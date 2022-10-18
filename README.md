@@ -10,5 +10,16 @@ This is a Blockchain-supported flatform which enable buyers and developers to sa
 5. [Khang Nguyen](https://https://github.com/klangthang): Pogrammer-by-day-poker-player-by-night
 6. [Hai Cao](https://https://github.com/SShindow): Distance-love-my-bro 
 
+
+## Shortcut:
+
+From the start of the project, run: 
+```shell
+make install
+```
+
+All the dependencies of nodes will be installed and after that, you are good to go!
+Do this everytime you pull/clone the project from source.
+
 ## Gant chart
 Sorry just soooo tired for it now.
