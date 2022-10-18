@@ -1,0 +1,83 @@
+body {
+    background-color: #FFF7F1;
+}
+
+.Publish_Block {
+    position: absolute;
+    top: 130px;
+    left: 245px;
+    background-color: #FFFFFF;
+    height: 500px;
+    width: 1040px;
+}
+
+.ReleaseTitle {
+    position: relative;
+    top: 20px;
+    left: 29px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #3A001E;
+}
+
+.AppNameFill input {
+    position: relative;
+    width: 320px;
+    height: 38px;
+    border: 1px solid #A3A3A3;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    top: 85px;
+    left: 150px;
+    color: #3A001E;
+}
+
+.AppNameFill .count1 {
+    position: relative;
+    top: 73px;
+    left: 440px;
+}
+
+.AppOrGame input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    padding: 3px;
+    /* background-color only for content */
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    background-color: #e7e6e7;
+    border-radius: 50%;
+}
+
+.AppOrGame input[type="radio"]:checked {
+    background-color: #3A001E;
+}
+
+.AppOrGame .form-check-input1{
+    position: relative;
+    left:100px
+}
+
+.AppOrGame .AppBox {
+    position: relative;
+    top: -20px;
+    left: 120px;
+}
+
+.AppOrGame .form-check-input2{
+    position: relative;
+    left:100px;
+    top: -12px;
+}
+
+.AppOrGame .GameBox {
+    position: relative;
+    top: -32px;
+    left: 120px;
+}
