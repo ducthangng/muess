@@ -3,7 +3,7 @@
 import { FC, useEffect, useState } from 'react';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 // import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import '../assets/css/Login.css';
 import LoginImage from '../assets/images/login.png';
 import LoginLogo from '../assets/images/logo.png';
 import CSS from 'csstype';
