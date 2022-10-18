@@ -1,6 +1,6 @@
 import { Card, Form, Tag } from 'antd';
 import React from 'react';
-import './MockTest.css';
+import '../assets/css/MockTest.css';
 import mocktest from '../assets/images/Rectangle 6295.png';
 import peopleGroup from '../assets/images/Vector.png';
 import { MockTestData } from '../models/MockTestData';

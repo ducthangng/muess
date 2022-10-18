@@ -4,11 +4,12 @@ import { FC, useEffect, useState } from 'react';
 import { authApi } from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
 import { roleFunc } from '../utils/Roles';
-import './Login.css';
+import '../assets/css/Login.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, []);
@@ -27,28 +28,30 @@ const Login = () => {
   });
 
   const routeChange = async (path: string) => {
-    const role = await roleFunc.getRole().then((res) => {
-      navigate(`/${res}/${path}`);
-    });
+    navigate(`/student/${path}`);
+    // const role = await roleFunc.getRole().then((res) => {
+    //   navigate(`/${res}/${path}`);
+    // });
   };
 
   const checkLogin = async () => {
-    let data = await authApi.getId();
-    if (data !== null && data !== 0) {
-      routeChange('dashboard');
-    }
+    // let data = await authApi.getId();
+    // if (data !== null && data !== 0) {
+    routeChange('dashboard');
+    // }
   };
 
   const handleLogin = () => {
-    let data = authApi.login({ username, password }).then((res) => {
-      if (res.id !== 0) {
-        routeChange('dashboard');
-      } else {
-        alert('Invalid username or password');
-      }
-      return res;
-    });
-    return data;
+    // let data = authApi.login({ username, password }).then((res) => {
+    //   if (res.id !== 0) {
+    //     routeChange('dashboard');
+    //   } else {
+    //     alert('Invalid username or password');
+    //   }
+    //   return res;
+    // });
+    // return data;
+    return 0;
   };
 
   return (
@@ -74,7 +77,7 @@ const Login = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
+                backgroundColor: '#F2F5F8'
               }}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -92,7 +95,7 @@ const Login = () => {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
-                backgroundColor: '#F2F5F8',
+                backgroundColor: '#F2F5F8'
               }}
               onChange={(e) => setPassword(e.target.value)}
               onPressEnter={handleLogin}
@@ -112,7 +115,7 @@ const Login = () => {
                 border: '2px solid #8172d5',
                 paddingBottom: '4px',
                 lineHeight: '14px',
-                fontSize: '20px',
+                fontSize: '20px'
               }}
             >
               Login
@@ -124,7 +127,7 @@ const Login = () => {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
-              gap: '0.5em',
+              gap: '0.5em'
             }}
           >
             <p>
@@ -133,7 +136,7 @@ const Login = () => {
                   color: '#8172d5',
                   textDecoration: 'underline',
                   fontFamily: 'Roboto',
-                  fontSize: '14px',
+                  fontSize: '14px'
                 }}
               >
                 Forgot Password?
@@ -146,7 +149,7 @@ const Login = () => {
                   color: '#8172d5',
                   textDecoration: 'underline',
                   fontFamily: 'Roboto',
-                  fontSize: '14px',
+                  fontSize: '14px'
                 }}
               >
                 Forgot Username?
@@ -165,7 +168,7 @@ const Login = () => {
                 border: '2px solid #8172d5',
                 paddingTop: '4px',
                 paddingBottom: '4px',
-                lineHeight: '14px',
+                lineHeight: '14px'
               }}
             >
               TEMPORARY ACCOUNT

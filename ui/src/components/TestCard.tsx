@@ -16,7 +16,7 @@ const TestCard: React.FC<TestCardData> = ({
   description,
   testClassId,
   testName,
-  imageLink,
+  imageLink
 }) => {
   const navigate = useNavigate();
   const { testDetails, setTestDetails } = useTestContext();

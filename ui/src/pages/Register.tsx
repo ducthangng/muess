@@ -27,7 +27,7 @@ export const Register = () => {
         username: username,
         password: password,
         gender: gender,
-        mail: email,
+        mail: email
       })) as number;
 
       if (id > 0) {
@@ -144,7 +144,7 @@ export const Register = () => {
                 border: '2px solid #8172d5',
                 paddingBottom: '4px',
                 lineHeight: '14px',
-                fontSize: '20px',
+                fontSize: '20px'
               }}
             >
               Create Account
@@ -162,7 +162,7 @@ export const Register = () => {
                 border: '2px solid #8172d5',
                 paddingTop: '4px',
                 paddingBottom: '4px',
-                lineHeight: '14px',
+                lineHeight: '14px'
               }}
             >
               SIGN IN

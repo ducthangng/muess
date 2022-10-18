@@ -14,7 +14,6 @@ const Guard = ({ guardEntity }: GuardEC) => {
 
   useEffect(() => {
     handleGuard();
-    handleGuard();
   }, []);
 
   if (isAuth === true) return <Outlet />;

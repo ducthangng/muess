@@ -17,13 +17,13 @@ import {
   DragEndEvent,
   DragOverEvent,
   UniqueIdentifier,
-  DragStartEvent,
+  DragStartEvent
 } from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
+  verticalListSortingStrategy
 } from '@dnd-kit/sortable';
 
 import { SortableItem } from './dnd/SortableItem';
@@ -31,14 +31,14 @@ import { SortableItem } from './dnd/SortableItem';
 export default function Footer() {
   const [items, setItems] = useState({
     root: ['1', '2', '3'],
-    container1: ['4', '5', '6'],
+    container1: ['4', '5', '6']
   });
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
+      coordinateGetter: sortableKeyboardCoordinates
     })
   );
 
@@ -124,7 +124,7 @@ export default function Footer() {
           items[overContainer as ItemsKey],
           activeIndex,
           overIndex
-        ),
+        )
       }));
     }
 
@@ -189,7 +189,7 @@ export default function Footer() {
         [activeContainer]: [
           ...prev[activeContainer as ItemsKey].filter(
             (item) => item !== active.id
-          ),
+          )
         ],
         [overContainer]: [
           ...prev[overContainer as ItemsKey].slice(0, newIndex),
@@ -197,8 +197,8 @@ export default function Footer() {
           ...prev[overContainer as ItemsKey].slice(
             newIndex,
             prev[overContainer as ItemsKey].length
-          ),
-        ],
+          )
+        ]
       };
     });
   }
