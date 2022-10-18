@@ -21,7 +21,7 @@ const Login = () => {
     const test: CSS.Properties = {
         position: 'relative',
         fontWeight: 400,
-        fontSize: '14px',
+        fontSize: '12px',
         lineHeight: '15px',
         color: '#8C98A9',
         left: '550px',
@@ -29,11 +29,11 @@ const Login = () => {
     }
     const Sign: CSS.Properties = {
         position: 'relative',
-        fontWeight: '900px',
+        fontWeight: '900',
         fontSize: '28px',
         lineHeight: '34px',
         color: '#3A001E',
-        top: '120px',
+        top: '115px',
         left: '550px',
     }
     const InputUser: CSS.Properties = {
@@ -52,7 +52,7 @@ const Login = () => {
     const Pass: CSS.Properties = {
         position: 'relative',
         fontWeight: 400,
-        fontSize: '14px',
+        fontSize: '12px',
         lineHeight: '15px',
         color: '#8C98A9',
         left: '550px',
