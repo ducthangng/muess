@@ -73,12 +73,13 @@ const Login = () => {
     }
     return (
         <>
-            <div className='box-1' style={{ position: 'fixed', backgroundColor: '#FFF7F1', height: 490, width: 479, top: 100, left: 309, borderRadius: '15px 0px 0px 15px' }}>
+            <div className='box-1' style={{ position: 'absolute', backgroundColor: '#FFF7F1', height: 490, width: 479, top: 100, left: 309, borderRadius: '15px 0px 0px 15px' }}>
                 <img src={LoginLogo} alt="Image" className='login_logo' style={{ width: 75, position: 'relative', top: 40, left: 50 }} />
                 <img src={LoginImage} alt="Image" className='login_image' style={{ position: 'relative', top: 100, left: -5 }} />
             </div>
             <div className='box-2' style={{ position: 'fixed', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 309, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
                 <button className='esc' style={{ background: '#DCE1EE', color: '#2E384D', fontWeight: 400, fontSize: '12px', height: '20px', width: '20px', borderRadius: '50%', position: 'relative', top: '15px', left: '880px' }} onClick={()=>handleClick()}>X</button>
+                <div className='signin-container' style={{position: 'fixed', width: '310px', height: "310px", top: '80px', left:'330px'}}>
                 <div className='SignIn' style={Sign}>Sign In</div>
                 <div className='username' style={test}>Username/Email</div>
                 <div className='input_username'>
@@ -93,6 +94,8 @@ const Login = () => {
                 <button className='signin_button' style={{ background: '#FB7F4B', color: '#FFFFFF', fontWeight: 400, fontSize: '12px', lineHeight: '15px', height: '40px', width: '272px', borderRadius: '5px', position: 'relative', top: '185px', left: '550px' }}>SIGN IN</button>
                 <div className='dhaa'>Don't Have An Account?</div>
                 <div className='ca'>Create Account</div>
+                </div>
+
             </div>
         </>
     );
