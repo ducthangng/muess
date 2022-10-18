@@ -37,7 +37,7 @@ const Login = () => {
   const checkLogin = async () => {
     // let data = await authApi.getId();
     // if (data !== null && data !== 0) {
-    routeChange('dashboard');
+    // routeChange('dashboard');
     // }
   };
 
@@ -51,6 +51,7 @@ const Login = () => {
     //   return res;
     // });
     // return data;
+    routeChange('dashboard');
     return 0;
   };
 

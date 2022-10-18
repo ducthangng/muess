@@ -10,14 +10,40 @@ function GroupSelection() {
   const [data, setData] = React.useState<Class[]>([] as Class[]);
 
   const getClasses = async () => {
-    const id = (await authApi.getId()) as number;
-    const allClasses = (await classApi.getAll()) as Class[];
-    allClasses.forEach(async (item, index) => {
-      await classApi.addMember({ classId: item.id, userId: id });
-    });
+    // const id = (await authApi.getId()) as number;
+    // const allClasses = (await classApi.getAll()) as Class[];
+    // allClasses.forEach(async (item, index) => {
+    //   await classApi.addMember({ classId: item.id, userId: id });
+    // });
 
-    const classes = (await userApi.getClass(id)) as Class[];
-    setData(classes);
+    // const classes = (await userApi.getClass(id)) as Class[];
+    const fakeData: Class[] = [
+      {
+        id: 1,
+        className: 'First Class',
+        info: 'First Class Info ayyy yooo',
+        announcement: 'Hello',
+        roomCode: 'B101',
+        level: 'A1'
+      },
+      {
+        id: 2,
+        className: 'Second Class',
+        info: 'Second Class Info ayyy yooo',
+        announcement: 'Hello',
+        roomCode: 'B201',
+        level: 'A2'
+      },
+      {
+        id: 3,
+        className: 'Third Class',
+        info: 'Third Class Info ayyy yooo',
+        announcement: 'Hello',
+        roomCode: 'B201',
+        level: 'A3'
+      }
+    ];
+    setData(fakeData);
   };
 
   useEffect(() => {
@@ -28,7 +54,7 @@ function GroupSelection() {
     <div
       style={{
         backgroundColor: '#fff',
-        width: '60%',
+        width: '60%'
       }}
     >
       <Divider
@@ -36,7 +62,7 @@ function GroupSelection() {
         style={{
           fontSize: '56px',
           fontFamily: 'Roboto',
-          color: '#8172d5',
+          color: '#8172d5'
         }}
       >
         Choose the class
@@ -56,7 +82,7 @@ function GroupSelection() {
                 style={{
                   borderColor: '#d4d4d6',
                   borderWidth: '1px',
-                  borderRadius: '20px',
+                  borderRadius: '20px'
                 }}
               >
                 <GroupCard
