@@ -2,7 +2,7 @@
 // // import logo from '../../assets/logo-1.svg';
 import { FC, useEffect, useState } from 'react';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/Login.css';
 import LoginImage from '../assets/images/login.png';
 import LoginLogo from '../assets/images/logo.png';
@@ -12,6 +12,11 @@ const Login = () => {
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
+    };
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/`);
     };
     const test: CSS.Properties = {
         position: 'relative',
@@ -73,7 +78,7 @@ const Login = () => {
                 <img src={LoginImage} alt="Image" className='login_image' style={{ position: 'relative', top: 100, left: -5 }} />
             </div>
             <div className='box-2' style={{ position: 'fixed', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 309, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
-            <button className='esc' style={{background: '#DCE1EE', color: '#2E384D', fontWeight: 400, fontSize: '12px', height: '20px', width: '20px', borderRadius: '50%', position: 'relative', top: '15px', left: '880px'}}>X</button>
+                <button className='esc' style={{ background: '#DCE1EE', color: '#2E384D', fontWeight: 400, fontSize: '12px', height: '20px', width: '20px', borderRadius: '50%', position: 'relative', top: '15px', left: '880px' }} onClick={()=>handleClick()}>X</button>
                 <div className='SignIn' style={Sign}>Sign In</div>
                 <div className='username' style={test}>Username/Email</div>
                 <div className='input_username'>
@@ -85,7 +90,7 @@ const Login = () => {
                     <EyeInvisibleOutlined className={passwordShown ? "shown" : "not"} onClick={togglePassword} />
                 </div>
                 <div className='forgot_password'>Forgot password?</div>
-                <button className='signin_button' style={{background: '#FB7F4B', color: '#FFFFFF', fontWeight: 400, fontSize: '12px', lineHeight: '15px', height: '40px', width: '272px', borderRadius: '5px', position: 'relative', top: '185px', left: '550px'}}>SIGN IN</button>
+                <button className='signin_button' style={{ background: '#FB7F4B', color: '#FFFFFF', fontWeight: 400, fontSize: '12px', lineHeight: '15px', height: '40px', width: '272px', borderRadius: '5px', position: 'relative', top: '185px', left: '550px' }}>SIGN IN</button>
                 <div className='dhaa'>Don't Have An Account?</div>
                 <div className='ca'>Create Account</div>
             </div>
