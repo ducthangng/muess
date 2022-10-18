@@ -1,0 +1,70 @@
+.box-2 .input_password .shown{
+    position: relative;
+    opacity: 50%;
+    font-size: 25px;
+    top: 160px;
+    left: 510px;
+}
+
+.box-2 .input_password .not:hover {
+    color: #FB7F4B;
+    cursor: pointer;
+}
+
+.box-2 .input_password .shown:hover {
+    color: #FB7F4B;
+    cursor: pointer;
+}
+
+.box-2 .input_password .not{
+    position: relative;
+    font-size: 25px;
+    top: 160px;
+    left: 510px;
+
+}
+
+.box-2 .forgot_password {
+    position: relative;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+    color: #8C98A9;
+    left: 550px;
+    top: 170px;
+    height: fit-content;
+    width: fit-content;
+}
+
+.box-2 .forgot_password:hover {
+    color: #FB7F4B;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.box-2 .dhaa {
+    position: relative;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+    color: #8C98A9;
+    left: 590px;
+    top: 205px;
+}
+
+.box-2 .ca {
+    position: relative;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+    color: #FB7F4B;
+    left: 698px;
+    top: 190px;
+}
+
+.box-2 .ca:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    height: fit-content;
+    width: fit-content;
+}
