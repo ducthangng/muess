@@ -68,11 +68,11 @@ const Login = () => {
     }
     return (
         <>
-            <div className='box-1' style={{ position: 'fixed', backgroundColor: '#FFF7F1', height: 490, width: 479, top: 100, left: 300, borderRadius: 15 }}>
+            <div className='box-1' style={{ position: 'fixed', backgroundColor: '#FFF7F1', height: 490, width: 479, top: 100, left: 309, borderRadius: '15px 0px 0px 15px' }}>
                 <img src={LoginLogo} alt="Image" className='login_logo' style={{ width: 75, position: 'relative', top: 40, left: 50 }} />
                 <img src={LoginImage} alt="Image" className='login_image' style={{ position: 'relative', top: 100, left: -5 }} />
             </div>
-            <div className='box-2' style={{ position: 'fixed', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 300, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
+            <div className='box-2' style={{ position: 'fixed', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 309, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
                 <div className='SignIn' style={Sign}>Sign In</div>
                 <div className='username' style={test}>Username/Email</div>
                 <div className='input_username'>
