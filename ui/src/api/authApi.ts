@@ -22,9 +22,9 @@ export const authApi = {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     })
       .then((res) => {
         if (res.ok) {
@@ -62,16 +62,16 @@ export const authApi = {
   login: async (parameter: { username: string; password: string }) => {
     const payload = {
       username: parameter.username,
-      password: parameter.password,
+      password: parameter.password
     };
 
     const response = await fetch(`${apiUrl}/login`, {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     })
       .then((res) => {
         if (res.ok) {
@@ -105,7 +105,7 @@ export const authApi = {
   logout: async () => {
     const response = await fetch(`${apiUrl}/logout`, {
       method: 'POST',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -139,7 +139,7 @@ export const authApi = {
   validateLoggedStatus: async () => {
     const response = await fetch(`${apiUrl}/validateLoggedStatus`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -168,7 +168,7 @@ export const authApi = {
   validateRole: async () => {
     const response = await fetch(`${apiUrl}/v1/validateRole`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -195,7 +195,7 @@ export const authApi = {
   getId: async () => {
     const response = await fetch(`${apiUrl}/v1/ID`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -217,5 +217,5 @@ export const authApi = {
       });
 
     return response;
-  },
+  }
 };

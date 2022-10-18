@@ -13,7 +13,7 @@ export const classApi = {
   getAll: async () => {
     const response = await fetch(`${apiUrl}/`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -45,7 +45,7 @@ export const classApi = {
         new URLSearchParams({ class_id: classId.toString() }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -77,11 +77,11 @@ export const classApi = {
       `${apiUrl}/single_test?` +
         new URLSearchParams({
           test_id: testId.toString(),
-          class_id: '1',
+          class_id: '1'
         }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -114,7 +114,7 @@ export const classApi = {
         new URLSearchParams({ class_id: classId.toString() }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -154,9 +154,9 @@ export const classApi = {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     })
       .then((res) => {
         if (res.ok) {
@@ -187,11 +187,11 @@ export const classApi = {
       `${apiUrl}/add_member?` +
         new URLSearchParams({
           class_id: parameter.classId.toString(),
-          user_id: parameter.userId.toString(),
+          user_id: parameter.userId.toString()
         }),
       {
         method: 'POST',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -223,11 +223,11 @@ export const classApi = {
       `${apiUrl}/add_test?` +
         new URLSearchParams({
           class_id: parameter.classId.toString(),
-          test_id: parameter.testId.toString(),
+          test_id: parameter.testId.toString()
         }),
       {
         method: 'POST',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -259,11 +259,11 @@ export const classApi = {
       `${apiUrl}/remove_test?` +
         new URLSearchParams({
           class_id: parameter.classId.toString(),
-          test_id: parameter.testId.toString(),
+          test_id: parameter.testId.toString()
         }),
       {
         method: 'DELETE',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -295,11 +295,11 @@ export const classApi = {
       `${apiUrl}/remove_member?` +
         new URLSearchParams({
           class_id: parameter.classId.toString(),
-          user_id: parameter.userId.toString(),
+          user_id: parameter.userId.toString()
         }),
       {
         method: 'DELETE',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -324,5 +324,5 @@ export const classApi = {
       });
 
     return response;
-  },
+  }
 };

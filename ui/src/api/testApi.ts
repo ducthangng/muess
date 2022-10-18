@@ -14,7 +14,7 @@ export const testApi = {
   getAllTests: async () => {
     const response = await fetch(`${apiUrl}/all`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -45,7 +45,7 @@ export const testApi = {
       `${apiUrl}/?` + new URLSearchParams({ test_id: testId }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -77,7 +77,7 @@ export const testApi = {
       `${apiUrl}/do?` + new URLSearchParams({ test_id: testId }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -114,9 +114,9 @@ export const testApi = {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     })
       .then((res) => {
         if (res.ok) {
@@ -150,7 +150,7 @@ export const testApi = {
         new URLSearchParams({ test_result_id: testResultId }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -183,7 +183,7 @@ export const testApi = {
         new URLSearchParams({ test_result_id: testResultId }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -216,7 +216,7 @@ export const testApi = {
         new URLSearchParams({ test_class_id: testClassId.toString() }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -241,5 +241,5 @@ export const testApi = {
       });
 
     return response;
-  },
+  }
 };

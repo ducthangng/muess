@@ -20,37 +20,37 @@ const reducer = (
     case types.SET_IS_LOADING: {
       return {
         ...state,
-        isLoading: payload,
+        isLoading: payload
       };
     }
     case types.SET_REVIEW_MODE: {
       return {
         ...state,
-        reviewMode: payload,
+        reviewMode: payload
       };
     }
     case types.SET_WAIT_MODAL: {
       return {
         ...state,
-        waitModal: payload,
+        waitModal: payload
       };
     }
     case types.SET_TEST_DETAILS: {
       return {
         ...state,
-        testDetails: payload,
+        testDetails: payload
       };
     }
     case types.SET_TEST_DATA: {
       return {
         ...state,
-        testData: payload,
+        testData: payload
       };
     }
     case types.SET_SUBMIT_DATA: {
       return {
         ...state,
-        submitData: payload,
+        submitData: payload
       };
     }
     default:

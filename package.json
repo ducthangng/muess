@@ -1,0 +1,40 @@
+{
+  "name": "muess",
+  "version": "1.0.0",
+  "description": "This is a Blockchain-supported flatform which enable buyers and developers to safely transacts software products. It implements Hyperledger Fabric framework underneath, thus provide comprehensive support for Auth-related process and Data Integrity.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "prettier-format": "prettier --config .prettierrc '**/**/*.ts' --write",
+    "postinstall": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ducthangng/muess.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ducthangng/muess/issues"
+  },
+  "homepage": "https://github.com/ducthangng/muess#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "@typescript-eslint/parser": "^5.40.1",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "**/**/**/**/*.{ts,tsx}": [
+      "npm run lint-and-fix",
+      "npm run prettier-format",
+      "git add ."
+    ]
+  }
+}

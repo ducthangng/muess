@@ -5,12 +5,12 @@ const userSchema: Schema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const userModel = model<User & Document>('User', userSchema);

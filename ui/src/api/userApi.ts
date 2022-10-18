@@ -14,7 +14,7 @@ export const userApi = {
   getAllUsers: async () => {
     const response = await fetch(`${apiUrl}/all`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include'
     })
       .then((res) => {
         if (res.ok) {
@@ -45,7 +45,7 @@ export const userApi = {
       `${apiUrl}/?` + new URLSearchParams({ username }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -77,7 +77,7 @@ export const userApi = {
       `${apiUrl}/?` + new URLSearchParams({ user_id: id.toString() }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -108,7 +108,7 @@ export const userApi = {
       `${apiUrl}?` + new URLSearchParams({ fullname }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -140,7 +140,7 @@ export const userApi = {
       `${apiUrl}/class?` + new URLSearchParams({ user_id: userId.toString() }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -174,9 +174,9 @@ export const userApi = {
       method: 'PUT',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     })
       .then((res) => {
         if (res.ok) {
@@ -209,7 +209,7 @@ export const userApi = {
       `${apiUrl}/test_result?` + new URLSearchParams({ user_id }),
       {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -234,5 +234,5 @@ export const userApi = {
       });
 
     return response;
-  },
+  }
 };

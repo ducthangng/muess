@@ -30,7 +30,11 @@ class AuthController {
     }
   };
 
-  public logOut = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  public logOut = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const userData: User = req.user;
       const logOutUserData: User = await this.authService.logout(userData);

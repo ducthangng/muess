@@ -15,7 +15,7 @@ export const adminApi = {
       `${apiUrl}/user?` + new URLSearchParams({ user_id: userId.toString() }),
       {
         method: 'DELETE',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -48,7 +48,7 @@ export const adminApi = {
         new URLSearchParams({ class_id: classId.toString() }),
       {
         method: 'DELETE',
-        credentials: 'include',
+        credentials: 'include'
       }
     )
       .then((res) => {
@@ -73,5 +73,5 @@ export const adminApi = {
       });
 
     return response;
-  },
+  }
 };

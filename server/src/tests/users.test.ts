@@ -6,7 +6,7 @@ import { CreateUserDto } from '@dtos/users.dto';
 import UsersRoute from '@routes/users.route';
 
 afterAll(async () => {
-  await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
+  await new Promise<void>((resolve) => setTimeout(() => resolve(), 500));
 });
 
 describe('Testing Users', () => {
@@ -19,18 +19,18 @@ describe('Testing Users', () => {
         {
           _id: 'qpwoeiruty',
           email: 'a@email.com',
-          password: await bcrypt.hash('q1w2e3r4!', 10),
+          password: await bcrypt.hash('q1w2e3r4!', 10)
         },
         {
           _id: 'alskdjfhg',
           email: 'b@email.com',
-          password: await bcrypt.hash('a1s2d3f4!', 10),
+          password: await bcrypt.hash('a1s2d3f4!', 10)
         },
         {
           _id: 'zmxncbv',
           email: 'c@email.com',
-          password: await bcrypt.hash('z1x2c3v4!', 10),
-        },
+          password: await bcrypt.hash('z1x2c3v4!', 10)
+        }
       ]);
 
       (mongoose as any).connect = jest.fn();
@@ -49,12 +49,14 @@ describe('Testing Users', () => {
       users.findOne = jest.fn().mockReturnValue({
         _id: 'qpwoeiruty',
         email: 'a@email.com',
-        password: await bcrypt.hash('q1w2e3r4!', 10),
+        password: await bcrypt.hash('q1w2e3r4!', 10)
       });
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).get(`${usersRoute.path}/${userId}`).expect(200);
+      return request(app.getServer())
+        .get(`${usersRoute.path}/${userId}`)
+        .expect(200);
     });
   });
 
@@ -62,7 +64,7 @@ describe('Testing Users', () => {
     it('response Create User', async () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
-        password: 'q1w2e3r4',
+        password: 'q1w2e3r4'
       };
 
       const usersRoute = new UsersRoute();
@@ -72,12 +74,15 @@ describe('Testing Users', () => {
       users.create = jest.fn().mockReturnValue({
         _id: '60706478aad6c9ad19a31c84',
         email: userData.email,
-        password: await bcrypt.hash(userData.password, 10),
+        password: await bcrypt.hash(userData.password, 10)
       });
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).post(`${usersRoute.path}`).send(userData).expect(201);
+      return request(app.getServer())
+        .post(`${usersRoute.path}`)
+        .send(userData)
+        .expect(201);
     });
   });
 
@@ -86,7 +91,7 @@ describe('Testing Users', () => {
       const userId = '60706478aad6c9ad19a31c84';
       const userData: CreateUserDto = {
         email: 'test@email.com',
-        password: 'q1w2e3r4',
+        password: 'q1w2e3r4'
       };
 
       const usersRoute = new UsersRoute();
@@ -96,19 +101,21 @@ describe('Testing Users', () => {
         users.findOne = jest.fn().mockReturnValue({
           _id: userId,
           email: userData.email,
-          password: await bcrypt.hash(userData.password, 10),
+          password: await bcrypt.hash(userData.password, 10)
         });
       }
 
       users.findByIdAndUpdate = jest.fn().mockReturnValue({
         _id: userId,
         email: userData.email,
-        password: await bcrypt.hash(userData.password, 10),
+        password: await bcrypt.hash(userData.password, 10)
       });
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).put(`${usersRoute.path}/${userId}`).send(userData);
+      return request(app.getServer())
+        .put(`${usersRoute.path}/${userId}`)
+        .send(userData);
     });
   });
 
@@ -122,12 +129,14 @@ describe('Testing Users', () => {
       users.findByIdAndDelete = jest.fn().mockReturnValue({
         _id: '60706478aad6c9ad19a31c84',
         email: 'test@email.com',
-        password: await bcrypt.hash('q1w2e3r4!', 10),
+        password: await bcrypt.hash('q1w2e3r4!', 10)
       });
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).delete(`${usersRoute.path}/${userId}`).expect(200);
+      return request(app.getServer())
+        .delete(`${usersRoute.path}/${userId}`)
+        .expect(200);
     });
   });
 });
