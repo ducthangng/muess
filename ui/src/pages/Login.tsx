@@ -77,8 +77,8 @@ const Login = () => {
                 <img src={LoginLogo} alt="Image" className='login_logo' style={{ width: 75, position: 'relative', top: 40, left: 50 }} />
                 <img src={LoginImage} alt="Image" className='login_image' style={{ position: 'relative', top: 100, left: -5 }} />
             </div>
-            <div className='box-2' style={{ position: 'fixed', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 309, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
-                <button className='esc' style={{ background: '#DCE1EE', color: '#2E384D', fontWeight: 400, fontSize: '12px', height: '20px', width: '20px', borderRadius: '50%', position: 'relative', top: '15px', left: '880px' }} onClick={()=>handleClick()}>X</button>
+            <div className='box-2' style={{ position: 'absolute', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 309, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
+                <button className='esc' style={{ background: '#DCE1EE', color: '#2E384D', fontWeight: 400, fontSize: '12px', height: '20px', width: '20px', borderRadius: '50%', position: 'absolute', top: '15px', left: '880px' }} onClick={()=>handleClick()}>X</button>
                 <div className='signin-container' style={{position: 'fixed', width: '310px', height: "310px", top: '80px', left:'330px'}}>
                 <div className='SignIn' style={Sign}>Sign In</div>
                 <div className='username' style={test}>Username/Email</div>
