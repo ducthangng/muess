@@ -4,7 +4,8 @@
     height: 490px;
     width: 479px;
     top: 100px;
-    left: 309px;
+    left: 300px;
+    border-radius: 15px;
 }
 
 .box-1 .login_logo {
@@ -26,7 +27,8 @@
     height: 490px;
     width: 920px;
     top: 100px;
-    right: 309px;
+    right: 300px;
+    border-radius: 15px;
     box-shadow: 2px 3px #dadada;
 }
 
