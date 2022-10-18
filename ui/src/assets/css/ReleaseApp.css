@@ -4,19 +4,19 @@ body {
 
 .Publish_Block {
     position: absolute;
-    top: 130px;
+    top: 100px;
     left: 245px;
     background-color: #FFFFFF;
-    height: 500px;
+    height: 540px;
     width: 1040px;
 }
 
 .ReleaseTitle {
     position: relative;
     top: 20px;
-    left: 29px;
+    left: 50px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     color: #3A001E;
 }
@@ -29,15 +29,16 @@ body {
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    top: 85px;
+    top: 65px;
     left: 150px;
     color: #3A001E;
 }
 
 .AppNameFill .count1 {
     position: relative;
-    top: 73px;
-    left: 440px;
+    font-size: 9px;
+    top: 57px;
+    left: 450px;
 }
 
 .AppOrGame input[type="radio"] {
@@ -80,4 +81,65 @@ body {
     position: relative;
     top: -32px;
     left: 120px;
+}
+
+
+
+.FreeOrPaidOrRent input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    padding: 3px;
+    /* background-color only for content */
+    background-clip: content-box;
+    border: 1.5px solid #bbbbbb;
+    background-color: #e7e6e7;
+    border-radius: 50%;
+}
+
+.FreeOrPaidOrRent input[type="radio"]:checked {
+    background-color: #3A001E;
+}
+
+.FreeOrPaidOrRent .form-check-input3{
+    position: relative;
+    left:100px
+}
+
+.FreeOrPaidOrRent .FreeBox {
+    position: relative;
+    top: -21px;
+    left: 120px;
+}
+
+.FreeOrPaidOrRent .form-check-input4{
+    position: relative;
+    left:100px;
+    top: -12px;
+}
+
+.FreeOrPaidOrRent .PaidBox {
+    position: relative;
+    top: -33px;
+    left: 120px;
+}
+
+.FreeOrPaidOrRent .form-check-input5{
+    position: relative;
+    left:100px;
+    top: -23px;
+}
+
+.FreeOrPaidOrRent .RentBox {
+    position: relative;
+    top: -44px;
+    left: 120px;
+}
+
+MultiSelect{
+    width: 100px;    
+
 }
