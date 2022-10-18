@@ -20,7 +20,7 @@ import { AdminEC, StudentEC } from '../models/Guard';
 import { TestProvider } from '../context/test/TestContext';
 import { LoginLayout } from '../pages/LoginLayout';
 import { Register } from '../pages/Register';
-import Login from '../pages/Login';
+import Login from '../pages/Login/Login';
 import Landingpage from '../pages/Landingpage';
 
 export default function AppRoute() {
