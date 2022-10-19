@@ -12,6 +12,7 @@ body {
     width: 1040px;
 }
 
+
 .ReleaseTitle {
     position: relative;
     top: 20px;
@@ -30,7 +31,7 @@ body {
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    top: 65px;
+    top: 50px;
     left: 150px;
     color: #3A001E;
 }
@@ -38,7 +39,7 @@ body {
 .AppNameFill .count1 {
     position: relative;
     font-size: 9px;
-    top: 57px;
+    top: 42px;
     left: 450px;
 }
 
@@ -142,5 +143,5 @@ body {
 
 MultiSelect{
     width: 100px;    
-
+    
 }
