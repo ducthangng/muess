@@ -89,7 +89,7 @@ const ReleaseApp = () => {
                 discover apps </div>
             <div style={{ position: 'relative', top: '55px', left: '50px', fontWeight: 600, fontSize: '12px', lineHeight: '11px', color: '#A3A3A3' }} >Category</div>
             <div style={{ position: 'relative', top: '90px', left: '50px', fontWeight: 600, fontSize: '12px', lineHeight: '11px', color: '#A3A3A3' }} >Tags</div>
-            <Select options={options} placeholder={'Select a category'} style={{ width: '272px', position: 'relative', left: '150px', top: '25px' }}></Select>
+            <Select options={options} placeholder={'Select a category'} style={{ width: '272px', position: 'relative', left: '150px', top: '17px' }}></Select>
             <MultiSelect />
         </div>
     );
