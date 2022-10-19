@@ -24,7 +24,7 @@ const App: React.FC = () => (
     <Select
       mode="multiple"
       allowClear
-      style={{ width: '272px',height: '33px', position: 'relative', top: '70px', left: '-123px', border:'1px solid #e1e1e1', borderRadius:'7px', overflowY: 'hidden'}}
+      style={{ width: '272px',paddingTop:'-3px',maxHeight: '35px', position: 'relative', top: '70px', left: '-123px', border:'1px solid #e1e1e1', borderRadius:'7px', overflowY: 'auto'}}
       placeholder="Please select"
       onChange={handleChange}
     >

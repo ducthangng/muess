@@ -21,8 +21,8 @@ function App() {
         rtl={false}
         pauseOnFocusLoss
         draggable
-      /> */}
-      {/* <AppRoute /> */}
+      /> 
+       <AppRoute /> */}
     </>
   );
 }
