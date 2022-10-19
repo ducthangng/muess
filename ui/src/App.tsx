@@ -8,10 +8,12 @@ import { ToastContainer } from 'react-toastify';
 
 // import AppRoute from './routes/routes';
 
+import CompleteTable from './pages/Purchase/CompleteTable';
+
 function App() {
   return (
     <>
-      <ReleaseApp />
+      <CompleteTable />
       {/* <ToastContainer
         position="top-center"
         autoClose={2500}
