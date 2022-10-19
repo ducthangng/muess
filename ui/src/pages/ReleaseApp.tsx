@@ -3,8 +3,9 @@ import React from 'react'
 import { Checkbox, Select } from 'antd';
 import { useState } from 'react';
 import MultiSelect from '../components/MultiSelect'
+import DragAndDrop from '../components/DragDrop'
 
-
+const fileTypes = ["JPEG", "PNG", "SVG"];
 
 const ReleaseApp = () => {
     const [selected, setSelected] = useState([]);
@@ -87,11 +88,16 @@ const ReleaseApp = () => {
                         Choose categories and tags that best describe the content or main functions of your app. These help </div>
                 </div>
                 <div style={{ position: 'relative', top: '5px', left: '50px', fontWeight: 600, fontSize: '9px', lineHeight: '11px', color: '#A3A3A3' }}>
-                customers discover apps </div>
+                    customers discover apps </div>
                 <div style={{ position: 'relative', top: '20px', left: '50px', fontWeight: 600, fontSize: '12px', lineHeight: '11px', color: '#A3A3A3' }} >Category</div>
                 <div style={{ position: 'relative', top: '50px', left: '50px', fontWeight: 600, fontSize: '12px', lineHeight: '11px', color: '#A3A3A3' }} >Tags</div>
                 <Select options={options} placeholder={'Select a category'} style={{ width: '325px', position: 'relative', left: '150px', top: '-25px' }}></Select>
                 <MultiSelect />
+                <div style={{width: '370px', position: 'relative', left: '600px', top: '-200px'}}>
+                    <DragAndDrop />
+                </div>
+
+
             </div>
         </div>
     );
