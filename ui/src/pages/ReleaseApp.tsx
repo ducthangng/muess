@@ -4,12 +4,13 @@ import { Checkbox, Select } from 'antd';
 import { useState } from 'react';
 import MultiSelect from '../components/MultiSelect'
 import DragAndDrop from '../components/DragDrop'
-
-const fileTypes = ["JPEG", "PNG", "SVG"];
+import TextArea from 'antd/lib/input/TextArea';
+import DragAndDropMulti from '../components/DragDropMulti'
 
 const ReleaseApp = () => {
     const [selected, setSelected] = useState([]);
     const [count, setCount] = React.useState(0);
+    const [count1, setCount1] = React.useState(0);
     const options = [
         { value: 'Educational', label: 'Educational' },
         { value: 'Lifestyle', label: 'Lifestyle' },
@@ -87,16 +88,30 @@ const ReleaseApp = () => {
                     <div style={{ position: 'relative', top: '5px', left: '50px', fontWeight: 600, fontSize: '9px', lineHeight: '11px', color: '#A3A3A3' }}>
                         Choose categories and tags that best describe the content or main functions of your app. These help </div>
                 </div>
+                <div style={{position: 'relative',transform: 'rotate(90deg)', left: '375px',width:'300px',top:'-100px', borderTop: '2px solid #E3E3E3'}}/>
                 <div style={{ position: 'relative', top: '5px', left: '50px', fontWeight: 600, fontSize: '9px', lineHeight: '11px', color: '#A3A3A3' }}>
                     customers discover apps </div>
                 <div style={{ position: 'relative', top: '20px', left: '50px', fontWeight: 600, fontSize: '12px', lineHeight: '11px', color: '#A3A3A3' }} >Category</div>
                 <div style={{ position: 'relative', top: '50px', left: '50px', fontWeight: 600, fontSize: '12px', lineHeight: '11px', color: '#A3A3A3' }} >Tags</div>
                 <Select options={options} placeholder={'Select a category'} style={{ width: '325px', position: 'relative', left: '150px', top: '-25px' }}></Select>
                 <MultiSelect />
-                <div style={{width: '370px', position: 'relative', left: '600px', top: '-200px'}}>
+                
+                <div className='DescBox'>
+                    <div style={{ position: 'relative',top:'22px',left:'-30px', fontWeight: 1000, fontSize: '12px', lineHeight: '15px', color: '#3A001E', }}>Description</div>
+                    <TextArea
+                        maxLength={1000} onChange={e => setCount1(e.target.value.length)}>
+                    </TextArea>
+                    <div className='count2'>{count1}/1000</div>
+                </div>
+                <div style={{ width: '310px', position: 'relative', left: '670px', top: '-360px' }}>
+                    <div style={{position: 'relative',top:'28px',left:'-100px', fontWeight: 1000, fontSize: '12px', lineHeight: '15px', color: '#3A001E'}}>App icon</div>
                     <DragAndDrop />
                 </div>
-
+                <div style={{ width: '310px', position: 'relative', left: '670px', top: '-360px' }}>
+                <div style={{position: 'relative',top:'28px',left:'-100px', fontWeight: 1000, fontSize: '12px', lineHeight: '15px', color: '#3A001E'}}>Images</div>
+                    <DragAndDropMulti/>
+                </div>
+                <button style={{backgroundColor: '#FB7F4B', color:'white', fontSize:'15px',position: 'relative', top: '-370px', left:'485px', borderRadius: '5px', width: '80px', height: '30px'}}>Release</button>
 
             </div>
         </div>

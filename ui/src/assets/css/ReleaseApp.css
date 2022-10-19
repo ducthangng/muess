@@ -1,6 +1,6 @@
 body {
     background-color: #FFF7F1;
-    overflow-x:hidden;
+    /* overflow:hidden; */
 }
 
 .Publish_Block {
@@ -141,7 +141,33 @@ body {
     left: 120px;
 }
 
-MultiSelect{
-    width: 100px;    
+.DescBox {
+    position: relative;
+    top: -370px;
+    left: 600px;
+    width: auto;
+    height: auto;
+}
 
+.DescBox TextArea {
+    position: relative;
+    top: 1px;
+    left: 67px;
+    width: 320px;
+    height: 180px;
+    border: 1px solid #A3A3A3;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: auto;
+    color: #3A001E;
+    resize: none;
+    overflow: auto;
+}
+
+.DescBox .count2{
+    position: relative;
+    font-size: 9px;
+    top: 3px;
+    left: 350px;
 }
