@@ -11,7 +11,7 @@ export const LoginLayout = () => {
           height: '54px',
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         <h1 style={{ width: '254px', paddingLeft: '22px', marginTop: '1em' }}>
@@ -30,7 +30,7 @@ export const LoginLayout = () => {
           position: 'fixed',
           bottom: '0',
           width: '100vw',
-          height: '61px',
+          height: '61px'
         }}
       ></footer>
     </Layout>

@@ -9,7 +9,7 @@ export function SortableItem(props: { id: UniqueIdentifier }) {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition
   };
 
   return (

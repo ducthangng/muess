@@ -4,7 +4,7 @@ import {
   LeftOutlined,
   RightOutlined,
   CheckOutlined,
-  HomeOutlined,
+  HomeOutlined
 } from '@ant-design/icons';
 
 import { useNavigate, useParams } from 'react-router-dom';

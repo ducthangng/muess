@@ -25,11 +25,11 @@ import Landingpage from '../pages/Landingpage';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
-    guardEntity: AdminEC,
+    guardEntity: AdminEC
   };
 
   const StudentGuard: GuardEC = {
-    guardEntity: StudentEC,
+    guardEntity: StudentEC
   };
 
   return (
