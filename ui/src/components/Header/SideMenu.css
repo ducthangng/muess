@@ -1,0 +1,48 @@
+.side-menu {
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: #FFFFFF;
+    height: 62px;
+    box-sizing: border-box;
+    padding: 30px 20px;
+    font-family: 'Inter', sans-serif;
+    z-index: 999;
+}
+
+.side-menu .logo img {
+    position: fixed;
+    top: 10px
+}
+
+.side-menu .main-menu .menu-item {
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3A001E;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.side-menu .main-menu .menu-item:hover {
+    background-color: #19020251;
+}
+
+.side-menu .main-menu {
+    margin: 5px 0;
+}
+
+.side-menu .main-menu ul li {
+    list-style: none;
+
+}
+
+
+
+
+
+
