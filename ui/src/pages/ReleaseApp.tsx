@@ -3,7 +3,7 @@ import React from 'react'
 import { Checkbox, Select } from 'antd';
 import { useState } from 'react';
 import MultiSelect from '../components/MultiSelect'
-import DragAndDrop from '../components/DragDrop'
+// import DragAndDrop from '../components/DragDrop'
 
 const fileTypes = ["JPEG", "PNG", "SVG"];
 
@@ -94,7 +94,7 @@ const ReleaseApp = () => {
                 <Select options={options} placeholder={'Select a category'} style={{ width: '325px', position: 'relative', left: '150px', top: '-25px' }}></Select>
                 <MultiSelect />
                 <div style={{width: '370px', position: 'relative', left: '600px', top: '-200px'}}>
-                    <DragAndDrop />
+                    {/* <DragAndDrop /> */}
                 </div>
 
 
