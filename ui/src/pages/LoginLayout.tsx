@@ -22,7 +22,7 @@ export const LoginLayout = () => {
         </h1>
       </header>
       <section>
-        <div className="login__body">
+        <div className="login__body" style = {{backgroundColor: '#FFF7F1'}}>
           <Outlet />
         </div>
       </section>

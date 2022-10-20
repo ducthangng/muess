@@ -6,7 +6,8 @@
 
 .side-menu {
     position: fixed;
-    width: 1rem;
+    top: 0;
+    width: 100%;
     background-color: #FFFFFF;
     height: 62px;
     box-sizing: border-box;
@@ -14,6 +15,7 @@
     font-family: 'Inter', sans-serif;
     z-index: 999;
     text-align: center;
+    
 
 }
 
