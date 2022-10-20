@@ -1,6 +1,8 @@
 body {
     background-color: #FFF7F1;
-    overflow-x:hidden;
+    /* overflow:hidden; */
+    margin: 0;
+    padding: 0;
 }
 
 .Publish_Block {
@@ -38,6 +40,7 @@ body {
 
 .AppNameFill .count1 {
     position: relative;
+    width: fit-content;
     font-size: 9px;
     top: 42px;
     left: 450px;
@@ -64,25 +67,29 @@ body {
 
 .AppOrGame .form-check-input1{
     position: relative;
-    left:100px
+    left:100px;
+    width: fit-content;
 }
 
 .AppOrGame .AppBox {
     position: relative;
     top: -20px;
     left: 120px;
+    width: fit-content;
 }
 
 .AppOrGame .form-check-input2{
     position: relative;
     left:100px;
     top: -12px;
+    width: fit-content;
 }
 
 .AppOrGame .GameBox {
     position: relative;
     top: -32px;
     left: 120px;
+    width: fit-content;
 }
 
 
@@ -115,6 +122,7 @@ body {
     position: relative;
     top: -21px;
     left: 120px;
+    width: fit-content;
 }
 
 .FreeOrPaidOrRent .form-check-input4{
@@ -127,6 +135,7 @@ body {
     position: relative;
     top: -33px;
     left: 120px;
+    width: fit-content;
 }
 
 .FreeOrPaidOrRent .form-check-input5{
@@ -139,9 +148,38 @@ body {
     position: relative;
     top: -44px;
     left: 120px;
+    width: fit-content;
 }
 
-MultiSelect{
-    width: 100px;    
+.DescBox {
+    position: absolute;
+    top: 94px;
+    left: 600px;
+    width: 358px;
+    height: 200px;
+    margin: 0;
+}
 
+.DescBox TextArea {
+    position: relative;
+    top: 1px;
+    left: 67px;
+    width: 320px;
+    height: 180px;
+    border: 1px solid #A3A3A3;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: auto;
+    color: #3A001E;
+    resize: none;
+    overflow: auto;
+}
+
+.DescBox .count2{
+    position: absolute;
+    font-size: 9px;
+    top: 3px;
+    left: 100%;
+    top: 100%;
 }

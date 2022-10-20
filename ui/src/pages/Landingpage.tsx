@@ -5,6 +5,7 @@ import IntroButton from '../api/IntroButton.json';
 
 import { Styles } from '../pages/Styles/styles';
 import Header from '../components/Header/Index';
+import SideMenu from '../components/Header/SideMenu';
 
 const MiddleBlock = lazy(
   () => import('../components/contentBlock/middleContent/index')
@@ -18,6 +19,7 @@ const Landingpage = () => {
     <Container>
       <Styles />
       <Header />
+      <SideMenu />
       <ScrollToTop />
       <ContentBlock
         type="left"

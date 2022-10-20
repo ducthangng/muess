@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import './App.scss';
 import './configs/antd/customized.css';
 import 'react-toastify/dist/ReactToastify.css';
-import ReleaseApp from "./pages/ReleaseApp";
 
 import { ToastContainer } from 'react-toastify';
+import ReleaseApp from './pages/ReleaseApp';
 
-// import AppRoute from './routes/routes';
+import AppRoute from './routes/routes';
 
 import CompleteTable from './pages/Purchase/CompleteTable.js';
 
@@ -15,6 +15,8 @@ function App() {
     <>
       <CompleteTable />
       {/* <ToastContainer
+      {/* <ReleaseApp/> */}
+      <ToastContainer
         position="top-center"
         autoClose={2500}
         hideProgressBar={false}
@@ -24,7 +26,7 @@ function App() {
         pauseOnFocusLoss
         draggable
       /> 
-       <AppRoute /> */}
+       <AppRoute />
     </>
   );
 }
