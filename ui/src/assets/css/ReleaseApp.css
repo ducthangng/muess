@@ -1,6 +1,8 @@
 body {
     background-color: #FFF7F1;
     /* overflow:hidden; */
+    margin: 0;
+    padding: 0;
 }
 
 .Publish_Block {
@@ -38,6 +40,7 @@ body {
 
 .AppNameFill .count1 {
     position: relative;
+    width: fit-content;
     font-size: 9px;
     top: 42px;
     left: 450px;
@@ -64,25 +67,29 @@ body {
 
 .AppOrGame .form-check-input1{
     position: relative;
-    left:100px
+    left:100px;
+    width: fit-content;
 }
 
 .AppOrGame .AppBox {
     position: relative;
     top: -20px;
     left: 120px;
+    width: fit-content;
 }
 
 .AppOrGame .form-check-input2{
     position: relative;
     left:100px;
     top: -12px;
+    width: fit-content;
 }
 
 .AppOrGame .GameBox {
     position: relative;
     top: -32px;
     left: 120px;
+    width: fit-content;
 }
 
 
@@ -115,6 +122,7 @@ body {
     position: relative;
     top: -21px;
     left: 120px;
+    width: fit-content;
 }
 
 .FreeOrPaidOrRent .form-check-input4{
@@ -127,6 +135,7 @@ body {
     position: relative;
     top: -33px;
     left: 120px;
+    width: fit-content;
 }
 
 .FreeOrPaidOrRent .form-check-input5{
@@ -139,14 +148,16 @@ body {
     position: relative;
     top: -44px;
     left: 120px;
+    width: fit-content;
 }
 
 .DescBox {
-    position: relative;
-    top: -370px;
+    position: absolute;
+    top: 94px;
     left: 600px;
-    width: auto;
-    height: auto;
+    width: 358px;
+    height: 200px;
+    margin: 0;
 }
 
 .DescBox TextArea {
@@ -166,8 +177,9 @@ body {
 }
 
 .DescBox .count2{
-    position: relative;
+    position: absolute;
     font-size: 9px;
     top: 3px;
-    left: 350px;
+    left: 100%;
+    top: 100%;
 }

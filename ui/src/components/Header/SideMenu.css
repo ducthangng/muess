@@ -1,31 +1,48 @@
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .side-menu {
     position: fixed;
-    width: 100%;
-    top: 0px;
-    left: 0px;
+    width: 1rem;
     background-color: #FFFFFF;
     height: 62px;
     box-sizing: border-box;
     padding: 30px 20px;
     font-family: 'Inter', sans-serif;
     z-index: 999;
+    text-align: center;
+
 }
 
 .side-menu .logo img {
     position: fixed;
-    top: 10px
+    top: 15px;
+    left: 30px;
+    cursor: pointer;
 }
 
 .side-menu .main-menu .menu-item {
+    position: relative;
+    top: 0px;
+    display: inline-block;
     text-decoration: none;
+    text-align: center;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 10px;
     color: #3A001E;
-    border-radius: 4px;
+    border-radius: 7px;
     cursor: pointer;
-    height: 40px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 30px;
+    width: fit-content;
+    padding-top: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-left: 40px;
+    font-weight: 700;
+    /* margin-top: -20px; */
 }
 
 .side-menu .main-menu .menu-item:hover {
@@ -33,13 +50,20 @@
 }
 
 .side-menu .main-menu {
-    margin: 5px 0;
+    position: fixed;
+    width:fit-content;
+    height: auto;
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    /* justify-content: center; */
+    top: 2%;
+    left: 30%;
+    /* margin: auto; */
+    /* padding: auto; */
+
 }
 
-.side-menu .main-menu ul li {
-    list-style: none;
-
-}
 
 
 

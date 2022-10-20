@@ -1,61 +1,112 @@
 import React, { useState } from 'react'
 import './SideMenu.css'
 import Logo from '../../assets/images/logo.png'
-
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { CustomNavLinkSmall, HeaderSection } from './Styles';
+import { NavLink } from "react-router-dom";
 
 const SideMenu = (props) => {
     const [inactive, setInactive] = useState(true);
+    let navigate = useNavigate();
 
     return (
         <div className='side-menu'>
-            <div className='logo'>
-                < img src={Logo} alt='logo' />
-            </div>
+            <div className='logo' onClick={() => navigate('/')}>
+                <img src={Logo} alt='logo' />
+            </div><div className='main-menu'>
+                <NavLink style={
+                    ({ isActive }) => (
+                        isActive
+                            ? {
+                                backgroundColor: '#FB7F4B',
+                                color: 'white',
+                                width: 'fit-content',
+                                textAlign: 'center',
+                                height: '30px',
+                                paddingTop: '10px',
+                                // paddingLeft: '7px',
+                                paddingRight: '7px',
+                            }
+                            : {}
+                    )
+                } className='menu-item' to="/release">
+                    Release
+                </NavLink>
 
-            <div className='main-menu'>
-                <ul>
-                    <li>
-                        <Link to='/dashboard'>
-                            <div className='menu-item'>
-                                <div className='menu-icon'>
-                                    Release
-                                </div>
+                <NavLink style={
+                    ({ isActive }) => (
+                        isActive
+                            ? {
+                                backgroundColor: '#FB7F4B',
+                                color: 'white',
+                                width: 'fit-content',
+                                textAlign: 'center',
+                                height: '30px',
+                                paddingTop: '10px',
+                                // paddingLeft: '7px',
+                                paddingRight: '7px',
+                            }
+                            : {}
+                    )
+                } className='menu-item' to="/purchase">
+                    Buy/Rent
+                </NavLink>
 
-                            </div>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/storage'>
-                            <div className='menu-item'>
-                                Buy/Rent
-                            </div>
+                <NavLink style={
+                    ({ isActive }) => (
+                        isActive
+                            ? {
+                                backgroundColor: '#FB7F4B',
+                                color: 'white',
+                                width: 'fit-content',
+                                textAlign: 'center',
+                                height: '30px',
+                                paddingTop: '10px',
+                                // paddingLeft: '7px',
+                                paddingRight: '7px',
+                            }
+                            : {}
+                    )
+                } className='menu-item' to="/purchase">
+                    Purchases
+                </NavLink>
 
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/message'>
-                            <div className='menu-item'>
-                                Purchases
-
-                            </div>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/report/overview'>
-                            <div className='menu-item'>
-                                Your Wallet
-                            </div>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/report/overview'>
-                            <div className='menu-item'>
-                                About us
-                            </div>
-                        </Link>
-                    </li>
-                </ul>
+                <NavLink style={
+                    ({ isActive }) => (
+                        isActive
+                            ? {
+                                backgroundColor: '#FB7F4B',
+                                color: 'white',
+                                width: 'fit-content',
+                                textAlign: 'center',
+                                height: '30px',
+                                paddingTop: '10px',
+                                // paddingLeft: '7px',
+                                paddingRight: '7px',
+                            }
+                            : {}
+                    )
+                } className='menu-item' to="/purchase">
+                    Your Wallet
+                </NavLink>
+                <NavLink style={
+                    ({ isActive }) => (
+                        isActive
+                            ? {
+                                backgroundColor: '#FB7F4B',
+                                color: 'white',
+                                width: 'fit-content',
+                                textAlign: 'center',
+                                height: '30px',
+                                paddingTop: '10px',
+                                // paddingLeft: '7px',
+                                paddingRight: '7px',
+                            }
+                            : {}
+                    )
+                } className='menu-item' to="/purchase">
+                    About us
+                </NavLink>
             </div>
 
             {/* <div className='side-menu-footer'>
@@ -80,7 +131,7 @@ const SideMenu = (props) => {
             </div> */}
 
 
-        </div>
+        </div >
     )
 }
 
