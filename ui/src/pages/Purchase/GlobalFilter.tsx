@@ -10,8 +10,8 @@ export const GlobalFilter = ({ filter, setFilter }) => {
   return (
     <div className="global-filter">
       <span>
-        Search: {' '}
         <input
+          placeholder='Search purchased product here'
           value={value || ''}
           onChange={(e) => {
             setValue(e.target.value)
