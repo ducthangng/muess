@@ -79,6 +79,7 @@ export const CompleteTable = () => {
                                 </tr>
                             )
                         })}
+
                     </tbody>
                 </table>
                 <div className = "table-footer" style={{ zIndex: '999' }}>
@@ -100,7 +101,7 @@ export const CompleteTable = () => {
                     </span>
                     <button
                         onClick={() => gotoPage(0)} disabled={!canPreviousPage} 
-                        style = {{marginLeft:'5px', padding: '7px', backgroundColor: '#FB7F4B', color: 'white', borderRadius: '5px'}}
+                        style = {{marginLeft:'7px', padding: '7px', backgroundColor: '#FB7F4B', color: 'white', borderRadius: '5px'}}
                     >
                         {'<< '}
                     </button>
