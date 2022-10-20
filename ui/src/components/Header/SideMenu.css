@@ -6,7 +6,7 @@
 
 .side-menu {
     position: fixed;
-    width: 1rem;
+    width: 100%;
     background-color: #FFFFFF;
     height: 62px;
     box-sizing: border-box;
@@ -14,7 +14,8 @@
     font-family: 'Inter', sans-serif;
     z-index: 999;
     text-align: center;
-
+    top: 0px;
+    left: 0px;
 }
 
 .side-menu .logo img {
