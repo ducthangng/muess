@@ -144,7 +144,7 @@ export const CompleteTable = () => {
                         {'>>'}
                 </button>
             </div>
-
+            
             <pre>
                 <code>
                     {JSON.stringify(
