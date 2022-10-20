@@ -9,6 +9,8 @@ export const LoginLayout = () => {
     <Layout className="App" style={{ backgroundColor: 'white' }}>
       <header
         style={{
+          // position: 'fixed',
+          // top: 0,
           height: '54px',
           display: 'flex',
           flexDirection: 'row',
