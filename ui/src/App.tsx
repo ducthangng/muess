@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 
 // import AppRoute from './routes/routes';
 
-import CompleteTable from './pages/Purchase/CompleteTable';
+import CompleteTable from './pages/Purchase/CompleteTable.js';
 
 function App() {
   return (

@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react'
-import { useTable, useSortBy, useGlobalFilter, usePagination, useRowSelect } from 'react-table'
+import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 import  MOCK_DATA from './MOCK_DATA.json'
-import { COLUMNS } from './columns.js'
+import { COLUMNS } from './columns.tsx'
 import './Table.css'
-import { Checkbox } from './CheckBox'
-import { GlobalFilter } from './GlobalFilter.js'
+
+import { GlobalFilter } from './GlobalFilter.tsx'
 
 
 export const CompleteTable = () => {
@@ -34,7 +34,6 @@ export const CompleteTable = () => {
         canNextPage,
         canPreviousPage,
         setPageSize,
-        selectedFlatRows
     } = useTable({
         columns,
         data,
@@ -44,23 +43,7 @@ export const CompleteTable = () => {
     useGlobalFilter,
     useSortBy,
     usePagination,
-    useRowSelect,
-        (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return [
-                    {
-                        id: 'selection',
-                        Header: ({ getToggleAllRowsSelectedProps }) => (
-                            <Checkbox {...getToggleAllRowsSelectedProps()} />
-                        ),
-                        Cell: ({ row }) => (
-                            <Checkbox {...row.getToggleRowSelectedProps()} />
-                        )
-                    },
-                    ...columns
-                ]
-            })
-        }
+    
     )
 
     const {globalFilter, pageIndex, pageSize} = state
@@ -144,18 +127,7 @@ export const CompleteTable = () => {
                         {'>>'}
                 </button>
             </div>
-            
-            <pre>
-                <code>
-                    {JSON.stringify(
-                        {
-                            selectedFlatRows: selectedFlatRows.map((row) => row.original),
-                        },
-                        null,
-                        2
-                    )}
-                </code>
-            </pre>
+
         </>
     )
 }
