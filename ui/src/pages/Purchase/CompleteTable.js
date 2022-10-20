@@ -38,7 +38,7 @@ export const CompleteTable = () => {
         columns,
         data,
         defaultColumn,
-        initialState: { pageIndex: 0}
+        initialState: { pageIndex: 0, pageSize: 5 }
     }, 
     useGlobalFilter,
     useSortBy,
@@ -80,7 +80,7 @@ export const CompleteTable = () => {
                 })} 
             </tbody>
         </table>
-        <div>
+        <div style={{zIndex:'999'}}>
                 <span>
                     Page{' '}
                     <strong>

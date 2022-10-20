@@ -67,7 +67,7 @@ const SideMenu = (props) => {
                             }
                             : {}
                     )
-                } className='menu-item' to="/purchase">
+                } className='menu-item' to="/purchases">
                     Purchases
                 </NavLink>
 

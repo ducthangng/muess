@@ -13,7 +13,7 @@ import CompleteTable from './pages/Purchase/CompleteTable.js';
 function App() {
   return (
     <>
-      <CompleteTable />
+      
       {/* <ToastContainer
       {/* <ReleaseApp/> */}
       <ToastContainer

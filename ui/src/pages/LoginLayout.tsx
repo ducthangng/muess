@@ -1,4 +1,5 @@
 import { Layout } from 'antd';
+import { transcode } from 'buffer';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import logo from '../assets/images/15backward.svg';
@@ -27,8 +28,9 @@ export const LoginLayout = () => {
       </section>
       <footer
         style={{
+          backgroundColor: 'transparent',
           position: 'fixed',
-          bottom: '0',
+          bottom: '-1000px',
           width: '100vw',
           height: '61px',
         }}
