@@ -20,7 +20,7 @@ export default function NotFound404() {
               color: '#8172d5',
               fontFamily: 'Roboto',
               fontWeight: 700,
-              fontSize: '64px',
+              fontSize: '64px'
             }}
           >
             404
@@ -30,7 +30,7 @@ export default function NotFound404() {
             style={{
               color: '#8172d5',
               fontFamily: 'Roboto',
-              fontSize: '32px',
+              fontSize: '32px'
             }}
           >
             {' '}
@@ -41,7 +41,7 @@ export default function NotFound404() {
             style={{
               color: 'Black',
               fontFamily: 'Roboto',
-              fontSize: '20px',
+              fontSize: '20px'
             }}
           >
             But dont worry, you can find plenty of other things on our homepage.

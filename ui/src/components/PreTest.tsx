@@ -46,7 +46,7 @@ function PreTest() {
             color: '#8172d5',
             marginLeft: '20px',
             fontFamily: 'Roboto',
-            fontWeight: 700,
+            fontWeight: 700
           }}
         >
           Before The Test

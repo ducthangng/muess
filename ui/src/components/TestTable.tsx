@@ -29,7 +29,7 @@ const TestTable: React.FC = () => {
         key: index + 1,
         testName: item.testName,
         description: item.title,
-        testDate: unixToDatetime(item.dateAssigned),
+        testDate: unixToDatetime(item.dateAssigned)
       };
 
       newData.push(tempt);
@@ -46,22 +46,22 @@ const TestTable: React.FC = () => {
     {
       title: 'Key',
       dataIndex: 'key',
-      key: 'key',
+      key: 'key'
     },
     {
       title: 'Test Name',
       dataIndex: 'testName',
-      key: 'testName',
+      key: 'testName'
     },
     {
       title: 'Test Description',
       dataIndex: 'description',
-      key: 'description',
+      key: 'description'
     },
     {
       title: 'Date Assigned',
       dataIndex: 'testDate',
-      key: 'testDate',
+      key: 'testDate'
     },
     {
       title: 'Action',
@@ -77,8 +77,8 @@ const TestTable: React.FC = () => {
             <Button type="primary">Delete</Button>
           </Popconfirm>
         );
-      },
-    },
+      }
+    }
   ];
 
   //TODO: Call to delete test information from database
