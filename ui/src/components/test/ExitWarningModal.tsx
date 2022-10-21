@@ -38,7 +38,7 @@ export default function ExitWarningModal() {
           </Button>,
           <Button key="review" type="primary" onClick={handleSubmit}>
             Submit Now
-          </Button>,
+          </Button>
         ]}
       >
         <div className="text-7xl text-center pb-7 text-red-600">

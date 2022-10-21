@@ -18,7 +18,7 @@ const UserProfileCard: React.FC<UserCardProps> = ({
   fullname,
   username,
   gender,
-  email,
+  email
 }) => {
   return (
     <div className={styles.content}>

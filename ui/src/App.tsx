@@ -8,11 +8,18 @@ import ReleaseApp from './pages/ReleaseApp';
 
 import AppRoute from './routes/routes';
 
+import About from './pages/About';
+
 function App() {
   return (
     <>
+      
+      {/* <ToastContainer
       {/* <ReleaseApp/> */}
-      <ToastContainer
+
+      <About />
+
+      {/* <ToastContainer
         position="top-center"
         autoClose={2500}
         hideProgressBar={false}
@@ -22,7 +29,7 @@ function App() {
         pauseOnFocusLoss
         draggable
       /> 
-       <AppRoute />
+       <AppRoute /> */}
     </>
   );
 }

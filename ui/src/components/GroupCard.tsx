@@ -25,7 +25,7 @@ const GroupCard: React.FC<Class> = ({ id, className, info, level }) => {
             style={{
               alignItems: 'center',
               borderTopLeftRadius: '20px',
-              borderTopRightRadius: '20px',
+              borderTopRightRadius: '20px'
             }}
           />
         }

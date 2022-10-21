@@ -23,14 +23,15 @@ import { Register } from '../pages/Register';
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
+import PurchaseList from '../pages/PurchaseList';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
-    guardEntity: AdminEC,
+    guardEntity: AdminEC
   };
 
   const StudentGuard: GuardEC = {
-    guardEntity: StudentEC,
+    guardEntity: StudentEC
   };
 
   return (
@@ -43,6 +44,7 @@ export default function AppRoute() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/release" element={<ReleaseApp/>} />
+            <Route path="/purchases" element={<PurchaseList />} />
           </Route>
 
           {/* student routes */}

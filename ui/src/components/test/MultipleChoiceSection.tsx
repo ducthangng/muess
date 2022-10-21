@@ -22,7 +22,7 @@ export default function MultipleChoiceSection(
     ? () => {}
     : (event?: RadioChangeEvent) => {
         let newChosenAnswers = [
-          ...submitData.sections[props.sectionIndex - 1].answers,
+          ...submitData.sections[props.sectionIndex - 1].answers
         ];
         newChosenAnswers[parseInt(event?.target.name as string)] =
           event?.target.value;
@@ -32,7 +32,7 @@ export default function MultipleChoiceSection(
           newChosenAnswers;
         let newSubmitData = {
           ...submitData,
-          sections: newSubmitDataSections,
+          sections: newSubmitDataSections
         };
         setSubmitData(newSubmitData);
       };

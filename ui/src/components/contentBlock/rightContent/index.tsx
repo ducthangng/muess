@@ -7,7 +7,7 @@ const RightBlock = ({ title, content, icon, id }: ContentBlockProps) => {
   const scrollTo = (id: string) => {
     const element = document.getElementById(id) as HTMLDivElement;
     element.scrollIntoView({
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
   };
   return (
