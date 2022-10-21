@@ -3,7 +3,7 @@ import {
   PlayCircleFilled,
   PauseCircleFilled,
   ForwardFilled,
-  BackwardFilled,
+  BackwardFilled
 } from '@ant-design/icons';
 // context
 import { useTestContext } from '../../context/test/TestContext';

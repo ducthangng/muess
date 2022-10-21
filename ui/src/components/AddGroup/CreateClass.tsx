@@ -6,11 +6,11 @@ const OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  wrapperCol: { span: 16 }
 };
 
 const validateMessages = {
-  required: '${label} is required!',
+  required: '${label} is required!'
 };
 
 const CreateForm: React.FC = () => {
