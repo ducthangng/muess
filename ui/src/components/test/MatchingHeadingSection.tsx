@@ -42,7 +42,7 @@ export default function MatchingHeadingSection(
     ? () => {}
     : (value: string, index: number) => {
         let newChosenAnswers = [
-          ...submitData.sections[props.sectionIndex - 1].answers,
+          ...submitData.sections[props.sectionIndex - 1].answers
         ];
         newChosenAnswers[index] = value;
 
@@ -51,7 +51,7 @@ export default function MatchingHeadingSection(
           newChosenAnswers;
         let newSubmitData = {
           ...submitData,
-          sections: newSubmitDataSections,
+          sections: newSubmitDataSections
         };
         setSubmitData(newSubmitData);
       };

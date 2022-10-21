@@ -26,7 +26,7 @@ function GroupInterface() {
     <div
       style={{
         backgroundColor: '#fff',
-        width: '60%',
+        width: '60%'
       }}
     >
       <Divider
@@ -42,7 +42,7 @@ function GroupInterface() {
           color: '#8172d5',
           fontSize: '56px',
           fontFamily: 'Roboto',
-          fontWeight: 700,
+          fontWeight: 700
         }}
       >
         <Button type="primary" onClick={() => navigate('create')}>
@@ -63,7 +63,7 @@ function GroupInterface() {
                 style={{
                   borderColor: '#d4d4d6',
                   borderWidth: '1px',
-                  borderRadius: '20px',
+                  borderRadius: '20px'
                 }}
               >
                 <GroupCard
