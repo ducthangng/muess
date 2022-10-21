@@ -4,12 +4,18 @@ import './configs/antd/customized.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
+import ReleaseApp from './pages/ReleaseApp';
 
 import AppRoute from './routes/routes';
+
+import CompleteTable from './pages/Purchase/CompleteTable.js';
 
 function App() {
   return (
     <>
+      
+      {/* <ToastContainer
+      {/* <ReleaseApp/> */}
       <ToastContainer
         position="top-center"
         autoClose={2500}
@@ -19,8 +25,8 @@ function App() {
         rtl={false}
         pauseOnFocusLoss
         draggable
-      />
-      <AppRoute />
+      /> 
+       <AppRoute />
     </>
   );
 }
