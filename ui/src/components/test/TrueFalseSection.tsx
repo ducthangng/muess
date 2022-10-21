@@ -21,7 +21,7 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
     ? () => {}
     : (value: string, index: number) => {
         let newChosenAnswers = [
-          ...submitData.sections[props.sectionIndex - 1].answers,
+          ...submitData.sections[props.sectionIndex - 1].answers
         ];
         newChosenAnswers[index] = value;
 
@@ -30,7 +30,7 @@ export default function TrueFalseSection(props: TrueFalseSectionProps) {
           newChosenAnswers;
         let newSubmitData = {
           ...submitData,
-          sections: newSubmitDataSections,
+          sections: newSubmitDataSections
         };
         console.log(newChosenAnswers);
         console.log(props.section.content[index].correctAns);

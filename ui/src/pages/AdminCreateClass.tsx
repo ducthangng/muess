@@ -4,7 +4,7 @@ import { Divider, Button, Form, Layout } from 'antd';
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  wrapperCol: { span: 16 }
 };
 
 const { Content } = Layout;
