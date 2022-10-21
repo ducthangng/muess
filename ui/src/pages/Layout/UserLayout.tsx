@@ -7,7 +7,7 @@ import {
   AppstoreOutlined,
   UserOutlined,
   DownOutlined,
-  LogoutOutlined,
+  LogoutOutlined
 } from '@ant-design/icons';
 import '../../App.scss';
 
@@ -53,7 +53,7 @@ const UserLayout = () => {
             backgroundColor: 'white',
             boxShadow: '0px 2px 5px #ccc',
             top: '0',
-            paddingLeft: '8vw',
+            paddingLeft: '8vw'
           }}
         >
           <a href="/">

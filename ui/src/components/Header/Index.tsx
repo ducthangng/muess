@@ -12,7 +12,7 @@ import {
   NotHidden,
   CustomNavLinkSmall,
   Outline,
-  Span,
+  Span
 } from './Styles';
 
 const Header = () => {
@@ -32,7 +32,7 @@ const Header = () => {
     const scrollTo = (id: string) => {
       const element = document.getElementById(id) as HTMLDivElement;
       element.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'smooth'
       });
       setVisibility(false);
     };

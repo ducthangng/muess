@@ -25,5 +25,5 @@ export const roleFunc = {
       });
 
     return Role;
-  },
+  }
 };

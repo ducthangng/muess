@@ -66,7 +66,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
           );
 
           let newChosenAnswers = [
-            ...submitData.sections[props.sectionIndex - 1].answers,
+            ...submitData.sections[props.sectionIndex - 1].answers
           ];
 
           for (let i = 0; i < inputList.length; i++) {
@@ -78,7 +78,7 @@ export default function FillBlankSection(props: FillBlankSectionProps) {
             newChosenAnswers;
           let newSubmitData = {
             ...submitData,
-            sections: newSubmitDataSections,
+            sections: newSubmitDataSections
           };
           setSubmitData(newSubmitData);
         }

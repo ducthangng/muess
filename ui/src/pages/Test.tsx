@@ -16,7 +16,7 @@ import {
   Route,
   useNavigate,
   Navigate,
-  useParams,
+  useParams
 } from 'react-router-dom';
 // context
 import { useTestContext } from '../context/test/TestContext';
@@ -44,7 +44,7 @@ export default function Test(props: { reviewMode: boolean }) {
     testData,
     submitData,
     setTestData,
-    setSubmitData,
+    setSubmitData
   } = useTestContext();
 
   // test data
@@ -72,7 +72,7 @@ export default function Test(props: { reviewMode: boolean }) {
         content: data.content,
         description: data.description,
         type: data.type,
-        sections: data.sections,
+        sections: data.sections
       };
       let newSections: SectionAnswer[] = [];
       for (let i = 0; i < data.sections.length; i++) {
@@ -88,7 +88,7 @@ export default function Test(props: { reviewMode: boolean }) {
         let newSection = {
           startIndex: data.sections[i]?.startIndex,
           endIndex: data.sections[i]?.endIndex,
-          answers: answers,
+          answers: answers
         };
         newSections.push(newSection);
       }
@@ -97,7 +97,7 @@ export default function Test(props: { reviewMode: boolean }) {
       setSubmitData({
         id: data.id,
         testClassId: 1, //change this later
-        sections: newSections,
+        sections: newSections
       });
 
       console.log(submitData);
@@ -203,7 +203,7 @@ export default function Test(props: { reviewMode: boolean }) {
       let newAnswerSection: SectionAnswer = {
         startIndex: section.startIndex,
         endIndex: section.endIndex,
-        answers: [],
+        answers: []
       };
       newUserAnswers.push(newAnswerSection);
     });

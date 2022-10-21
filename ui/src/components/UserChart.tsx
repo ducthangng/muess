@@ -7,13 +7,13 @@ import { unixToDatetime } from '../utils/timeConvert';
 
 let defaultData = [
   ['Test Name', 'Grade'],
-  ['', 0],
+  ['', 0]
 ];
 
 const UserChart: React.FC = () => {
   const [data, setData] = useState<(string | number)[][]>([
     ['Test Name', 'Grade'],
-    ['', 0],
+    ['', 0]
   ]);
 
   const getData = async () => {
@@ -54,7 +54,7 @@ const UserChart: React.FC = () => {
   const options = {
     title: 'User Performance',
     curveType: 'function',
-    legend: { position: 'bottom' },
+    legend: { position: 'bottom' }
   };
   return (
     <Chart
