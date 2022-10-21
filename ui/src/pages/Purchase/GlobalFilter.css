@@ -1,0 +1,20 @@
+.global-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    
+}
+
+
+span input{
+    margin-top: 20px;
+    width: 350px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 15px;
+    padding-left: 10px;
+    background-color: #F5F5F5;
+    color: #3A001E;
+    font-family: 'Inter', sans-serif;
+}
