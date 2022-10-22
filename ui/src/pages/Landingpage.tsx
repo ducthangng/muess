@@ -16,7 +16,6 @@ const Landingpage = () => {
       <Styles />
       <Header />
       <SideMenu />
-      <ScrollToTop />
       <ContentBlock
         type="left"
         title={IntroButton.title}

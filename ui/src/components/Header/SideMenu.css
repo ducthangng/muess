@@ -16,8 +16,8 @@
     text-align: center;
     top: 0px;
     left: 0px;
-    // align-items: center;
-    // margin: 0 auto;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .side-menu .logo img {

@@ -14,12 +14,12 @@ function App() {
   return (
     <>
       
-      {/* <ToastContainer
+      {/* <ToastContainer */}
       {/* <ReleaseApp/> */}
 
-      <About />
+      {/* <About /> */}
 
-      {/* <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={2500}
         hideProgressBar={false}
@@ -29,7 +29,7 @@ function App() {
         pauseOnFocusLoss
         draggable
       /> 
-       <AppRoute /> */}
+       <AppRoute />
     </>
   );
 }
