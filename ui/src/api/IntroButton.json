@@ -1,13 +1,13 @@
 {
-    "title": "IMPROVE YOUR ENGLISH SKILLS!",
-    "text": "Pratice with other 100+ online test and 1000+ exercises.",
+    "title": "München Software Service",
+    "text": "New service technology platform for the cyber future",
     "button": [
-      {
-        "title": "Register"
-      },
-      {
-        "title": "Sign in",
-        "color": "#fff"
-      }
+        {
+            "title": "Register"
+        },
+        {
+            "title": "Login",
+            "color": "#fff"
+        }
     ]
-  }
+}

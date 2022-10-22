@@ -26,7 +26,7 @@ const UserTable: React.FC = () => {
         key: index + 1,
         username: user.username,
         fullname: user.fullname,
-        email: user.mail,
+        email: user.mail
       };
 
       newUser.push(tempt);
@@ -44,22 +44,22 @@ const UserTable: React.FC = () => {
     {
       title: 'Key',
       dataIndex: 'key',
-      key: 'key',
+      key: 'key'
     },
     {
       title: 'Username',
       dataIndex: 'username',
-      key: 'username',
+      key: 'username'
     },
     {
       title: 'Fullname',
       dataIndex: 'fullname',
-      key: 'fullname',
+      key: 'fullname'
     },
     {
       title: 'Email',
       dataIndex: 'email',
-      key: 'email',
+      key: 'email'
     },
     {
       title: 'Action',
@@ -75,8 +75,8 @@ const UserTable: React.FC = () => {
             <Button type="primary">Delete</Button>
           </Popconfirm>
         );
-      },
-    },
+      }
+    }
   ];
 
   //GOTO: Call to delete test information from database

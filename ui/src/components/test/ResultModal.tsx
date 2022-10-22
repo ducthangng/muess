@@ -68,13 +68,13 @@ export default function ResultModal(props: ResultModalProps) {
           </Button>,
           <Button key="review" type="primary" onClick={handleReview}>
             Review Test
-          </Button>,
+          </Button>
         ]}
       >
         <div className="text-xl text-center">
           <Progress
             strokeColor={{
-              '0%': (score as number) < 50 ? '#e30b1a' : '#87d068',
+              '0%': (score as number) < 50 ? '#e30b1a' : '#87d068'
             }}
             type="circle"
             percent={score}

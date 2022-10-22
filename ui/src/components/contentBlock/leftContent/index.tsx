@@ -7,7 +7,7 @@ import {
   ContentWrapper,
   ServiceWrapper,
   MinTitle,
-  MinPara,
+  MinPara
 } from './styles';
 
 const LeftContentBlock = ({
@@ -15,7 +15,7 @@ const LeftContentBlock = ({
   title,
   content,
   section,
-  id,
+  id
 }: ContentBlockProps) => {
   return (
     <LeftContentSection>

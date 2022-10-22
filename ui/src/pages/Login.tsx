@@ -1,183 +1,103 @@
-import { Form, Layout, Button, Input, Divider } from 'antd';
-// import logo from '../../assets/logo-1.svg';
+// import { Form, Layout, Button, Input, Divider } from 'antd';
+// // import logo from '../../assets/logo-1.svg';
 import { FC, useEffect, useState } from 'react';
-import { authApi } from '../api/authApi';
+import { EyeInvisibleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { roleFunc } from '../utils/Roles';
 import '../assets/css/Login.css';
+import LoginImage from '../assets/images/login.png';
+import LoginLogo from '../assets/images/logo.png';
+import CSS from 'csstype';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-  }, []);
-
-  let navigate = useNavigate();
-
-  // check if already log-in with JWT
-  useEffect(() => {
-    checkLogin();
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = 'scroll';
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePassword = () => {
+        setPasswordShown(!passwordShown);
     };
-  });
+    const navigate = useNavigate();
 
-  const routeChange = async (path: string) => {
-    navigate(`/student/${path}`);
-    // const role = await roleFunc.getRole().then((res) => {
-    //   navigate(`/${res}/${path}`);
-    // });
-  };
+    const handleClick = () => {
+        navigate(`/`);
+    };
+    const test: CSS.Properties = {
+        position: 'relative',
+        fontWeight: 400,
+        fontSize: '12px',
+        lineHeight: '15px',
+        color: '#8C98A9',
+        left: '550px',
+        top: '130px'
+    }
+    const Sign: CSS.Properties = {
+        position: 'relative',
+        fontWeight: '900',
+        fontSize: '28px',
+        lineHeight: '34px',
+        color: '#3A001E',
+        top: '115px',
+        left: '550px',
+    }
+    const InputUser: CSS.Properties = {
+        fontWeight: 400,
+        height: '40px',
+        width: '272px',
+        position: 'relative',
+        borderColor: '#FFE7D4',
+        color: '#3A001E',
+        borderWidth: '2px',
+        borderRadius: '5px',
+        left: '550px',
+        top: '135px',
+        paddingLeft: '10px',
+    }
+    const Pass: CSS.Properties = {
+        position: 'relative',
+        fontWeight: 400,
+        fontSize: '12px',
+        lineHeight: '15px',
+        color: '#8C98A9',
+        left: '550px',
+        top: '150px',
+    }
+    const InputPass: CSS.Properties = {
+        fontWeight: 400,
+        height: '40px',
+        width: '272px',
+        position: 'relative',
+        borderColor: '#FFE7D4',
+        color: '#3A001E',
+        borderWidth: '2px',
+        borderRadius: '5px',
+        left: '550px',
+        top: '160px',
+        paddingLeft: '10px',
+    }
+    return (
+        <>
+            <div className='box-1' style={{ position: 'absolute', backgroundColor: '#FFF7F1', height: 490, width: 479, top: 100, left: 309, borderRadius: '15px 0px 0px 15px' }}>
+                <img src={LoginLogo} alt="Image" className='login_logo' style={{ width: 75, position: 'relative', top: 40, left: 50 }} />
+                <img src={LoginImage} alt="Image" className='login_image' style={{ position: 'relative', top: 100, left: -5 }} />
+            </div>
+            <div className='box-2' style={{ position: 'absolute', borderColor: '#FFE7D4', borderWidth: 1, height: 490, width: 920, top: 100, right: 309, borderRadius: 15, boxShadow: '2px 3px #dadada' }}>
+                <button className='esc' style={{ background: '#DCE1EE', color: '#2E384D', fontWeight: 400, fontSize: '12px', height: '20px', width: '20px', borderRadius: '50%', position: 'absolute', top: '15px', left: '880px' }} onClick={()=>handleClick()}>X</button>
+                <div className='signin-container' style={{position: 'fixed', width: '310px', height: "310px", top: '80px', left:'330px'}}>
+                <div className='SignIn' style={Sign}>Sign In</div>
+                <div className='username' style={test}>Username/Email</div>
+                <div className='input_username'>
+                    <input style={InputUser}></input>
+                </div>
+                <div className='password' style={Pass}>Password</div>
+                <div className='input_password'>
+                    <input type={passwordShown ? "text" : "password"} style={InputPass} ></input>
+                    <EyeInvisibleOutlined className={passwordShown ? "shown" : "not"} onClick={togglePassword} />
+                </div>
+                <div className='forgot_password'>Forgot password?</div>
+                <button className='signin_button' style={{ background: '#FB7F4B', color: '#FFFFFF', fontWeight: 400, fontSize: '12px', lineHeight: '15px', height: '40px', width: '272px', borderRadius: '5px', position: 'relative', top: '185px', left: '550px' }}>SIGN IN</button>
+                <div className='dhaa'>Don't Have An Account?</div>
+                <div className='ca'>Create Account</div>
+                </div>
 
-  const checkLogin = async () => {
-    // let data = await authApi.getId();
-    // if (data !== null && data !== 0) {
-    // routeChange('dashboard');
-    // }
-  };
-
-  const handleLogin = () => {
-    // let data = authApi.login({ username, password }).then((res) => {
-    //   if (res.id !== 0) {
-    //     routeChange('dashboard');
-    //   } else {
-    //     alert('Invalid username or password');
-    //   }
-    //   return res;
-    // });
-    // return data;
-    routeChange('dashboard');
-    return 0;
-  };
-
-  return (
-    <div>
-      <h6
-        className="login__title"
-        style={{ color: '#8172d5', marginLeft: '20px' }}
-      >
-        Sign In
-      </h6>
-      <div className="login__form">
-        <Form>
-          <Form.Item>
-            <label
-              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
-            >
-              Username
-            </label>
-            <Input
-              type="text"
-              value={username}
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8'
-              }}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item>
-            <label
-              style={{ fontSize: 20, fontWeight: '700', color: '#8172d5' }}
-            >
-              Password
-            </label>
-            <Input
-              type="password"
-              value={password}
-              style={{
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                backgroundColor: '#F2F5F8'
-              }}
-              onChange={(e) => setPassword(e.target.value)}
-              onPressEnter={handleLogin}
-            />
-          </Form.Item>
-          <Form.Item>
-            <button
-              onClick={() => {
-                handleLogin();
-              }}
-              className="login__button login__login"
-              style={{
-                width: '100%',
-                height: '50px',
-                borderRadius: '32px',
-                paddingTop: '4px',
-                border: '2px solid #8172d5',
-                paddingBottom: '4px',
-                lineHeight: '14px',
-                fontSize: '20px'
-              }}
-            >
-              Login
-            </button>
-          </Form.Item>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              gap: '0.5em'
-            }}
-          >
-            <p>
-              <a
-                style={{
-                  color: '#8172d5',
-                  textDecoration: 'underline',
-                  fontFamily: 'Roboto',
-                  fontSize: '14px'
-                }}
-              >
-                Forgot Password?
-              </a>
-            </p>
-            |{' '}
-            <p>
-              <a
-                style={{
-                  color: '#8172d5',
-                  textDecoration: 'underline',
-                  fontFamily: 'Roboto',
-                  fontSize: '14px'
-                }}
-              >
-                Forgot Username?
-              </a>
-            </p>
-          </div>
-          <Divider>Or</Divider>
-          <Form.Item>
-            <button
-              className="login__create login__button"
-              onClick={() => navigate('temp')}
-              style={{
-                width: '100%',
-                height: '40px',
-                borderRadius: '32px',
-                border: '2px solid #8172d5',
-                paddingTop: '4px',
-                paddingBottom: '4px',
-                lineHeight: '14px'
-              }}
-            >
-              TEMPORARY ACCOUNT
-            </button>
-          </Form.Item>
-        </Form>
-      </div>
-    </div>
-  );
+            </div>
+        </>
+    );
 };
 export default Login;
