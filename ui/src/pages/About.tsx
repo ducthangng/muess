@@ -2,10 +2,6 @@ import '../assets/css/ReleaseApp.css'
 import React from 'react'
 import { Checkbox, Select } from 'antd';
 import { useState } from 'react';
-import MultiSelect from '../components/MultiSelect'
-import DragAndDrop from '../components/DragDrop'
-import TextArea from 'antd/lib/input/TextArea';
-import DragAndDropMulti from '../components/DragDropMulti'
 import SideMenu from '../components/Header/SideMenu';
 import AboutImage from '../assets/images/about.png';
 

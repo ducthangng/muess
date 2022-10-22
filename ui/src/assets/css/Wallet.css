@@ -1,0 +1,236 @@
+.header {
+  position: fixed;
+  top: 24px;
+  left: 100px;
+}
+
+.header h1 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 34px;
+  color: #013567;
+}
+
+.graph {
+  position: absolute;
+  bottom: 30px;
+  left: 100px;
+  height: 400px;
+  width: 1400px;
+  background-color: #FEFCE3;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 50px;
+}
+
+.graph .dropdown {
+  position: absolute;
+  top: 8px;
+}
+
+.wallet-container .import-container {
+  position: absolute;
+  display: flex;
+  top: 30px;
+  left: 30px;
+  height: 120px;
+  width: 280px;
+  background-color: #FFF7F1;
+  border-style: none;
+  -webkit-box-shadow: 3px 3px 3px #ededed;
+          box-shadow: 3px 3px 3px #ededed;
+  border-radius: 15px;
+}
+
+.import-container img {
+  position: absolute;
+  top: 45px;
+  left: 20px;
+  height: 60px;
+  width: 60px;
+}
+
+.import-container .header {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  height: 20px;
+  width: flex;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  color: #013567;
+}
+
+.import-container .import-data {
+  position: absolute;
+  top: 48px;
+  left: 100px;
+}
+
+.import-container .import-data .import-data-info {
+  height: flex;
+  width: flex;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 20px;
+  color: #FB7F4B;
+}
+
+.import-container .import-data .import-data-data {
+  position: absolute;
+  width:max-content;
+  top: 35px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #009899;
+}
+
+.export-container {
+  position: absolute;
+  top: 30px;
+  left: 325px;
+  height: 120px;
+  width: 280px;
+  border-style: none;
+  background-color: #FFF7F1;
+  -webkit-box-shadow: 3px 3px 3px #ededed;
+          box-shadow: 3px 3px 3px #ededed;
+  border-radius: 15px;
+}
+
+.export-container img {
+  position: absolute;
+  top: 45px;
+  left: 20px;
+  height: 60px;
+  width: 60px;
+}
+
+.export-container .header {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  height: 20px;
+  width: flex;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  color: #013567;
+}
+
+.export-container .export-data {
+  position: absolute;
+  top: 48px;
+  left: 100px;
+}
+
+.export-container .export-data .export-data-info {
+  height: flex;
+  width: flex;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 20px;
+  color: #FB7F4B;
+}
+
+.export-container .export-data .export-data-data {
+  position: absolute;
+  top: 35px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #009899;
+}
+
+.earning-container {
+  position: absolute;
+  top: 30px;
+  left: 620px;
+  height: 120px;
+  width: 250px;
+  border-style: none;
+  background-color: #FFF7F1;
+  -webkit-box-shadow: 3px 3px 3px #ededed;
+          box-shadow: 3px 3px 3px #ededed;
+  border-radius: 15px;
+}
+
+.earning-container img {
+  position: absolute;
+  top: 45px;
+  left: 20px;
+  height: 60px;
+  width: 60px;
+}
+
+.earning-container .header {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  height: 20px;
+  width: flex;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  color: #013567;
+}
+
+.earning-container .earning-data {
+  position: absolute;
+  top: 60px;
+  left: 100px;
+}
+
+.earning-container .earning-data .earning-data-info {
+  height: flex;
+  width: flex;
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 20px;
+  color: #FB7F4B;
+}
+
+.earning-container .earning-data .earning-data-data {
+  position: absolute;
+  right: -50%;
+  top: 5px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
+}
+
+.dropdown {
+  position: relative;
+  font-style: bold;
+  font-weight: 800;
+  font-size: 25px;
+  line-height: 30px;
+  color: #013567;
+  width: 235px;
+  height: 35px;
+}
+
+.dropdown select{
+  font-style: bold;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 30px;
+  color: #013567;
+  width: 235px;
+  height: 35px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.dropdown select option{
+  background-color: transparent;
+}
