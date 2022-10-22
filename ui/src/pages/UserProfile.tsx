@@ -41,7 +41,7 @@ function UserProfile() {
       style={{
         width: '80%',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'center'
       }}
     >
       <div>
@@ -50,7 +50,7 @@ function UserProfile() {
           style={{
             fontSize: '56px',
             fontFamily: 'Roboto',
-            color: '#8172d5',
+            color: '#8172d5'
           }}
         >
           User Profile
@@ -86,7 +86,7 @@ function UserProfile() {
               style={{
                 marginLeft: '100px',
                 fontWeight: 'bold',
-                marginTop: '30px',
+                marginTop: '30px'
               }}
             >
               <Title level={4} style={{ textDecoration: 'underline' }}>
@@ -104,7 +104,7 @@ function UserProfile() {
                         border: '1px solid',
                         borderColor: '#8e9599',
                         borderRadius: '5px',
-                        marginRight: '15px',
+                        marginRight: '15px'
                       }}
                     >
                       <a
@@ -118,7 +118,7 @@ function UserProfile() {
                             justifyContent: 'space-between',
                             marginTop: '12px',
                             marginRight: '15px',
-                            marginLeft: '15px',
+                            marginLeft: '15px'
                           }}
                         >
                           <p style={{ fontWeight: 'bold' }}>

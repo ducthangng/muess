@@ -42,7 +42,7 @@ const initialState: InitialStateType = {
     dateAssigned: 0,
     dateUpdated: 0,
     deadline: 0,
-    isDone: false,
+    isDone: false
   },
   testData: {
     mediaURL: '',
@@ -50,19 +50,19 @@ const initialState: InitialStateType = {
     content: '',
     description: '',
     type: '',
-    sections: [],
+    sections: []
   },
   submitData: {
     id: 0,
     testClassId: 0,
-    sections: [],
+    sections: []
   },
   setTestDetails: () => {},
   setTestData: () => {},
   setSubmitData: () => {},
   setIsLoading: () => {},
   setReviewMode: () => {},
-  setWaitModal: () => {},
+  setWaitModal: () => {}
 };
 
 const TestContext = createContext<InitialStateType>(initialState);
@@ -73,42 +73,42 @@ const TestProvider = (parameter: { children: React.ReactNode }) => {
   const handleSetTestDetails = (testDetails: TestDetails) => {
     dispatch({
       type: types.SET_TEST_DETAILS,
-      payload: testDetails,
+      payload: testDetails
     });
   };
 
   const handleSetTestData = (testData: TestData) => {
     dispatch({
       type: types.SET_TEST_DATA,
-      payload: testData,
+      payload: testData
     });
   };
 
   const handleSetSubmitData = (submitData: SubmitData) => {
     dispatch({
       type: types.SET_SUBMIT_DATA,
-      payload: submitData,
+      payload: submitData
     });
   };
 
   const handleSetIsLoading = (isLoading: boolean) => {
     dispatch({
       type: types.SET_IS_LOADING,
-      payload: isLoading,
+      payload: isLoading
     });
   };
 
   const handleSetReviewMode = (reviewMode: boolean) => {
     dispatch({
       type: types.SET_REVIEW_MODE,
-      payload: reviewMode,
+      payload: reviewMode
     });
   };
 
   const handleSetWaitModal = (waitModal: boolean) => {
     dispatch({
       type: types.SET_WAIT_MODAL,
-      payload: waitModal,
+      payload: waitModal
     });
   };
 
@@ -121,7 +121,7 @@ const TestProvider = (parameter: { children: React.ReactNode }) => {
         setSubmitData: handleSetSubmitData,
         setIsLoading: handleSetIsLoading,
         setReviewMode: handleSetReviewMode,
-        setWaitModal: handleSetWaitModal,
+        setWaitModal: handleSetWaitModal
       }}
     >
       {parameter.children}
