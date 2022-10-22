@@ -10,7 +10,7 @@ popd
 
 # start the network && create config channel
 pushd ./test-network/
-./network.sh up createChannel -c munich
+./network.sh up createChannel -c munich -ca -s couchdb
 popd
 
 # deploy the chaincode
