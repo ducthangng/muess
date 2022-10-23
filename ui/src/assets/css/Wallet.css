@@ -1,17 +1,3 @@
-.header {
-  position: fixed;
-  top: 24px;
-  left: 100px;
-}
-
-.header h1 {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 34px;
-  line-height: 34px;
-  color: #013567;
-}
-
 .graph {
   position: absolute;
   bottom: 30px;
@@ -29,59 +15,56 @@
   top: 8px;
 }
 
-.wallet-container .import-container {
-  position: absolute;
+.wallet-container .card-container{
   display: flex;
-  top: 30px;
-  left: 30px;
-  height: 120px;
-  width: 280px;
-  background-color: #FFF7F1;
-  border-style: none;
-  -webkit-box-shadow: 3px 3px 3px #ededed;
-          box-shadow: 3px 3px 3px #ededed;
-  border-radius: 15px;
+  position: relative;
+  top: -25vh;
+  width: 100%;
+  height: 25vh;
+  background-color: transparent;
+  margin: 1rem;
 }
 
-.import-container img {
-  position: absolute;
-  top: 45px;
-  left: 20px;
-  height: 60px;
-  width: 60px;
+.wallet-container .card-container .purchased-container{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 80%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
 }
 
-.import-container .header {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  height: 20px;
+.wallet-container .card-container .purchased-container .purchased-header{
+  position: relative;;
   width: flex;
   font-weight: 700;
   font-size: 18px;
-  line-height: 20px;
-  color: #013567;
+  color: #3A001E;
 }
 
-.import-container .import-data {
-  position: absolute;
-  top: 48px;
-  left: 100px;
+.purchased-container .purchased-data {
+  position: relative;
+  right: 0;
+  top: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
 }
 
-.import-container .import-data .import-data-info {
-  height: flex;
-  width: flex;
+.purchased-container .purchased-data .purchased-data-info {
+  position: relative;
   font-weight: 700;
   font-size: 30px;
   line-height: 20px;
+  padding-bottom: 1rem ;
   color: #FB7F4B;
 }
 
-.import-container .import-data .import-data-data {
+.purchased-container .purchased-data .purchased-data-data {
   position: absolute;
   width:max-content;
-  top: 35px;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -89,57 +72,44 @@
   color: #009899;
 }
 
-.export-container {
-  position: absolute;
-  top: 30px;
-  left: 325px;
-  height: 120px;
-  width: 280px;
-  border-style: none;
-  background-color: #FFF7F1;
-  -webkit-box-shadow: 3px 3px 3px #ededed;
-          box-shadow: 3px 3px 3px #ededed;
-  border-radius: 15px;
+.wallet-container .card-container .sold-container{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 80%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
 }
 
-.export-container img {
-  position: absolute;
-  top: 45px;
-  left: 20px;
-  height: 60px;
-  width: 60px;
-}
-
-.export-container .header {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  height: 20px;
+.wallet-container .card-container .sold-container .sold-header{
+  position: relative;;
   width: flex;
   font-weight: 700;
   font-size: 18px;
-  line-height: 20px;
-  color: #013567;
+  color: #3A001E;
 }
 
-.export-container .export-data {
-  position: absolute;
-  top: 48px;
-  left: 100px;
+.sold-container .sold-data {
+  position: relative;
+  margin-left: 1rem;
+  margin-top: 1rem;
 }
 
-.export-container .export-data .export-data-info {
-  height: flex;
-  width: flex;
+.sold-container .sold-data .sold-data-info {
+  position: relative;
   font-weight: 700;
   font-size: 30px;
   line-height: 20px;
+  padding-bottom: 1rem ;
   color: #FB7F4B;
 }
 
-.export-container .export-data .export-data-data {
+.sold-container .sold-data .sold-data-data {
   position: absolute;
-  top: 35px;
+  width:max-content;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -147,65 +117,96 @@
   color: #009899;
 }
 
-.earning-container {
-  position: absolute;
-  top: 30px;
-  left: 620px;
-  height: 120px;
-  width: 250px;
-  border-style: none;
-  background-color: #FFF7F1;
-  -webkit-box-shadow: 3px 3px 3px #ededed;
-          box-shadow: 3px 3px 3px #ededed;
-  border-radius: 15px;
+.wallet-container .card-container .income-container{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 80%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
 }
 
-.earning-container img {
-  position: absolute;
-  top: 45px;
-  left: 20px;
-  height: 60px;
-  width: 60px;
-}
-
-.earning-container .header {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  height: 20px;
+.wallet-container .card-container .income-container .income-header{
+  position: relative;;
   width: flex;
   font-weight: 700;
   font-size: 18px;
-  line-height: 20px;
-  color: #013567;
+  color: #3A001E;
 }
 
-.earning-container .earning-data {
-  position: absolute;
-  top: 60px;
-  left: 100px;
+.income-container .income-data {
+  position: relative;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
 
-.earning-container .earning-data .earning-data-info {
-  height: flex;
-  width: flex;
-  font-family: 'Inter';
+.income-container .income-data .income-data-info {
+  position: relative;
   font-weight: 700;
   font-size: 30px;
   line-height: 20px;
+  padding-bottom: 1rem ;
   color: #FB7F4B;
 }
 
-.earning-container .earning-data .earning-data-data {
+.income-container .income-data .income-data-data {
   position: absolute;
-  right: -50%;
-  top: 5px;
-  font-family: 'Inter';
+  width:max-content;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #000000;
+  color: #009899;
+}
+
+.wallet-container .card-container .balance-container{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 80%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.wallet-container .card-container .balance-container .balance-header{
+  position: relative;;
+  width: flex;
+  font-weight: 700;
+  font-size: 18px;
+  color: #3A001E;
+}
+
+.balance-container .balance-data {
+  position: relative;
+  right: 0;
+  top: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.balance-container .balance-data .balance-data-info {
+  position: relative;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 20px;
+  padding-bottom: 1rem ;
+  color: #FB7F4B;
+}
+
+.balance-container .balance-data .balance-data-data {
+  position: absolute;
+  width:max-content;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #009899;
 }
 
 .dropdown {
@@ -221,12 +222,12 @@
 
 .dropdown select{
   font-style: bold;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 20px;
-  line-height: 30px;
-  color: #013567;
+  line-height: 35px;
+  color: #3A001E;
   width: 235px;
-  height: 35px;
+  height: 40px;
   background-color: transparent;
   border-color: transparent;
 }
