@@ -20,7 +20,15 @@ const mspId = envOrDefault('MSP_ID', 'Org1MSP');
 // Path to crypto materials.
 const cryptoPath = envOrDefault(
   'CRYPTO_PATH',
-  path.resolve(__dirname, 'org1.example.com')
+  path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'test-network',
+    'organizations',
+    'peerOrganizations',
+    'org1.example.com'
+  )
 );
 
 // Path to user private key directory.
@@ -38,7 +46,7 @@ const certPath = envOrDefault(
     'User1@org1.example.com',
     'msp',
     'signcerts',
-    'User1@org1.example.com-cert.pem'
+    'cert.pem'
   )
 );
 
@@ -179,6 +187,7 @@ async function initLedger(contract: Contract): Promise<void> {
  * displayInputParameters() will print the global scope parameters used by the main driver routine.
  */
 async function displayInputParameters(): Promise<void> {
+  console.log(`dirname:           ${cryptoPath}`);
   console.log(`channelName:       ${channelName}`);
   console.log(`chaincodeName:     ${chaincodeName}`);
   console.log(`mspId:             ${mspId}`);

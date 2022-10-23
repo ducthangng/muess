@@ -13,7 +13,6 @@ import About from './pages/About';
 function App() {
   return (
     <>
-      
       {/* <ToastContainer */}
       {/* <ReleaseApp/> */}
 
@@ -28,8 +27,8 @@ function App() {
         rtl={false}
         pauseOnFocusLoss
         draggable
-      /> 
-       <AppRoute />
+      />
+      <AppRoute />
     </>
   );
 }
