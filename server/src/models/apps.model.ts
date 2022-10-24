@@ -10,6 +10,22 @@ const appSchema: Schema = new Schema({
   desc: {
     type: String,
     required: true
+  },
+  apptype: {
+    type: String,
+    required: true
+  },
+  payoption: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  tags: {
+    type: String,
+    required: true
   }
 });
 
