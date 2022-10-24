@@ -119,7 +119,7 @@ function Wallet() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 margin: '0 auto',
-                top: '10vh',
+                top: '7.5rem',
             }}>
                 <div className='card-container'>
                     <div className='purchased-container'>

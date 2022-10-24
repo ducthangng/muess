@@ -24,7 +24,7 @@ const About = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     margin: '0 auto',
-                    top: '9vh',
+                    top: '7.5rem',
                 }}
             >
                 <div className="content-left"
