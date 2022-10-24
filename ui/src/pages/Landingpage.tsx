@@ -13,7 +13,6 @@ const Landingpage = () => {
   return (
     <Container>
       <Styles />
-      <Header />
       <ContentBlock
         type="left"
         title={IntroButton.title}
