@@ -1,6 +1,6 @@
 {
-  "index": { "fields": ["license", "owner"] },
-  "ddoc": "indexOwnerDoc",
-  "name": "indexOwner",
+  "index": { "fields": ["appID", "creatorID"] },
+  "ddoc": "indexAppCreatorDoc",
+  "name": "indexAppCreator",
   "type": "json"
 }

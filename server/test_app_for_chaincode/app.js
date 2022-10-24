@@ -4,24 +4,24 @@
  * SPDX-licenseDetails-Identifier: Apache-2.0
  */
 
-"use strict";
+'use strict';
 
-const { Gateway, Wallets } = require("fabric-network");
-const FabricCAServices = require("fabric-ca-client");
-const path = require("path");
+const { Gateway, Wallets } = require('fabric-network');
+const FabricCAServices = require('fabric-ca-client');
+const path = require('path');
 const {
   buildCAClient,
   registerAndEnrollUser,
-  enrollAdmin,
-} = require("./CAUtil.js");
-const { buildCCPOrg1, buildWallet } = require("./AppUtil.js");
+  enrollAdmin
+} = require('./CAUtil.js');
+const { buildCCPOrg1, buildWallet } = require('./AppUtil.js');
 
-const channelName = "mychannel";
-const chaincodeName = "ledger";
-const mspOrg1 = "Org1MSP";
+const channelName = 'mychannel';
+const chaincodeName = 'ledger';
+const mspOrg1 = 'Org1MSP';
 
-const walletPath = path.join(__dirname, "wallet");
-const userId = "appUser";
+const walletPath = path.join(__dirname, 'wallet');
+const userId = 'appUser';
 
 function prettyJSONString(inputString) {
   return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -77,7 +77,7 @@ function prettyJSONString(inputString) {
 async function main() {
   let skipInit = false;
   if (process.argv.length > 2) {
-    if (process.argv[2] === "skipInit") {
+    if (process.argv[2] === 'skipInit') {
       skipInit = true;
     }
   }
@@ -91,7 +91,7 @@ async function main() {
     const caClient = buildCAClient(
       FabricCAServices,
       ccp,
-      "ca.org1.example.com"
+      'ca.org1.example.com'
     );
 
     // setup the wallet to hold the credentials of the application user
@@ -107,7 +107,7 @@ async function main() {
       wallet,
       mspOrg1,
       userId,
-      "org1.department1"
+      'org1.department1'
     );
 
     // Create a new gateway instance for interacting with the fabric network.
@@ -123,7 +123,7 @@ async function main() {
       await gateway.connect(ccp, {
         wallet,
         identity: userId,
-        discovery: { enabled: true, asLocalhost: true }, // using asLocalhost as this gateway is using a fabric network deployed locally
+        discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
       });
 
       // Build a network instance based on the channel where the smart contract is deployed
@@ -139,10 +139,10 @@ async function main() {
       if (!skipInit) {
         try {
           console.log(
-            "\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger"
+            '\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger'
           );
-          await contract.submitTransaction("InitLedger");
-          console.log("*** Result: committed");
+          await contract.submitTransaction('InitLedger');
+          console.log('*** Result: committed');
         } catch (initError) {
           // this is error is OK if we are rerunning this app without restarting
           console.log(`******** initLedger failed :: ${initError}`);
@@ -156,38 +156,38 @@ async function main() {
       // Let's try a query operation (function).
       // This will be sent to just one peer and the results will be shown.
       console.log(
-        "\n--> Evaluate Transaction: GetAssetsByRange, function returns assets in a specific range from asset1 to before asset6"
+        '\n--> Evaluate Transaction: GetAssetsByRange, function returns assets in a specific range from asset1 to before asset6'
       );
       result = await contract.evaluateTransaction(
-        "GetAssetsByRange",
-        "asset1",
-        "asset6"
+        'GetAssetsByRange',
+        'asset1',
+        'asset6'
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       console.log(
-        "\n--> Evaluate Transaction: GetAssetsByRange, function use an open start and open end range to return assest1 to asset6"
+        '\n--> Evaluate Transaction: GetAssetsByRange, function use an open start and open end range to return assest1 to asset6'
       );
-      result = await contract.evaluateTransaction("GetAssetsByRange", "", "");
+      result = await contract.evaluateTransaction('GetAssetsByRange', '', '');
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       console.log(
-        "\n--> Evaluate Transaction: GetAssetsByRange, function use an fixed start (asset3) and open end range to return assest3 to asset6"
+        '\n--> Evaluate Transaction: GetAssetsByRange, function use an fixed start (asset3) and open end range to return assest3 to asset6'
       );
       result = await contract.evaluateTransaction(
-        "GetAssetsByRange",
-        "asset3",
-        ""
+        'GetAssetsByRange',
+        'asset3',
+        ''
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       console.log(
-        "\n--> Evaluate Transaction: GetAssetsByRange, function use an open start and fixed end (asset3) range to return assest1 to asset2"
+        '\n--> Evaluate Transaction: GetAssetsByRange, function use an open start and fixed end (asset3) range to return assest1 to asset2'
       );
       result = await contract.evaluateTransaction(
-        "GetAssetsByRange",
-        "",
-        "asset3"
+        'GetAssetsByRange',
+        '',
+        'asset3'
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
@@ -195,52 +195,53 @@ async function main() {
       // This will be sent to both peers and if both peers endorse the transaction, the endorsed proposal will be sent
       // to the orderer to be committed by each of the peer's to the channel ledger.
       console.log(
-        "\n--> Submit Transaction: CreateAsset, creates new asset with ID(asset7), color(yellow), size(5), owner(Tom), and appraisedValue(1300) arguments"
+        '\n--> Submit Transaction: CreateAsset, creates new asset with licenseID(asset7), appID(app4), licenseDetails(GPL), creatorID(Tom), ownerID(Tom) arguments'
       );
       await contract.submitTransaction(
-        "CreateAsset",
-        "asset7",
-        "GPL",
-        "Tom",
-        "Tom"
+        'CreateAsset',
+        'asset7',
+        'app4',
+        'GPL',
+        'Tom',
+        'Tom'
       );
-      console.log("*** Result: committed");
+      console.log('*** Result: committed');
 
       console.log(
-        "\n--> Evaluate Transaction: ReadAsset, function returns information about an asset with ID(asset7)"
+        '\n--> Evaluate Transaction: ReadAsset, function returns information about an asset with ID(asset7)'
       );
-      result = await contract.evaluateTransaction("ReadAsset", "asset7");
+      result = await contract.evaluateTransaction('ReadAsset', 'asset7');
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       console.log(
         '\n--> Evaluate Transaction: AssetExists, function returns "true" if an asset with ID(asset7) exist'
       );
-      result = await contract.evaluateTransaction("AssetExists", "asset7");
+      result = await contract.evaluateTransaction('AssetExists', 'asset7');
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       // Now let's try to submit a transaction that deletes an asset
       // This will be sent to both peers and if both peers endorse the transaction, the endorsed proposal will be sent
       // to the orderer to be committed by each of the peer's to the channel ledger.
-      console.log("\n--> Submit Transaction: DeleteAsset with ID(asset7)");
-      await contract.submitTransaction("DeleteAsset", "asset7");
-      console.log("*** Result: committed");
+      console.log('\n--> Submit Transaction: DeleteAsset with ID(asset7)');
+      await contract.submitTransaction('DeleteAsset', 'asset7');
+      console.log('*** Result: committed');
 
       console.log(
         '\n--> Evaluate Transaction: AssetExists, function returns "false" if an asset with ID(asset7) does not exist'
       );
-      result = await contract.evaluateTransaction("AssetExists", "asset7");
+      result = await contract.evaluateTransaction('AssetExists', 'asset7');
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       console.log(
-        "\n--> Submit Transaction: TransferAsset, transfer asset(asset2) to new owner(Max)"
+        '\n--> Submit Transaction: TransferAsset, transfer asset(asset2) to new owner(Max)'
       );
-      await contract.submitTransaction("TransferAsset", "asset2", "Max");
-      console.log("*** Result: committed");
+      await contract.submitTransaction('TransferAsset', 'asset2', 'Max');
+      console.log('*** Result: committed');
 
       console.log(
-        "\n--> Evaluate Transaction: ReadAsset, function returns information about an asset with ID(asset2)"
+        '\n--> Evaluate Transaction: ReadAsset, function returns information about an asset with ID(asset2)'
       );
-      result = await contract.evaluateTransaction("ReadAsset", "asset2");
+      result = await contract.evaluateTransaction('ReadAsset', 'asset2');
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       // Rich Query with Pagination (Only supported if CouchDB is used as state database)
@@ -248,10 +249,10 @@ async function main() {
         '\n--> Evaluate Transaction: QueryAssetsWithPagination, function returns "Max" assets'
       );
       result = await contract.evaluateTransaction(
-        "QueryAssetsWithPagination",
-        '{"selector":{"licenseDetails": "MIT", "owner":"Max"}, "use_index":["_design/indexOwnerDoc", "indexOwner"]}',
-        "1",
-        ""
+        'QueryAssetsWithPagination',
+        '{"selector":{"appID": "app2", "creatorID":"Max"}, "use_index":["_design/indexAppCreatorDoc", "indexAppCreator"]}',
+        '1',
+        ''
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
@@ -262,9 +263,9 @@ async function main() {
         '\n--> Evaluate Transaction: QueryAssetsWithPagination, function returns "Max" assets next page'
       );
       result = await contract.evaluateTransaction(
-        "QueryAssetsWithPagination",
-        '{"selector":{"licenseDetails":"MIT","owner":"Max"}, "use_index":["_design/indexOwnerDoc", "indexOwner"]}',
-        "1",
+        'QueryAssetsWithPagination',
+        '{"selector":{"appID": "app2", "creatorID":"Max"}, "use_index":["_design/indexAppCreatorDoc", "indexAppCreator"]}',
+        '1',
         resultJson.bookmark
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
@@ -275,26 +276,43 @@ async function main() {
 
       // Rich Query (Only supported if CouchDB is used as state database):
       console.log(
-        "\n--> Evaluate Transaction: QueryAssetsByOwner, find all assets with owner(Michel)"
+        '\n--> Evaluate Transaction: QueryAssetsByOwnerID, find all assets with ownerID(Michel)'
       );
       result = await contract.evaluateTransaction(
-        "QueryAssetsByOwner",
-        "Michel"
+        'QueryAssetsByOwnerID',
+        'Michel'
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       console.log(
-        "\n--> Evaluate Transaction: GetAssetHistory, get the history of an asset(asset2)"
+        '\n--> Evaluate Transaction: QueryAssetsByCreatorID, find all assets with creatorID(Max)'
       );
-      result = await contract.evaluateTransaction("GetAssetHistory", "asset2");
+      result = await contract.evaluateTransaction(
+        'QueryAssetsByCreatorID',
+        'Michel'
+      );
+      console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+
+      console.log(
+        '\n--> Evaluate Transaction: QueryAssetsByAppID, find all assets with appID(app1)'
+      );
+      result = await contract.evaluateTransaction('QueryAssetsByAppID', 'app1');
+      console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+
+      // get asset history
+
+      console.log(
+        '\n--> Evaluate Transaction: GetAssetHistory, get the history of an asset(asset2)'
+      );
+      result = await contract.evaluateTransaction('GetAssetHistory', 'asset2');
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       // Rich Query (Only supported if CouchDB is used as state database):
       console.log(
-        "\n--> Evaluate Transaction: QueryAssets, assets of licenseDetails MIT"
+        '\n--> Evaluate Transaction: QueryAssets, assets of licenseDetails MIT'
       );
       result = await contract.evaluateTransaction(
-        "QueryAssets",
+        'QueryAssets',
         '{"selector":{"licenseDetails":"MIT"}}'
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
@@ -302,38 +320,38 @@ async function main() {
       // Rich Query with index design doc and index name specified (Only supported if CouchDB is used as state database):
       console.log("\n--> Evaluate Transaction: QueryAssets, Jin Soo's assets");
       result = await contract.evaluateTransaction(
-        "QueryAssets",
+        'QueryAssets',
         '{"selector":{"licenseDetails":"MIT","owner":"Jin Soo"}, "use_index":["_design/indexOwnerDoc", "indexOwner"]}'
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       // Range Query with Pagination
       console.log(
-        "\n--> Evaluate Transaction: GetAssetsByRangeWithPagination - get page 1 of assets from asset2 to asset6 (asset2, asset3)"
+        '\n--> Evaluate Transaction: GetAssetsByRangeWithPagination - get page 1 of assets from asset2 to asset6 (asset2, asset3)'
       );
       result = await contract.evaluateTransaction(
-        "GetAssetsByRangeWithPagination",
-        "asset2",
-        "asset6",
-        "2",
-        ""
+        'GetAssetsByRangeWithPagination',
+        'asset2',
+        'asset6',
+        '2',
+        ''
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
       // Range Query with Pagination
       console.log(
-        "\n--> Evaluate Transaction: GetAssetsByRangeWithPagination - get page 2 of assets from asset2 to asset6 (asset4, asset5)"
+        '\n--> Evaluate Transaction: GetAssetsByRangeWithPagination - get page 2 of assets from asset2 to asset6 (asset4, asset5)'
       );
       result = await contract.evaluateTransaction(
-        "GetAssetsByRangeWithPagination",
-        "asset2",
-        "asset6",
-        "2",
-        "asset4"
+        'GetAssetsByRangeWithPagination',
+        'asset2',
+        'asset6',
+        '2',
+        'asset4'
       );
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
-      console.log("*** all tests completed");
+      console.log('*** all tests completed');
     } finally {
       // Disconnect from the gateway when the application is closing
       // This will close all connections to the network
@@ -343,7 +361,7 @@ async function main() {
     console.error(`******** FAILED to run the application: ${error}`);
   }
 
-  console.log("*** application ending");
+  console.log('*** application ending');
 }
 
 main();

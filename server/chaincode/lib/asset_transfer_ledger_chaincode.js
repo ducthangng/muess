@@ -20,11 +20,11 @@
 // peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["GetAssetHistory","asset1"]}'
 
 // Rich Query (Only supported if CouchDB is used as state database):
-// peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["QueryAssetsByOwner","Tom"]}' output issue
-// peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["QueryAssets","{\"selector\":{\"owner\":\"Tom\"}}"]}'
+// peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["QueryAssetsByownerID","Tom"]}' output issue
+// peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["QueryAssets","{\"selector\":{\"ownerID\":\"Tom\"}}"]}'
 
 // Rich Query with Pagination (Only supported if CouchDB is used as state database):
-// peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["QueryAssetsWithPagination","{\"selector\":{\"owner\":\"Tom\"}}","3",""]}'
+// peer chaincode query -C CHANNEL_NAME -n asset_transfer -c '{"Args":["QueryAssetsWithPagination","{\"selector\":{\"ownerID\":\"Tom\"}}","3",""]}'
 
 // INDEXES TO SUPPORT COUCHDB RICH QUERIES
 //
@@ -36,7 +36,7 @@
 // http://docs.couchdb.org/en/2.3.1/api/database/find.html#db-index
 //
 // This asset transfer ledger example chaincode demonstrates a packaged
-// index which you can find in META-INF/statedb/couchdb/indexes/indexOwner.json.
+// index which you can find in META-INF/statedb/couchdb/indexes/indexownerID.json.
 //
 // If you have access to the your peer's CouchDB state database in a development environment,
 // you may want to iteratively test various indexes in support of your chaincode queries.  You
@@ -50,54 +50,55 @@
 // to create the indexes in the CouchDB Fauxton interface or a curl command line utility.
 //
 
-// Index for docType, owner.
+// Index for docType, ownerID.
 //
 // Example curl command line to define index in the CouchDB channel_chaincode database
-// curl -i -X POST -H "Content-Type: application/json" -d "{\"index\":{\"fields\":[\"docType\",\"owner\"]},\"name\":\"indexOwner\",\"ddoc\":\"indexOwnerDoc\",\"type\":\"json\"}" http://hostname:port/myc1_assets/_index
+// curl -i -X POST -H "Content-Type: application/json" -d "{\"index\":{\"fields\":[\"docType\",\"ownerID\"]},\"name\":\"indexownerID\",\"ddoc\":\"indexownerIDDoc\",\"type\":\"json\"}" http://hostname:port/myc1_assets/_index
 //
 
-// Index for docType, owner, size (descending order).
+// Index for docType, ownerID, size (descending order).
 //
 // Example curl command line to define index in the CouchDB channel_chaincode database
-// curl -i -X POST -H "Content-Type: application/json" -d "{\"index\":{\"fields\":[{\"size\":\"desc\"},{\"docType\":\"desc\"},{\"owner\":\"desc\"}]},\"ddoc\":\"indexSizeSortDoc\", \"name\":\"indexSizeSortDesc\",\"type\":\"json\"}" http://hostname:port/myc1_assets/_index
+// curl -i -X POST -H "Content-Type: application/json" -d "{\"index\":{\"fields\":[{\"size\":\"desc\"},{\"docType\":\"desc\"},{\"ownerID\":\"desc\"}]},\"ddoc\":\"indexSizeSortDoc\", \"name\":\"indexSizeSortDesc\",\"type\":\"json\"}" http://hostname:port/myc1_assets/_index
 
 // Rich Query with index design doc and index name specified (Only supported if CouchDB is used as state database):
-//   peer chaincode query -C CHANNEL_NAME -n ledger -c '{"Args":["QueryAssets","{\"selector\":{\"docType\":\"asset\",\"owner\":\"Tom\"}, \"use_index\":[\"_design/indexOwnerDoc\", \"indexOwner\"]}"]}'
+//   peer chaincode query -C CHANNEL_NAME -n ledger -c '{"Args":["QueryAssets","{\"selector\":{\"docType\":\"asset\",\"ownerID\":\"Tom\"}, \"use_index\":[\"_design/indexownerIDDoc\", \"indexownerID\"]}"]}'
 
 // Rich Query with index design doc specified only (Only supported if CouchDB is used as state database):
-//   peer chaincode query -C CHANNEL_NAME -n ledger -c '{"Args":["QueryAssets","{\"selector\":{\"docType\":{\"$eq\":\"asset\"},\"owner\":{\"$eq\":\"Tom\"},\"size\":{\"$gt\":0}},\"fields\":[\"docType\",\"owner\",\"size\"],\"sort\":[{\"size\":\"desc\"}],\"use_index\":\"_design/indexSizeSortDoc\"}"]}'
+//   peer chaincode query -C CHANNEL_NAME -n ledger -c '{"Args":["QueryAssets","{\"selector\":{\"docType\":{\"$eq\":\"asset\"},\"ownerID\":{\"$eq\":\"Tom\"},\"size\":{\"$gt\":0}},\"fields\":[\"docType\",\"ownerID\",\"size\"],\"sort\":[{\"size\":\"desc\"}],\"use_index\":\"_design/indexSizeSortDoc\"}"]}'
 
-"use strict";
+'use strict';
 
-const { Contract } = require("fabric-contract-api");
+const { Contract } = require('fabric-contract-api');
 
 class Chaincode extends Contract {
   // CreateAsset - create a new asset, store into chaincode state
-  async CreateAsset(ctx, assetID, licenseDetails, creator, owner) {
-    const exists = await this.AssetExists(ctx, assetID);
+  async CreateAsset(ctx, licenseID, appID, licenseDetails, creatorID, ownerID) {
+    const exists = await this.AssetExists(ctx, licenseID);
     if (exists) {
-      throw new Error(`The asset ${assetID} already exists`);
+      throw new Error(`The asset ${licenseID} already exists`);
     }
 
     // ==== Create asset object and marshal to JSON ====
     let asset = {
-      assetID: assetID,
+      licenseID: licenseID,
+      appID: appID,
       licenseDetails: licenseDetails,
-      creator: creator,
-      owner: owner,
+      creatorID: creatorID,
+      ownerID: ownerID
     };
 
     // === Save asset to state ===
-    await ctx.stub.putState(assetID, Buffer.from(JSON.stringify(asset)));
-    let indexName = "licenseDetails~name";
-    let licenseDetailsNameIndexKey = await ctx.stub.createCompositeKey(
-      indexName,
-      [asset.licenseDetails, asset.assetID]
-    );
+    await ctx.stub.putState(licenseID, Buffer.from(JSON.stringify(asset)));
+    let indexName = 'creatorID~name';
+    let creatorIDNameIndexKey = await ctx.stub.createCompositeKey(indexName, [
+      asset.creatorID,
+      asset.licenseID
+    ]);
 
     //  Save index entry to state. Only the key name is needed, no need to store a duplicate copy of the marble.
     //  Note - passing a 'nil' value will effectively delete the key from state, therefore we pass null character as value
-    await ctx.stub.putState(licenseDetailsNameIndexKey, Buffer.from("\u0000"));
+    await ctx.stub.putState(creatorIDNameIndexKey, Buffer.from('\u0000'));
   }
 
   // ReadAsset returns the asset stored in the world state with given id.
@@ -113,7 +114,7 @@ class Chaincode extends Contract {
   // delete - remove a asset key/value pair from state
   async DeleteAsset(ctx, id) {
     if (!id) {
-      throw new Error("Asset name must not be empty");
+      throw new Error('Asset name must not be empty');
     }
 
     let exists = await this.AssetExists(ctx, id);
@@ -139,20 +140,20 @@ class Chaincode extends Contract {
     await ctx.stub.deleteState(id); //remove the asset from chaincode state
 
     // delete the index
-    let indexName = "licenseDetails~name";
-    let licenseDetailsNameIndexKey = ctx.stub.createCompositeKey(indexName, [
-      assetJSON.licenseDetails,
-      assetJSON.assetID,
+    let indexName = 'creatorID~name';
+    let creatorIDNameIndexKey = ctx.stub.createCompositeKey(indexName, [
+      assetJSON.creatorID,
+      assetJSON.licenseID
     ]);
-    if (!licenseDetailsNameIndexKey) {
-      throw new Error(" Failed to create the createCompositeKey");
+    if (!creatorIDNameIndexKey) {
+      throw new Error(' Failed to create the createCompositeKey');
     }
     //  Delete index entry to state.
-    await ctx.stub.deleteState(licenseDetailsNameIndexKey);
+    await ctx.stub.deleteState(creatorIDNameIndexKey);
   }
 
-  // TransferAsset transfers a asset by setting a new owner name on the asset
-  async TransferAsset(ctx, assetName, newOwner) {
+  // TransferAsset transfers an asset by setting a new ownerID name on the asset
+  async TransferAsset(ctx, assetName, newownerID) {
     let assetAsBytes = await ctx.stub.getState(assetName);
     if (!assetAsBytes || !assetAsBytes.toString()) {
       throw new Error(`Asset ${assetName} does not exist`);
@@ -162,10 +163,10 @@ class Chaincode extends Contract {
       assetToTransfer = JSON.parse(assetAsBytes.toString()); //unmarshal
     } catch (err) {
       let jsonResp = {};
-      jsonResp.error = "Failed to decode JSON of: " + assetName;
+      jsonResp.error = 'Failed to decode JSON of: ' + assetName;
       throw new Error(jsonResp);
     }
-    assetToTransfer.owner = newOwner; //change the owner
+    assetToTransfer.ownerID = newownerID; //change the ownerID
 
     let assetJSONasBytes = Buffer.from(JSON.stringify(assetToTransfer));
     await ctx.stub.putState(assetName, assetJSONasBytes); //rewrite the asset
@@ -186,20 +187,20 @@ class Chaincode extends Contract {
     return JSON.stringify(results);
   }
 
-  // TransferAssetByColor will transfer assets of a given color to a certain new owner.
+  // TransferAssetByColor will transfer assets of a given color to a certain new ownerID.
   // Uses a GetStateByPartialCompositeKey (range query) against color~name 'index'.
   // Committing peers will re-execute range queries to guarantee that result sets are stable
   // between endorsement time and commit time. The transaction is invalidated by the
   // committing peers if the result set has changed between endorsement time and commit time.
   // Therefore, range queries are a safe option for performing update transactions based on query results.
   // Example: GetStateByPartialCompositeKey/RangeQuery
-  //   async TransferAssetByColor(ctx, color, newOwner) {
+  //   async TransferAssetByColor(ctx, color, newownerID) {
   //     // Query the color~name index by color
   //     // This will execute a key range query on all keys starting with 'color'
   //     let coloredAssetResultsIterator =
   //       await ctx.stub.getStateByPartialCompositeKey("color~name", [color]);
 
-  //     // Iterate through result set and for each asset found, transfer to newOwner
+  //     // Iterate through result set and for each asset found, transfer to newownerID
   //     let responseRange = await coloredAssetResultsIterator.next();
   //     while (!responseRange.done) {
   //       if (!responseRange || !responseRange.value || !responseRange.value.key) {
@@ -217,31 +218,38 @@ class Chaincode extends Contract {
 
   //       // Now call the transfer function for the found asset.
   //       // Re-use the same function that is used to transfer individual assets
-  //       await this.TransferAsset(ctx, returnedAssetName, newOwner);
+  //       await this.TransferAsset(ctx, returnedAssetName, newownerID);
   //       responseRange = await coloredAssetResultsIterator.next();
   //     }
   //   }
 
-  // QueryAssetsByOwner queries for assets based on a passed in owner.
+  // QueryAssetsByownerID queries for assets based on a passed in ownerID.
   // This is an example of a parameterized query where the query logic is baked into the chaincode,
-  // and accepting a single query parameter (owner).
+  // and accepting a single query parameter (ownerID).
   // Only available on state databases that support rich query (e.g. CouchDB)
   // Example: Parameterized rich query
-  async QueryAssetsByOwner(ctx, owner) {
+  async QueryAssetsByOwnerID(ctx, ownerID) {
     let queryString = {};
     queryString.selector = {};
-    // queryString.selector.docType = "asset";
-    queryString.selector.owner = owner;
+    queryString.selector.ownerID = ownerID;
     return await this.GetQueryResultForQueryString(
       ctx,
       JSON.stringify(queryString)
     ); //shim.success(queryResults);
   }
-  async QueryAssetsByCreator(ctx, creator) {
+  async QueryAssetsByCreatorID(ctx, creatorID) {
     let queryString = {};
     queryString.selector = {};
-    // queryString.selector.docType = "asset";
-    queryString.selector.creator = creator;
+    queryString.selector.creatorID = creatorID;
+    return await this.GetQueryResultForQueryString(
+      ctx,
+      JSON.stringify(queryString)
+    ); //shim.success(queryResults);
+  }
+  async QueryAssetsByAppID(ctx, appID) {
+    let queryString = {};
+    queryString.selector = {};
+    queryString.selector.appID = appID;
     return await this.GetQueryResultForQueryString(
       ctx,
       JSON.stringify(queryString)
@@ -252,7 +260,7 @@ class Chaincode extends Contract {
   // QueryAssets uses a query string to perform a query for assets.
   // Query string matching state database syntax is passed in and executed as is.
   // Supports ad hoc queries that can be defined at runtime by the client.
-  // If this is not desired, follow the QueryAssetsForOwner example for parameterized queries.
+  // If this is not desired, follow the QueryAssetsForownerID example for parameterized queries.
   // Only available on state databases that support rich query (e.g. CouchDB)
   async QueryAssets(ctx, queryString) {
     return await this.GetQueryResultForQueryString(ctx, queryString);
@@ -301,7 +309,7 @@ class Chaincode extends Contract {
   // for assets. Query string matching state database syntax is passed in and executed as is.
   // The number of fetched records would be equal to or lesser than the specified page size.
   // Supports ad hoc queries that can be defined at runtime by the client.
-  // If this is not desired, follow the QueryAssetsForOwner example for parameterized queries.
+  // If this is not desired, follow the QueryAssetsForownerID example for parameterized queries.
   // Only available on state databases that support rich query (e.g. CouchDB)
   // Paginated queries are only valid for read only transactions.
   async QueryAssetsWithPagination(ctx, queryString, pageSize, bookmark) {
@@ -346,23 +354,23 @@ class Chaincode extends Contract {
     while (!res.done) {
       if (res.value && res.value.value.toString()) {
         let jsonRes = {};
-        console.log(res.value.value.toString("utf8"));
+        console.log(res.value.value.toString('utf8'));
         if (isHistory && isHistory === true) {
           jsonRes.TxId = res.value.txId;
           jsonRes.Timestamp = res.value.timestamp;
           try {
-            jsonRes.Value = JSON.parse(res.value.value.toString("utf8"));
+            jsonRes.Value = JSON.parse(res.value.value.toString('utf8'));
           } catch (err) {
             console.log(err);
-            jsonRes.Value = res.value.value.toString("utf8");
+            jsonRes.Value = res.value.value.toString('utf8');
           }
         } else {
           jsonRes.Key = res.value.key;
           try {
-            jsonRes.Record = JSON.parse(res.value.value.toString("utf8"));
+            jsonRes.Record = JSON.parse(res.value.value.toString('utf8'));
           } catch (err) {
             console.log(err);
-            jsonRes.Record = res.value.value.toString("utf8");
+            jsonRes.Record = res.value.value.toString('utf8');
           }
         }
         allResults.push(jsonRes);
@@ -377,51 +385,58 @@ class Chaincode extends Contract {
   async InitLedger(ctx) {
     const assets = [
       {
-        assetID: "asset1",
-        licenseDetails: "rent for 5 days",
-        creator: "Tom",
-        owner: "Tom",
+        licenseID: 'asset1',
+        appID: 'app1',
+        licenseDetails: 'rent for 5 days',
+        creatorID: 'Tom',
+        ownerID: 'Tom'
       },
       {
-        assetID: "asset2",
+        licenseID: 'asset2',
+        appID: 'app1',
         licenseDetails:
-          "buy with rights to modify code for non-commercial purposes",
-        creator: "Brad",
-        owner: "Brad",
+          'buy with rights to modify code for non-commercial purposes',
+        creatorID: 'Brad',
+        ownerID: 'Brad'
       },
       {
-        assetID: "asset3",
-        licenseDetails: "MIT",
-        creator: "Jin Soo",
-        owner: "Jin Soo",
+        licenseID: 'asset3',
+        appID: 'app2',
+        licenseDetails: 'MIT',
+        creatorID: 'Jin Soo',
+        ownerID: 'Jin Soo'
       },
       {
-        assetID: "asset4",
-        licenseDetails: "MIT",
-        creator: "Max",
-        owner: "Max",
+        licenseID: 'asset4',
+        appID: 'app2',
+        licenseDetails: 'MIT',
+        creatorID: 'Max',
+        ownerID: 'Max'
       },
       {
-        assetID: "asset5",
-        licenseDetails: "fair use",
-        creator: "Adriana",
-        owner: "Adriana",
+        licenseID: 'asset5',
+        appID: 'app3',
+        licenseDetails: 'fair use',
+        creatorID: 'Adriana',
+        ownerID: 'Adriana'
       },
       {
-        assetID: "asset6",
-        licenseDetails: "AGPL",
-        creator: "Michel",
-        owner: "Michel",
-      },
+        licenseID: 'asset6',
+        appID: 'app3',
+        licenseDetails: 'AGPL',
+        creatorID: 'Michel',
+        ownerID: 'Michel'
+      }
     ];
 
     for (const asset of assets) {
       await this.CreateAsset(
         ctx,
-        asset.assetID,
+        asset.licenseID,
+        asset.appID,
         asset.licenseDetails,
-        asset.creator,
-        asset.owner
+        asset.creatorID,
+        asset.ownerID
       );
     }
   }
