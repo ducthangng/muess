@@ -71,6 +71,32 @@
 
 const { Contract } = require('fabric-contract-api');
 
+// internal util functions that lie outside the contract
+const getCollectionName = (ctx) => {
+  try {
+    const clientMSPID = ctx.clientIdentity.getMSPID();
+    const orgCollection = clientMSPID + "PrivateCollection";
+    return orgCollection;
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
+const verifyClientOrgMatchesPeerOrg = (ctx) => {
+  try {
+    const clientMSPID = ctx.clientIdentity.getMSPID();
+    const peerMSPID = ctx.stub.getMspID();
+    if (clientMSPID !== peerMSPID) {
+      throw new Error(`client from org ${clientMSPID} is not authorized to read or write private data from an org ${peerMSPID} peer`);
+    }
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
+// contract
 class Chaincode extends Contract {
   // CreateAsset - create a new asset, store into chaincode state
   async CreateAsset(ctx, licenseID, appID, licenseDetails, creatorID, ownerID) {
