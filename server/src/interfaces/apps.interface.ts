@@ -1,6 +1,5 @@
 export interface App {
-  // declare app input
-  appId: string;
-  // Licenseprice
-  //License
+  _id: string;
+  name: string;
+  desc: string;
 }
