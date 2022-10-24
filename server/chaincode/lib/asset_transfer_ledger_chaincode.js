@@ -72,27 +72,74 @@
 const { Contract } = require('fabric-contract-api');
 
 // internal util functions that lie outside the contract
-const getCollectionName = (ctx) => {
+const getCollectionName = async (ctx) => {
   try {
-    const clientMSPID = ctx.clientIdentity.getMSPID();
-    const orgCollection = clientMSPID + "PrivateCollection";
+    const clientMSPID = await ctx.clientIdentity.getMSPID();
+    const orgCollection = clientMSPID + 'PrivateCollection';
     return orgCollection;
-  }
-  catch (error) {
+  } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
-}
+};
 
-const verifyClientOrgMatchesPeerOrg = (ctx) => {
+const verifyClientOrgMatchesPeerOrg = async (ctx) => {
   try {
-    const clientMSPID = ctx.clientIdentity.getMSPID();
-    const peerMSPID = ctx.stub.getMspID();
+    const clientMSPID = await ctx.clientIdentity.getMSPID();
+    const peerMSPID = await ctx.stub.getMspID();
     if (clientMSPID !== peerMSPID) {
-      throw new Error(`client from org ${clientMSPID} is not authorized to read or write private data from an org ${peerMSPID} peer`);
+      throw new Error(
+        `client from org ${clientMSPID} is not authorized to read or write private data from an org ${peerMSPID} peer`
+      );
     }
-  }
-  catch (error) {
+  } catch (error) {
+    console.log(error);
     throw new Error(error);
+  }
+};
+
+const getSubmittingClientIdentity = async (ctx) => {
+  try {
+    const base64ID = ctx.clientIdentity.getID();
+    const buffer = Buffer.from(base64ID, 'base64');
+    const decodeID = buffer.toString('ascii');
+    return decodeID;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+const verifyAgreement = async (ctx, licenseID, ownerID, buyerMSP) {
+  // Check 1: verify that the transfer is being initiatied by the owner
+
+  // Get ID of submitting client identity
+  const clientID = await getSubmittingClientIdentity(ctx);
+  if (clientID!=ownerID) {
+    throw new Error("error: submitting client identity does not own asset");
+  }
+
+  // Check 2: verify that the buyer has agreed to the appraised value
+
+  // Get collection names
+  ownerCollection = getCollectionName(ctx); // get owner collection from caller identity
+  buyerCollection = buyerMSP + "PrivateCollection"; //get buyer collection
+
+  // Get hash of owner's agreed to value
+  const ownerPriceHash = ctx.stub.getPrivateDataHash(ownerCollection, licenseID);
+  if (!ownerPriceHash) {
+    throw new Error(`Hash of price for ${licenseID} does not exist in collection ${ownerCollection}. AgreeToTransfer must be called by the owner first`);
+  }
+
+  // Get hash of buyer's agreed to value
+  const buyerPriceHash = ctx.stub.getPrivateDataHash(buyerCollection, licenseID);
+  if (!buyerPriceHash) {
+    throw new Error(`Hash of price for ${licenseID} does not exist in collection ${buyerCollection}. AgreeToTransfer must be called by the owner first`);
+  }
+
+  // Check if ownerPriceHash and buyerPriceHash is equal
+  if (ownerPriceHash!=buyerPriceHash) {
+    throw new Error(`Hash of owner's agreed price (${ownerPriceHash} is diffent from hash of buyer's agreed price (${buyerPriceHash}))`);
   }
 }
 
@@ -466,6 +513,37 @@ class Chaincode extends Contract {
       );
     }
   }
+
+  // put client's expected price into their private collection
+  async AgreeToTransfer(ctx, licenseID, price) {
+    try {
+      // Get ID of submitting client identity
+      // const clientID = getSubmittingClientIdentity(ctx);
+      // const transientMap = ctx.stub.getTransient();
+      // const valueJSONasBytes = transientMap["asset_value"];
+      const assetPrivateDetails = {
+        licenseID: licenseID,
+        price: price,
+      }
+      const orgCollection = await getCollectionName(ctx);
+      // check if asset already exists
+      const assetAsBytes = await ctx.stub.getPrivateData(orgCollection, licenseID);
+      if (assetAsBytes) {
+        throw new Error("There's already a transfer agreement existed for this license");
+      }
+      
+      await verifyClientOrgMatchesPeerOrg(ctx);
+      ctx.stub.putPrivateData(orgCollection, licenseID, assetPrivateDetails);
+    }
+    catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+
+  // async TransferAsset(ctx) {
+  //   const transientMap = ctx.stub.getTransient();
+  // }
 }
 
 module.exports = Chaincode;
