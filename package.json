@@ -31,7 +31,7 @@
     "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "**/**/**/**/*.{ts,tsx}": [
+    "**/**/**/**/*.{ts,tsx,js}": [
       "npm run lint-and-fix",
       "npm run prettier-format",
       "git add ."
