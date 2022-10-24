@@ -22,6 +22,7 @@ const utf8Decoder = new TextDecoder();
 const assetId = `asset${Date.now()}`;
 
 class HLFService {
+  // examples of GetAllAssets
   public async getAllAssets(): Promise<SampleAsset[]> {
     const data = getSingleton()
       .then(async (gateway) => {
@@ -32,7 +33,6 @@ class HLFService {
         const contract = gateway.network.getContract('basic');
 
         const resultBytes = await contract.evaluateTransaction('GetAllAssets');
-
         const resultJson = utf8Decoder.decode(resultBytes);
         const result: SampleAsset[] = JSON.parse(resultJson);
 

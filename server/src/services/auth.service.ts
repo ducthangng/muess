@@ -85,6 +85,10 @@ class AuthService {
   public createCookie(tokenData: TokenData): string {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
+
+  public signInWithCAServer(): string {
+    return 'hello world';
+  }
 }
 
 export default AuthService;
