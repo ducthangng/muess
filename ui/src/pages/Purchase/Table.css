@@ -29,12 +29,13 @@ table td, table th {
 
 table tr:hover {
   background-color: #F5F5F5;
+  border-radius: 15px;
 }
 
 table th, tfoot td {
   padding-top: 12px;
   padding-bottom: 40px;
-  ;
+  
 }
 
 .table-footer{
