@@ -19,6 +19,24 @@ const x: App = {
     }
   ]
 };
+
+const createlicenseApp: App = {
+  _id: '1',
+  title: '1',
+  description: '1',
+  rated: '1',
+  reviewer: '1',
+  appTag: '1',
+  downloaded: 1,
+  appInformations: '1',
+  feedbacks: [
+    {
+      name: '1',
+      content: '1'
+    }
+  ]
+};
+
 class AppController {
   //public appService = new appService();
 
@@ -75,7 +93,9 @@ class AppController {
       //const createAppLicense: App = await this.appService.createlicenseApp(appId, appLicense)
 
       //return
-      res.status(201).json({ data: x, message: 'created License' });
+      res
+        .status(201)
+        .json({ data: createlicenseApp, message: 'created License' });
     } catch (error) {
       next(error);
     }
