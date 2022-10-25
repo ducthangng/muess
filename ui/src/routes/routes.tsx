@@ -93,7 +93,7 @@ export default function AppRoute() {
           {/* test routes */}
           <Route path="test">
             <Route path=":testId">
-              <Route path="details" element={<TestProvider></TestProvider>} />
+              {/* <Route path="details" element={<TestProvider></TestProvider>} /> */}
               {/* <Route
                 path="do/*"
                 element={
