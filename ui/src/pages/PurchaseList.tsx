@@ -10,7 +10,6 @@ const PurchaseList = () => {
     return (
         <><SideMenu />
         <CompleteTable />
-        <div className="container"></div>
         </>
     );
 };
