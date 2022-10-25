@@ -5,9 +5,9 @@ import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
-import TestSelection from '../pages/TestSelection';
-import GroupSelection from '../pages/GroupSelection';
-import PreTestPage from '../pages/PreTestPage';
+// import TestSelection from '../pages/TestSelection';
+// import GroupSelection from '../pages/GroupSelection';
+// import PreTestPage from '../pages/PreTestPage';
 // import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
@@ -61,9 +61,9 @@ export default function AppRoute() {
               </Route>
 
               <Route path="classroom/*">
-                <Route path="" element={<GroupSelection />} />
+                {/* <Route path="" element={<GroupSelection />} /> */}
                 <Route element={<ClassroomLayout />}>
-                  <Route path=":id/home" element={<TestSelection />} />
+                  {/* <Route path=":id/home" element={<TestSelection />} /> */}
                 </Route>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
@@ -86,7 +86,7 @@ export default function AppRoute() {
                 <Route path="" element={<GroupInterface />} />
                 <Route path="create" element={<AdminCreateClass />} />
                 <Route element={<ClassroomLayout />}>
-                  <Route path=":id/home" element={<TestSelection />} />
+                  {/* <Route path=":id/home" element={<TestSelection />} /> */}
                 </Route>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
@@ -104,7 +104,7 @@ export default function AppRoute() {
                 path="details"
                 element={
                   <TestProvider>
-                    <PreTestPage />
+                    {/* <PreTestPage /> */}
                   </TestProvider>
                 }
               />
