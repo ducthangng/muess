@@ -44,9 +44,9 @@ export default function AppRoute() {
             <Route path="/" element={<Landingpage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/release" element={<ReleaseApp/>} />
+            <Route path="/release" element={<ReleaseApp />} />
             <Route path="/purchases" element={<PurchaseList />} />
-            <Route path="/about" element ={<About />} />
+            <Route path="/about" element={<About />} />
           </Route>
 
           {/* student routes */}

@@ -18,6 +18,34 @@ class AuthController {
     }
   };
 
+  public getClientForOrg = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userData: CreateUserDto = req.body;
+      const clientUserData: User = await this.authService.getClientForOrg(
+        userData
+      );
+
+      res.status(201).json({ data: clientUserData, message: 'client' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // public getRegisteredUser = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  //   try {
+  //     const userData: CreateUserDto = req.body;
+  //     const registeredUserData: User = await this.authService.getRegisteredUser(userData, isJson);
+
+  //     res.status(201).json({ data: registeredUserData, message:'registered' });
+  //     } catch (error) {
+  //     next(error);
+  //   }
+  // };
+
   public logIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;
