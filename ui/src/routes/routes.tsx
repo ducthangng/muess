@@ -8,7 +8,7 @@ import ClassroomLayout from '../pages/Layout/ClassroomLayout';
 import TestSelection from '../pages/TestSelection';
 import GroupSelection from '../pages/GroupSelection';
 import PreTestPage from '../pages/PreTestPage';
-import Test from '../pages/Test';
+// import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
 import GroupInterface from '../pages/GroupInterface';
@@ -112,7 +112,7 @@ export default function AppRoute() {
                 path="do/*"
                 element={
                   <TestProvider>
-                    <Test reviewMode={false} />
+                    {/* <Test reviewMode={false} /> */}
                   </TestProvider>
                 }
               />
@@ -120,7 +120,7 @@ export default function AppRoute() {
                 path="review/*"
                 element={
                   <TestProvider>
-                    <Test reviewMode={true} />
+                    {/* <Test reviewMode={true} /> */}
                   </TestProvider>
                 }
               />
