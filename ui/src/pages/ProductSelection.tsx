@@ -1,9 +1,9 @@
 import React from 'react';
 import MockProduct from '../components/MockProduct';
+import SideMenu from '../components/Header/SideMenu';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { AppData } from '../models/AppData';
-import SideMenu from '../components/Header/SideMenu';
 
 const defaultData: AppData[] = [
   {

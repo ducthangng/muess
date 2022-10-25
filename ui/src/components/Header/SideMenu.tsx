@@ -85,7 +85,7 @@ const SideMenu = (props) => {
                             }
                             : {}
                     )
-                } className='menu-item' to="/purchase">
+                } className='menu-item' to="/wallet">
                     Your Wallet
                 </NavLink>
                 <NavLink style={
@@ -103,7 +103,7 @@ const SideMenu = (props) => {
                             }
                             : {}
                     )
-                } className='menu-item' to="/purchase">
+                } className='menu-item' to="/about">
                     About us
                 </NavLink>
             </div>

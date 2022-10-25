@@ -5,25 +5,18 @@ import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
-import TestSelection from '../pages/TestSelection';
-import GroupSelection from '../pages/GroupSelection';
-import PreTestPage from '../pages/PreTestPage';
-import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
-import GroupInterface from '../pages/GroupInterface';
-import AdminCreateClass from '../pages/AdminCreateClass';
 import UserProfile from '../pages/UserProfile';
-import TestManagement from '../pages/TestManagement';
-import UserManagement from '../pages/UserManagement';
 import { AdminEC, StudentEC } from '../models/Guard';
 import { TestProvider } from '../context/test/TestContext';
-import { Register } from '../pages/Register';
+import Register from "../pages/Register";
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
 import PurchaseList from '../pages/PurchaseList';
 import About from '../pages/About';
+import Wallet from '../pages/Wallet';
 import ProductSelection from '../pages/ProductSelection';
 
 export default function AppRoute() {
@@ -40,15 +33,16 @@ export default function AppRoute() {
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          <Route>
+          {/* <Route element={<LoginLayout />}> */}
             <Route path="/" element={<Landingpage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/release" element={<ReleaseApp/>} />
-            <Route path="/products" element={<ProductSelection />} />
-            <Route path="/purchases" element={<PurchaseList  />} />
+            <Route path="/products" element={<ProductSelection/>} />
+            <Route path="/purchases" element={<PurchaseList />} />
             <Route path="/about" element ={<About />} />
-          </Route>
+            <Route path="/wallet" element ={<Wallet />} />
+          {/* </Route> */}
 
           {/* student routes */}
           {/* <Route path="/student/*" element={<Guard {...StudentGuard} />}> */}
@@ -59,9 +53,9 @@ export default function AppRoute() {
               </Route>
 
               <Route path="classroom/*">
-                <Route path="" element={<GroupSelection />} />
+                {/* <Route path="" element={<GroupSelection />} /> */}
                 <Route element={<ClassroomLayout />}>
-                  <Route path=":id/home" element={<TestSelection />} />
+                  {/* <Route path=":id/home" element={<TestSelection />} /> */}
                 </Route>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
@@ -76,15 +70,15 @@ export default function AppRoute() {
           <Route path="/admin/*" element={<Guard {...AdminGuard} />}>
             <Route element={<UserLayout />}>
               <Route path="dashboard/*">
-                <Route path="" element={<TestManagement />} />
-                <Route path="users" element={<UserManagement />} />
+                {/* <Route path="" element={<TestManagement />} />
+                <Route path="users" element={<UserManagement />} /> */}
               </Route>
 
               <Route path="classroom/*">
-                <Route path="" element={<GroupInterface />} />
-                <Route path="create" element={<AdminCreateClass />} />
+                {/* <Route path="" element={<GroupInterface />} />
+                <Route path="create" element={<AdminCreateClass />} /> */}
                 <Route element={<ClassroomLayout />}>
-                  <Route path=":id/home" element={<TestSelection />} />
+                  {/* <Route path=":id/home" element={<TestSelection />} /> */}
                 </Route>
                 <Route path="*" element={<Navigate to="" replace />} />
               </Route>
@@ -102,7 +96,7 @@ export default function AppRoute() {
                 path="details"
                 element={
                   <TestProvider>
-                    <PreTestPage />
+                    
                   </TestProvider>
                 }
               />
@@ -110,7 +104,7 @@ export default function AppRoute() {
                 path="do/*"
                 element={
                   <TestProvider>
-                    <Test reviewMode={false} />
+                    {/* <Test reviewMode={false} /> */}
                   </TestProvider>
                 }
               />
@@ -118,7 +112,7 @@ export default function AppRoute() {
                 path="review/*"
                 element={
                   <TestProvider>
-                    <Test reviewMode={true} />
+                    {/* <Test reviewMode={true} /> */}
                   </TestProvider>
                 }
               />
