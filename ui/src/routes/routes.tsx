@@ -25,8 +25,8 @@ import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
 import PurchaseList from '../pages/PurchaseList';
 import About from '../pages/About';
-
 import Wallet from '../pages/Wallet';
+import ProductSelection from '../pages/ProductSelection';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -47,6 +47,7 @@ export default function AppRoute() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/release" element={<ReleaseApp/>} />
+            <Route path="/products" element={<ProductSelection/>} />
             <Route path="/purchases" element={<PurchaseList />} />
             <Route path="/about" element ={<About />} />
             <Route path="/wallet" element ={<Wallet />} />
