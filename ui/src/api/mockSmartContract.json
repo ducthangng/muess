@@ -1,0 +1,51 @@
+[
+  {
+    "productId": "1",
+    "provider": "Riffpath",
+    "price": 1.75,
+    "purchased_date": "11/2/2022",
+    "smart_contract_info": "1"
+  },
+  {
+    "product_id": "2",
+    "provider": "Riffpath",
+    "price": "$2.75",
+    "purchased_date": "12/2/2022",
+    "smart_contract_info": "2"
+  },
+  {
+    "product_id": "3",
+    "provider": "Riffpath",
+    "price": "$3.75",
+    "purchased_date": "13/2/2022",
+    "smart_contract_info": "3"
+  },
+  {
+    "product_id": "1",
+    "provider": "Thang",
+    "price": "$3.75",
+    "purchased_date": "13/2/2022",
+    "smart_contract_info": "4"
+  },
+  {
+    "product_id": "2",
+    "provider": "Riffpath",
+    "price": "$2.75",
+    "purchased_date": "12/2/2022",
+    "smart_contract_info": "2"
+  },
+  {
+    "product_id": "3",
+    "provider": "Riffpath",
+    "price": "$3.75",
+    "purchased_date": "13/2/2022",
+    "smart_contract_info": "3"
+  },
+  {
+    "product_id": "1",
+    "provider": "Thang",
+    "price": "$3.75",
+    "purchased_date": "13/2/2022",
+    "smart_contract_info": "4"
+  }
+]

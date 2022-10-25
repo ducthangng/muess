@@ -26,10 +26,7 @@ class AppService {
 
     const findApp: App = await this.apps.findOne({ name: appData.name });
     if (findApp)
-      throw new HttpException(
-        409,
-        `This name ${appData.name} already exists`
-      );
+      throw new HttpException(409, `This name ${appData.name} already exists`);
     const createAppData: App = await this.apps.create({
       ...appData
     });

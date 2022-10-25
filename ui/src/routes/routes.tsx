@@ -5,6 +5,7 @@ import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
 import ClassroomLayout from '../pages/Layout/ClassroomLayout';
+// import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
 import UserProfile from '../pages/UserProfile';
@@ -100,22 +101,22 @@ export default function AppRoute() {
                   </TestProvider>
                 }
               />
-              <Route
+              {/* <Route
                 path="do/*"
                 element={
                   <TestProvider>
-                    {/* <Test reviewMode={false} /> */}
+                    {/* <Test reviewMode={false} />
                   </TestProvider>
                 }
-              />
-              <Route
+              /> */}
+              {/* <Route
                 path="review/*"
                 element={
                   <TestProvider>
-                    {/* <Test reviewMode={true} /> */}
+                    {/* <Test reviewMode={true} />
                   </TestProvider>
                 }
-              />
+              /> */}
             </Route>
           </Route>
 
