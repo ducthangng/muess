@@ -1,51 +1,51 @@
 [
     {
-        "product_id": "1",
+        "productId": "1",
         "provider":"Riffpath",
-        "price":"$1.75",
-        "purchased_date":"11/2/2022",
-        "smart_contract_info":"1"
+        "price":1.75,
+        "purchasedDate":"11/2/2022",
+        "smartContractInfo":"1"
     },
     {
-        "product_id": "2",
+        "productId": "2",
         "provider":"Riffpath",
-        "price":"$2.75",  
-        "purchased_date":"12/2/2022",
-        "smart_contract_info":"2"
+        "price":2.75,  
+        "purchasedDate":"12/2/2022",
+        "smartContractInfo":"2"
     },
     {
-        "product_id": "3",
+        "productId": "3",
         "provider":"Riffpath",
-        "price":"$3.75",
-        "purchased_date":"13/2/2022",
-        "smart_contract_info":"3"
+        "price":3.75,
+        "purchasedDate":"13/2/2022",
+        "smartContractInfo":"3"
     },
     {
-        "product_id": "1",
+        "productId": "1",
         "provider":"Thang",
-        "price":"$3.75",
-        "purchased_date":"13/2/2022",
-        "smart_contract_info":"4"
+        "price":3.75,
+        "purchasedDate":"13/2/2022",
+        "smartContractInfo":"4"
     },
     {
-        "product_id": "2",
+        "productId": "2",
         "provider":"Riffpath",
-        "price":"$2.75",  
-        "purchased_date":"12/2/2022",
-        "smart_contract_info":"2"
+        "price":2.75,  
+        "purchasedDate":"12/2/2022",
+        "smartContractInfo":"2"
     },
     {
-        "product_id": "3",
+        "productId": "3",
         "provider":"Riffpath",
-        "price":"$3.75",
-        "purchased_date":"13/2/2022",
-        "smart_contract_info":"3"
+        "price":3.75,
+        "purchasedDate":"13/2/2022",
+        "smartContractInfo":"3"
     },
     {
-        "product_id": "1",
+        "productId": "1",
         "provider":"Thang",
-        "price":"$3.75",
-        "purchased_date":"13/2/2022",
-        "smart_contract_info":"4"
+        "price":3.75,
+        "purchasedDate":"13/2/2022",
+        "smartContractInfo":"4"
     }
 ]
