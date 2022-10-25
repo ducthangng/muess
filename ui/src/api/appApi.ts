@@ -1,17 +1,15 @@
 import { AppError } from '../models/Error';
-import { User } from '../models/User';
-import { Class } from '../models/Class';
-import { Result } from '../models/Result';
+import { AppDetailData } from '../models/AppDetailData';
 import { stringify } from 'querystring';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
-const apiUrl = `${BASE_API}/api/v1/user`;
+const apiUrl = `${BASE_API}/api/v1/app`;
 
 /**
- * fetches for user data.
+ * fetches for app data.
  */
-export const userApi = {
-  getAllUsers: async () => {
+export const appApi = {
+  getAllApps: async () => {
     const response = await fetch(`${apiUrl}/all`, {
       method: 'GET',
       credentials: 'include'
@@ -30,8 +28,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const apps: AppDetailData[] = data.data;
+        return apps;
       })
       .catch((err) => {
         return err;
@@ -40,11 +38,9 @@ export const userApi = {
     return response;
   },
 
-  
-
-  getInfoByUsername: async (username: string) => {
+  getInfoByName: async (Name: string) => {
     const response = await fetch(
-      `${apiUrl}/?` + new URLSearchParams({ username }),
+      `${apiUrl}/?` + new URLSearchParams({ Name }),
       {
         method: 'GET',
         credentials: 'include'
@@ -64,8 +60,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const apps: AppDetailData[] = data.data;
+        return apps;
       })
       .catch((err) => {
         return err;
@@ -76,7 +72,7 @@ export const userApi = {
 
   getInfoById: async (id: number) => {
     const response = await fetch(
-      `${apiUrl}/?` + new URLSearchParams({ user_id: id.toString() }),
+      `${apiUrl}/?` + new URLSearchParams({ app_id: id.toString() }),
       {
         method: 'GET',
         credentials: 'include'
@@ -95,8 +91,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const apps: AppDetailData[] = data.data;
+        return apps;
       })
       .catch((err) => {
         return err;
@@ -105,9 +101,41 @@ export const userApi = {
     return response;
   },
 
-  getInfoByFullname: async (fullname: string) => {
+//   getInfoByFullname: async (fullname: string) => {
+//     const response = await fetch(
+//       `${apiUrl}?` + new URLSearchParams({ fullname }),
+//       {
+//         method: 'GET',
+//         credentials: 'include'
+//       }
+//     )
+//       .then((res) => {
+//         if (res.ok) {
+//           return res.json();
+//         }
+
+//         throw new Error('Network response was not ok.');
+//       })
+//       .then((data) => {
+//         console.log(data);
+//         const err: AppError = data.error;
+//         if (err.errorCode !== 0) {
+//           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+//         }
+
+//         const users: User[] = data.data;
+//         return users;
+//       })
+//       .catch((err) => {
+//         return err;
+//       });
+
+//     return response;
+//   },
+
+  getDesc: async (appId: number) => {
     const response = await fetch(
-      `${apiUrl}?` + new URLSearchParams({ fullname }),
+      `${apiUrl}/class?` + new URLSearchParams({ app_id: appId.toString() }),
       {
         method: 'GET',
         credentials: 'include'
@@ -127,8 +155,8 @@ export const userApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const users: User[] = data.data;
-        return users;
+        const desc: AppDetailData[] = data.description;
+        return desc;
       })
       .catch((err) => {
         return err;
@@ -137,39 +165,7 @@ export const userApi = {
     return response;
   },
 
-  getClass: async (userId: number) => {
-    const response = await fetch(
-      `${apiUrl}/class?` + new URLSearchParams({ user_id: userId.toString() }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const classes: Class[] = data.data;
-        return classes;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
-  updateInfo: async (parameter: User) => {
+  updateInfo: async (parameter: AppDetailData) => {
     const payload = parameter;
 
     const response = await fetch(`${apiUrl}`, {
@@ -204,37 +200,37 @@ export const userApi = {
     return response;
   },
 
-  getAllTestResult: async (id: number) => {
-    const user_id = id.toString();
+//   getAllTestResult: async (id: number) => {
+//     const user_id = id.toString();
 
-    const response = await fetch(
-      `${apiUrl}/test_result?` + new URLSearchParams({ user_id }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+//     const response = await fetch(
+//       `${apiUrl}/test_result?` + new URLSearchParams({ user_id }),
+//       {
+//         method: 'GET',
+//         credentials: 'include'
+//       }
+//     )
+//       .then((res) => {
+//         if (res.ok) {
+//           return res.json();
+//         }
 
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
+//         throw new Error('Network response was not ok.');
+//       })
+//       .then((data) => {
+//         console.log(data);
+//         const err: AppError = data.error;
+//         if (err.errorCode !== 0) {
+//           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+//         }
 
-        const results: Result[] = data.data;
-        return results;
-      })
-      .catch((err) => {
-        return err;
-      });
+//         const results: Result[] = data.data;
+//         return results;
+//       })
+//       .catch((err) => {
+//         return err;
+//       });
 
-    return response;
-  }
+//     return response;
+//   }
 };
