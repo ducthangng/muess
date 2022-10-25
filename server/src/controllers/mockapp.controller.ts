@@ -21,17 +21,15 @@ const app: App = {
   ]
 };
 
-const smartContractMockData: APISmartContract[] = [
-  {
-    productId: '1',
-    provider: '1',
-    price: 1,
-    purchaseDate: 1,
-    smartContractInfo: '1'
-  }
-];
+const smartContractMockData: APISmartContract = {
+  productId: '1',
+  provider: 'Thang',
+  price: 1.76,
+  purchaseDate: new Date('2023-10-10'),
+  smartContractInfo: '1'
+};
 
-export class MockAppController {
+class AppsController {
   //public appService = new appService();
 
   public createlicenseApp = async (
@@ -45,7 +43,9 @@ export class MockAppController {
       //const createAppLicense: App = await this.appService.createlicenseApp(appId, appLicense)
 
       //return
-      res.status(201).json({ data: x, message: 'created License' });
+      res
+        .status(201)
+        .json({ data: smartContractMockData, message: 'created License' });
     } catch (error) {
       next(error);
     }
@@ -81,7 +81,9 @@ export class MockAppController {
       //const getAppLicenseprice: App = await this.appService.getAppLicenseprice(appId, Licenseprice)
 
       //return
-      res.status(201).json({ data: x, message: 'got license' });
+      res
+        .status(201)
+        .json({ data: smartContractMockData, message: 'got license' });
     } catch (error) {
       next(error);
     }
@@ -96,7 +98,9 @@ export class MockAppController {
       //const getallAppLicense: App = await this.appService.findAllLicense()
 
       //return
-      res.status(201).json({ data: x, message: 'findLicense' });
+      res
+        .status(201)
+        .json({ data: smartContractMockData, message: 'findLicense' });
     } catch (error) {
       next(error);
     }
@@ -113,9 +117,13 @@ export class MockAppController {
       //const getpurchaseLicense: App = await this.appService.purchaseLicense(appId, purchaseLicense)
 
       //return
-      res.status(201).json({ data: x, message: 'purchased License' });
+      res
+        .status(201)
+        .json({ data: smartContractMockData, message: 'purchased License' });
     } catch (error) {
       next(error);
     }
   };
 }
+
+export default AppsController;

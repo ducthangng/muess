@@ -1,13 +1,6 @@
 import HLFService from '@/services/hlf.service';
 import { NextFunction, Request, Response } from 'express';
 import { SampleAsset } from '@/models/hlf.model';
-import {
-  connect,
-  Contract,
-  Identity,
-  Signer,
-  signers
-} from '@hyperledger/fabric-gateway';
 
 class HLFController {
   public hlfservice = new HLFService();

@@ -1,9 +1,10 @@
 import { IsString } from 'class-validator';
 
-export interface APISmartContract {
+export class APISmartContract {
+  @IsString()
   productId: string;
   provider: string;
   price: number;
-  purchaseDate: number; // UNIX int64
+  purchaseDate: Date;
   smartContractInfo: string;
 }

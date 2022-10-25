@@ -4,6 +4,9 @@ import { User } from '@interfaces/users.interface';
 import userService from '@services/users.service';
 
 class UsersController {
+  enrollUser() {
+    throw new Error('Method not implemented.');
+  }
   public userService = new userService();
 
   public getUsers = async (req: Request, res: Response, next: NextFunction) => {

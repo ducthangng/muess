@@ -1,6 +1,5 @@
 import { AppError } from '../models/Error';
 import { User } from '../models/User';
-import { toast } from 'react-toastify';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
 const apiUrl = `${BASE_API}/api`;
