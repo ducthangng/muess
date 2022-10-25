@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './SideMenu.css'
 import Logo from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom';
-import { CustomNavLinkSmall, HeaderSection } from './Styles';
 import { NavLink } from "react-router-dom";
 
 const SideMenu = (props) => {
@@ -48,7 +47,7 @@ const SideMenu = (props) => {
                             }
                             : {}
                     )
-                } className='menu-item' to="/purchase">
+                } className='menu-item' to="/products">
                     Buy/Rent
                 </NavLink>
 

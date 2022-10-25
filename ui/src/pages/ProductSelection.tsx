@@ -3,6 +3,7 @@ import MockProduct from '../components/MockProduct';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { AppData } from '../models/AppData';
+import SideMenu from '../components/Header/SideMenu';
 
 const defaultData: AppData[] = [
   {
@@ -33,7 +34,7 @@ const defaultData: AppData[] = [
 
 function ProductSelection() {
   return (
-    <div
+    <><SideMenu /><div
       style={{
         display: 'flex'
       }}
@@ -47,8 +48,7 @@ function ProductSelection() {
                 appId={item.appId}
                 description={item.description}
                 title={item.title}
-                apptag={item.apptag}
-              />
+                apptag={item.apptag} />
             );
           })}
         </div>
@@ -57,11 +57,10 @@ function ProductSelection() {
           <Pagination
             defaultCurrent={1}
             total={50}
-            style={{ color: '#8172D5' }}
-          />
+            style={{ color: '#8172D5' }} />
         </Row>
       </body>
-    </div>
+    </div></>
   );
 }
 
