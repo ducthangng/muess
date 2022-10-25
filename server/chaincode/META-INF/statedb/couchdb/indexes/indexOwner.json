@@ -1,6 +1,0 @@
-{
-  "index": { "fields": ["appID", "creatorID"] },
-  "ddoc": "indexAppCreatorDoc",
-  "name": "indexAppCreator",
-  "type": "json"
-}
