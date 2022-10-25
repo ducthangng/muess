@@ -9,6 +9,7 @@ const x: User = {
   password: '1',
   userType: '1'
 };
+
 class UsersController {
   public userService = new userService();
 

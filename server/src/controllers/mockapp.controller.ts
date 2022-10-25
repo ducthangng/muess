@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
 import { App } from '@interfaces/apps.interface';
 //import appService from '@services/apps.service';
+import { APISmartContract } from '../dtos/smartContract.dto';
 
-const x: App = {
+const app: App = {
   _id: '1',
   title: '1',
   description: '1',
@@ -19,50 +20,19 @@ const x: App = {
     }
   ]
 };
-class AppController {
+
+const smartContractMockData: APISmartContract[] = [
+  {
+    productId: '1',
+    provider: '1',
+    price: 1,
+    purchaseDate: 1,
+    smartContractInfo: '1'
+  }
+];
+
+export class MockAppController {
   //public appService = new appService();
-
-  public getApps = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      // const findAllAppsData: App[] = await this.appService.findAllApp();
-
-      //return
-      res.status(200).json({ data: x, message: 'findAll' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public getAppById = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      //const appId: string = req.params.id;
-      //const findOneAppData: App = await this.appService.findAppById(appId);
-
-      //return
-      res.status(200).json({ data: x, message: 'findOne' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public createApp = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      //const appData: CreateUserDto = req.body;
-      //const createAppData: App = await this.appService.createApp(appData);
-
-      res.status(201).json({ data: x, message: 'created' });
-    } catch (error) {
-      next(error);
-    }
-  };
 
   public createlicenseApp = async (
     req: Request,
@@ -76,6 +46,25 @@ class AppController {
 
       //return
       res.status(201).json({ data: x, message: 'created License' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getAllDeveloperSmartContract = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      //const appId: string = req.params.id;
+      //const appLicense: CreateUserDto = req.body;
+      //const createAppLicense: App = await this.appService.createlicenseApp(appId, appLicense)
+
+      //return
+      res
+        .status(201)
+        .json({ data: smartContractMockData, message: 'created License' });
     } catch (error) {
       next(error);
     }
