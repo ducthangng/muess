@@ -3,6 +3,12 @@ import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@interfaces/users.interface';
 import userService from '@services/users.service';
 
+const x: User = {
+  _id: '1',
+  email: '1',
+  password: '1',
+  userType: '1'
+};
 class UsersController {
   public userService = new userService();
 
@@ -14,12 +20,6 @@ class UsersController {
     try {
       //const userId: string = req.params.id;
       //const findOneUserData: User = await this.userService.findUserById(userId);
-      const x: User = { email: '1' };
-      // [
-      //   {
-      //     /// declare user input
-      //   }
-      // ];
 
       //return
       res.status(200).json({ data: x, message: 'findOne' });
@@ -36,12 +36,6 @@ class UsersController {
     try {
       //const userData: CreateUserDto = req.body;
       //const createUserData: User = await this.userService.createUser(userData);
-      const x: User = { email: '1' };
-      // [
-      //   {
-      //     /// declare user input
-      //   }
-      // ];
 
       res.status(201).json({ data: x, message: 'created' });
     } catch (error) {
@@ -58,16 +52,6 @@ class UsersController {
       const userId: string = req.params.id;
       //const userData: CreateUserDto = req.body;
       //const enrollUserData: User = await this.userService.enrollUser(userId, userData)
-      const x: User = { email: '1' };
-      // [
-      //   {
-      //     /// declare user input
-      //     // Name: abc
-      //     // Email: xyz
-      //     // Password: xyz
-      //     // Role: xyz
-      //   }
-      // ];
 
       //return
       res.status(201).json({ data: x, message: 'enrolled' });
