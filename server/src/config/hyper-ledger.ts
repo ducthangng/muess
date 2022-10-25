@@ -62,9 +62,6 @@ const peerEndpoint = envOrDefault('PEER_ENDPOINT', 'localhost:7051');
 // Gateway peer SSL host name override.
 const peerHostAlias = envOrDefault('PEER_HOST_ALIAS', 'peer0.org1.example.com');
 
-const utf8Decoder = new TextDecoder();
-const assetId = `asset${Date.now()}`;
-
 /**
  * envOrDefault() will return the value of an environment variable, or a default value if the variable is undefined.
  */
