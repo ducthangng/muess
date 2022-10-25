@@ -26,7 +26,7 @@ class AuthController {
     try {
       const userData: CreateUserDto = req.body;
       const clientUserData: User = await this.authService.getClientForOrg(
-        userData
+        userData.email
       );
 
       res.status(201).json({ data: clientUserData, message: 'client' });
@@ -35,16 +35,22 @@ class AuthController {
     }
   };
 
-  // public getRegisteredUser = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-  //   try {
-  //     const userData: CreateUserDto = req.body;
-  //     const registeredUserData: User = await this.authService.getRegisteredUser(userData, isJson);
+  public getRegisteredUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const userData: CreateUserDto = req.body;
+      const registeredUserData: User = await this.authService.getRegisteredUser(
+        userData.email
+      );
 
-  //     res.status(201).json({ data: registeredUserData, message:'registered' });
-  //     } catch (error) {
-  //     next(error);
-  //   }
-  // };
+      res.status(201).json({ data: registeredUserData, message: 'registered' });
+    } catch (error) {
+      next(error);
+    }
+  };
 
   public logIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
