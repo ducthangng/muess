@@ -11,7 +11,7 @@ import NotFound404 from '../pages/NotFound404';
 import UserProfile from '../pages/UserProfile';
 import { AdminEC, StudentEC } from '../models/Guard';
 import { TestProvider } from '../context/test/TestContext';
-import Register from "../pages/Register";
+import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
@@ -35,14 +35,14 @@ export default function AppRoute() {
         <Routes>
           {/* public routes */}
           {/* <Route element={<LoginLayout />}> */}
-            <Route path="/" element={<Landingpage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/release" element={<ReleaseApp/>} />
-            <Route path="/products" element={<ProductSelection/>} />
-            <Route path="/purchases" element={<PurchaseList />} />
-            <Route path="/about" element ={<About />} />
-            <Route path="/wallet" element ={<Wallet />} />
+          <Route path="/" element={<Landingpage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/release" element={<ReleaseApp />} />
+          <Route path="/products" element={<ProductSelection />} />
+          <Route path="/purchases" element={<PurchaseList />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/wallet" element={<Wallet />} />
           {/* </Route> */}
 
           {/* student routes */}
@@ -93,14 +93,7 @@ export default function AppRoute() {
           {/* test routes */}
           <Route path="test">
             <Route path=":testId">
-              <Route
-                path="details"
-                element={
-                  <TestProvider>
-                    
-                  </TestProvider>
-                }
-              />
+              <Route path="details" element={<TestProvider></TestProvider>} />
               {/* <Route
                 path="do/*"
                 element={

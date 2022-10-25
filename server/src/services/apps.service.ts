@@ -34,10 +34,7 @@ class AppService {
     return createAppData;
   }
 
-  public async updateApp(
-    appId: string,
-    appData: CreateAppDto
-  ): Promise<App> {
+  public async updateApp(appId: string, appData: CreateAppDto): Promise<App> {
     if (isEmpty(appData)) throw new HttpException(400, 'appData is empty');
 
     if (appData.name) {
@@ -51,8 +48,9 @@ class AppService {
         );
     }
 
-    const updateAppById: App = await this.apps.findByIdAndUpdate(appId, 
-      appData  
+    const updateAppById: App = await this.apps.findByIdAndUpdate(
+      appId,
+      appData
     );
     if (!updateAppById) throw new HttpException(409, "App doesn't exist");
 

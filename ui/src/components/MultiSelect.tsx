@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
-import '../assets/css/MultiSelect.css'
+import '../assets/css/MultiSelect.css';
 
 const { Option } = Select;
 const options: React.ReactNode[] = [];
@@ -24,13 +24,19 @@ const App: React.FC = () => (
     <Select
       mode="multiple"
       allowClear
-      style={{ width: '325px', height:'33px',overflow:'auto',position: 'relative', top: '30px', left: '-175px' }}
+      style={{
+        width: '325px',
+        height: '33px',
+        overflow: 'auto',
+        position: 'relative',
+        top: '30px',
+        left: '-175px'
+      }}
       placeholder="Please select"
       onChange={handleChange}
     >
       {options}
     </Select>
-
   </>
 );
 

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
+import React, { useState } from 'react';
+import { FileUploader } from 'react-drag-drop-files';
 
-const fileTypes = ["JPG", "PNG", "SVG"];
+const fileTypes = ['JPG', 'PNG', 'SVG'];
 
 function DragDrop() {
   const [file, setFile] = useState(null);
@@ -13,9 +13,8 @@ function DragDrop() {
   return (
     <div className="fileContainer">
       <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
-      <p>{file ? `File name: ${fileName}` : "no files uploaded yet"}</p>
+      <p>{file ? `File name: ${fileName}` : 'no files uploaded yet'}</p>
     </div>
-
   );
 }
 
