@@ -18,13 +18,15 @@ import TestManagement from '../pages/TestManagement';
 import UserManagement from '../pages/UserManagement';
 import { AdminEC, StudentEC } from '../models/Guard';
 import { TestProvider } from '../context/test/TestContext';
-import { LoginLayout } from '../pages/LoginLayout';
-import { Register } from '../pages/Register';
+// import { LoginLayout } from '../pages/LoginLayout';
+import Register from "../pages/Register";
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
 import PurchaseList from '../pages/PurchaseList';
 import About from '../pages/About';
+
+import Wallet from '../pages/Wallet';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -40,14 +42,15 @@ export default function AppRoute() {
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          <Route element={<LoginLayout />}>
+          {/* <Route element={<LoginLayout />}> */}
             <Route path="/" element={<Landingpage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/release" element={<ReleaseApp/>} />
             <Route path="/purchases" element={<PurchaseList />} />
             <Route path="/about" element ={<About />} />
-          </Route>
+            <Route path="/wallet" element ={<Wallet />} />
+          {/* </Route> */}
 
           {/* student routes */}
           {/* <Route path="/student/*" element={<Guard {...StudentGuard} />}> */}
