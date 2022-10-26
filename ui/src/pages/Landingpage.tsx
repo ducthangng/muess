@@ -4,7 +4,6 @@ import { lazy } from 'react';
 import IntroButton from '../api/IntroButton.json';
 
 import { Styles } from './Styles/styles';
-import Header from '../components/Header/Index';
 
 const Container = lazy(() => import('../components/Container/index'));
 const ContentBlock = lazy(() => import('../components/contentBlock/index'));

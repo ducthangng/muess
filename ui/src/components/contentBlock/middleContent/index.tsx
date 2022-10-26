@@ -7,12 +7,6 @@ interface MiddleBlockProps {
 }
 
 const MiddleBlock = ({ title, content }: MiddleBlockProps) => {
-  const scrollTo = (id: string) => {
-    const element = document.getElementById(id) as HTMLDivElement;
-    element.scrollIntoView({
-      behavior: 'smooth'
-    });
-  };
   return (
     <MiddleBlockSection>
       <Row justify="center" align="middle">
