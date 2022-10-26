@@ -1,0 +1,50 @@
+[
+    {
+      "appId": "1",
+      "description": "This is the default application",
+      "title": "Application 1",
+      "apptag": "18+"
+    },
+    {
+      "appId": "2",
+      "description": "This is the default application",
+      "title": "Application 2",
+      "apptag": "Best seller"
+    },
+    {
+        "appId": "3",
+        "description": "This is the default application",
+        "title": "Application 3",
+        "apptag": "Best seller"
+    },
+    {
+        "appId": "4",
+        "description": "This is the default application",
+        "title": "Application 4",
+        "apptag": "Top rated"
+    },
+    {
+        "appId": "1",
+        "description": "This is the default application",
+        "title": "Application 1",
+        "apptag": "18+"
+      },
+      {
+        "appId": "2",
+        "description": "This is the default application",
+        "title": "Application 2",
+        "apptag": "Best seller"
+      },
+      {
+          "appId": "3",
+          "description": "This is the default application",
+          "title": "Application 3",
+          "apptag": "Best seller"
+      },
+      {
+          "appId": "4",
+          "description": "This is the default application",
+          "title": "Application 4",
+          "apptag": "Top rated"
+      }
+]
