@@ -48,9 +48,10 @@ class AppService {
         );
     }
 
-    const updateAppById: App = await this.apps.findByIdAndUpdate(appId, {
+    const updateAppById: App = await this.apps.findByIdAndUpdate(
+      appId,
       appData
-    });
+    );
     if (!updateAppById) throw new HttpException(409, "App doesn't exist");
 
     return updateAppById;

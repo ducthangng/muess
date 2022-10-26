@@ -8,7 +8,6 @@ const PurchaseList = () => {
     <>
       <SideMenu />
       <CompleteTable />
-      <div className="container"></div>
     </>
   );
 };

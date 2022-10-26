@@ -6,4 +6,16 @@ export class CreateAppDto {
 
   @IsString()
   public desc: string;
+
+  @IsString()
+  public apptype: string;
+
+  @IsString()
+  public payoption: string;
+
+  @IsString()
+  public category: string;
+
+  @IsString()
+  public tags: string;
 }

@@ -21,6 +21,26 @@ class AuthRoute implements Routes {
       this.authController.signUp
     );
     this.router.post(
+      `${this.path}getClientForOrg`,
+      validationMiddleware(CreateUserDto, 'body'),
+      this.authController.getClientForOrg
+    );
+    this.router.post(
+      `${this.path}getRegisteredClient`,
+      validationMiddleware(CreateUserDto, 'body'),
+      this.authController.getRegisteredClient
+    );
+    this.router.post(
+      `${this.path}createChannel`,
+      validationMiddleware(CreateUserDto, 'body'),
+      this.authController.createChannel
+    );
+    this.router.post(
+      `${this.path}joinChannel`,
+      validationMiddleware(CreateUserDto, 'body'),
+      this.authController.joinChannel
+    );
+    this.router.post(
       `${this.path}login`,
       validationMiddleware(CreateUserDto, 'body'),
       this.authController.logIn

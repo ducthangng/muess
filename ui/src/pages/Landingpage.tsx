@@ -4,7 +4,6 @@ import { lazy } from 'react';
 import IntroButton from '../api/IntroButton.json';
 
 import { Styles } from './Styles/styles';
-import Header from '../components/Header/Index';
 import SideMenu from '../components/Header/SideMenu';
 
 const Container = lazy(() => import('../components/Container/index'));
@@ -14,7 +13,6 @@ const Landingpage = () => {
   return (
     <Container>
       <Styles />
-      <Header />
       <SideMenu />
       <ContentBlock
         type="left"

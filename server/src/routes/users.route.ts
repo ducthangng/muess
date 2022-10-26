@@ -1,15 +1,15 @@
 import { Router } from 'express';
-import UsersController from '@controllers/users.controller';
-import { CreateUserDto } from '@dtos/users.dto';
-import { Routes } from '@interfaces/routes.interface';
-import validationMiddleware from '@middlewares/validation.middleware';
-import { MockAppController } from '../controllers/mockapp.controller';
+import UsersController from '@/controllers/users.controller';
+import { CreateUserDto } from '@/dtos/users.dto';
+import { Routes } from '@/interfaces/routes.interface';
+import validationMiddleware from '@/middlewares/validation.middleware';
+import AppsController from '@/controllers/mockapp.controller';
 
 class UsersRoute implements Routes {
   public path = '/users';
   public router = Router();
   public usersController = new UsersController();
-  public mockAppController = new MockAppController();
+  public appsController = new AppsController();
 
   constructor() {
     this.initializeRoutes();
@@ -29,10 +29,33 @@ class UsersRoute implements Routes {
       this.usersController.updateUser
     );
     this.router.delete(`${this.path}/:id`, this.usersController.deleteUser);
+    this.router.get(`${this.path}/:id/`, this.usersController.enrollUser);
 
+    //mock app
+    this.router.get(`${this.path}/mockapp`, this.appsController.getApps);
+    this.router.get(`${this.path}/mockapp/:id`, this.appsController.getAppById);
+    this.router.post(
+      `${this.path}/mockapp`,
+      validationMiddleware(CreateUserDto, 'body'),
+      this.appsController.createApp
+    );
+    this.router.post(
+      `${this.path}/mockapp/:id`,
+      validationMiddleware(CreateUserDto, 'body', true),
+      this.appsController.createlicenseApp
+    );
     this.router.get(
-      `${this.path}/:id/smartContracts`,
-      this.mockAppController.getAllDeveloperSmartContract
+      `${this.path}/mockapp/:id/`,
+      this.appsController.getAppLicenseprice
+    );
+    this.router.get(
+      `${this.path}/mockapp/:id/`,
+      this.appsController.getallAppLicense
+    );
+    this.router.post(
+      `${this.path}/mockapp/:id/`,
+      validationMiddleware(CreateUserDto, 'body', true),
+      this.appsController.purchaseLicense
     );
   }
 }
