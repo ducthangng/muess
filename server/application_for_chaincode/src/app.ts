@@ -211,7 +211,7 @@ const queryAssetByCreatorID = async (contract: Contract, creatorID: string) => {
   );
   const result = await contract.evaluateTransaction(
     'QueryAssetByCreatorID',
-    'asset',
+    'license',
     creatorID
   );
   return result;
@@ -221,9 +221,9 @@ const queryAssetByCreatorID = async (contract: Contract, creatorID: string) => {
 const agreeToTransfer = async (
   contract: Contract,
   assetID: string,
-  appraisedValue: number
+  expectedValue: number
 ) => {
-  const dataForAgreement = { assetID: assetID, appraisedValue: appraisedValue };
+  const dataForAgreement = { assetID: assetID, expectedValue: expectedValue };
   console.log(
     '\nSubmit Transaction: AgreeToTransfer payload ' +
       JSON.stringify(dataForAgreement)

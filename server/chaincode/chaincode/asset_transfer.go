@@ -36,8 +36,8 @@ type Asset struct {
 
 // AssetPrivateDetails describes details that are private to owners
 type AssetPrivateDetails struct {
-	ID             string `json:"assetID"`
-	AppraisedValue int    `json:"appraisedValue"`
+	ID            string `json:"assetID"`
+	ExpectedValue int    `json:"expectedValue"`
 }
 
 // TransferAgreement describes the buyer agreement returned by ReadTransferAgreement
@@ -73,7 +73,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	}
 
 	asset := &Asset{
-		Type:    "asset",
+		Type:    "license",
 		ID:      assetID,
 		Details: licenseDetails,
 		Creator: clientID,
@@ -93,45 +93,12 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 		return err
 	}
 
-	// Save asset to private data collection
-	// Typical logger, logs to stdout/file in the fabric managed docker container, running this chaincode
-	// Look for container name like dev-peer0.org1.example.com-{chaincodename_version}-xyz
-	// log.Printf("CreateAsset Put: collection %v, ID %v, owner %v", assetCollection, assetInput.ID, clientID)
-
-	// err = ctx.GetStub().PutPrivateData(assetCollection, assetInput.ID, assetJSONasBytes)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to put asset into private data collecton: %v", err)
-	// }
-
-	// // Save asset details to collection visible to owning organization
-	// assetPrivateDetails := AssetPrivateDetails{
-	// 	ID:             assetInput.ID,
-	// 	AppraisedValue: assetInput.AppraisedValue,
-	// }
-
-	// assetPrivateDetailsAsBytes, err := json.Marshal(assetPrivateDetails) // marshal asset details to JSON
-	// if err != nil {
-	// 	return fmt.Errorf("failed to marshal into JSON: %v", err)
-	// }
-
-	// // Get collection name for this organization.
-	// orgCollection, err := getCollectionName(ctx)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to infer private collection name for the org: %v", err)
-	// }
-
-	// // Put asset appraised value into owners org specific private data collection
-	// log.Printf("Put: collection %v, ID %v", orgCollection, assetInput.ID)
-	// err = ctx.GetStub().PutPrivateData(orgCollection, assetInput.ID, assetPrivateDetailsAsBytes)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to put asset private details: %v", err)
-	// }
 	return nil
 }
 
-// AgreeToTransfer is used by the potential buyer of the asset to agree to the
-// asset value. The agreed to appraisal value is stored in the buying orgs
-// org specifc collection, while the the buyer client ID is stored in the asset collection
+// AgreeToTransfer is used by both the owner and buyer to store their expected price.
+// The expected value is stored in the owner's and buyer's respective private colelctions,
+// while the the buyer client ID is stored in the asset collection
 // using a composite key
 func (s *SmartContract) AgreeToTransfer(ctx contractapi.TransactionContextInterface) error {
 
@@ -164,8 +131,8 @@ func (s *SmartContract) AgreeToTransfer(ctx contractapi.TransactionContextInterf
 	if len(valueJSON.ID) == 0 {
 		return fmt.Errorf("assetID field must be a non-empty string")
 	}
-	if valueJSON.AppraisedValue <= 0 {
-		return fmt.Errorf("appraisedValue field must be a positive integer")
+	if valueJSON.ExpectedValue <= 0 {
+		return fmt.Errorf("expectedValue field must be a positive integer")
 	}
 
 	// Read asset from ledger
@@ -186,6 +153,11 @@ func (s *SmartContract) AgreeToTransfer(ctx contractapi.TransactionContextInterf
 	orgCollection, err := getCollectionName(ctx)
 	if err != nil {
 		return fmt.Errorf("failed to infer private collection name for the org: %v", err)
+	}
+
+	existingTransferAgreement, err := s.ReadTransferAgreement(ctx, valueJSON.ID)
+	if existingTransferAgreement != nil {
+		return fmt.Errorf("There already exists a transfer agreement for this asset %v", assetID)
 	}
 
 	log.Printf("AgreeToTransfer Put: collection %v, ID %v", orgCollection, valueJSON.ID)
@@ -336,102 +308,29 @@ func (s *SmartContract) verifyAgreement(ctx contractapi.TransactionContextInterf
 	collectionBuyer := buyerMSP + "PrivateCollection" // get buyers collection
 
 	// Get hash of owners agreed to value
-	ownerAppraisedValueHash, err := ctx.GetStub().GetPrivateDataHash(collectionOwner, assetID)
+	ownerExpectedValueHash, err := ctx.GetStub().GetPrivateDataHash(collectionOwner, assetID)
 	if err != nil {
 		return fmt.Errorf("failed to get hash of appraised value from owners collection %v: %v", collectionOwner, err)
 	}
-	if ownerAppraisedValueHash == nil {
+	if ownerExpectedValueHash == nil {
 		return fmt.Errorf("hash of appraised value for %v does not exist in collection %v", assetID, collectionOwner)
 	}
 
 	// Get hash of buyers agreed to value
-	buyerAppraisedValueHash, err := ctx.GetStub().GetPrivateDataHash(collectionBuyer, assetID)
+	buyerExpectedValueHash, err := ctx.GetStub().GetPrivateDataHash(collectionBuyer, assetID)
 	if err != nil {
 		return fmt.Errorf("failed to get hash of appraised value from buyer collection %v: %v", collectionBuyer, err)
 	}
-	if buyerAppraisedValueHash == nil {
+	if buyerExpectedValueHash == nil {
 		return fmt.Errorf("hash of appraised value for %v does not exist in collection %v. AgreeToTransfer must be called by the buyer first", assetID, collectionBuyer)
 	}
 
 	// Verify that the two hashes match
-	if !bytes.Equal(ownerAppraisedValueHash, buyerAppraisedValueHash) {
-		return fmt.Errorf("hash for appraised value for owner %x does not value for seller %x", ownerAppraisedValueHash, buyerAppraisedValueHash)
+	if !bytes.Equal(ownerExpectedValueHash, buyerExpectedValueHash) {
+		return fmt.Errorf("hash for appraised value for owner %x does not value for seller %x", ownerExpectedValueHash, buyerExpectedValueHash)
 	}
 
 	return nil
-}
-
-// DeleteAsset can be used by the owner of the asset to delete the asset
-func (s *SmartContract) DeleteAsset(ctx contractapi.TransactionContextInterface) error {
-
-	transientMap, err := ctx.GetStub().GetTransient()
-	if err != nil {
-		return fmt.Errorf("Error getting transient: %v", err)
-	}
-
-	// Asset properties are private, therefore they get passed in transient field
-	transientDeleteJSON, ok := transientMap["asset_delete"]
-	if !ok {
-		return fmt.Errorf("asset to delete not found in the transient map")
-	}
-
-	type assetDelete struct {
-		ID string `json:"assetID"`
-	}
-
-	var assetDeleteInput assetDelete
-	err = json.Unmarshal(transientDeleteJSON, &assetDeleteInput)
-	if err != nil {
-		return fmt.Errorf("failed to unmarshal JSON: %v", err)
-	}
-
-	if len(assetDeleteInput.ID) == 0 {
-		return fmt.Errorf("assetID field must be a non-empty string")
-	}
-
-	// Verify that the client is submitting request to peer in their organization
-	err = verifyClientOrgMatchesPeerOrg(ctx)
-	if err != nil {
-		return fmt.Errorf("DeleteAsset cannot be performed: Error %v", err)
-	}
-
-	log.Printf("Deleting Asset: %v", assetDeleteInput.ID)
-	valAsbytes, err := ctx.GetStub().GetPrivateData(assetCollection, assetDeleteInput.ID) //get the asset from chaincode state
-	if err != nil {
-		return fmt.Errorf("failed to read asset: %v", err)
-	}
-	if valAsbytes == nil {
-		return fmt.Errorf("asset not found: %v", assetDeleteInput.ID)
-	}
-
-	ownerCollection, err := getCollectionName(ctx) // Get owners collection
-	if err != nil {
-		return fmt.Errorf("failed to infer private collection name for the org: %v", err)
-	}
-
-	//check the asset is in the caller org's private collection
-	valAsbytes, err = ctx.GetStub().GetPrivateData(ownerCollection, assetDeleteInput.ID)
-	if err != nil {
-		return fmt.Errorf("failed to read asset from owner's Collection: %v", err)
-	}
-	if valAsbytes == nil {
-		return fmt.Errorf("asset not found in owner's private Collection %v: %v", ownerCollection, assetDeleteInput.ID)
-	}
-
-	// delete the asset from state
-	err = ctx.GetStub().DelPrivateData(assetCollection, assetDeleteInput.ID)
-	if err != nil {
-		return fmt.Errorf("failed to delete state: %v", err)
-	}
-
-	// Finally, delete private details of asset
-	err = ctx.GetStub().DelPrivateData(ownerCollection, assetDeleteInput.ID)
-	if err != nil {
-		return err
-	}
-
-	return nil
-
 }
 
 // DeleteTranferAgreement can be used by the buyer to withdraw a proposal from
