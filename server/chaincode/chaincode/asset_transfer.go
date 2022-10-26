@@ -206,11 +206,21 @@ func (s *SmartContract) AgreeToTransfer(ctx contractapi.TransactionContextInterf
 			return fmt.Errorf("failed to create composite key: %v", err)
 		}
 
-		log.Printf("AgreeToTransfer Put: collection %v, ID %v, Key %v", assetCollection, valueJSON.ID, transferAgreeKey)
-		err = ctx.GetStub().PutPrivateData(assetCollection, transferAgreeKey, []byte(clientID))
+		log.Printf("AgreeToTransfer Put into Ledger, ID %v, Key %v", valueJSON.ID, transferAgreeKey)
+		log.Printf(transferAgreeKey)
+		// err = ctx.GetStub().PutPrivateData(assetCollection, transferAgreeKey, []byte(clientID))
+		// if err != nil {
+		// 	return fmt.Errorf("failed to put asset bid: %v", err)
+		// }
+
+		err = ctx.GetStub().PutState(transferAgreeKey, []byte(clientID))
 		if err != nil {
 			return fmt.Errorf("failed to put asset bid: %v", err)
 		}
+
+		// queryString := fmt.Sprintf("{\"selector\":{\"licenseID\":\"%v\"}}", valueJSON.ID)
+		// queryResults, err := s.getQueryResultForQueryString(ctx, queryString)
+		// log.Print(queryResults)
 	}
 
 	return nil
@@ -218,28 +228,6 @@ func (s *SmartContract) AgreeToTransfer(ctx contractapi.TransactionContextInterf
 
 // TransferAsset transfers the asset to the new owner by setting a new owner ID
 func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterface, assetID, buyerMSP string) error {
-
-	// transientMap, err := ctx.GetStub().GetTransient()
-	// if err != nil {
-	// 	return fmt.Errorf("error getting transient %v", err)
-	// }
-
-	// // Asset properties are private, therefore they get passed in transient field
-	// transientTransferJSON, ok := transientMap["asset_owner"]
-	// if !ok {
-	// 	return fmt.Errorf("asset owner not found in the transient map")
-	// }
-
-	// type assetTransferTransientInput struct {
-	// 	ID       string `json:"assetID"`
-	// 	BuyerMSP string `json:"buyerMSP"`
-	// }
-
-	// var assetTransferInput assetTransferTransientInput
-	// err = json.Unmarshal(transientTransferJSON, &assetTransferInput)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to unmarshal JSON: %v", err)
-	// }
 
 	if len(assetID) == 0 {
 		return fmt.Errorf("assetID field must be a non-empty string")

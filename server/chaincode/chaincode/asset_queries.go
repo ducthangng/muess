@@ -57,14 +57,17 @@ func (s *SmartContract) ReadAssetPrivateDetails(ctx contractapi.TransactionConte
 
 // ReadTransferAgreement gets the buyer's identity from the transfer agreement from collection
 func (s *SmartContract) ReadTransferAgreement(ctx contractapi.TransactionContextInterface, assetID string) (*TransferAgreement, error) {
-	log.Printf("ReadTransferAgreement: collection %v, ID %v", assetCollection, assetID)
+	log.Printf("ReadTransferAgreement: ID %v", assetID)
 	// composite key for TransferAgreement of this asset
 	transferAgreeKey, err := ctx.GetStub().CreateCompositeKey(transferAgreementObjectType, []string{assetID})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create composite key: %v", err)
 	}
 
-	buyerIdentity, err := ctx.GetStub().GetPrivateData(assetCollection, transferAgreeKey) // Get the identity from collection
+	log.Printf("Finding agreement with transferAgreeKey")
+	log.Print(transferAgreeKey)
+
+	buyerIdentity, err := ctx.GetStub().GetState(transferAgreeKey) // Get the identity from collection
 	if err != nil {
 		return nil, fmt.Errorf("failed to read TransferAgreement: %v", err)
 	}
