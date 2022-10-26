@@ -25,8 +25,8 @@ const AppDetail: React.FC<AppDetailData> = ({
       >
         App Details
       </Divider>
-
-      <div className="">return (</div>
     </div>
   );
 };
+
+export default AppDetail;
