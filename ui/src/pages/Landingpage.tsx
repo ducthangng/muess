@@ -19,7 +19,7 @@ const Landingpage = () => {
         title={IntroButton.title}
         content={IntroButton.text}
         button={IntroButton.button}
-        icon="developer.svg"
+        icon="welcome.svg"
         id="intro"
       />
     </Container>
