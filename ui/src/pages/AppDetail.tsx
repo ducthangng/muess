@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 import { AppDetailData } from '../models/AppDetailData';
 import { Divider } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
+import '../assets/css/AppDetail.css';
+import PurchasePopup from '../components/PurchasePopup';
+
 
 const AppDetail: React.FC<AppDetailData> = ({
   _id,
@@ -18,8 +22,12 @@ const AppDetail: React.FC<AppDetailData> = ({
   creatorName
 }) => {
   const navigate = useNavigate();
+
+  const [buttonPopup, setButtonPopup] = useState(false);
+
   return (
     <>
+      <main>
       <SideMenu />
       <div className="app-detail"
         style={{
@@ -30,6 +38,7 @@ const AppDetail: React.FC<AppDetailData> = ({
           left: '15vw',
           backgroundColor: 'transparent',
         }}>
+      
         <button className="return" onClick={() => navigate(-1)}
           style={{
             position: 'relative',
@@ -132,7 +141,8 @@ const AppDetail: React.FC<AppDetailData> = ({
                 18+
               </div>
             </div>
-            <button className='continue_button'
+            <button className='purchase_button'
+              onClick={() => setButtonPopup(true)}
               style={{
                 background: '#FB7F4B',
                 color: '#FFFFFF',
@@ -143,7 +153,10 @@ const AppDetail: React.FC<AppDetailData> = ({
                 width: '30%',
                 borderRadius: '10px',
                 position: 'relative',
-              }}>CONTACT</button>
+              }}
+            >Purchase</button>
+            
+            
           </div>
           <div className="app-sub-detail"
             style={{
@@ -176,8 +189,8 @@ const AppDetail: React.FC<AppDetailData> = ({
                 fontSize: '1rem',
                 fontWeight: '400',
               }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
-              <div className="app-feedback-title"
+            </div>
+            <div className="app-feedback-title"
               style={{
                 position: 'relative',
                 top: '0',
@@ -188,7 +201,7 @@ const AppDetail: React.FC<AppDetailData> = ({
                 fontWeight: '700',
                 marginTop: '1.5rem',
               }}>Feedbacks</div>
-              <div className="app-feedback-user"
+            <div className="app-feedback-user"
               style={{
                 position: 'relative',
                 top: '0',
@@ -200,7 +213,7 @@ const AppDetail: React.FC<AppDetailData> = ({
                 marginTop: '1rem',
                 color: '#FB7F4B',
               }}>User1234</div>
-              <div className="app-feedback-content"
+            <div className="app-feedback-content"
               style={{
                 position: 'relative',
                 top: '0',
@@ -211,10 +224,13 @@ const AppDetail: React.FC<AppDetailData> = ({
                 fontSize: '1rem',
                 fontWeight: '400',
               }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
+            </div>
           </div>
         </div>
       </div>
+      </main>
+        <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup}/>
+        
     </>
 
   );
