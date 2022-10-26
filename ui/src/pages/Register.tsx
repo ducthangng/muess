@@ -4,8 +4,8 @@ import { FC, useEffect, useState } from 'react';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Register.css';
-import LoginLogo from '../assets/images/logo.png';
-import RegisterImage from '../assets/images/register.png';
+import LoginLogo from '../assets/images/logo.svg';
+import RegisterImage from '../assets/images/register.svg';
 import CSS from 'csstype';
 
 const Register = () => {
@@ -80,9 +80,9 @@ const Register = () => {
                         <img src={RegisterImage} alt='LoginImage'
                             style={{
                                 width: '80%',
-                                height: '50%',
+                                height: '60%',
                                 display: 'block',
-                                margin: '5rem auto',
+                                margin: '15% auto',
                             }} />
                     </div>
 

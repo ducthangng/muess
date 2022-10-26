@@ -25,12 +25,12 @@ const ReleaseApp = () => {
     <>
       <SideMenu />
       <div className="Publish_Block">
-        <div className="ReleaseTitle">Upload an App</div>
+        <div className="ReleaseTitle" style={{fontWeight:'700'}}>Upload an App</div>
         <div
           style={{
             border: '1px solid #E3E3E3',
             position: 'relative',
-            top: '30px'
+            top: '2rem'
           }}
         ></div>
         <div className="release-form-1">
@@ -39,7 +39,7 @@ const ReleaseApp = () => {
               position: 'relative',
               top: '45px',
               left: '50px',
-              fontWeight: 900,
+              fontWeight: 700,
               fontSize: '16px',
               lineHeight: '19px',
               color: '#3A001E'
@@ -52,7 +52,7 @@ const ReleaseApp = () => {
               position: 'relative',
               top: '70px',
               left: '50px',
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: '12px',
               lineHeight: '15px',
               color: '#3A001E'
@@ -70,7 +70,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '55px',
                 left: '150px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '9px',
                 lineHeight: '11px',
                 color: '#A3A3A3',
@@ -87,7 +87,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '50px',
                 left: '50px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '12px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -100,7 +100,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '38px',
                 left: '150px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '9px',
                 lineHeight: '11px',
                 color: '#A3A3A3',
@@ -114,7 +114,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '50px',
                 left: '50px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '9px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -143,7 +143,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '35px',
                 left: '50px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '12px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -156,7 +156,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '23px',
                 left: '150px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '9px',
                 lineHeight: '11px',
                 color: '#A3A3A3',
@@ -170,7 +170,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '35px',
                 left: '50px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '9px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -208,7 +208,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '0px',
                 left: '50px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '12px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -221,7 +221,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '5px',
                 left: '50px',
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: '9px',
                 lineHeight: '11px',
                 color: '#A3A3A3'
@@ -246,7 +246,7 @@ const ReleaseApp = () => {
               position: 'relative',
               top: '5px',
               left: '50px',
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: '9px',
               lineHeight: '11px',
               color: '#A3A3A3'
@@ -259,7 +259,7 @@ const ReleaseApp = () => {
               position: 'relative',
               top: '20px',
               left: '50px',
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: '12px',
               lineHeight: '11px',
               color: '#A3A3A3'
@@ -272,7 +272,7 @@ const ReleaseApp = () => {
               position: 'relative',
               top: '50px',
               left: '50px',
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: '12px',
               lineHeight: '11px',
               color: '#A3A3A3'
@@ -298,7 +298,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '22px',
                 left: '-30px',
-                fontWeight: 1000,
+                fontWeight: 700,
                 fontSize: '12px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -325,7 +325,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '28px',
                 left: '-100px',
-                fontWeight: 1000,
+                fontWeight: 700,
                 fontSize: '12px',
                 lineHeight: '15px',
                 color: '#3A001E'
@@ -348,7 +348,7 @@ const ReleaseApp = () => {
                 position: 'relative',
                 top: '28px',
                 left: '-100px',
-                fontWeight: 1000,
+                fontWeight: 700,
                 fontSize: '12px',
                 lineHeight: '15px',
                 color: '#3A001E'

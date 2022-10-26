@@ -4,8 +4,8 @@ import { FC, useEffect, useState } from 'react';
 import { authApi } from '../api/authApi';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import LoginLogo from '../assets/images/logo.png';
-import LoginImage from '../assets/images/login.png';
+import LoginLogo from '../assets/images/logo.svg';
+import LoginImage from '../assets/images/login.svg';
 import CSS from 'csstype';
 import '../assets/css/Login.css';
 
@@ -121,9 +121,9 @@ const Login = () => {
               alt="LoginImage"
               style={{
                 width: '80%',
-                height: '50%',
+                height: '60%',
                 display: 'block',
-                margin: '5rem auto'
+                margin: '15% auto'
               }}
             />
           </div>

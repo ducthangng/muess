@@ -13,7 +13,7 @@ const Landingpage = () => {
   return (
     <Container>
       <Styles />
-      <SideMenu />
+      {/* <SideMenu /> */}
       <ContentBlock
         type="left"
         title={IntroButton.title}
