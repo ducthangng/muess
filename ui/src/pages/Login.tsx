@@ -1,6 +1,7 @@
 // import { Form, Layout, Button, Input, Divider } from 'antd';
 // // import logo from '../../assets/logo-1.svg';
 import { FC, useEffect, useState } from 'react';
+import { authApi } from '../api/authApi';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import LoginLogo from '../assets/images/logo.png';
@@ -9,11 +10,42 @@ import CSS from 'csstype';
 import '../assets/css/Login.css';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  let navigate = useNavigate();
+
+  const routeChange = async (path: string) => {
+    navigate(`${path}`);
+  };
+
+  const checkLogin = async () => {
+    let data = await authApi.getId();
+    if (data !== null && data !== 0) {
+      routeChange('/');
+    }
+  };
+
+  const handleLogin = async () => {
+    let data = authApi.login({ username, password }).then((res) => {
+      if (res.id !== 0) {
+        routeChange('/');
+      } else {
+        alert('Invalid username or password');
+      }
+      return res;
+    });
+    return data;
+  };
+
+  // useEffect(() => {
+  //     checkLogin();
+  // }, []);
+
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
-  const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/`);

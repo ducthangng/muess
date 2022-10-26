@@ -12,7 +12,7 @@ export const authApi = {
     fullname: string;
     username: string;
     password: string;
-    gender: string;
+    date_of_birth: string;
     mail: string;
   }) => {
     const payload = parameter;
