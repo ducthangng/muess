@@ -43,8 +43,8 @@ const org1PrivateCollectionName = 'Org1MSPPrivateCollection';
 const org2PrivateCollectionName = 'Org2MSPPrivateCollection';
 const mspOrg1 = 'Org1MSP';
 const mspOrg2 = 'Org2MSP';
-const Org1UserId = 'appUser7';
-const Org2UserId = 'appUser8';
+const Org1UserId = 'appUser1';
+const Org2UserId = 'appUser2';
 
 const RED = '\x1b[31m\n';
 const RESET = '\x1b[0m';
@@ -248,15 +248,14 @@ const readTransferAgreement = async (contract: Contract, assetID: string) => {
 };
 
 const deleteTransferAgreement = async (contract: Contract, assetID: string) => {
+  console.log('\nSubmit Transaction: DeleteTransferAgreement ' + assetID);
   //Buyer can withdraw the Agreement, using DeleteTranferAgreement
-  const statefulTxn = contract.createTransaction('DeleteTranferAgreement');
-  statefulTxn.setEndorsingOrganizations(mspOrg2);
-  const dataForDeleteAgreement = { assetID: assetID };
-  const tmapData = Buffer.from(JSON.stringify(dataForDeleteAgreement));
-  statefulTxn.setTransient({
-    agreement_delete: tmapData
-  });
-  const result = await statefulTxn.submit();
+  const result = contract.submitTransaction('DeleteTranferAgreement', assetID);
+  // statefulTxn.setEndorsingOrganizations(mspOrg2);
+  // statefulTxn.setTransient({
+  //   agreement_delete: tmapData
+  // });
+  // const result = await statefulTxn.submit();
   return result;
 };
 
@@ -341,8 +340,17 @@ async function main() {
       result = await agreeToTransfer(contractOrg1, assetID1, 100);
       console.log(`<-- result: ${prettyJSONString(result.toString())}`);
 
-      // Buyer from Org2 agrees to buy the asset assetID1 with price 100//
       // To purchase the asset, the buyer needs to agree to the same value as the asset owner
+
+      // Buyer from Org2 agrees to buy the asset assetID1 with price 110
+      result = await agreeToTransfer(contractOrg2, assetID1, 110);
+      console.log(`<-- result: ${prettyJSONString(result.toString())}`);
+
+      // Buyer from Org2 deletes agreement
+      result = await deleteTransferAgreement(contractOrg2, assetID1);
+      console.log(`<-- result: ${prettyJSONString(result.toString())}`);
+
+      // Buyer from Org2 agrees to buy the asset assetID1 again with new price 100
       result = await agreeToTransfer(contractOrg2, assetID1, 100);
       console.log(`<-- result: ${prettyJSONString(result.toString())}`);
 

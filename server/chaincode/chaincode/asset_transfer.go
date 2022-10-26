@@ -157,7 +157,7 @@ func (s *SmartContract) AgreeToTransfer(ctx contractapi.TransactionContextInterf
 
 	existingTransferAgreement, err := s.ReadTransferAgreement(ctx, valueJSON.ID)
 	if existingTransferAgreement != nil {
-		return fmt.Errorf("There already exists a transfer agreement for this asset %v", assetID)
+		return fmt.Errorf("There already exists a transfer agreement for this asset %v", valueJSON.ID)
 	}
 
 	log.Printf("AgreeToTransfer Put: collection %v, ID %v", orgCollection, valueJSON.ID)
@@ -335,35 +335,35 @@ func (s *SmartContract) verifyAgreement(ctx contractapi.TransactionContextInterf
 
 // DeleteTranferAgreement can be used by the buyer to withdraw a proposal from
 // the asset collection and from his own collection.
-func (s *SmartContract) DeleteTranferAgreement(ctx contractapi.TransactionContextInterface) error {
+func (s *SmartContract) DeleteTranferAgreement(ctx contractapi.TransactionContextInterface, assetID string) error {
 
-	transientMap, err := ctx.GetStub().GetTransient()
-	if err != nil {
-		return fmt.Errorf("error getting transient: %v", err)
-	}
+	// transientMap, err := ctx.GetStub().GetTransient()
+	// if err != nil {
+	// 	return fmt.Errorf("error getting transient: %v", err)
+	// }
 
-	// Asset properties are private, therefore they get passed in transient field
-	transientDeleteJSON, ok := transientMap["agreement_delete"]
-	if !ok {
-		return fmt.Errorf("asset to delete not found in the transient map")
-	}
+	// // Asset properties are private, therefore they get passed in transient field
+	// transientDeleteJSON, ok := transientMap["agreement_delete"]
+	// if !ok {
+	// 	return fmt.Errorf("asset to delete not found in the transient map")
+	// }
 
-	type assetDelete struct {
-		ID string `json:"assetID"`
-	}
+	// type assetDelete struct {
+	// 	ID string `json:"assetID"`
+	// }
 
-	var assetDeleteInput assetDelete
-	err = json.Unmarshal(transientDeleteJSON, &assetDeleteInput)
-	if err != nil {
-		return fmt.Errorf("failed to unmarshal JSON: %v", err)
-	}
+	// var assetDeleteInput assetDelete
+	// err = json.Unmarshal(transientDeleteJSON, &assetDeleteInput)
+	// if err != nil {
+	// 	return fmt.Errorf("failed to unmarshal JSON: %v", err)
+	// }
 
-	if len(assetDeleteInput.ID) == 0 {
-		return fmt.Errorf("transient input ID field must be a non-empty string")
+	if len(assetID) == 0 {
+		return fmt.Errorf("assetID must be a non-empty string")
 	}
 
 	// Verify that the client is submitting request to peer in their organization
-	err = verifyClientOrgMatchesPeerOrg(ctx)
+	err := verifyClientOrgMatchesPeerOrg(ctx)
 	if err != nil {
 		return fmt.Errorf("DeleteTranferAgreement cannot be performed: Error %v", err)
 	}
@@ -372,28 +372,27 @@ func (s *SmartContract) DeleteTranferAgreement(ctx contractapi.TransactionContex
 	if err != nil {
 		return fmt.Errorf("failed to infer private collection name for the org: %v", err)
 	}
-	tranferAgreeKey, err := ctx.GetStub().CreateCompositeKey(transferAgreementObjectType, []string{assetDeleteInput.
-		ID}) // Create composite key
+	tranferAgreeKey, err := ctx.GetStub().CreateCompositeKey(transferAgreementObjectType, []string{assetID}) // Create composite key
 	if err != nil {
 		return fmt.Errorf("failed to create composite key: %v", err)
 	}
 
-	valAsbytes, err := ctx.GetStub().GetPrivateData(assetCollection, tranferAgreeKey) //get the transfer_agreement
+	valAsbytes, err := ctx.GetStub().GetState(tranferAgreeKey) //get the transfer_agreement
 	if err != nil {
 		return fmt.Errorf("failed to read transfer_agreement: %v", err)
 	}
 	if valAsbytes == nil {
-		return fmt.Errorf("asset's transfer_agreement does not exist: %v", assetDeleteInput.ID)
+		return fmt.Errorf("asset's transfer_agreement does not exist: %v", assetID)
 	}
 
-	log.Printf("Deleting TranferAgreement: %v", assetDeleteInput.ID)
-	err = ctx.GetStub().DelPrivateData(orgCollection, assetDeleteInput.ID) // Delete the asset
+	log.Printf("Deleting TranferAgreement: %v", assetID)
+	err = ctx.GetStub().DelPrivateData(orgCollection, assetID) // Delete the asset
 	if err != nil {
 		return err
 	}
 
 	// Delete transfer agreement record
-	err = ctx.GetStub().DelPrivateData(assetCollection, tranferAgreeKey) // remove agreement from state
+	err = ctx.GetStub().DelState(tranferAgreeKey) // remove agreement from state
 	if err != nil {
 		return err
 	}
