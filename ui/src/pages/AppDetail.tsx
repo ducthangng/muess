@@ -80,6 +80,7 @@ const AppDetail: React.FC<AppDetailData> = ({
                 backgroundColor: '#ffffff',
                 fontSize: '1.25rem',
                 fontWeight: '400',
+                color: '#FB7F4B',
               }}>Nha cai uy tin so 1 vietnam</div>
             <div className="app-detail-types"
               style={{
@@ -138,13 +139,12 @@ const AppDetail: React.FC<AppDetailData> = ({
                 fontWeight: 700,
                 fontSize: '14px',
                 lineHeight: '15px',
-                height: '2.5rem',
-                width: '50%',
-                borderRadius: '5px',
+                height: '2.25rem',
+                width: '30%',
+                borderRadius: '10px',
                 position: 'relative',
               }}>CONTACT</button>
           </div>
-
           <div className="app-sub-detail"
             style={{
               width: '90%',
@@ -198,6 +198,7 @@ const AppDetail: React.FC<AppDetailData> = ({
                 fontSize: '1rem',
                 fontWeight: '700',
                 marginTop: '1rem',
+                color: '#FB7F4B',
               }}>User1234</div>
               <div className="app-feedback-content"
               style={{
