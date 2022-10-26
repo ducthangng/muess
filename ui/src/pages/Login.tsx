@@ -10,42 +10,42 @@ import CSS from 'csstype';
 import '../assets/css/Login.css';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-    let navigate = useNavigate();
+  let navigate = useNavigate();
 
-    const routeChange = async (path: string) => {
-        navigate(`${path}`);
+  const routeChange = async (path: string) => {
+    navigate(`${path}`);
+  };
+
+  const checkLogin = async () => {
+    let data = await authApi.getId();
+    if (data !== null && data !== 0) {
+      routeChange('/');
     }
+  };
 
-    const checkLogin = async () => {
-        let data = await authApi.getId();
-        if (data !== null && data !== 0) {
-            routeChange('/');
-        }
-    };
+  const handleLogin = async () => {
+    let data = authApi.login({ username, password }).then((res) => {
+      if (res.id !== 0) {
+        routeChange('/');
+      } else {
+        alert('Invalid username or password');
+      }
+      return res;
+    });
+    return data;
+  };
 
-    const handleLogin = async () => {
-        let data = authApi.login({ username, password }).then((res) => {
-            if (res.id !== 0) {
-                routeChange('/');
-            } else {
-                alert('Invalid username or password');
-            }
-            return res;
-        });
-        return data;
-    };
+  // useEffect(() => {
+  //     checkLogin();
+  // }, []);
 
-    // useEffect(() => {
-    //     checkLogin();
-    // }, []);
-
-    const [passwordShown, setPasswordShown] = useState(false);
-    const togglePassword = () => {
-        setPasswordShown(!passwordShown);
-    };
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   const handleClick = () => {
     navigate(`/`);

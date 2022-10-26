@@ -10,15 +10,20 @@ const app: App = {
   description: '1',
   rated: '1',
   reviewer: '1',
-  appTag: '1',
+  appTags: [],
   downloaded: 1,
-  appInformations: '1',
   feedbacks: [
     {
       name: '1',
       content: '1'
     }
-  ]
+  ],
+  creatorId: '',
+  creatorName: '',
+  appType: '',
+  appPaymentMethod: '',
+  appCategories: [],
+  appIcon: ''
 };
 
 const smartContractMockData: APISmartContract = {

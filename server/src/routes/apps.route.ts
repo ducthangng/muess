@@ -14,11 +14,11 @@ class AppsRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.appsController.getApps);
+    this.router.get(`${this.path}/all`, this.appsController.getAllApps);
     this.router.get(`${this.path}/:id`, this.appsController.getAppById);
     this.router.post(
       `${this.path}`,
-      validationMiddleware(CreateAppDto, 'body'),
+      // validationMiddleware(CreateAppDto, 'body'),
       this.appsController.createApp
     );
     this.router.put(
@@ -26,7 +26,7 @@ class AppsRoute implements Routes {
       validationMiddleware(CreateAppDto, 'body', true),
       this.appsController.updateApp
     );
-    this.router.delete(`${this.path}/:id`, this.appsController.deleteApp);
+    // this.router.delete(`${this.path}/:id`, this.appsController.deleteApp);
   }
 }
 

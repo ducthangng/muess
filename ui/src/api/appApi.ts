@@ -1,14 +1,94 @@
 import { AppError } from '../models/Error';
-import { AppDetailData } from '../models/AppDetailData';
-import { stringify } from 'querystring';
+import { AppDetailData, CreateAppData } from '../models/AppDetailData';
 
-const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
-const apiUrl = `${BASE_API}/api/v1/app`;
+const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8000';
+const apiUrl = `${BASE_API}/apps`;
+
+const SENDPOST = async (url: string, data: any) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify(data)
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    throw new Error('Network response was not ok.');
+  });
+
+  return response.json();
+};
 
 /**
  * fetches for app data.
  */
 export const appApi = {
+  /**
+   * create a new application.
+   *
+   * @param app details of the created app
+   * @returns true if scuccess, false otherwise
+   */
+  releaseApp: async (params: { app: CreateAppData }) => {
+    const response = SENDPOST(`${apiUrl}`, params.app)
+      .then((data) => {
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const x: number = data.data;
+        return x === 1 ? true : false;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  getAppByCreatorId: async (creatorId: string) => {
+    const response = await fetch(
+      `${apiUrl}/creator_app?creator_id=${creatorId}`,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const x: AppDetailData[] = data.data;
+
+        return x;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  /**
+   * Get all available apps from database without considering the owner.
+   *
+   * @returns list of app
+   */
   getAllApps: async () => {
     const response = await fetch(`${apiUrl}/all`, {
       method: 'GET',
@@ -22,62 +102,25 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
         const apps: AppDetailData[] = data.data;
+        console.log('app: ', data.data);
         return apps;
-      })
-      .catch((err) => {
-        return err;
       });
 
     return response;
   },
 
-  getInfoByName: async (Name: string) => {
-    const response = await fetch(
-      `${apiUrl}/?` + new URLSearchParams({ Name }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const apps: AppDetailData[] = data.data;
-        return apps;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
-  getInfoById: async (id: number) => {
-    const response = await fetch(
-      `${apiUrl}/?` + new URLSearchParams({ app_id: id.toString() }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
+  /**
+   *  Returns app information of a specific app with the given app id.
+   *
+   * @param id id of the app
+   * @returns app detail data
+   */
+  getAppById: async (id: string) => {
+    const response = await fetch(`${apiUrl}/${id}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -91,7 +134,7 @@ export const appApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const apps: AppDetailData[] = data.data;
+        const apps: AppDetailData = data.data;
         return apps;
       })
       .catch((err) => {
@@ -101,72 +144,14 @@ export const appApi = {
     return response;
   },
 
-//   getInfoByFullname: async (fullname: string) => {
-//     const response = await fetch(
-//       `${apiUrl}?` + new URLSearchParams({ fullname }),
-//       {
-//         method: 'GET',
-//         credentials: 'include'
-//       }
-//     )
-//       .then((res) => {
-//         if (res.ok) {
-//           return res.json();
-//         }
-
-//         throw new Error('Network response was not ok.');
-//       })
-//       .then((data) => {
-//         console.log(data);
-//         const err: AppError = data.error;
-//         if (err.errorCode !== 0) {
-//           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-//         }
-
-//         const users: User[] = data.data;
-//         return users;
-//       })
-//       .catch((err) => {
-//         return err;
-//       });
-
-//     return response;
-//   },
-
-  getDesc: async (appId: number) => {
-    const response = await fetch(
-      `${apiUrl}/class?` + new URLSearchParams({ app_id: appId.toString() }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const desc: AppDetailData[] = data.description;
-        return desc;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
-  updateInfo: async (parameter: AppDetailData) => {
-    const payload = parameter;
+  /**
+   *  Update an existed app inside database.
+   *
+   * @param app app detail of the updated app. Note: all fields are required.
+   * @returns status: true if success, false if not.
+   */
+  updateApp: async (app: AppDetailData): Promise<Boolean> => {
+    const payload = app;
 
     const response = await fetch(`${apiUrl}`, {
       method: 'PUT',
@@ -190,47 +175,18 @@ export const appApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const response: number = data.data;
-        return response;
+        const x: number = data.data;
+
+        if (x === 1) {
+          return true;
+        }
+
+        return false;
       })
       .catch((err) => {
         return err;
       });
 
     return response;
-  },
-
-//   getAllTestResult: async (id: number) => {
-//     const user_id = id.toString();
-
-//     const response = await fetch(
-//       `${apiUrl}/test_result?` + new URLSearchParams({ user_id }),
-//       {
-//         method: 'GET',
-//         credentials: 'include'
-//       }
-//     )
-//       .then((res) => {
-//         if (res.ok) {
-//           return res.json();
-//         }
-
-//         throw new Error('Network response was not ok.');
-//       })
-//       .then((data) => {
-//         console.log(data);
-//         const err: AppError = data.error;
-//         if (err.errorCode !== 0) {
-//           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-//         }
-
-//         const results: Result[] = data.data;
-//         return results;
-//       })
-//       .catch((err) => {
-//         return err;
-//       });
-
-//     return response;
-//   }
+  }
 };

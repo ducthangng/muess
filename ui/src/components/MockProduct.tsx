@@ -2,9 +2,9 @@ import { Card, Form, Tag } from 'antd';
 import React from 'react';
 import '../assets/css/MockTest.css';
 import mocktest from '../assets/images/Rectangle 6295.png';
-import { AppData } from '../models/AppData';
+import { AppDetailData } from '../models/AppDetailData';
 
-const MockApp: React.FC<AppData> = ({ appId, description, title, apptag }) => {
+const MockApp: React.FC<AppDetailData> = ({ _id, title, appTags }) => {
   return (
     <Form>
       <Card
@@ -23,7 +23,7 @@ const MockApp: React.FC<AppData> = ({ appId, description, title, apptag }) => {
           <h1 className="content">{title}</h1>
         </div>
         <Tag color="#F17B7B" style={{ bottom: 'left' }} className="tag_lon">
-          {apptag}
+          {appTags}
         </Tag>
       </Card>
     </Form>

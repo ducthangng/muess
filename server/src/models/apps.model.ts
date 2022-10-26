@@ -1,31 +1,74 @@
 import { model, Schema, Document } from 'mongoose';
 import { App } from '@interfaces/apps.interface';
 
-const appSchema: Schema = new Schema({
+const feedback: Schema = new Schema({
   name: {
+    type: String,
+    required: false,
+    unique: false
+  },
+  content: {
+    type: String,
+    required: false,
+    unique: false
+  }
+});
+
+const appSchema: Schema = new Schema({
+  title: {
     type: String,
     required: true,
     unique: true
   },
-  desc: {
+  creatorId: {
     type: String,
-    required: true
+    required: false
   },
-  apptype: {
+  creatorName: {
     type: String,
-    required: true
+    required: false
   },
-  payoption: {
+  description: {
     type: String,
-    required: true
+    required: false
   },
-  category: {
+  rated: {
     type: String,
-    required: true
+    required: true,
+    unique: false
   },
-  tags: {
+  appType: {
     type: String,
-    required: true
+    required: false
+  },
+  appPaymentMethod: {
+    type: String,
+    required: false
+  },
+  appCategories: {
+    type: String,
+    required: false
+  },
+  appTags: {
+    type: [String],
+    required: false
+  },
+  reviewer: {
+    type: String,
+    required: false
+  },
+  downloaded: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  appIcon: {
+    type: String,
+    required: false
+  },
+  feedbacks: {
+    type: [feedback],
+    required: false
   }
 });
 

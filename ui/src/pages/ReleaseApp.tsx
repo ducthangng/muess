@@ -7,19 +7,58 @@ import DragAndDrop from '../components/DragDrop';
 import TextArea from 'antd/lib/input/TextArea';
 import DragAndDropMulti from '../components/DragDropMulti';
 import SideMenu from '../components/Header/SideMenu';
+import { appApi } from '../api/appApi';
+import { AppDetailData, CreateAppData } from '../models/AppDetailData';
+
+const options = [
+  { value: 'Educational', label: 'Educational' },
+  { value: 'Lifestyle', label: 'Lifestyle' },
+  { value: 'SocialMedia', label: 'Social media' },
+  { value: 'Productivity', label: 'Productivity' },
+  { value: 'Entertainment', label: 'Entertainment' },
+  { value: 'Game', label: 'Game' }
+];
 
 const ReleaseApp = () => {
-  const [selected, setSelected] = useState([]);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [appType, setAppType] = useState('');
+  const [appPaymentMethod, setAppPaymentMethod] = useState('');
+  const [appCategories, setAppCategories] = useState('');
+  const [appTags, setAppTags] = useState([] as string[]);
   const [count, setCount] = React.useState(0);
   const [count1, setCount1] = React.useState(0);
-  const options = [
-    { value: 'Educational', label: 'Educational' },
-    { value: 'Lifestyle', label: 'Lifestyle' },
-    { value: 'SocialMedia', label: 'Social media' },
-    { value: 'Productivity', label: 'Productivity' },
-    { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Game', label: 'Game' }
-  ];
+
+  const onRelease = () => {
+    const req: CreateAppData = {
+      title,
+      description,
+      appType,
+      appTags,
+      appPaymentMethod,
+      appCategories,
+      creatorId: '',
+      creatorName: '',
+      rated: '',
+      reviewer: '',
+      downloaded: 0,
+      appIcon: '',
+      feedbacks: [
+        {
+          name: '',
+          content: ''
+        }
+      ]
+    };
+
+    appApi.releaseApp({ app: req }).then((status) => {
+      if (status) {
+        // proceed success
+      }
+
+      // proceed fail
+    });
+  };
 
   return (
     <>
@@ -63,7 +102,8 @@ const ReleaseApp = () => {
           <div className="AppNameFill">
             <input
               maxLength={50}
-              onChange={(e) => setCount(e.target.value.length)}
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
             ></input>
             <div
               style={{
@@ -125,6 +165,7 @@ const ReleaseApp = () => {
                 name="choices1"
                 value="app"
                 className="form-check-input1"
+                onClick={(e) => setAppType('app')}
               />
               <div className="AppBox">App</div>
 
@@ -133,6 +174,7 @@ const ReleaseApp = () => {
                 name="choices1"
                 value="game"
                 className="form-check-input2"
+                onClick={(e) => setAppType('game')}
               />
               <div className="GameBox">Game</div>
             </label>
@@ -181,6 +223,7 @@ const ReleaseApp = () => {
                 name="choices2"
                 value="free"
                 className="form-check-input3"
+                onClick={(e) => setAppPaymentMethod('Free')}
               />
               <div className="FreeBox">Free</div>
 
@@ -189,6 +232,7 @@ const ReleaseApp = () => {
                 name="choices2"
                 value="game"
                 className="form-check-input4"
+                onClick={(e) => setAppPaymentMethod('Paid')}
               />
               <div className="PaidBox">Paid</div>
 
@@ -197,6 +241,7 @@ const ReleaseApp = () => {
                 name="choices2"
                 value="game"
                 className="form-check-input5"
+                onClick={(e) => setAppPaymentMethod('Rent')}
               />
               <div className="RentBox">Rent</div>
             </label>
@@ -289,6 +334,7 @@ const ReleaseApp = () => {
               left: '150px',
               top: '-25px'
             }}
+            onChange={(value) => setAppCategories(value)}
           ></Select>
           <MultiSelect />
 
@@ -308,7 +354,7 @@ const ReleaseApp = () => {
             </div>
             <TextArea
               maxLength={1000}
-              onChange={(e) => setCount1(e.target.value.length)}
+              onChange={(e) => setDescription(e.target.value)}
             ></TextArea>
             <div className="count2">{count1}/1000</div>
           </div>
@@ -370,6 +416,7 @@ const ReleaseApp = () => {
               width: '80px',
               height: '30px'
             }}
+            onClick={onRelease}
           >
             Release
           </button>

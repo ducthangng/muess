@@ -2,20 +2,11 @@ import { IsString } from 'class-validator';
 
 export class CreateAppDto {
   @IsString()
-  public name: string;
+  public title: string;
 
   @IsString()
-  public desc: string;
+  public description: string;
 
   @IsString()
-  public apptype: string;
-
-  @IsString()
-  public payoption: string;
-
-  @IsString()
-  public category: string;
-
-  @IsString()
-  public tags: string;
+  public appType: string;
 }
