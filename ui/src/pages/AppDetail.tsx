@@ -4,12 +4,17 @@ import { AppDetailData } from '../models/AppDetailData';
 import { Divider } from 'antd';
 
 const AppDetail: React.FC<AppDetailData> = ({
-  appId,
-  appTitle,
+  _id,
+  title,
   description,
-  apprank,
-  appdownloadrate,
-  Appinformation
+  appCategories,
+  appIcon,
+  appPaymentMethod,
+  appTags,
+  appType,
+  feedbacks,
+  creatorId,
+  creatorName
 }) => {
   const navigate = useNavigate();
   return (

@@ -4,11 +4,10 @@ import './configs/antd/customized.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
-import ReleaseApp from './pages/ReleaseApp';
-
+import { QueryClient, QueryClientProvider } from 'react-query';
 import AppRoute from './routes/routes';
 
-import About from './pages/About';
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -28,7 +27,9 @@ function App() {
         pauseOnFocusLoss
         draggable
       />
-      <AppRoute />
+      <QueryClientProvider client={queryClient}>
+        <AppRoute />
+      </QueryClientProvider>
     </>
   );
 }

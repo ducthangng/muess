@@ -1,12 +1,16 @@
 import { CreateAppDto } from '@dtos/apps.dto';
-import { App } from '@interfaces/apps.interface';
+import { App, CreateAppData } from '@interfaces/apps.interface';
 import appService from '@services/apps.service';
 import { Request, NextFunction, Response } from 'express';
 
 class AppsController {
   public appService = new appService();
 
-  public getApps = async (req: Request, res: Response, next: NextFunction) => {
+  public getAllApps = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const findAllAppsData: App[] = await this.appService.findAllApp();
 
@@ -37,7 +41,12 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const appData: CreateAppDto = req.body;
+      console.log(req.body);
+      const appData: CreateAppData = req.body;
+
+      appData.creatorId = 'ducthang_id';
+      appData.creatorName = 'ducthang';
+      appData.rated = '16+';
       const createAppData: App = await this.appService.createApp(appData);
 
       res.status(201).json({ data: createAppData, message: 'created' });
@@ -52,12 +61,8 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const appId: string = req.params.id;
-      const appData: CreateAppDto = req.body;
-      const updateAppData: App = await this.appService.updateApp(
-        appId,
-        appData
-      );
+      const appData: App = req.body;
+      const updateAppData: App = await this.appService.updateApp(appData);
 
       res.status(200).json({ data: updateAppData, message: 'updated' });
     } catch (error) {

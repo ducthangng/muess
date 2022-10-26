@@ -32,13 +32,13 @@ class UsersRoute implements Routes {
     this.router.get(`${this.path}/:id/`, this.usersController.enrollUser);
 
     //mock app
-    this.router.get(`${this.path}/mockapp`, this.appsController.getApps);
-    this.router.get(`${this.path}/mockapp/:id`, this.appsController.getAppById);
-    this.router.post(
-      `${this.path}/mockapp`,
-      validationMiddleware(CreateUserDto, 'body'),
-      this.appsController.createApp
-    );
+    // this.router.get(`${this.path}/mockapp`, this.appsController);
+    // this.router.get(`${this.path}/mockapp/:id`, this.appsController.getAppById);
+    // this.router.post(
+    //   `${this.path}/mockapp`,
+    //   validationMiddleware(CreateUserDto, 'body'),
+    //   this.appsController.createApp
+    // );
     this.router.post(
       `${this.path}/mockapp/:id`,
       validationMiddleware(CreateUserDto, 'body', true),
