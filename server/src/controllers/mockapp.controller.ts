@@ -37,7 +37,7 @@ const smartContractMockData: APISmartContract = {
 class AppsController {
   //public appService = new appService();
 
-  public createlicenseApp = async (
+  public createAppLicense = async (
     req: Request,
     res: Response,
     next: NextFunction

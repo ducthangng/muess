@@ -84,6 +84,21 @@ class AppsController {
       next(error);
     }
   };
+
+  public getPurchasedApp = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      // /myApp?userId=10
+      const userId = req.query['id'];
+
+      res.status(200).json({ data: userId, message: 'deleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default AppsController;

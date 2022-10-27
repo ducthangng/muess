@@ -8,79 +8,17 @@ import { User } from '@interfaces/users.interface';
 import { Client } from '../../node_modules/fabric-client/lib/Client';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
+import log4js from 'log4js';
+import hfc from 'fabric-client';
+import util from 'util';
+import path from 'path';
+import fs from 'fs';
 
-// const log4js = require('log4js');
-// var logger = log4js.getLogger('auth.service.ts');
-
-// const util = require('util');
-// const fs = require('fs-extra');
-// const path = require('path');
-
-// var hfc = require('../../node_modules/fabric-client');
-// hfc.setLogger(logger);
+const logger = log4js.getLogger('auth.service.ts');
+hfc.setLogger(logger);
 
 class AuthService {
   public users = userModel;
-
-  public async signup(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
-
-    const findUser: User = await this.users.findOne({ email: userData.email });
-    if (findUser)
-      throw new HttpException(
-        409,
-        `This email ${userData.email} already exists`
-      );
-
-    const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await this.users.create({
-      ...userData,
-      password: hashedPassword
-    });
-
-    return createUserData;
-  }
-
-  public async login(
-    userData: CreateUserDto
-  ): Promise<{ cookie: string; findUser: User }> {
-    if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
-
-    const findUser: User = await this.users.findOne({ email: userData.email });
-    if (!findUser)
-      throw new HttpException(
-        409,
-        `This email ${userData.email} was not found`
-      );
-
-    const isPasswordMatching: boolean = await compare(
-      userData.password,
-      findUser.password
-    );
-    if (!isPasswordMatching)
-      throw new HttpException(409, 'Password is not matching');
-
-    const tokenData = this.createToken(findUser);
-    const cookie = this.createCookie(tokenData);
-
-    return { cookie, findUser };
-  }
-
-  public async logout(userData: User): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
-
-    const findUser: User = await this.users.findOne({
-      email: userData.email,
-      password: userData.password
-    });
-    if (!findUser)
-      throw new HttpException(
-        409,
-        `This email ${userData.email} was not found`
-      );
-
-    return findUser;
-  }
 
   public createToken(user: User): TokenData {
     const dataStoredInToken: DataStoredInToken = { _id: user._id };
@@ -98,10 +36,11 @@ class AuthService {
   }
 
   public async getClientForOrg(orgName: string): Promise<Client> {
-    logger.debug('getClientForOrg - ****** START %s', orgName);
+    console.log('getClientForOrg - ****** START %s', orgName);
 
     // get a fabric client loaded with a connection profile for this org
-    const config = '../test-network/organizations/' + orgName;
+    const config =
+      '../../test-network/organizations/peerOrganizations/' + orgName;
 
     // build a client context and load it with a connection profile
     // lets only load the network settings and save the client for later
@@ -134,7 +73,7 @@ class AuthService {
     return client;
   }
 
-  public async getRegisteredUser(email: string): Promise<boolean> {
+  public async getRegisteredUser(email: string): Promise<string> {
     try {
       const client = await this.getClientForOrg(email);
       logger.debug('Successfully initialized the credential stores');

@@ -17,6 +17,28 @@ class HLFService {
     console.log('*** Result:', result.toString());
   }
 
+  public async getAssetByOwnerId(
+    contract: Contract,
+    ownerId: string
+  ): Promise<License[]> {
+    console.log(
+      `\n--> Evaluate Transaction: QueryAssetByOwnerID, OwnerID: ${ownerId}`
+    );
+
+    const resultBytes = await contract.evaluateTransaction(
+      'QueryAssetByOwnerID',
+      ownerId
+    );
+
+    const resultString = utf8Decoder.decode(resultBytes);
+    if (!resultString) {
+      this.doFail('Received empty result for ReadAsset');
+    }
+    const result: License[] = JSON.parse(resultString);
+
+    return result;
+  }
+
   public async readAssetByID(
     contract: Contract,
     licenseId: string
@@ -34,26 +56,6 @@ class HLFService {
     const result: License[] = JSON.parse(resultString);
 
     return result;
-  }
-
-  public async agreeToTransfer(
-    contract: Contract,
-    license: License
-  ): Promise<string> {
-    // Buyer from Org2 agrees to buy the asset//
-    // To purchase the asset, the buyer needs to agree to the same value as the asset owner
-
-    const dataForAgreement = { license };
-    console.log(
-      '\n--> Submit Transaction: AgreeToTransfer, payload:',
-      dataForAgreement
-    );
-
-    const x = await contract.submit('AgreeToTransfer', {
-      transientData: { asset_value: JSON.stringify(dataForAgreement) }
-    });
-
-    return x.toString();
   }
 
   public async readTransferAgreement(
@@ -94,13 +96,13 @@ class HLFService {
     return x.toString();
   }
 
-  public async deleteAsset(
+  public async deleteTransferAgreement(
     contract: Contract,
     lisenceId: string
   ): Promise<string> {
     console.log('\n--> Submit Transaction: DeleteAsset, ID:', lisenceId);
     const dataForDelete = { lisenceId };
-    const x = await contract.submit('DeleteAsset', {
+    const x = await contract.submit('DeleteTranferAgreement', {
       transientData: { asset_delete: JSON.stringify(dataForDelete) }
     });
 

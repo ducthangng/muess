@@ -42,7 +42,7 @@ class UsersRoute implements Routes {
     this.router.post(
       `${this.path}/mockapp/:id`,
       validationMiddleware(CreateUserDto, 'body', true),
-      this.appsController.createlicenseApp
+      this.appsController.createAppLicense
     );
     this.router.get(
       `${this.path}/mockapp/:id/`,

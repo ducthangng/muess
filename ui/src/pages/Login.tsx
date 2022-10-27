@@ -27,15 +27,16 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    let data = authApi.login({ username, password }).then((res) => {
-      if (res.id !== 0) {
-        routeChange('/');
-      } else {
-        alert('Invalid username or password');
-      }
-      return res;
-    });
-    return data;
+    // let data = authApi.login({ username, password }).then((res) => {
+    //   if (res.id !== 0) {
+    //     routeChange('/');
+    //   } else {
+    //     alert('Invalid username or password');
+    //   }
+    //   return res;
+    // });
+    // return data;
+    routeChange('/release');
   };
 
   // useEffect(() => {
@@ -257,6 +258,7 @@ const Login = () => {
                   position: 'relative',
                   marginTop: '1.2rem'
                 }}
+                onClick={handleLogin}
               >
                 SIGN IN
               </button>

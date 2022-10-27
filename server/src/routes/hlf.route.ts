@@ -12,7 +12,7 @@ class HLFRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.hlfController.getAllAssets);
+    this.router.get(`${this.path}/bid`, this.hlfController.bidLicense);
   }
 }
 

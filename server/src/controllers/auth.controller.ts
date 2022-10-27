@@ -18,11 +18,7 @@ class AuthController {
     }
   };
 
-  public getClientForOrg = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public Login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;
       const clientUserData: User = await this.authService.getClientForOrg(
@@ -42,9 +38,8 @@ class AuthController {
   ) => {
     try {
       const userData: CreateUserDto = req.body;
-      const registeredUserData: User = await this.authService.getRegisteredUser(
-        userData.email
-      );
+      const registeredUserData: string =
+        await this.authService.getRegisteredUser(userData.email);
 
       res.status(201).json({ data: registeredUserData, message: 'registered' });
     } catch (error) {

@@ -13,8 +13,8 @@ import { TextDecoder } from 'util';
 import { Gateway } from '../../node_modules/@hyperledger/fabric-gateway/dist/gateway.d';
 import { Network } from '../../node_modules/@hyperledger/fabric-gateway/dist/network.d';
 
-const channelName = envOrDefault('CHANNEL_NAME', 'munich');
-const chaincodeName = envOrDefault('CHAINCODE_NAME', 'basic');
+const channelName = envOrDefault('CHANNEL_NAME', 'myChannel');
+const chaincodeName = envOrDefault('CHAINCODE_NAME', 'private');
 const mspId = envOrDefault('MSP_ID', 'Org1MSP');
 
 // Path to crypto materials.
@@ -124,8 +124,11 @@ export const singletoninitHyperledgerFabric = (function () {
   return {
     getInstance: async function () {
       if (!instance) {
+        console.log('getting it ...');
         instance = await init();
       }
+
+      console.log('singleton');
       return instance;
     }
   };
