@@ -10,9 +10,9 @@
 //      go mod tidy
 //      go mod vendor
 // go to ../test-network, run
-//      ./network.sh down
-//      ./network.sh up createChannel -ca -s couchdb
-//      ./network.sh deployCC -ccn private -ccp ../chaincode/ -ccl go -ccep "OR('Org1MSP.peer','Org2MSP.peer')" -cccg ../chaincode/collections_config.json
+//  ./network.sh down
+//  ./network.sh up createChannel -ca -s couchdb
+//  ./network.sh deployCC -ccn private -ccp ../chaincode/ -ccl go -ccep "OR('Org1MSP.peer','Org2MSP.peer')" -cccg ../chaincode/collections_config.json
 // at this folder, run:
 //      npm run prepare
 //      npm run start

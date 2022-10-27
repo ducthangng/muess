@@ -64,7 +64,9 @@ const ReleaseApp = () => {
     <>
       <SideMenu />
       <div className="Publish_Block">
-        <div className="ReleaseTitle" style={{fontWeight:'700'}}>Upload an App</div>
+        <div className="ReleaseTitle" style={{ fontWeight: '700' }}>
+          Upload an App
+        </div>
         <div
           style={{
             border: '1px solid #E3E3E3',
