@@ -4,19 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-'use strict';
+import * as FabricCAServices from 'fabric-ca-client';
+import { Wallet } from 'fabric-network';
 
 const adminUserId = 'admin';
 const adminUserPasswd = 'adminpw';
 
 /**
  *
- * @param {*} FabricCAServices
  * @param {*} ccp
  */
-exports.buildCAClient = (FabricCAServices, ccp, caHostName) => {
+const buildCAClient = (
+  ccp: Record<string, any>,
+  caHostName: string
+): FabricCAServices => {
   // Create a new CA client for interacting with the CA.
-  const caInfo = ccp.certificateAuthorities[caHostName]; //lookup CA details from config
+  const caInfo = ccp.certificateAuthorities[caHostName]; // lookup CA details from config
   const caTLSCACerts = caInfo.tlsCACerts.pem;
   const caClient = new FabricCAServices(
     caInfo.url,
@@ -28,7 +31,11 @@ exports.buildCAClient = (FabricCAServices, ccp, caHostName) => {
   return caClient;
 };
 
-exports.enrollAdmin = async (caClient, wallet, orgMspId) => {
+const enrollAdmin = async (
+  caClient: FabricCAServices,
+  wallet: Wallet,
+  orgMspId: string
+): Promise<void> => {
   try {
     // Check to see if we've already enrolled the admin user.
     const identity = await wallet.get(adminUserId);
@@ -61,13 +68,13 @@ exports.enrollAdmin = async (caClient, wallet, orgMspId) => {
   }
 };
 
-exports.registerAndEnrollUser = async (
-  caClient,
-  wallet,
-  orgMspId,
-  userId,
-  affiliation
-) => {
+const registerAndEnrollUser = async (
+  caClient: FabricCAServices,
+  wallet: Wallet,
+  orgMspId: string,
+  userId: string,
+  affiliation: string
+): Promise<void> => {
   try {
     // Check to see if we've already enrolled the user
     const userIdentity = await wallet.get(userId);
@@ -98,7 +105,7 @@ exports.registerAndEnrollUser = async (
     // if affiliation is specified by client, the affiliation value must be configured in CA
     const secret = await caClient.register(
       {
-        affiliation: affiliation,
+        affiliation,
         enrollmentID: userId,
         role: 'client'
       },
@@ -124,3 +131,5 @@ exports.registerAndEnrollUser = async (
     console.error(`Failed to register user : ${error}`);
   }
 };
+
+export { buildCAClient, enrollAdmin, registerAndEnrollUser };
