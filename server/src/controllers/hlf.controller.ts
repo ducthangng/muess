@@ -4,6 +4,12 @@ import { NextFunction, Request, Response } from 'express';
 class HLFController {
   public hlfservice = new HLFService();
 
+  /**
+   *  Propose a transaction
+   * @param req
+   * @param res
+   * @param next
+   */
   public bidLicense = async (
     req: Request,
     res: Response,
@@ -11,7 +17,7 @@ class HLFController {
   ) => {
     console.log('tes');
     try {
-      // const findAllAsset = await this.hlfservice.getAllAssets();
+      // const findAllAsset = await this.hlfservice.();
       const x: [] = [];
 
       res.status(200).json({ data: x, message: 'findAllAsset' });
@@ -20,6 +26,12 @@ class HLFController {
     }
   };
 
+  /**
+   *  Get All proposals
+   * @param req
+   * @param res
+   * @param next
+   */
   public getAllBids = async (
     req: Request,
     res: Response,
@@ -36,6 +48,12 @@ class HLFController {
     }
   };
 
+  /**
+   * Agree and transfer the asset
+   * @param req
+   * @param res
+   * @param next
+   */
   public agreeToTransfer = async (
     req: Request,
     res: Response,
@@ -52,6 +70,12 @@ class HLFController {
     }
   };
 
+  /**
+   * Delete an agreement
+   * @param req
+   * @param res
+   * @param next
+   */
   public deleteTransferAgreement = async (
     req: Request,
     res: Response,
@@ -63,6 +87,48 @@ class HLFController {
       const x: [] = [];
 
       res.status(200).json({ data: x, message: 'findAllAsset' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Get all purchased license by a user
+   * @param req
+   * @param res
+   * @param next
+   */
+  public getAllUserPurchasedLicense = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      // /myApp?userId=10
+      const userId = req.query['id'];
+
+      res.status(200).json({ data: userId, message: 'deleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Get all license that a provider has sold.
+   * @param req
+   * @param res
+   * @param next
+   */
+  public getAllSoldLicense = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      // /myApp?userId=10
+      const userId = req.query['id'];
+
+      res.status(200).json({ data: userId, message: 'deleted' });
     } catch (error) {
       next(error);
     }

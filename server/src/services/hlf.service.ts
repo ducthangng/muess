@@ -11,7 +11,10 @@ class HLFService {
     license: License
   ): Promise<void> {
     const result = await contract.submit('CreateAsset', {
-      transientData: { asset_properties: JSON.stringify(license) }
+      transientData: {
+        assetID: JSON.stringify(license.licenseId),
+        licenseDetails: JSON.stringify(license)
+      }
     });
 
     console.log('*** Result:', result.toString());

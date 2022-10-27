@@ -45,6 +45,7 @@ pushd ../../test-network
 popd
 
 pushd ../../application_for_chaincode
+ rm -rf dist/
  npm run prepare
  npm run start
 popd
