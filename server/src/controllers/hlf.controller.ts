@@ -1,8 +1,9 @@
-import HLFService from '@/services/hlf.service';
+// import HLFService from '@/services/hlf.service';
 import { NextFunction, Request, Response } from 'express';
 
+console.log('inside hlf controller');
 class HLFController {
-  public hlfservice = new HLFService();
+  // public hlfservice = new HLFService();
 
   /**
    *  Propose a transaction

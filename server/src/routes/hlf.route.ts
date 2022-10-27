@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import { Routes } from '@interfaces/routes.interface';
+import { Routes } from '@/interfaces/routes.interface';
 import HLFController from '../controllers/hlf.controller';
+
+console.log('inside hlf route');
 
 class HLFRoute implements Routes {
   public path = '/hlf';
