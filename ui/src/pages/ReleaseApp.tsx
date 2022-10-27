@@ -325,7 +325,7 @@ const ReleaseApp = () => {
               color: '#A3A3A3'
             }}
           >
-            Tags
+            Services
           </div>
           <Select
             options={options}
