@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /*
  * Copyright IBM Corp. All Rights Reserved.
  *
@@ -68,10 +67,9 @@
 // Rich Query with index design doc specified only (Only supported if CouchDB is used as state database):
 //   peer chaincode query -C CHANNEL_NAME -n ledger -c '{"Args":["QueryAssets","{\"selector\":{\"docType\":{\"$eq\":\"asset\"},\"owner\":{\"$eq\":\"Tom\"},\"size\":{\"$gt\":0}},\"fields\":[\"docType\",\"owner\",\"size\"],\"sort\":[{\"size\":\"desc\"}],\"use_index\":\"_design/indexSizeSortDoc\"}"]}'
 
-'use strict';
+"use strict";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { Contract } = require('fabric-contract-api');
+const { Contract } = require("fabric-contract-api");
 
 class Chaincode extends Contract {
   // CreateProposal - create a new proposal, store into chaincode state
@@ -90,12 +88,12 @@ class Chaincode extends Contract {
 
     // ==== Create asset object and marshal to JSON ====
     let asset = {
-      assetType: 'proposal',
+      assetType: "proposal",
       assetID: assetID,
       appID: appID,
       buyerID: buyerID,
       proposedPrice: proposedPrice,
-      licenseDetails: licenseDetails
+      licenseDetails: licenseDetails,
     };
 
     // === Save asset to state ===
@@ -105,7 +103,7 @@ class Chaincode extends Contract {
   async AcceptProposal(ctx, assetID, creatorID, proposalID) {
     const proposalBytes = await ctx.stub.getState(proposalID);
     if (!proposalBytes) {
-      throw new Error('No such proposal exists');
+      throw new Error("No such proposal exists");
     }
 
     const proposal = JSON.parse(proposalBytes.toString());
@@ -114,12 +112,12 @@ class Chaincode extends Contract {
     }
 
     let asset = {
-      assetType: 'license',
+      assetType: "license",
       assetID: assetID,
       appID: proposal.appID,
       licenseDetails: proposal.licenseDetails,
       creatorID: creatorID,
-      ownerID: proposal.buyerID
+      ownerID: proposal.buyerID,
     };
 
     await ctx.stub.putState(assetID, Buffer.from(JSON.stringify(asset)));
@@ -139,7 +137,7 @@ class Chaincode extends Contract {
   // delete - remove a asset key/value pair from state
   async DeleteAsset(ctx, id) {
     if (!id) {
-      throw new Error('Asset name must not be empty');
+      throw new Error("Asset name must not be empty");
     }
 
     let exists = await this.AssetExists(ctx, id);
@@ -189,7 +187,7 @@ class Chaincode extends Contract {
   async QueryProposalsByAppID(ctx, appID) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = 'proposal';
+    queryString.selector.assetType = "proposal";
     queryString.selector.appID = appID;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -199,7 +197,7 @@ class Chaincode extends Contract {
   async QueryProposalsByBuyerID(ctx, buyerID) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = 'proposal';
+    queryString.selector.assetType = "proposal";
     queryString.selector.buyerID = buyerID;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -209,7 +207,7 @@ class Chaincode extends Contract {
   async QueryLicensesByAppID(ctx, appID) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = 'license';
+    queryString.selector.assetType = "license";
     queryString.selector.appID = appID;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -219,7 +217,7 @@ class Chaincode extends Contract {
   async QueryLicensesByOwnerID(ctx, ownerID) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = 'license';
+    queryString.selector.assetType = "license";
     queryString.selector.ownerID = ownerID;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -229,7 +227,7 @@ class Chaincode extends Contract {
   async QueryLicensesByCreatorID(ctx, creatorID) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = 'license';
+    queryString.selector.assetType = "license";
     queryString.selector.creatorID = creatorID;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -335,23 +333,23 @@ class Chaincode extends Contract {
     while (!res.done) {
       if (res.value && res.value.value.toString()) {
         let jsonRes = {};
-        console.log(res.value.value.toString('utf8'));
+        console.log(res.value.value.toString("utf8"));
         if (isHistory && isHistory === true) {
           jsonRes.TxId = res.value.txId;
           jsonRes.Timestamp = res.value.timestamp;
           try {
-            jsonRes.Value = JSON.parse(res.value.value.toString('utf8'));
+            jsonRes.Value = JSON.parse(res.value.value.toString("utf8"));
           } catch (err) {
             console.log(err);
-            jsonRes.Value = res.value.value.toString('utf8');
+            jsonRes.Value = res.value.value.toString("utf8");
           }
         } else {
           jsonRes.Key = res.value.key;
           try {
-            jsonRes.Record = JSON.parse(res.value.value.toString('utf8'));
+            jsonRes.Record = JSON.parse(res.value.value.toString("utf8"));
           } catch (err) {
             console.log(err);
-            jsonRes.Record = res.value.value.toString('utf8');
+            jsonRes.Record = res.value.value.toString("utf8");
           }
         }
         allResults.push(jsonRes);
