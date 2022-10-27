@@ -44,6 +44,7 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/material": "^5.10.9",
     "react-multi-select-component": "^4.3.4",
+    "react-query": "^3.39.2",
     "react-select": "^5.5.2"
   }
 }
