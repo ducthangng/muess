@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
 import { RequestWithUser } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
+import { CreateUserDTO, User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
 
 class AuthController {
@@ -9,23 +9,12 @@ class AuthController {
 
   public signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const signUpUserData: User = await this.authService.signup(userData);
+      const userData: CreateUserDTO = req.body;
+      const result: { cookie: string; findUser: User } =
+        await this.authService.signUp(userData);
 
-      res.status(201).json({ data: signUpUserData, message: 'signup' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public Login = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userData: CreateUserDto = req.body;
-      const clientUserData: User = await this.authService.getClientForOrg(
-        userData.email
-      );
-
-      res.status(201).json({ data: clientUserData, message: 'client' });
+      res.cookie('muess', result.cookie, { httpOnly: true });
+      res.status(201).json({ data: result.findUser, message: 'signup' });
     } catch (error) {
       next(error);
     }
@@ -50,9 +39,9 @@ class AuthController {
   public logIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;
-      const { cookie, findUser } = await this.authService.login(userData);
+      const { cookie, findUser } = await this.authService.logIn(userData);
 
-      res.setHeader('Set-Cookie', [cookie]);
+      res.cookie('muess', cookie, { httpOnly: false });
       res.status(200).json({ data: findUser, message: 'login' });
     } catch (error) {
       next(error);
@@ -65,11 +54,10 @@ class AuthController {
     next: NextFunction
   ) => {
     try {
-      const userData: User = req.user;
-      const logOutUserData: User = await this.authService.logout(userData);
+      const cookie = await this.authService.logOut();
 
-      res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
-      res.status(200).json({ data: logOutUserData, message: 'logout' });
+      res.cookie('muess', cookie, { httpOnly: false });
+      res.status(200).json({ message: 'logout' });
     } catch (error) {
       next(error);
     }
