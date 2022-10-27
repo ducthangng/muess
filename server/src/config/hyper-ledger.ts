@@ -20,7 +20,15 @@ const mspId = envOrDefault('MSP_ID', 'Org1MSP');
 // Path to crypto materials.
 const cryptoPath = envOrDefault(
   'CRYPTO_PATH',
-  path.resolve(__dirname, 'org1.example.com')
+  path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'test-network',
+    'organizations',
+    'peerOrganizations',
+    'org1.example.com'
+  )
 );
 
 // Path to user private key directory.
@@ -38,7 +46,7 @@ const certPath = envOrDefault(
     'User1@org1.example.com',
     'msp',
     'signcerts',
-    'User1@org1.example.com-cert.pem'
+    'cert.pem'
   )
 );
 
@@ -53,9 +61,6 @@ const peerEndpoint = envOrDefault('PEER_ENDPOINT', 'localhost:7051');
 
 // Gateway peer SSL host name override.
 const peerHostAlias = envOrDefault('PEER_HOST_ALIAS', 'peer0.org1.example.com');
-
-const utf8Decoder = new TextDecoder();
-const assetId = `asset${Date.now()}`;
 
 /**
  * envOrDefault() will return the value of an environment variable, or a default value if the variable is undefined.
@@ -179,6 +184,7 @@ async function initLedger(contract: Contract): Promise<void> {
  * displayInputParameters() will print the global scope parameters used by the main driver routine.
  */
 async function displayInputParameters(): Promise<void> {
+  console.log(`dirname:           ${cryptoPath}`);
   console.log(`channelName:       ${channelName}`);
   console.log(`chaincodeName:     ${chaincodeName}`);
   console.log(`mspId:             ${mspId}`);

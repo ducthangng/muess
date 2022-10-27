@@ -9,9 +9,10 @@
   position: relative;
   width: 70vw;
   height: fit-content;
-  top: 25px;
-  margin: 0 auto; 
-  border-radius: 15px;
+  top: 6.5rem;
+  margin: auto; 
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 table {
@@ -28,12 +29,13 @@ table td, table th {
 
 table tr:hover {
   background-color: #F5F5F5;
+  border-radius: 15px;
 }
 
 table th, tfoot td {
   padding-top: 12px;
   padding-bottom: 40px;
-  ;
+  
 }
 
 .table-footer{

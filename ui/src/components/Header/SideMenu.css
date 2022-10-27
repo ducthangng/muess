@@ -6,6 +6,8 @@
 
 .side-menu {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     background-color: #FFFFFF;
     height: 62px;
@@ -16,8 +18,8 @@
     text-align: center;
     top: 0px;
     left: 0px;
-    // align-items: center;
-    // margin: 0 auto;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .side-menu .logo img {

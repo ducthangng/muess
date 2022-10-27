@@ -1,7 +1,5 @@
 import { AppError } from '../models/Error';
 import { User } from '../models/User';
-import { Class } from '../models/Class';
-import { Result } from '../models/Result';
 import { stringify } from 'querystring';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
@@ -135,38 +133,6 @@ export const userApi = {
     return response;
   },
 
-  getClass: async (userId: number) => {
-    const response = await fetch(
-      `${apiUrl}/class?` + new URLSearchParams({ user_id: userId.toString() }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const classes: Class[] = data.data;
-        return classes;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
   updateInfo: async (parameter: User) => {
     const payload = parameter;
 
@@ -194,40 +160,6 @@ export const userApi = {
 
         const response: number = data.data;
         return response;
-      })
-      .catch((err) => {
-        return err;
-      });
-
-    return response;
-  },
-
-  getAllTestResult: async (id: number) => {
-    const user_id = id.toString();
-
-    const response = await fetch(
-      `${apiUrl}/test_result?` + new URLSearchParams({ user_id }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const results: Result[] = data.data;
-        return results;
       })
       .catch((err) => {
         return err;

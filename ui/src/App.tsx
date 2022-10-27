@@ -4,22 +4,20 @@ import './configs/antd/customized.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
-import ReleaseApp from './pages/ReleaseApp';
-
+import { QueryClient, QueryClientProvider } from 'react-query';
 import AppRoute from './routes/routes';
 
-import About from './pages/About';
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      
-      {/* <ToastContainer
+      {/* <ToastContainer */}
       {/* <ReleaseApp/> */}
 
-      <About />
+      {/* <About /> */}
 
-      {/* <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={2500}
         hideProgressBar={false}
@@ -28,8 +26,10 @@ function App() {
         rtl={false}
         pauseOnFocusLoss
         draggable
-      /> 
-       <AppRoute /> */}
+      />
+      <QueryClientProvider client={queryClient}>
+        <AppRoute />
+      </QueryClientProvider>
     </>
   );
 }

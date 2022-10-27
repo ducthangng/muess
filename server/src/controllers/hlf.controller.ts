@@ -1,12 +1,6 @@
 import HLFService from '@/services/hlf.service';
 import { NextFunction, Request, Response } from 'express';
-import {
-  connect,
-  Contract,
-  Identity,
-  Signer,
-  signers
-} from '@hyperledger/fabric-gateway';
+import { SampleAsset } from '@/models/hlf.model';
 
 class HLFController {
   public hlfservice = new HLFService();
@@ -18,9 +12,10 @@ class HLFController {
   ) => {
     console.log('tes');
     try {
-      const findAllAsset = await this.hlfservice.getAllAssets();
+      // const findAllAsset = await this.hlfservice.getAllAssets();
+      const x: SampleAsset[] = [];
 
-      res.status(200).json({ data: findAllAsset, message: 'findAllAsset' });
+      res.status(200).json({ data: x, message: 'findAllAsset' });
     } catch (error) {
       next(error);
     }

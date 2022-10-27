@@ -2,14 +2,14 @@ import { Card, Form, Button } from 'antd';
 import React from 'react';
 import styles from '../assets/css/GroupCard.module.css';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Class } from '../models/Class';
+import { AppDetailData } from '../models/AppDetailData';
 const { Meta } = Card;
 
-const GroupCard: React.FC<Class> = ({ id, className, info, level }) => {
+const GroupCard: React.FC<AppDetailData> = ({ _id, title, description }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`${id}/home`);
+    navigate(`${_id}/home`);
   };
 
   return (
@@ -32,8 +32,8 @@ const GroupCard: React.FC<Class> = ({ id, className, info, level }) => {
       >
         <div className={styles.wrapper}>
           <Meta
-            title={className}
-            description={info}
+            title={title}
+            description={description}
             className={styles.content}
             style={{ textAlign: 'center' }}
           />
