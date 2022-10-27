@@ -65,7 +65,7 @@ const AppDetail: React.FC<AppDetailData> = ({
           <div className="app-main-detail"
             style={{
               width: '45%',
-              height: '55%',
+              height: '50%',
               position: 'relative',
               top: '0',
               left: '0',
@@ -96,7 +96,7 @@ const AppDetail: React.FC<AppDetailData> = ({
               style={{
                 position: 'relative',
                 width: "60%",
-                height: "30%",
+                height: "20%",
                 backgroundColor: "#ffffff",
                 display: 'flex',
                 // margin: 'auto',
