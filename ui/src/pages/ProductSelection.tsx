@@ -3,6 +3,7 @@ import MockProduct from '../components/MockProduct';
 import SideMenu from '../components/Header/SideMenu';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
+import { Button } from 'antd';
 import { AppDetailData } from '../models/AppDetailData';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
@@ -13,18 +14,46 @@ function ProductSelection() {
   });
 
   return (
-    <>
+    <div>
       <SideMenu />
-      <div
-        style={{
-          display: 'flex'
-        }}
-      >
-        <body>
+      <body>
+        <div
+          style={{
+            display: 'flex'
+          }}
+        >
           <Divider className="" orientation="left">
-            {' '}
-            FEATURE APPS:{' '}
+            FEATURE APPS:
           </Divider>
+          <Divider className="" orientation="left">
+            <div>
+              <Button
+                type="primary"
+                shape="default"
+                size="middle"
+                href="/productselection"
+              >
+                Featured Apps
+              </Button>
+              <Button
+                type="primary"
+                shape="default"
+                size="middle"
+                href="/productselection"
+              >
+                Owned Apps
+              </Button>
+              <Button
+                type="primary"
+                shape="default"
+                size="middle"
+                href="/productselection"
+              >
+                My Apps
+              </Button>
+            </div>
+          </Divider>
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto">
             {data &&
               data.map((item) => {
@@ -56,9 +85,9 @@ function ProductSelection() {
               style={{ color: '#8172D5' }}
             />
           </Row>
-        </body>
-      </div>
-    </>
+        </div>
+      </body>
+    </div>
   );
 }
 
