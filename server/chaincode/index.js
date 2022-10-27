@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 /*
  * Copyright IBM Corp. All Rights Reserved.
  *
@@ -10,4 +12,4 @@
 const CC = require('./lib/asset_transfer_ledger_chaincode.js');
 
 module.exports.CC = CC;
-module.exports.contracts = [ CC ];
+module.exports.contracts = [CC];

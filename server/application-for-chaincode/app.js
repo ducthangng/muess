@@ -18,28 +18,24 @@
 //  - "failed to register user/identity not found"
 //    -> delete wallet folder and retry node app.js
 
-"use strict";
+'use strict';
 
-const { Gateway, Wallets } = require("fabric-network");
-const FabricCAServices = require("fabric-ca-client");
-const path = require("path");
+const { Gateway, Wallets } = require('fabric-network');
+const FabricCAServices = require('fabric-ca-client');
+const path = require('path');
 const {
   buildCAClient,
   registerAndEnrollUser,
-  enrollAdmin,
-} = require("./CAUtil.js");
-const {
-  buildCCPOrg1,
-  buildWallet,
-} = require("./AppUtil.js");
+  enrollAdmin
+} = require('./CAUtil.js');
+const { buildCCPOrg1, buildWallet } = require('./AppUtil.js');
 
-const channelName = "mychannel";
-const chaincodeName = "muess";
-const mspOrg1 = "Org1MSP";
+const channelName = 'mychannel';
+const chaincodeName = 'muess';
+const mspOrg1 = 'Org1MSP';
 
-const walletPath = path.join(__dirname, "wallet");
-const userId = "appUser";
-
+const walletPath = path.join(__dirname, 'wallet');
+const userId = 'appUser';
 
 // utility functions
 function prettyJSONString(inputString) {
@@ -47,98 +43,93 @@ function prettyJSONString(inputString) {
 }
 
 // functions to call on transactions
-const createProposal = async (contract, proposalID, appID, buyerID, proposedPrice, licenseDetails) => {
-  console.log("create a proposal");
+const createProposal = async (
+  contract,
+  proposalID,
+  appID,
+  buyerID,
+  proposedPrice,
+  licenseDetails
+) => {
+  console.log('create a proposal');
   await contract.submitTransaction(
-    "CreateProposal",
+    'CreateProposal',
     proposalID,
     appID,
     buyerID,
     proposedPrice,
     licenseDetails
   );
-}
+};
 
 const acceptProposal = async (contract, licenseID, creatorID, proposalID) => {
-  console.log("accept a proposal");
+  console.log('accept a proposal');
   await contract.submitTransaction(
-    "AcceptProposal",
+    'AcceptProposal',
     licenseID,
     creatorID,
     proposalID
   );
-}
+};
 
 const readAsset = async (contract, assetID) => {
-  console.log(
-    "\nread asset"
-  );
-  const result = await contract.evaluateTransaction("ReadAsset", assetID);
+  console.log('\nread asset');
+  const result = await contract.evaluateTransaction('ReadAsset', assetID);
   // console.log(`*** Result: ${prettyJSONString(result.toString())}`);
   return result;
-}
+};
 
 const queryLicensesByAppID = async (contract, appID) => {
-  console.log(
-    "\n--> Evaluate Transaction: QueryLicensesByAppID"
-  );
+  console.log('\n--> Evaluate Transaction: QueryLicensesByAppID');
   const result = await contract.evaluateTransaction(
-    "QueryLicensesByAppID",
+    'QueryLicensesByAppID',
     appID
   );
   return result;
-}
+};
 
 const queryLicensesByOwnerID = async (contract, ownerID) => {
-  console.log(
-    "\n--> Evaluate Transaction: QueryLicensesByOwnerID"
-  );
+  console.log('\n--> Evaluate Transaction: QueryLicensesByOwnerID');
   const result = await contract.evaluateTransaction(
-    "QueryLicensesByOwnerID",
+    'QueryLicensesByOwnerID',
     ownerID
   );
   return result;
   // console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-}
+};
 
 const queryLicensesByCreatorID = async (contract, creatorID) => {
-  console.log(
-    "\n--> Evaluate Transaction: QueryLicensesByCreatorID"
-  );
+  console.log('\n--> Evaluate Transaction: QueryLicensesByCreatorID');
   const result = await contract.evaluateTransaction(
-    "QueryLicensesByCreatorID",
+    'QueryLicensesByCreatorID',
     creatorID
   );
   return result;
   // console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-}
+};
 
 const queryProposalsByAppID = async (contract, appID) => {
-  console.log(
-    "\n--> Evaluate Transaction: QueryProposalsByAppID"
-  );
+  console.log('\n--> Evaluate Transaction: QueryProposalsByAppID');
   const result = await contract.evaluateTransaction(
-    "QueryProposalsByAppID",
+    'QueryProposalsByAppID',
     appID
   );
   return result;
-}
+};
 
 const queryProposalsByBuyerID = async (contract, buyerID) => {
-  console.log(
-    "\n--> Evaluate Transaction: QueryProposalsByBuyerID"
-  );
+  console.log('\n--> Evaluate Transaction: QueryProposalsByBuyerID');
   const result = await contract.evaluateTransaction(
-    "QueryProposalsByBuyerID",
+    'QueryProposalsByBuyerID',
     buyerID
   );
   return result;
-}
+};
 
 async function main() {
   let skipInit = false;
   if (process.argv.length > 2) {
-    if (process.argv[2] === "skipInit") {
+    if (process.argv[2] === 'skipInit') {
       skipInit = true;
     }
   }
@@ -152,7 +143,7 @@ async function main() {
     const caClient = buildCAClient(
       FabricCAServices,
       ccp,
-      "ca.org1.example.com"
+      'ca.org1.example.com'
     );
 
     // setup the wallet to hold the credentials of the application user
@@ -168,7 +159,7 @@ async function main() {
       wallet,
       mspOrg1,
       userId,
-      "org1.department1"
+      'org1.department1'
     );
 
     // Create a new gateway instance for interacting with the fabric network.
@@ -184,7 +175,7 @@ async function main() {
       await gateway.connect(ccp, {
         wallet,
         identity: userId,
-        discovery: { enabled: true, asLocalhost: true }, // using asLocalhost as this gateway is using a fabric network deployed locally
+        discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
       });
 
       // Build a network instance based on the channel where the smart contract is deployed
@@ -193,21 +184,25 @@ async function main() {
       // Get the contract from the network.
       const contract = network.getContract(chaincodeName);
 
-
-
-
       /* MODIFY THIS PART TO TEST OUT CHAINCODE */
       ///////////////////////////////////////////
       // some consts
-      const proposalID = "proposal3";
-      const licenseID = "license3";
-      const appID = "app3";
-      const creatorID = "billgates";
-      const buyerID = "nghihua";
+      const proposalID = 'proposal3';
+      const licenseID = 'license3';
+      const appID = 'app3';
+      const creatorID = 'billgates';
+      const buyerID = 'nghihua';
 
       let result;
 
-      await createProposal(contract, proposalID, appID, buyerID, 100, "free use");
+      await createProposal(
+        contract,
+        proposalID,
+        appID,
+        buyerID,
+        100,
+        'free use'
+      );
 
       // read proposal we just created
       result = await readAsset(contract, proposalID);
@@ -228,9 +223,7 @@ async function main() {
       result = await queryLicensesByAppID(contract, appID);
       console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
-
-
-      console.log("*** all tests completed");
+      console.log('*** all tests completed');
     } finally {
       // Disconnect from the gateway when the application is closing
       // This will close all connections to the network
@@ -240,7 +233,7 @@ async function main() {
     console.error(`******** FAILED to run the application: ${error}`);
   }
 
-  console.log("*** application ending");
+  console.log('*** application ending');
 }
 
 main();
