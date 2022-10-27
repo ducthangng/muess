@@ -5,14 +5,17 @@ function PurchasePopup(props) {
         <div className="purchase-popup"
         style = {{
             postion: 'fixed',
+            zIndex: '999',
             top: '0',
             left: '0',
             width: '100vw',
             height: '100vh',
             backgroundColor: 'rgba(0,0,0,0.2)',
+            opacity: '0.65',
             display:'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            
         }}>
             <div className="purchase-popup-inner"
                 style={{
