@@ -89,12 +89,13 @@ class AuthService {
 
     return {
       expiresIn,
-      token: sign(dataStoredInToken, secretKey, { expiresIn })
+      token: sign(dataStoredInToken, secretKey, { expiresIn }),
+      userType: user.userType
     };
   }
 
   public createCookie(tokenData: TokenData): string {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+    return `userType=${tokenData.userType}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
 
   public async getClientForOrg(orgName: string): Promise<Client> {
