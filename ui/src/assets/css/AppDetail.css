@@ -32,7 +32,12 @@
     border: 1px solid #cfcece;
   } */
 
-  * {
-    margin: 0;
-    padding: 0;
-  }
+* {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.app-detail-body{
+  height: 100vh;
+  overflow-y: hidden;
+}
