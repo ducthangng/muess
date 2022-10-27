@@ -16,6 +16,7 @@ import PurchaseList from '../pages/PurchaseList';
 import About from '../pages/About';
 import Wallet from '../pages/Wallet';
 import ProductSelection from '../pages/ProductSelection';
+import AppDetail from '../pages/AppDetail';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -33,6 +34,7 @@ export default function AppRoute() {
           <Route path="/register" element={<Register />} />
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
+            <Route path="/products/id/123456" element={<AppDetail _id={'123456'} creatorId={'789'} creatorName={'HaiKao'} title={'Suck My Balls'} description={'App that suck dick'} rated={'5.1'} appType={'game'} appPaymentMethod={'free'} appCategories={'entertainment'} appTags={['#NSFW']} reviewer={''} downloaded={0} appIcon={''} feedbacks= {[{name: 'bui nhien loc', content: 'dell on'}]} />} />
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
