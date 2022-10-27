@@ -64,7 +64,7 @@ const AppDetail: React.FC<AppDetailData> = ({
           <div className="app-main-detail"
             style={{
               width: '45%',
-              height: '45%',
+              height: '55%',
               position: 'relative',
               top: '0',
               left: '0',
@@ -141,6 +141,17 @@ const AppDetail: React.FC<AppDetailData> = ({
                 18+
               </div>
             </div>
+            <div className="app-detail-author"
+              style={{
+                position: 'relative',
+                top: '0',
+                left: '0',
+                backgroundColor: '#ffffff',
+                fontSize: '1.25rem',
+                fontWeight: '400',
+                color: '#FB7F4B',
+                marginBottom: '1rem',
+              }}>Price: 9.99$</div>
             <button className='purchase_button'
               onClick={() => setButtonPopup(true)}
               style={{
