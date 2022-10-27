@@ -26,10 +26,10 @@ const AppDetail: React.FC<AppDetailData> = ({
   const [buttonPopup, setButtonPopup] = useState(false);
 
   return (
-    <>
+    <body className='app-detail-body'>
       <SideMenu />
-      <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup} style={{display:'list-item'}}/>
-      
+      <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup} />
+
       <div className="app-detail"
         style={{
           position: 'relative',
@@ -38,8 +38,9 @@ const AppDetail: React.FC<AppDetailData> = ({
           top: '13vh',
           left: '15vw',
           backgroundColor: 'transparent',
+          
         }}>
-
+        
         <button className="return" onClick={() => navigate(-1)}
           style={{
             position: 'relative',
@@ -242,7 +243,7 @@ const AppDetail: React.FC<AppDetailData> = ({
       </div>
 
 
-    </>
+    </ body>
 
   );
 };
