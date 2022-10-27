@@ -9,6 +9,7 @@ import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
 import { AdminEC, StudentEC } from '../models/Guard';
 import Register from '../pages/Register';
+import Register2 from '../pages/Register2';
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
@@ -17,6 +18,7 @@ import About from '../pages/About';
 import Wallet from '../pages/Wallet';
 import ProductSelection from '../pages/ProductSelection';
 import AppDetail from '../pages/AppDetail';
+
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -32,6 +34,7 @@ export default function AppRoute() {
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register2" element={<Register2 />} />
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
             <Route path="/products/id/123456" element={<AppDetail _id={'123456'} creatorId={'789'} creatorName={'HaiKao'} title={'Suck My Balls'} description={'App that suck dick'} rated={'5.1'} appType={'game'} appPaymentMethod={'free'} appCategories={'entertainment'} appTags={['#NSFW']} reviewer={''} downloaded={0} appIcon={''} feedbacks= {[{name: 'bui nhien loc', content: 'dell on'}]} />} />

@@ -39,13 +39,17 @@ function PurchasePopup(props) {
                 <button className="close-button"
                     onClick={() => props.setTrigger(false)}
                     style={{
-                        position: 'absolute',
-                        top: '16px',
-                        right: '16px',
-                        border: '1px solid #000',
+                        background: '#DCE1EE',
+                        color: '#2E384D',
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        height: '20px',
+                        width: '20px',
                         borderRadius: '50%',
-                        width: '1rem',
-                        height: '1rem',
+                        position: 'relative',
+                        float: 'right',
+                        top: '5%',
+                        right: '5%',
                     }}>X</button>
                 {props.children}
 

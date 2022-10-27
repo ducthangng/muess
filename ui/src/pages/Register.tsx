@@ -192,15 +192,16 @@ const Register = () => {
                                 style={{
                                     background: '#FB7F4B',
                                     color: '#FFFFFF',
-                                    fontWeight: 400,
-                                    fontSize: '12px',
+                                    fontWeight: 700,
+                                    fontSize: '16px',
                                     lineHeight: '15px',
                                     height: '40px',
                                     width: '100%',
                                     borderRadius: '5px',
                                     position: 'relative',
                                     marginTop: '1rem',
-                                }}>CONTINUE</button>
+                                }}
+                                onClick={() => navigate('/register2')}>Continue</button>
                             <div className='return-signin'
                                 style={{
                                     display: 'flex',
@@ -221,7 +222,8 @@ const Register = () => {
                                     position: 'relative',
                                     color: '#FB7F4B',
                                     marginLeft: '0.2rem',
-                                }}>Sign in</button>
+                                }}
+                                onClick={() => navigate('/login')}>Sign in</button>
                             </div>
                         </div>
                     </div>

@@ -248,8 +248,8 @@ const Login = () => {
                 style={{
                   background: '#FB7F4B',
                   color: '#FFFFFF',
-                  fontWeight: 400,
-                  fontSize: '12px',
+                  fontWeight: 700,
+                  fontSize: '16px',
                   lineHeight: '15px',
                   height: '40px',
                   width: '100%',
@@ -258,7 +258,7 @@ const Login = () => {
                   marginTop: '1.2rem'
                 }}
               >
-                SIGN IN
+                Sign in
               </button>
               <div
                 className="return-signup"
@@ -288,6 +288,7 @@ const Login = () => {
                     color: '#FB7F4B',
                     marginLeft: '0.2rem'
                   }}
+                  onClick={() => navigate('/register')}
                 >
                   Create Account
                 </button>
