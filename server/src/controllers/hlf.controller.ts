@@ -1,135 +1,54 @@
-// import HLFService from '@/services/hlf.service';
 import { NextFunction, Request, Response } from 'express';
+import HLFService from '@/services/hlf.service';
+import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 
-console.log('inside hlf controller');
 class HLFController {
-  // public hlfservice = new HLFService();
+  public hlfService = new HLFService();
 
-  /**
-   *  Propose a transaction
-   * @param req
-   * @param res
-   * @param next
-   */
-  public bidLicense = async (
+  public createProposal = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    console.log('tes');
     try {
-      // const findAllAsset = await this.hlfservice.();
-      const x: [] = [];
+      const proposalData: CreateProposalDto = req.body;
+      const result: any = await this.hlfService.createProposal(proposalData);
 
-      res.status(200).json({ data: x, message: 'findAllAsset' });
+      res.status(201).json({ data: result, message: 'created' });
     } catch (error) {
       next(error);
     }
   };
 
-  /**
-   *  Get All proposals
-   * @param req
-   * @param res
-   * @param next
-   */
-  public getAllBids = async (
+  public acceptProposal = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    console.log('getAllBids');
     try {
-      // const findAllAsset = await this.hlfservice.getAllAssets();
-      const x: [] = [];
+      const acceptProposalData: AcceptProposalDto = req.body;
+      const result: any = await this.hlfService.acceptProposal(
+        acceptProposalData
+      );
 
-      res.status(200).json({ data: x, message: 'findAllAsset' });
+      res.status(201).json({ data: result, message: 'created' });
     } catch (error) {
       next(error);
     }
   };
 
-  /**
-   * Agree and transfer the asset
-   * @param req
-   * @param res
-   * @param next
-   */
-  public agreeToTransfer = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    console.log('tes');
-    try {
-      // const findAllAsset = await this.hlfservice.getAllAssets();
-      const x: [] = [];
-
-      res.status(200).json({ data: x, message: 'findAllAsset' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Delete an agreement
-   * @param req
-   * @param res
-   * @param next
-   */
-  public deleteTransferAgreement = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    console.log('tes');
-    try {
-      // const findAllAsset = await this.hlfservice.getAllAssets();
-      const x: [] = [];
-
-      res.status(200).json({ data: x, message: 'findAllAsset' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Get all purchased license by a user
-   * @param req
-   * @param res
-   * @param next
-   */
-  public getAllUserPurchasedLicense = async (
+  public getProposalsByAppID = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      // /myApp?userId=10
-      const userId = req.query['id'];
+      const appId: string = req.params.buyerId;
+      const proposalsData: any = await this.hlfService.getProposalsByAppID(
+        appId
+      );
 
-      res.status(200).json({ data: userId, message: 'deleted' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Get all license that a provider has sold.
-   * @param req
-   * @param res
-   * @param next
-   */
-  public getAllSoldLicense = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      // /myApp?userId=10
-      const userId = req.query['id'];
-
-      res.status(200).json({ data: userId, message: 'deleted' });
+      res.status(200).json({ data: proposalsData, message: 'findOne' });
     } catch (error) {
       next(error);
     }

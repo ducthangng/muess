@@ -14,7 +14,18 @@ class HLFRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/bid`, this.hlfController.bidLicense);
+    this.router.post(
+      `${this.path}/createProposal`,
+      this.hlfController.createProposal
+    );
+    this.router.post(
+      `${this.path}/acceptProposal`,
+      this.hlfController.acceptProposal
+    );
+    this.router.get(
+      `${this.path}/proposals/:appId`,
+      this.hlfController.getProposalsByAppID
+    );
   }
 }
 
