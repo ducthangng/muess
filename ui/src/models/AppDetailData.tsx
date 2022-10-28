@@ -13,6 +13,7 @@ interface AppDetailData {
   appTags: string[];
   reviewer: string;
   downloaded: number;
+  imageSrc: string;
   appIcon: string; // link to database.
   feedbacks: [
     {
@@ -34,6 +35,7 @@ interface CreateAppData {
   appTags: string[];
   reviewer: string;
   downloaded: number;
+  imageSrc: string;
   appIcon: string; // link to database.
   feedbacks: [
     {

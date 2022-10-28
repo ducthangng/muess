@@ -37,7 +37,7 @@ export default function AppRoute() {
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
           <Route
-            path="/products/id/123456"
+            path="/products/12"
             element={
               <AppDetail
                 _id={'123456'}
@@ -54,6 +54,9 @@ export default function AppRoute() {
                 downloaded={0}
                 appIcon={''}
                 feedbacks={[{ name: 'bui nhien loc', content: 'dell on' }]}
+                imageSrc={
+                  'https://play-lh.googleusercontent.com/TLUeelx8wcpEzf3hoqeLxPs3ai1tdGtAZTIFkNqy3gbDp1NPpNFTOzSFJDvZ9narFS0'
+                }
               />
             }
           />
