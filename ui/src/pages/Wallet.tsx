@@ -92,7 +92,7 @@ function Wallet() {
       <div
         className="wallet-container"
         style={{
-          position: 'relative',
+          // position: 'relative',
           display: 'flex',
           width: '70vw',
           height: '75vh',
@@ -103,7 +103,12 @@ function Wallet() {
           justifyContent: 'center',
           alignItems: 'center',
           margin: '0 auto',
-          top: '7.5rem'
+          // top: '7.5rem'
+          float: 'none',
+          position: 'absolute',
+          top: '53%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
         }}
       >
         <div className="card-container">

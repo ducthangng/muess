@@ -68,7 +68,16 @@ const ReleaseApp = () => {
   return (
     <>
       <SideMenu />
-      <div className="Publish_Block">
+      <div
+        className="Publish_Block"
+        style={{
+          float: 'none',
+          position: 'absolute',
+          top: '53%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+      >
         <div className="ReleaseTitle" style={{ fontWeight: '700' }}>
           Upload an App
         </div>
