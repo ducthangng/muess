@@ -77,7 +77,6 @@ class Chaincode extends Contract {
     ctx,
     assetID,
     appID,
-    buyerID,
     proposedPrice,
     licenseDetails
   ) {
@@ -86,12 +85,14 @@ class Chaincode extends Contract {
       throw new Error(`The asset ${assetID} already exists`);
     }
 
+    const clientID = ctx.clientIdentity.getID();
+
     // ==== Create asset object and marshal to JSON ====
     let asset = {
       assetType: "proposal",
       assetID: assetID,
       appID: appID,
-      buyerID: buyerID,
+      buyerID: clientID,
       proposedPrice: proposedPrice,
       licenseDetails: licenseDetails,
     };
@@ -100,7 +101,10 @@ class Chaincode extends Contract {
     await ctx.stub.putState(assetID, Buffer.from(JSON.stringify(asset)));
   }
 
-  async AcceptProposal(ctx, assetID, creatorID, proposalID) {
+  async AcceptProposal(ctx, assetID, proposalID) {
+
+    const clientID = ctx.clientIdentity.getID();
+
     const proposalBytes = await ctx.stub.getState(proposalID);
     if (!proposalBytes) {
       throw new Error("No such proposal exists");
@@ -116,7 +120,7 @@ class Chaincode extends Contract {
       assetID: assetID,
       appID: proposal.appID,
       licenseDetails: proposal.licenseDetails,
-      creatorID: creatorID,
+      creatorID: clientID,
       ownerID: proposal.buyerID,
     };
 

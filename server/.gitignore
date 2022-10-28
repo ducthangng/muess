@@ -1,5 +1,3 @@
-.DS_Store
-
 # Logs
 logs
 *.log
@@ -132,3 +130,5 @@ dist
 .pnp.*
 
 src/services/wallet
+bin
+.DS_Store
