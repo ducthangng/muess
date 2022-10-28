@@ -43,12 +43,29 @@ class HLFController {
     next: NextFunction
   ) => {
     try {
-      const appId: string = req.params.buyerId;
+      const appId: string = req.params.appId;
       const proposalsData: any = await this.hlfService.getProposalsByAppID(
         appId
       );
 
-      res.status(200).json({ data: proposalsData, message: 'findOne' });
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getProposalsByBuyerID = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const buyerId: string = req.params.buyerId;
+      const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
+        buyerId
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
     } catch (error) {
       next(error);
     }

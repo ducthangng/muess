@@ -6,7 +6,9 @@ import validateEnv from '@utils/validateEnv';
 import HLFRoute from '@routes/hlf.route';
 import AppsRoute from '@routes/apps.route';
 
-console.log('hello');
+process.on('uncaughtException', function (exception) {
+  console.log(exception); // to see your exception details in the console
+});
 
 try {
   validateEnv();

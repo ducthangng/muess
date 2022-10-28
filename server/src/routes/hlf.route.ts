@@ -23,8 +23,12 @@ class HLFRoute implements Routes {
       this.hlfController.acceptProposal
     );
     this.router.get(
-      `${this.path}/proposals/:appId`,
+      `${this.path}/proposals-by-app/:appId`,
       this.hlfController.getProposalsByAppID
+    );
+    this.router.get(
+      `${this.path}/proposals-by-buyer/:buyerId`,
+      this.hlfController.getProposalsByBuyerID
     );
   }
 }
