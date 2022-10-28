@@ -13,7 +13,16 @@ const SideMenu = (props) => {
       <div className="logo" onClick={() => navigate('/')}>
         <img src={Logo} alt="logo" />
       </div>
-      <div className="main-menu">
+      <div
+        className="main-menu"
+        style={{
+          float: 'none',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+      >
         <NavLink
           style={({ isActive }) =>
             isActive
@@ -75,6 +84,27 @@ const SideMenu = (props) => {
           to="/purchases"
         >
           Purchases
+        </NavLink>
+
+        <NavLink
+          style={({ isActive }) =>
+            isActive
+              ? {
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
+              : {}
+          }
+          className="menu-item"
+          to="/solds"
+        >
+          Solds
         </NavLink>
 
         <NavLink
