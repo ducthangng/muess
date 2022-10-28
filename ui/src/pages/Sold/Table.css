@@ -46,7 +46,7 @@ table th, tfoot td {
 }
 
 .status-button{
-  margin: 1rem auto;
+  margin: auto;
   width: fit-content;
   height: fit-content;
   display: grid;

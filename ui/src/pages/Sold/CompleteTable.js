@@ -93,10 +93,11 @@ export const CompleteTable = () => {
                       <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
-                  <div className="status-button">
+                  <td><div className="status-button">
                     <button className="table-btn-accept">Accept</button>
                     <button className="table-btn-decline">Decline</button>
-                  </div>
+                  </div></td>
+
 
                 </tr></>
               );
