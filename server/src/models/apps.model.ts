@@ -66,6 +66,10 @@ const appSchema: Schema = new Schema({
     type: String,
     required: false
   },
+  imageSrc: {
+    type: String,
+    required: false
+  },
   feedbacks: {
     type: [feedback],
     required: false

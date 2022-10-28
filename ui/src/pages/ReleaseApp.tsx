@@ -9,6 +9,7 @@ import DragAndDropMulti from '../components/DragDropMulti';
 import SideMenu from '../components/Header/SideMenu';
 import { appApi } from '../api/appApi';
 import { AppDetailData, CreateAppData } from '../models/AppDetailData';
+import { useNavigate } from 'react-router-dom';
 
 const options = [
   { value: 'Educational', label: 'Educational' },
@@ -25,9 +26,11 @@ const ReleaseApp = () => {
   const [appType, setAppType] = useState('');
   const [appPaymentMethod, setAppPaymentMethod] = useState('');
   const [appCategories, setAppCategories] = useState('');
+  const [appImage, setAppImage] = useState('');
   const [appTags, setAppTags] = useState([] as string[]);
   const [count, setCount] = React.useState(0);
   const [count1, setCount1] = React.useState(0);
+  let navigate = useNavigate();
 
   const onRelease = () => {
     const req: CreateAppData = {
@@ -48,12 +51,14 @@ const ReleaseApp = () => {
           name: '',
           content: ''
         }
-      ]
+      ],
+      imageSrc: appImage
     };
 
     appApi.releaseApp({ app: req }).then((status) => {
       if (status) {
         // proceed success
+        navigate('/products');
       }
 
       // proceed fail
@@ -402,9 +407,16 @@ const ReleaseApp = () => {
                 color: '#3A001E'
               }}
             >
-              Images
+              App Image
             </div>
-            <DragAndDropMulti />
+            <input
+              style={{ borderColor: '#D7DBDB' }}
+              maxLength={1000}
+              onChange={(e) => setAppImage(e.target.value)}
+              value={appImage}
+            ></input>
+
+            <div className="count1">{count}/50</div>
           </div>
           <button
             style={{

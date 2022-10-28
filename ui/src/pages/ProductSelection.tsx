@@ -91,6 +91,7 @@ function ProductSelection() {
                       appIcon={item.appIcon} // link to database.
                       feedbacks={item.feedbacks}
                       appTags={item.appTags}
+                      imageSrc={item.imageSrc}
                     />
                   );
                 })}

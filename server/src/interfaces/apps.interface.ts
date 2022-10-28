@@ -12,6 +12,7 @@ export interface App {
   appTags: string[];
   reviewer: string;
   downloaded: number;
+  imageSrc: string;
   appIcon: string; // link to database.
   feedbacks: [
     {
@@ -34,6 +35,7 @@ export interface CreateAppData {
   appTags: string[];
   reviewer: string;
   downloaded: number;
+  imageSrc: string;
   appIcon: string; // link to database.
   feedbacks: [
     {
