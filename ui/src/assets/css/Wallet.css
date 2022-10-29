@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .graph {
   position: absolute;
   bottom: 30px;
@@ -8,6 +13,7 @@
   border-radius: 20px;
   padding: 20px;
   padding-top: 50px;
+  margin: 0 auto;
 }
 
 .graph .dropdown {
@@ -18,8 +24,7 @@
 .wallet-container .card-container {
   display: flex;
   position: relative;
-  top: -25vh;
-  width: 100%;
+  width: 98%;
   height: 25vh;
   background-color: transparent;
   margin: 1rem;
@@ -30,7 +35,7 @@
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 80%;
+  height: 75%;
   border: 1px solid #969696;
   border-radius: 20px;
   padding: 1rem;
@@ -39,8 +44,9 @@
 
 .wallet-container .card-container .purchased-container .purchased-header {
   position: relative;
-  ;
-  width: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   font-size: 15px;
   color: #3A001E;
@@ -72,9 +78,8 @@
   line-height: 19px;
   color: #009899;
   float: none;
-  position: absolute;
-  top: 120%;
-  left: 50%;
+  position: relative;
+  float: right;
   transform: translate(-50%, -50%);
 }
 
@@ -83,7 +88,7 @@
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 80%;
+  height: 75%;
   border: 1px solid #969696;
   border-radius: 20px;
   padding: 1rem;
@@ -92,8 +97,9 @@
 
 .wallet-container .card-container .sold-container .sold-header {
   position: relative;
-  ;
-  width: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   font-size: 15px;
   color: #3A001E;
@@ -122,10 +128,8 @@
   font-size: 14px;
   line-height: 19px;
   color: #009899;
-  float: none;
-  position: absolute;
-  top: 120%;
-  left: 90%;
+  position: relative;
+  float: right;
   transform: translate(-50%, -50%);
 }
 
@@ -134,7 +138,7 @@
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 80%;
+  height: 75%;
   border: 1px solid #969696;
   border-radius: 20px;
   padding: 1rem;
@@ -143,8 +147,9 @@
 
 .wallet-container .card-container .income-container .income-header {
   position: relative;
-  ;
-  width: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   font-size: 15px;
   color: #3A001E;
@@ -174,9 +179,8 @@
   line-height: 19px;
   color: #009899;
   float: none;
-  position: absolute;
-  top: 120%;
-  left: 30%;
+  position: relative;
+  float: right;
   transform: translate(-50%, -50%);
 }
 
@@ -185,7 +189,7 @@
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 80%;
+  height: 75%;
   border: 1px solid #969696;
   border-radius: 20px;
   padding: 1rem;
@@ -194,8 +198,9 @@
 
 .wallet-container .card-container .balance-container .balance-header {
   position: relative;
-  ;
-  width: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   font-size: 15px;
   color: #3A001E;
@@ -227,9 +232,8 @@
   line-height: 19px;
   color: #009899;
   float: none;
-  position: absolute;
-  top: 120%;
-  left: 30%;
+  position: relative;
+  float: right;
   transform: translate(-50%, -50%);
 }
 

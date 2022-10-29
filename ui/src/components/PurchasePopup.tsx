@@ -374,7 +374,10 @@ function PurchasePopup(props) {
                     event.preventDefault();
                     redirect();
                   }}
-                > Place order</button>
+                >
+                  {' '}
+                  Place order
+                </button>
                 <ToastContainer
                   position="bottom-left"
                   autoClose={5000}

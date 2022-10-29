@@ -28,15 +28,15 @@ const SideMenu = (props) => {
           style={({ isActive }) =>
             isActive
               ? {
-                backgroundColor: '#FB7F4B',
-                color: 'white',
-                width: 'fit-content',
-                textAlign: 'center',
-                height: '30px',
-                paddingTop: '10px',
-                // paddingLeft: '7px',
-                paddingRight: '7px'
-              }
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
               : {}
           }
           className="menu-item"
@@ -49,15 +49,15 @@ const SideMenu = (props) => {
           style={({ isActive }) =>
             isActive
               ? {
-                backgroundColor: '#FB7F4B',
-                color: 'white',
-                width: 'fit-content',
-                textAlign: 'center',
-                height: '30px',
-                paddingTop: '10px',
-                // paddingLeft: '7px',
-                paddingRight: '7px'
-              }
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
               : {}
           }
           className="menu-item"
@@ -70,15 +70,15 @@ const SideMenu = (props) => {
           style={({ isActive }) =>
             isActive
               ? {
-                backgroundColor: '#FB7F4B',
-                color: 'white',
-                width: 'fit-content',
-                textAlign: 'center',
-                height: '30px',
-                paddingTop: '10px',
-                // paddingLeft: '7px',
-                paddingRight: '7px'
-              }
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
               : {}
           }
           className="menu-item"
@@ -91,15 +91,15 @@ const SideMenu = (props) => {
           style={({ isActive }) =>
             isActive
               ? {
-                backgroundColor: '#FB7F4B',
-                color: 'white',
-                width: 'fit-content',
-                textAlign: 'center',
-                height: '30px',
-                paddingTop: '10px',
-                // paddingLeft: '7px',
-                paddingRight: '7px'
-              }
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
               : {}
           }
           className="menu-item"
@@ -112,15 +112,15 @@ const SideMenu = (props) => {
           style={({ isActive }) =>
             isActive
               ? {
-                backgroundColor: '#FB7F4B',
-                color: 'white',
-                width: 'fit-content',
-                textAlign: 'center',
-                height: '30px',
-                paddingTop: '10px',
-                // paddingLeft: '7px',
-                paddingRight: '7px'
-              }
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
               : {}
           }
           className="menu-item"
@@ -132,15 +132,15 @@ const SideMenu = (props) => {
           style={({ isActive }) =>
             isActive
               ? {
-                backgroundColor: '#FB7F4B',
-                color: 'white',
-                width: 'fit-content',
-                textAlign: 'center',
-                height: '30px',
-                paddingTop: '10px',
-                // paddingLeft: '7px',
-                paddingRight: '7px'
-              }
+                  backgroundColor: '#FB7F4B',
+                  color: 'white',
+                  width: 'fit-content',
+                  textAlign: 'center',
+                  height: '30px',
+                  paddingTop: '10px',
+                  // paddingLeft: '7px',
+                  paddingRight: '7px'
+                }
               : {}
           }
           className="menu-item"
@@ -150,31 +150,28 @@ const SideMenu = (props) => {
         </NavLink>
       </div>
 
-      <div className='account' onClick={() => setOpen(!open)}>
-        <div className='account-info'>
-          <div className='username'>Bui Nhien Loc</div>
+      <div className="account" onClick={() => setOpen(!open)}>
+        <div className="account-info">
+          <div className="username">Bui Nhien Loc</div>
           <div>nhienloc@gmail.com</div>
-
         </div>
-        <div className={`dropdown-menu ${(open ? "open" : "")}`}>
+        <div className={`dropdown-menu ${open ? 'open' : ''}`}>
           <ul>
             <li>
-              <a className='profile-item'>
-                <div className='account-info'>
-                  <div className='username'>Bui Nhien Loc</div>
-                  <div className='email'>nhienloc@gmail.com</div>
-                  <div className='small-text'>View account's information</div>
-
+              <a className="profile-item">
+                <div className="account-info">
+                  <div className="username">Bui Nhien Loc</div>
+                  <div className="email">nhienloc@gmail.com</div>
+                  <div className="small-text">View account's information</div>
                 </div>
               </a>
             </li>
             <li>
-              <a className='logout'>
-                <div className='icon'>
+              <a className="logout">
+                <div className="icon">
                   <BIIcons.BiLogOut></BIIcons.BiLogOut>
                 </div>
                 <span>Logout</span>
-
               </a>
             </li>
           </ul>

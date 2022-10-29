@@ -199,6 +199,7 @@
     width: 100%;
     cursor: pointer;
     padding: auto;
+
     /* margin-top: 5px; */
     /* margin-bottom: 5px; */
     /* margin-left: 0px;
@@ -220,6 +221,7 @@
     cursor: pointer;
     background-color: #ECE8E8;
     border-radius: 50%;
+
 }
 
 .account .dropdown-menu.open .logout span {

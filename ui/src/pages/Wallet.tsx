@@ -10,6 +10,7 @@ import Purchased from '../assets/images/purchased.gif';
 import Sold from '../assets/images/sold.gif';
 import Income from '../assets/images/income.gif';
 import Balance from '../assets/images/balance.gif';
+import Spend from '../assets/images/spend.gif';
 import { Link } from 'react-router-dom';
 import SideMenu from '../components/Header/SideMenu';
 
@@ -93,7 +94,7 @@ function Wallet() {
         className="wallet-container"
         style={{
           // position: 'relative',
-          display: 'flex',
+          display: 'grid',
           width: '70vw',
           height: '75vh',
           backgroundColor: '#ffffff',
@@ -105,7 +106,7 @@ function Wallet() {
           margin: '0 auto',
           // top: '7.5rem'
           float: 'none',
-          position: 'absolute',
+          position: 'fixed',
           top: '53%',
           left: '50%',
           transform: 'translate(-50%, -50%)'
@@ -123,21 +124,33 @@ function Wallet() {
         >
           <div className="purchased-container">
             <div className="purchased-header">Purchased Apps</div>
-            <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               <img
                 className="purchased-img"
                 src={Purchased}
                 style={{ width: '40%' }}
               ></img>
               <div className="purchased-data">
-                <div className="purchased-data-info">1,234 $</div>
-                <div className="purchased-data-data">+10% this week</div>
+                <div className="purchased-data-info">1,234 </div>
+                <div className="purchased-data-data">USD</div>
               </div>
             </div>
           </div>
           <div className="sold-container">
             <div className="sold-header">Sold-App Numbers</div>
-            <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               <img
                 className="sold-img"
                 src={Sold}
@@ -145,13 +158,19 @@ function Wallet() {
               ></img>
               <div className="sold-data">
                 <div className="sold-data-info">275</div>
-                <div className="sold-data-data">+10% this week</div>
+                <div className="sold-data-data">USD</div>
               </div>
             </div>
           </div>
           <div className="income-container">
             <div className="income-header">Money Made</div>
-            <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               <img
                 className="income-img"
                 src={Income}
@@ -159,13 +178,19 @@ function Wallet() {
               ></img>
               <div className="income-data">
                 <div className="income-data-info">50,057</div>
-                <div className="income-data-data">VND</div>
+                <div className="income-data-data">USD</div>
               </div>
             </div>
           </div>
           <div className="balance-container">
             <div className="balance-header">Total Balance</div>
-            <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               <img
                 className="balance-img"
                 src={Balance}
@@ -173,21 +198,27 @@ function Wallet() {
               ></img>
               <div className="balance-data">
                 <div className="balance-data-info">50,057</div>
-                <div className="balance-data-data">VND</div>
+                <div className="balance-data-data">USD</div>
               </div>
             </div>
           </div>
           <div className="purchased-container">
             <div className="purchased-header">Money Spend</div>
-            <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               <img
                 className="purchased-img"
-                src={Purchased}
+                src={Spend}
                 style={{ width: '40%' }}
               ></img>
               <div className="purchased-data">
-                <div className="purchased-data-info">1,234 $</div>
-                <div className="purchased-data-data">+10% this week</div>
+                <div className="purchased-data-info">12,345</div>
+                <div className="purchased-data-data">USD</div>
               </div>
             </div>
           </div>
