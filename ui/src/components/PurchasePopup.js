@@ -4,8 +4,21 @@ import useCollapse from 'react-collapsed';
 import Checkbox from './Checkbox';
 import MultiSelectDetails from '../components/MultiSelectDetail';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function PurchasePopup(props) {
+  const notify = () => toast.success('Your offer has been accepted. You will be redirect shortly...', {
+    position: "bottom-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
   let navigate = useNavigate();
 
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
@@ -333,7 +346,7 @@ function PurchasePopup(props) {
                   marginTop: '1rem'
                 }}
               >
-                <input
+                <button
                   type="submit"
                   className="placeorder_button"
                   style={{
@@ -350,9 +363,20 @@ function PurchasePopup(props) {
                     margin: '0 auto'
                   }}
                   onClick={() => {
-                    navigate('/');
+                    notify
                   }}
-                  value="Place Order"
+                > Place order</button>
+                <ToastContainer
+                  position="bottom-left"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
                 />
               </div>
             </div>
