@@ -20,22 +20,6 @@ class AuthController {
     }
   };
 
-  public getRegisteredUser = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const userData: CreateUserDto = req.body;
-      const registeredUserData: string =
-        await this.authService.getRegisteredUser(userData.email);
-
-      res.status(201).json({ data: registeredUserData, message: 'registered' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;

@@ -16,12 +16,14 @@ import {
 } from '../utils/CAUtil';
 import { v4 as uuidv4 } from 'uuid';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
+import { User } from '@/interfaces/users.interface';
+import userModel from '@/models/users.model';
 
-const channelName = 'mychannel';
-const chaincodeName = 'muess';
-const mspOrg1 = 'Org1MSP';
+export const channelName = 'mychannel';
+export const chaincodeName = 'muess';
+export const mspOrg1 = 'Org1MSP';
 
-const walletPath = path.join(__dirname, 'wallet');
+export const walletPath = path.join(__dirname, 'wallet');
 const org1UserId = `appUser${Math.floor(Math.random() * 100)}`;
 
 const testIdentity: X509Identity = {
@@ -40,26 +42,6 @@ const initContract = async (identity: X509Identity) => {
   try {
     // build an in memory object with the network configuration (also known as a connection profile)
     const ccp = buildCCPOrg1();
-
-    // // build an instance of the fabric ca services client based on
-    // // the information in the network configuration
-    // const caClient = buildCAClient(ccp, 'ca.org1.example.com');
-
-    // // setup the wallet to hold the credentials of the application user
-    // const wallet = await buildWallet(walletPath);
-
-    // // in a real application this would be done on an administrative flow, and only once
-    // await enrollAdmin(caClient, wallet, mspOrg1);
-
-    // // in a real application this would be done only when a new user was required to be added
-    // // and would be part of an administrative flow
-    // await registerAndEnrollUser(
-    //   caClient,
-    //   wallet,
-    //   mspOrg1,
-    //   org1UserId,
-    //   'org1.department1'
-    // );
 
     // Create a new gateway instance for interacting with the fabric network.
     // In a real application this would be done as the backend server session is setup for
@@ -92,15 +74,47 @@ const initContract = async (identity: X509Identity) => {
   }
 };
 
-// const utf8Decoder = new TextDecoder();
-// const assetId = `asset${Date.now()}`;
-
-// const temp_walletpath = path.join(process.cwd(), 'wallet');
-// const ccp = buildCCPOrg1();
-
 class HLFService {
-  public async createProposal(proposalData: CreateProposalDto) {
-    const contract = await initContract(testIdentity);
+  public users = userModel;
+
+  /**
+   * enrollAdmin enrolls the admin user and imports the new identity into the wallet.
+   *import { userModel } from '@models/users.model';
+
+   * @returns
+   */
+  public async enrollAdmin() {
+    // build an in memory object with the network configuration (also known as a connection profile)
+    const ccp = buildCCPOrg1();
+
+    // // build an instance of the fabric ca services client based on
+    // // the information in the network configuration
+    const caClient = buildCAClient(ccp, 'ca.org1.example.com');
+
+    // // setup the wallet to hold the credentials of the application user
+    const wallet = await buildWallet(walletPath);
+
+    // // in a real application this would be done on an administrative flow, and only once
+    await enrollAdmin(caClient, wallet, mspOrg1);
+  }
+
+  /**
+   *
+   * @param proposalData
+   * @param identity
+   * @returns
+   */
+  public async createProposal(
+    proposalData: CreateProposalDto,
+    user_id: string
+  ) {
+    const user: User = await this.users.findOne({ _id: user_id });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const identity: X509Identity = JSON.parse(user.identity);
+    const contract = await initContract(identity);
     const { appID, buyerID, proposedPrice, licenseDetails } = proposalData;
     const proposalID = uuidv4();
     const result = await contract.submitTransaction(
@@ -117,8 +131,19 @@ class HLFService {
     return result.toString();
   }
 
-  public async acceptProposal(acceptProposalData: AcceptProposalDto) {
-    const contract = await initContract(testIdentity);
+  public async acceptProposal(
+    acceptProposalData: AcceptProposalDto,
+    _id: string
+  ) {
+    const user: User = await this.users.findOne({ _id: _id });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const identity: X509Identity = JSON.parse(user.identity);
+
+    const contract = await initContract(identity);
+
     const { creatorID, proposalID } = acceptProposalData;
     const licenseID = uuidv4();
     const result = await contract.submitTransaction(
@@ -134,8 +159,15 @@ class HLFService {
     return result.toString();
   }
 
-  public async getProposalsByAppID(appId: string) {
-    const contract = await initContract(testIdentity);
+  public async getProposalsByAppID(appId: string, _id: string) {
+    const user: User = await this.users.findOne({ _id: _id });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const identity: X509Identity = JSON.parse(user.identity);
+
+    const contract = await initContract(identity);
     const result = await contract.evaluateTransaction(
       'QueryProposalsByAppID',
       appId
@@ -146,8 +178,15 @@ class HLFService {
     return JSON.parse(result.toString());
   }
 
-  public async getProposalsByBuyerID(buyerId: string) {
-    const contract = await initContract(testIdentity);
+  public async getProposalsByBuyerID(buyerId: string, _id: string) {
+    const user: User = await this.users.findOne({ _id: _id });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const identity: X509Identity = JSON.parse(user.identity);
+
+    const contract = await initContract(identity);
     const result = await contract.evaluateTransaction(
       'QueryProposalsByBuyerID',
       buyerId

@@ -4,16 +4,19 @@ import { SECRET_KEY } from '@config';
 import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { Client } from '../../node_modules/fabric-client/lib/Client';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
 import log4js from 'log4js';
 import hfc from 'fabric-client';
-import util from 'util';
 import path from 'path';
-import fs from 'fs';
 import { User } from '../interfaces/users.interface';
 import { CreateUserDTO } from '@interfaces/users.interface';
+import { buildCCPOrg1, buildWallet } from '../utils//AppUtil';
+import { buildCAClient, registerAndEnrollUser } from '../utils/CAUtil';
+import { X509Identity } from 'fabric-network';
+import { mspOrg1 } from './hlf.service';
+
+const walletPath = path.join(__dirname, 'wallet');
 
 const logger = log4js.getLogger('auth.service.ts');
 hfc.setLogger(logger);
@@ -28,51 +31,12 @@ class AuthService {
 
     return {
       expiresIn,
-      token: sign(dataStoredInToken, secretKey, { expiresIn }),
-      userType: user.userType
+      token: sign(dataStoredInToken, secretKey, { expiresIn })
     };
   }
 
   public createCookie(tokenData: TokenData): string {
-    return `userType=${tokenData.userType}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
-  }
-
-  public async getClientForOrg(orgName: string): Promise<Client> {
-    console.log('getClientForOrg - ****** START %s', orgName);
-
-    // get a fabric client loaded with a connection profile for this org
-    const config =
-      '../../test-network/organizations/peerOrganizations/' + orgName;
-
-    // build a client context and load it with a connection profile
-    // lets only load the network settings and save the client for later
-    const client = hfc.loadFromConfig(hfc.getConfigSetting('network' + config));
-
-    // This will load a connection profile over the top of the current one one
-    // since the first one did not have a client section and the following one does
-    // nothing will actually be replaced.
-    // This will also set an admin identity because the organization defined in the
-    // client section has one defined
-    client.loadFromConfig(hfc.getConfigSetting(orgName + config));
-
-    // this will create both the state store and the crypto store based
-    // on the settings in the client section of the connection profile
-    await client.initCredentialStores();
-
-    // The getUserContext call tries to get the user from persistence.
-    // If the user has been saved to persistence then that means the user has
-    // been registered and enrolled. If the user is found in persistence
-    // the call will then assign the user to the client object.
-    const user = await client.getUserContext(orgName, true);
-    if (!user) {
-      throw new Error(util.format('User was not found :', orgName));
-    } else {
-      logger.debug('User %s was found to be registered and enrolled', orgName);
-    }
-
-    logger.debug('getClientForOrg - ****** END %s \n\n', orgName);
-
-    return client;
+    return `token=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
 
   // sign up a user
@@ -93,6 +57,35 @@ class AuthService {
       ...userData,
       password: hashedPassword
     });
+
+    // build an in memory object with the network configuration (also known as a connection profile)
+    const ccp = buildCCPOrg1();
+
+    // // build an instance of the fabric ca services client based on
+    // // the information in the network configuration
+    const caClient = buildCAClient(ccp, 'ca.org1.example.com');
+
+    // // setup the wallet to hold the credentials of the application user
+    const wallet = await buildWallet(walletPath);
+
+    // // in a real application this would be done only when a new user was required to be added
+    // // and would be part of an administrative flow
+    const identity: X509Identity = await registerAndEnrollUser(
+      caClient,
+      wallet,
+      mspOrg1,
+      createUserData._id,
+      'org1.department1'
+    );
+
+    // Update the created user with identity
+    await this.users.findOneAndUpdate(
+      {
+        email: createUserData.email,
+        password: createUserData.password
+      },
+      { identity: JSON.stringify(identity) }
+    );
 
     return {
       cookie: this.createCookie(this.createToken(createUserData)),
@@ -119,6 +112,11 @@ class AuthService {
       throw new HttpException(409, 'Username or Password not found');
     }
 
+    const identity: X509Identity = JSON.parse(findUser.identity);
+
+    console.log('findUser', findUser);
+    console.log(`user's identity: `, identity);
+
     return {
       cookie: this.createCookie(this.createToken(findUser)),
       findUser
@@ -127,237 +125,7 @@ class AuthService {
 
   // logout
   public logOut(): string {
-    return this.createCookie({ expiresIn: 0, token: '', userType: '' });
-  }
-
-  public async getRegisteredUser(email: string): Promise<string> {
-    try {
-      const client = await this.getClientForOrg(email);
-      logger.debug('Successfully initialized the credential stores');
-      // client can now act as an agent for organization Org1
-      // first check to see if the user is already enrolled
-      let user = await client.getUserContext(email, true);
-      if (user && user.isEnrolled()) {
-        logger.info('Successfully loaded member from persistence');
-      } else {
-        // user was not enrolled, so we will need an admin user object to register
-        logger.info(
-          'User %s was not enrolled, so we will need an admin user object to register',
-          email
-        );
-        const admins = hfc.getConfigSetting('admins');
-        const adminUserObj = await client.setUserContext({
-          username: admins[0].username,
-          password: admins[0].secret
-        });
-        const caClient = client.getCertificateAuthority();
-        const secret = await caClient.register(
-          {
-            enrollmentID: email,
-            affiliation: email.toLowerCase() + '.department1',
-            attrs: [{ name: 'role', value: 'approver', ecert: true }]
-          },
-          adminUserObj
-        );
-        // let secret = await caClient.register({
-        // 	enrollmentID: username,
-        // 	affiliation: userOrg.toLowerCase() + '.department1'
-        // }, adminUserObj);
-        logger.debug('Successfully got the secret for user %s', email);
-        user = await client.setUserContext({
-          username: email,
-          password: secret,
-          attr_reqs: [{ name: 'role', optional: false }]
-        });
-        // user = await client.setUserContext({ username: username, password: secret });
-        logger.debug(
-          'Successfully enrolled username %s  and setUserContext on the client object',
-          email
-        );
-      }
-      if (user && user.isEnrolled) {
-        // var response = {
-        //   success: true,
-        //   secret: user._enrollmentSecret,
-        //   message: email + ' enrolled Successfully',
-        // };
-
-        return user._enrollmentSecret.toString;
-      } else {
-        throw new Error('User was not enrolled ');
-      }
-    } catch (error) {
-      logger.error(
-        'Failed to get registered user: %s with error: %s',
-        email,
-        error.toString()
-      );
-      return 'failed ' + error.toString();
-    }
-  }
-
-  public async createChannel(
-    channelName,
-    channelConfigPath,
-    username,
-    orgName
-  ) {
-    logger.debug("\n====== Creating Channel '" + channelName + "' ======\n");
-    try {
-      // first setup the client for this org
-      const client = await this.getClientForOrg(orgName);
-      logger.debug(
-        'Successfully got the fabric client for the organization "%s"',
-        orgName
-      );
-
-      // read in the envelope for the channel config raw bytes
-      const envelope = fs.readFileSync(path.join(__dirname, channelConfigPath));
-      // extract the channel config bytes from the envelope to be signed
-      const channelConfig = client.extractChannelConfig(envelope);
-
-      //Acting as a client in the given organization provided with "orgName" param
-      // sign the channel config bytes as "endorsement", this is required by
-      // the orderer's channel creation policy
-      // this will use the admin identity assigned to the client when the connection profile was loaded
-      const signature = client.signChannelConfig(channelConfig);
-
-      const request = {
-        config: channelConfig,
-        signatures: [signature],
-        name: channelName,
-        txId: client.newTransactionID(true) // get an admin based transactionID
-      };
-
-      // send to orderer
-      const response = await client.createChannel(request);
-      logger.debug(' response ::%j', response);
-      if (response && response.status === 'SUCCESS') {
-        logger.debug('Successfully created the channel.');
-        const response = {
-          success: true,
-          message: "Channel '" + channelName + "' created Successfully"
-        };
-        return response;
-      } else {
-        logger.error(
-          "\n!!!!!!!!! Failed to create the channel '" +
-            channelName +
-            "' !!!!!!!!!\n\n"
-        );
-        throw new Error("Failed to create the channel '" + channelName + "'");
-      }
-    } catch (err) {
-      logger.error(
-        'Failed to initialize the channel: ' + err.stack ? err.stack : err
-      );
-      throw new Error('Failed to initialize the channel: ' + err.toString());
-    }
-  }
-
-  public async joinChannel(channelName, peers, username, orgname) {
-    logger.debug('\n\n============ Join Channel start ============\n');
-    let error_message = null;
-    const all_eventhubs = [];
-    try {
-      logger.info(
-        'Calling peers in organization "%s" to join the channel',
-        orgname
-      );
-
-      // first setup the client for this org
-      const client = await this.getClientForOrg(orgname);
-      logger.debug(
-        'Successfully got the fabric client for the organization "%s"',
-        orgname
-      );
-      const channel = client.getChannel(channelName);
-      if (!channel) {
-        const message = util.format(
-          'Channel %s was not defined in the connection profile',
-          channelName
-        );
-        logger.error(message);
-        throw new Error(message);
-      }
-
-      // next step is to get the genesis_block from the orderer,
-      // the starting point for the channel that we want to join
-      const request = {
-        txId: client.newTransactionID(true) //get an admin based transactionID
-      };
-      const genesis_block = await channel.getGenesisBlock(request);
-
-      // tell each peer to join and wait 10 seconds
-      // for the channel to be created on each peer
-      const promises = [];
-      promises.push(new Promise((resolve) => setTimeout(resolve, 10000)));
-
-      const join_request = {
-        targets: peers, //using the peer names which only is allowed when a connection profile is loaded
-        txId: client.newTransactionID(true), //get an admin based transactionID
-        block: genesis_block
-      };
-      const join_promise = channel.joinChannel(join_request);
-      promises.push(join_promise);
-      const results = await Promise.all(promises);
-      logger.debug(util.format('Join Channel R E S P O N S E : %j', results));
-
-      // lets check the results of sending to the peers which is
-      // last in the results array
-      const peers_results = results.pop();
-      // then each peer results
-      for (const i in peers_results) {
-        const peer_result = peers_results[i];
-        if (peer_result.response && peer_result.response.status == 200) {
-          logger.info(
-            'Successfully joined peer to the channel %s',
-            channelName
-          );
-        } else {
-          const message = util.format(
-            'Failed to join peer to the channel %s',
-            channelName
-          );
-          error_message = message;
-          logger.error(message);
-        }
-      }
-    } catch (error) {
-      logger.error(
-        'Failed to join channel due to error: ' + error.stack
-          ? error.stack
-          : error
-      );
-      error_message = error.toString();
-    }
-
-    // need to shutdown open event streams
-    all_eventhubs.forEach((eh) => {
-      eh.disconnect();
-    });
-
-    if (!error_message) {
-      const message = util.format(
-        'Successfully joined peers in organization %s to the channel:%s',
-        orgname,
-        channelName
-      );
-      logger.info(message);
-      // build a response to send back to the REST caller
-      const response = {
-        success: true,
-        message: message
-      };
-      return response;
-    } else {
-      const message = util.format(
-        'Failed to join all peers to channel. cause:%s',
-        error_message
-      );
-      logger.error(message);
-      throw new Error(message);
-    }
+    return this.createCookie({ expiresIn: 0, token: '' });
   }
 }
 

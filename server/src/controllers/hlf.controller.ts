@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import HLFService from '@/services/hlf.service';
+import { SECRET_KEY } from '@config';
+import { sign, verify, decode } from 'jsonwebtoken';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 
 class HLFController {
@@ -11,10 +13,14 @@ class HLFController {
     next: NextFunction
   ) => {
     try {
-      const proposalData: CreateProposalDto = req.body;
-      const result: any = await this.hlfService.createProposal(proposalData);
+      const secretKey: string = SECRET_KEY;
+      const token = req.cookies['muess'].token;
+      const decoded = decode(token, { complete: true, json: true });
 
-      res.status(201).json({ data: result, message: 'created' });
+      // const proposalData: CreateProposalDto = req.body;
+      // const result: any = await this.hlfService.createProposal(proposalData);
+
+      res.status(201).json({ data: decoded, message: 'created' });
     } catch (error) {
       next(error);
     }
@@ -28,7 +34,8 @@ class HLFController {
     try {
       const acceptProposalData: AcceptProposalDto = req.body;
       const result: any = await this.hlfService.acceptProposal(
-        acceptProposalData
+        acceptProposalData,
+        ''
       );
 
       res.status(201).json({ data: result, message: 'created' });
@@ -45,7 +52,8 @@ class HLFController {
     try {
       const appId: string = req.params.appId;
       const proposalsData: any = await this.hlfService.getProposalsByAppID(
-        appId
+        appId,
+        ''
       );
 
       res.status(200).json({ data: proposalsData, message: 'Found' });
@@ -62,7 +70,8 @@ class HLFController {
     try {
       const buyerId: string = req.params.buyerId;
       const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
-        buyerId
+        buyerId,
+        ''
       );
 
       res.status(200).json({ data: proposalsData, message: 'Found' });
