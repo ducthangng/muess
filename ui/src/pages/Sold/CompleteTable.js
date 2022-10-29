@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   useTable,
   useSortBy,
@@ -15,6 +15,7 @@ import './Table.css';
 import { GlobalFilter } from './GlobalFilter.tsx';
 
 export const CompleteTable = () => {
+  const [visibility, setVisibility] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
@@ -93,8 +94,8 @@ export const CompleteTable = () => {
                       <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
-                  <td><div className="status-button">
-                    <button className="table-btn-accept">Accept</button>
+                  <td><div className={"status-button-"+row.original.license_status}>
+                    <button className="table-btn-accept" >Accept</button>
                     <button className="table-btn-decline">Decline</button>
                   </div></td>
 
