@@ -111,9 +111,18 @@ function Wallet() {
           transform: 'translate(-50%, -50%)'
         }}
       >
-        <div className="card-container">
+        <div
+          className="card-container"
+          style={{
+            float: 'none',
+            position: 'absolute',
+            top: '13%',
+            left: '48.61%',
+            transform: 'translate(-50%, -50%)'
+          }}
+        >
           <div className="purchased-container">
-            <div className="purchased-header">Total purchased</div>
+            <div className="purchased-header">Purchased Apps</div>
             <div style={{ display: 'flex' }}>
               <img
                 className="purchased-img"
@@ -127,7 +136,7 @@ function Wallet() {
             </div>
           </div>
           <div className="sold-container">
-            <div className="sold-header">Total Sold Product</div>
+            <div className="sold-header">Sold-App Numbers</div>
             <div style={{ display: 'flex' }}>
               <img
                 className="sold-img"
@@ -141,7 +150,7 @@ function Wallet() {
             </div>
           </div>
           <div className="income-container">
-            <div className="income-header">Total Income</div>
+            <div className="income-header">Money Made</div>
             <div style={{ display: 'flex' }}>
               <img
                 className="income-img"
@@ -168,6 +177,20 @@ function Wallet() {
               </div>
             </div>
           </div>
+          <div className="purchased-container">
+            <div className="purchased-header">Money Spend</div>
+            <div style={{ display: 'flex' }}>
+              <img
+                className="purchased-img"
+                src={Purchased}
+                style={{ width: '40%' }}
+              ></img>
+              <div className="purchased-data">
+                <div className="purchased-data-info">1,234 $</div>
+                <div className="purchased-data-data">+10% this week</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           className="graph"
@@ -176,8 +199,13 @@ function Wallet() {
             height: '350px',
             width: '95%',
             backgroundColor: '#FFF8F2',
-            left: '3%',
-            bottom: '3%'
+            // left: '3%',
+            bottom: '3%',
+            float: 'none',
+            position: 'absolute',
+            top: '64.5%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
           }}
         >
           <div className="dropdown">

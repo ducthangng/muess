@@ -8,16 +8,20 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function PurchasePopup(props) {
-  const notify = () => toast.success('Your offer has been accepted. You will be redirect shortly...', {
-    position: "bottom-left",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  });
+  const notify = () =>
+    toast.success(
+      'Your offer has been accepted. You will be redirect shortly...',
+      {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      }
+    );
 
   let navigate = useNavigate();
 
@@ -226,7 +230,7 @@ function PurchasePopup(props) {
                   Please select the service you want to be provided:
                 </div>
                 <div className="purchase-popup-container-body-app-desired-serive-value">
-                  <MultiSelectDetails/>
+                  <MultiSelectDetails />
                 </div>
               </div>
               <div className="purchase-popup-container-body-app-policy">
@@ -338,9 +342,7 @@ function PurchasePopup(props) {
                     className="purchase-popup-container-body-app-policy-checkbox"
                     style={{ marginTop: '1rem' }}
                   >
-                    <Checkbox
-                      label="I have read and accept the policy."
-                    />
+                    <Checkbox label="I have read and accept the policy." />
                   </div>
                 </div>
               </div>

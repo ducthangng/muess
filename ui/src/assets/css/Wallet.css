@@ -15,7 +15,7 @@
   top: 8px;
 }
 
-.wallet-container .card-container{
+.wallet-container .card-container {
   display: flex;
   position: relative;
   top: -25vh;
@@ -25,7 +25,7 @@
   margin: 1rem;
 }
 
-.wallet-container .card-container .purchased-container{
+.wallet-container .card-container .purchased-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -37,11 +37,12 @@
   margin: 1rem;
 }
 
-.wallet-container .card-container .purchased-container .purchased-header{
-  position: relative;;
+.wallet-container .card-container .purchased-container .purchased-header {
+  position: relative;
+  ;
   width: flex;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   color: #3A001E;
 }
 
@@ -56,23 +57,28 @@
 .purchased-container .purchased-data .purchased-data-info {
   position: relative;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 20px;
-  padding-bottom: 1rem ;
+  padding-bottom: 1rem;
   color: #FB7F4B;
 }
 
 .purchased-container .purchased-data .purchased-data-data {
-  position: absolute;
-  width:max-content;
+  /* position: absolute; */
+  width: max-content;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   color: #009899;
+  float: none;
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.wallet-container .card-container .sold-container{
+.wallet-container .card-container .sold-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -84,11 +90,12 @@
   margin: 1rem;
 }
 
-.wallet-container .card-container .sold-container .sold-header{
-  position: relative;;
+.wallet-container .card-container .sold-container .sold-header {
+  position: relative;
+  ;
   width: flex;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   color: #3A001E;
 }
 
@@ -101,23 +108,28 @@
 .sold-container .sold-data .sold-data-info {
   position: relative;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 20px;
-  padding-bottom: 1rem ;
+  padding-bottom: 1rem;
   color: #FB7F4B;
 }
 
 .sold-container .sold-data .sold-data-data {
-  position: absolute;
-  width:max-content;
+  /* position: absolute; */
+  width: max-content;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   color: #009899;
+  float: none;
+  position: absolute;
+  top: 120%;
+  left: 90%;
+  transform: translate(-50%, -50%);
 }
 
-.wallet-container .card-container .income-container{
+.wallet-container .card-container .income-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -129,11 +141,12 @@
   margin: 1rem;
 }
 
-.wallet-container .card-container .income-container .income-header{
-  position: relative;;
+.wallet-container .card-container .income-container .income-header {
+  position: relative;
+  ;
   width: flex;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   color: #3A001E;
 }
 
@@ -146,23 +159,28 @@
 .income-container .income-data .income-data-info {
   position: relative;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 20px;
-  padding-bottom: 1rem ;
+  padding-bottom: 1rem;
   color: #FB7F4B;
 }
 
 .income-container .income-data .income-data-data {
-  position: absolute;
-  width:max-content;
+  /* position: absolute; */
+  width: max-content;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   color: #009899;
+  float: none;
+  position: absolute;
+  top: 120%;
+  left: 30%;
+  transform: translate(-50%, -50%);
 }
 
-.wallet-container .card-container .balance-container{
+.wallet-container .card-container .balance-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -174,11 +192,12 @@
   margin: 1rem;
 }
 
-.wallet-container .card-container .balance-container .balance-header{
-  position: relative;;
+.wallet-container .card-container .balance-container .balance-header {
+  position: relative;
+  ;
   width: flex;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   color: #3A001E;
 }
 
@@ -193,20 +212,25 @@
 .balance-container .balance-data .balance-data-info {
   position: relative;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 20px;
-  padding-bottom: 1rem ;
+  padding-bottom: 1rem;
   color: #FB7F4B;
 }
 
 .balance-container .balance-data .balance-data-data {
-  position: absolute;
-  width:max-content;
+  /* position: absolute; */
+  width: max-content;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   color: #009899;
+  float: none;
+  position: absolute;
+  top: 120%;
+  left: 30%;
+  transform: translate(-50%, -50%);
 }
 
 .dropdown {
@@ -220,7 +244,7 @@
   height: 35px;
 }
 
-.dropdown select{
+.dropdown select {
   font-style: bold;
   font-weight: 700;
   font-size: 20px;
@@ -232,6 +256,6 @@
   border-color: transparent;
 }
 
-.dropdown select option{
+.dropdown select option {
   background-color: transparent;
 }

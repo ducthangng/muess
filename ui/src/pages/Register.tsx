@@ -203,11 +203,7 @@ const Register = () => {
                 >
                   Date of Birth
                 </div>
-                <input
-                  type="date"
-                  name="dateofbirth"
-                  id="dateofbirth"
-                ></input>
+                <input type="date" name="dateofbirth" id="dateofbirth"></input>
                 <div
                   className="email"
                   style={{

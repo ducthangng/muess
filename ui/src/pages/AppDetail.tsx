@@ -6,7 +6,7 @@ import { Divider } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
-import AppIcon from '../assets/images/MOCK-TEST-2022-Apr_1.png'
+import AppIcon from '../assets/images/MOCK-TEST-2022-Apr_1.png';
 
 const AppDetail: React.FC<AppDetailData> = ({
   _id,
@@ -204,7 +204,17 @@ const AppDetail: React.FC<AppDetailData> = ({
             >
               Purchase
             </button>
-            <img src={AppIcon} style={{ marginLeft: 'auto', marginRight: '5%', marginTop:'-27%' ,width:'30%', display: 'flex', position: 'relative' }} />
+            <img
+              src={AppIcon}
+              style={{
+                marginLeft: 'auto',
+                marginRight: '5%',
+                marginTop: '-27%',
+                width: '30%',
+                display: 'flex',
+                position: 'relative'
+              }}
+            />
           </div>
 
           <div

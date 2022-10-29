@@ -49,7 +49,13 @@ export default function NotFound404() {
 
           <button
             onClick={handleHome}
-            style={{backgroundColor:'#FB7F4B', color: 'white',fontSize:'1.3rem', padding: '0.7rem', borderRadius: '15px', }}
+            style={{
+              backgroundColor: '#FB7F4B',
+              color: 'white',
+              fontSize: '1.3rem',
+              padding: '0.7rem',
+              borderRadius: '15px'
+            }}
           >
             Back to homepage
           </button>
