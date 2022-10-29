@@ -19,6 +19,7 @@ import Wallet from '../pages/Wallet';
 import ProductSelection from '../pages/ProductSelection';
 import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
+import Test from '../pages/Test';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -39,6 +40,7 @@ export default function AppRoute() {
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
           <Route path="/solds" element={<SoldList />} />
+          <Route path="/test" element={<Test />} />
           <Route
             path="/products/12"
             element={
