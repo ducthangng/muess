@@ -21,6 +21,13 @@ function PurchasePopup(props) {
 
   let navigate = useNavigate();
 
+  function redirect() {
+    notify();
+    setTimeout(() => {
+      navigate('/purchases');
+    }, 6000);
+  }
+
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
 
   return props.trigger ? (
@@ -361,8 +368,9 @@ function PurchasePopup(props) {
                     marginTop: '1.2rem',
                     margin: '0 auto'
                   }}
-                  onClick={() => {
-                    notify
+                  onClick={(event) => {
+                    event.preventDefault();
+                    redirect();
                   }}
                 > Place order</button>
                 <ToastContainer
