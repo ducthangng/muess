@@ -418,7 +418,6 @@
 // };
 // export default Register;
 
-
 // import { Form, Layout, Button, Input, Divider } from 'antd';
 // // import logo from '../../assets/logo-1.svg';
 import { FC, useEffect, useState } from 'react';
@@ -627,11 +626,7 @@ const Register = () => {
                 >
                   Date of Birth
                 </div>
-                <input
-                  type="date"
-                  name="dateofbirth"
-                  id="dateofbirth"
-                ></input>
+                <input type="date" name="dateofbirth" id="dateofbirth"></input>
                 <div
                   className="email"
                   style={{

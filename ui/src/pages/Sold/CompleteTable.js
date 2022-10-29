@@ -77,7 +77,6 @@ export const CompleteTable = () => {
                           : ' 🔼'
                         : ''}
                     </span>
-
                   </th>
                 ))}
                 <th>Pending</th>
@@ -88,19 +87,25 @@ export const CompleteTable = () => {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <><tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    );
-                  })}
-                  <td><div className={"status-button-"+row.original.license_status}>
-                    <button className="table-btn-accept" >Accept</button>
-                    <button className="table-btn-decline">Decline</button>
-                  </div></td>
-
-
-                </tr></>
+                <>
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                    })}
+                    <td>
+                      <div
+                        className={
+                          'status-button-' + row.original.license_status
+                        }
+                      >
+                        <button className="table-btn-accept">Accept</button>
+                        <button className="table-btn-decline">Decline</button>
+                      </div>
+                    </td>
+                  </tr>
+                </>
               );
             })}
           </tbody>
@@ -148,7 +153,7 @@ export const CompleteTable = () => {
               backgroundColor: '#FB7F4B',
               color: 'white',
               borderRadius: '5px',
-              cursor: 'pointer',
+              cursor: 'pointer'
             }}
           >
             {' '}
@@ -164,7 +169,7 @@ export const CompleteTable = () => {
               backgroundColor: '#FB7F4B',
               color: 'white',
               borderRadius: '5px',
-              cursor: 'pointer',
+              cursor: 'pointer'
             }}
           >
             {' '}
@@ -180,7 +185,7 @@ export const CompleteTable = () => {
               backgroundColor: '#FB7F4B',
               color: 'white',
               borderRadius: '5px',
-              cursor: 'pointer',
+              cursor: 'pointer'
             }}
           >
             {' >>'}
@@ -188,7 +193,11 @@ export const CompleteTable = () => {
           <select
             value={pageSize}
             onChange={(e) => setPageSize(Number(e.target.value))}
-            style={{ paddingLeft: '5px', width: 'fit-content', cursor: 'pointer', }}
+            style={{
+              paddingLeft: '5px',
+              width: 'fit-content',
+              cursor: 'pointer'
+            }}
           >
             {[5, 10, 20].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
