@@ -27,7 +27,7 @@ function PurchasePopup(props) {
     <div
       className="purchase-popup"
       style={{
-        postion: 'fixed',
+        position: 'fixed',
         zIndex: '999',
         top: '0',
         left: '0',
@@ -219,7 +219,7 @@ function PurchasePopup(props) {
                   Please select the service you want to be provided:
                 </div>
                 <div className="purchase-popup-container-body-app-desired-serive-value">
-                  <MultiSelectDetails required />
+                  <MultiSelectDetails/>
                 </div>
               </div>
               <div className="purchase-popup-container-body-app-policy">
@@ -333,7 +333,6 @@ function PurchasePopup(props) {
                   >
                     <Checkbox
                       label="I have read and accept the policy."
-                      required="true"
                     />
                   </div>
                 </div>
