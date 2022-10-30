@@ -20,7 +20,7 @@ class UsersRoute implements Routes {
     this.router.get(`${this.path}`, this.usersController.getUserById);
     this.router.get(
       `${this.path}/roposedLicense`,
-      this.licenseController.getProposalsByBuyerID
+      this.licenseController.getProposalsByAppId
     );
     this.router.get(
       `${this.path}/soldLicense`,
@@ -28,19 +28,19 @@ class UsersRoute implements Routes {
     );
     this.router.get(
       `${this.path}/app`,
-      this.licenseController.getProposalsByBuyerID
+      this.licenseController.getProposalsByBuyerId
     );
     this.router.post(
       `${this.path}/createProposal`,
-      this.licenseController.createLicenseProposal
+      this.licenseController.createProposal
     );
     this.router.post(
       `${this.path}/acceptProposal`,
-      this.licenseController.acceptLicenseProposal
+      this.licenseController.acceptProposal
     );
     this.router.post(
       `${this.path}/denyProposal`,
-      this.licenseController.acceptLicenseProposal
+      this.licenseController.denyProposal
     );
     this.router.post(
       `${this.path}`,

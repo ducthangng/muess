@@ -8,6 +8,7 @@ import {
 import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
+import { Proposal } from '@/interfaces/hlf.interface';
 
 class HLFService {
   public async createApp(user: User, appData: CreateAppDto) {
@@ -156,6 +157,14 @@ class HLFService {
     ];
 
     return mockResult;
+  }
+
+  public async getProposalsByBuyerID(buyerId: string) {
+    return 'hello';
+  }
+
+  public async denyProposal(proposalId: string) {
+    return 'hello';
   }
 }
 

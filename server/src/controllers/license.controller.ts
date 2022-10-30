@@ -8,7 +8,7 @@ import {
 import { User } from '@/interfaces/users.interface';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 
-class HLFController {
+class LicenseController {
   public hlfService = new HLFService();
 
   public createApp = async (
@@ -130,8 +130,7 @@ class HLFController {
     try {
       const buyerId: string = req.params.buyerId;
       const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
-        buyerId,
-        ''
+        buyerId
       );
 
       res.status(200).json({ data: proposalsData, message: 'Found' });
@@ -148,8 +147,7 @@ class HLFController {
     try {
       const buyerId: string = req.params.buyerId;
       const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
-        buyerId,
-        ''
+        buyerId
       );
 
       res.status(200).json({ data: proposalsData, message: 'Found' });
