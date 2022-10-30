@@ -11,16 +11,17 @@ const authMiddleware = async (
   next: NextFunction
 ) => {
   try {
+    req.user = null;
     const Authorization =
       req.cookies['muess'] ||
       (req.header('muess') ? req.header('muess').split('Bearer ')[1] : null);
 
     if (Authorization) {
-      const secretKey: string = SECRET_KEY;
       const verificationResponse = (await verify(
         Authorization,
-        secretKey
+        SECRET_KEY
       )) as DataStoredInToken;
+
       const userId = verificationResponse._id;
       const findUser = await userModel.findById(userId);
 
@@ -34,6 +35,7 @@ const authMiddleware = async (
       next(new HttpException(404, 'Authentication token missing'));
     }
   } catch (error) {
+    console.log(error);
     next(new HttpException(401, 'Wrong authentication token'));
   }
 };

@@ -22,22 +22,20 @@ class AuthService {
   public createToken(user: User): TokenData {
     const dataStoredInToken: DataStoredInToken = { _id: user._id };
     const secretKey: string = SECRET_KEY;
-    const expiresIn: number = 60 * 60;
+    const expiresIn: number = 3 * 24 * 6 * 60;
 
     return {
       expiresIn,
-      token: sign(dataStoredInToken, secretKey, { expiresIn })
+      token: sign(dataStoredInToken, secretKey, { expiresIn: expiresIn })
     };
   }
 
-  public createCookie(tokenData: TokenData): string {
-    return `token=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
-  }
+  // public createCookie(tokenData: TokenData): string {
+  //   return `token=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+  // }
 
   // sign up a user
-  public async register(
-    userData: CreateUserDTO
-  ): Promise<{ cookie: string; user: User }> {
+  public async register(userData: CreateUserDTO) {
     if (isEmpty(userData))
       throw new HttpException(400, 'userData cannot be empty');
 
@@ -50,6 +48,8 @@ class AuthService {
 
     const hashedPassword = await hash(userData.password, 10);
     const x509Identity = await createIdentity(userData.email);
+    console.log('after createIdentity, x509Identity is');
+    console.log(x509Identity);
     const contract = await initContract(x509Identity);
     const clientIdentity = await contract.evaluateTransaction(
       'GetClientIdentity'
@@ -63,15 +63,13 @@ class AuthService {
     });
 
     return {
-      cookie: this.createCookie(this.createToken(createdUser)),
+      cookie: this.createToken(createdUser),
       user: createdUser
     };
   }
 
   // login a user and return a cookie
-  public async login(
-    userData: CreateUserDto
-  ): Promise<{ cookie: string; user: User }> {
+  public async login(userData: CreateUserDto) {
     if (isEmpty(userData))
       throw new HttpException(400, 'userData cannot be empty');
 
@@ -90,11 +88,10 @@ class AuthService {
 
     const identity: X509Identity = JSON.parse(findUser.x509Identity);
 
-    console.log('findUser', findUser);
-    console.log(`user's x509Identity: `, identity);
-
+    console.log('findUser:');
+    console.log(findUser);
     return {
-      cookie: this.createCookie(this.createToken(findUser)),
+      cookie: this.createToken(findUser),
       user: findUser
     };
   }

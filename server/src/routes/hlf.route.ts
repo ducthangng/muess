@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { Routes } from '@/interfaces/routes.interface';
 import HLFController from '../controllers/hlf.controller';
-
-console.log('inside hlf route');
+import authMiddleware from '@/middlewares/auth.middleware';
 
 class HLFRoute implements Routes {
   public path = '/hlf';
@@ -14,7 +13,11 @@ class HLFRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}/create-app`, this.hlfController.createApp);
+    this.router.post(
+      `${this.path}/create-app`,
+      authMiddleware,
+      this.hlfController.createApp
+    );
     this.router.post(
       `${this.path}/create-proposal`,
       this.hlfController.createProposal
@@ -23,8 +26,10 @@ class HLFRoute implements Routes {
       `${this.path}/accept-proposal`,
       this.hlfController.acceptProposal
     );
+    // remember to encodeURIComponent(creatorId) before sending to server
     this.router.get(
       `${this.path}/apps-by-creator/:creatorId`,
+      authMiddleware,
       this.hlfController.getAppsByCreatorId
     );
     this.router.get(

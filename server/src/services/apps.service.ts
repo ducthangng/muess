@@ -23,7 +23,6 @@ class AppService {
   public async createApp(appData: CreateAppData): Promise<App> {
     if (isEmpty(appData)) throw new HttpException(400, 'appData is empty');
 
-    console.log('creating ... ');
     const findApp: App = await this.apps.findOne({ title: appData.title });
     if (findApp)
       throw new HttpException(409, `This name ${appData.title} already exists`);
@@ -33,10 +32,9 @@ class AppService {
         ...appData
       });
 
-      console.log('app adata daydayda ...:  ', createAppData);
       return createAppData;
     } catch (err) {
-      console.log('hello loi ne: ', err);
+      console.log(err);
     }
   }
 

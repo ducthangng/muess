@@ -5,18 +5,21 @@ import {
   CreateAppDto,
   CreateProposalDto
 } from '@/dtos/hlf.dto';
+import { User } from '@/interfaces/users.interface';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 class HLFController {
   public hlfService = new HLFService();
 
   public createApp = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const appData: CreateAppDto = req.body;
-      const result: any = await this.hlfService.createApp(appData);
+      const user: User = req.user;
+      const result: any = await this.hlfService.createApp(user, appData);
 
       res.status(201).json({ data: result, message: 'created' });
     } catch (error) {
@@ -57,13 +60,17 @@ class HLFController {
   };
 
   public getAppsByCreatorId = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
+      const user: User = req.user;
       const creatorId: string = req.params.creatorId;
-      const appsData: any = await this.hlfService.getAppsByCreatorId(creatorId);
+      const appsData: any = await this.hlfService.getAppsByCreatorId(
+        user,
+        creatorId
+      );
 
       res.status(200).json({ data: appsData, message: 'Found' });
     } catch (error) {

@@ -31,6 +31,14 @@ export const initContract = async (identity: X509Identity) => {
     // build an in memory object with the network configuration (also known as a connection profile)
     const ccp = buildCCPOrg1();
 
+    const caClient = buildCAClient(ccp, 'ca.org1.example.com');
+
+    // setup the wallet to hold the credentials of the application user
+    const wallet = await buildWallet(walletPath);
+
+    // in a real application this would be done on an administrative flow, and only once
+    await enrollAdmin(caClient, wallet, mspOrg1);
+
     // Create a new gateway instance for interacting with the fabric network.
     // In a real application this would be done as the backend server session is setup for
     // a user that has been verified.
@@ -47,11 +55,17 @@ export const initContract = async (identity: X509Identity) => {
 
     await gateway.connect(ccp, gatewayOpts);
 
+    console.log('connect gateway');
+
     // Build a network instance based on the channel where the smart contract is deployed
     const network = await gateway.getNetwork(channelName);
 
+    console.log('network got');
+
     // Get the contract from the network.
     const contract = network.getContract(chaincodeName);
+
+    console.log('contract got');
 
     return contract;
   } catch (error) {
@@ -74,6 +88,8 @@ export const createIdentity = async (email: string) => {
 
     // in a real application this would be done on an administrative flow, and only once
     await enrollAdmin(caClient, wallet, mspOrg1);
+
+    console.log('enrol admin successfully');
 
     // in a real application this would be done only when a new user was required to be added
     // and would be part of an administrative flow

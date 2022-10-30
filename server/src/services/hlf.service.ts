@@ -7,6 +7,7 @@ import {
 
 import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
+import { User } from '@/interfaces/users.interface';
 
 const testIdentity: X509Identity = {
   credentials: {
@@ -20,8 +21,8 @@ const testIdentity: X509Identity = {
 };
 
 class HLFService {
-  public async createApp(appData: CreateAppDto) {
-    const contract = await initContract(testIdentity);
+  public async createApp(user: User, appData: CreateAppDto) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
     const {
       title,
       description,
@@ -91,11 +92,12 @@ class HLFService {
     return result.toString();
   }
 
-  public async getAppsByCreatorId(creatorId: string) {
-    const contract = await initContract(testIdentity);
+  public async getAppsByCreatorId(user: User, creatorId: string) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const decodedCreatorId = decodeURIComponent(creatorId);
     const result = await contract.evaluateTransaction(
       'QueryAppsByCreatorId',
-      creatorId
+      decodedCreatorId
     );
     console.log(
       `Transaction has successfully created, result is: ${result.toString()}`
