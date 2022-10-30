@@ -28,13 +28,17 @@ class HLFController {
   };
 
   public createProposal = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const proposalData: CreateProposalDto = req.body;
-      const result: any = await this.hlfService.createProposal(proposalData);
+      const user: User = req.user;
+      const result: any = await this.hlfService.createProposal(
+        user,
+        proposalData
+      );
 
       res.status(201).json({ data: result, message: 'created' });
     } catch (error) {
@@ -43,13 +47,15 @@ class HLFController {
   };
 
   public acceptProposal = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
+      const user: User = req.user;
       const acceptProposalData: AcceptProposalDto = req.body;
       const result: any = await this.hlfService.acceptProposal(
+        user,
         acceptProposalData
       );
 
@@ -79,13 +85,15 @@ class HLFController {
   };
 
   public getProposalsByAppId = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
+      const user: User = req.user;
       const appId: string = req.params.appId;
       const proposalsData: any = await this.hlfService.getProposalsByAppId(
+        user,
         appId
       );
 
@@ -96,13 +104,15 @@ class HLFController {
   };
 
   public getProposalsByBuyerId = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
+      const user: User = req.user;
       const buyerId: string = req.params.buyerId;
       const proposalsData: any = await this.hlfService.getProposalsByBuyerId(
+        user,
         buyerId
       );
 

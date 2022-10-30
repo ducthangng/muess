@@ -9,17 +9,6 @@ import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 
-const testIdentity: X509Identity = {
-  credentials: {
-    certificate:
-      '-----BEGIN CERTIFICATE-----\nMIICfTCCAiSgAwIBAgIUYapXGiVG2tA88VatJBKYX13VloEwCgYIKoZIzj0EAwIw\naDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK\nEwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt\nY2Etc2VydmVyMB4XDTIyMTAzMDA0NTUwMFoXDTIzMTAzMDA1MTYwMFowRTEwMAsG\nA1UECxMEb3JnMTANBgNVBAsTBmNsaWVudDASBgNVBAsTC2RlcGFydG1lbnQxMREw\nDwYDVQQDEwhhcHBVc2VyMTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPcsOFL8\nLzzQkifht28r/drB4dMPY497TQkMyLy1VupxIqlzuuOIycIt8s0tQjCHHnNtMEQO\nCINtTlQRG3pw2oijgc4wgcswDgYDVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAw\nHQYDVR0OBBYEFHaXjw76D34a97psTEG17vcUNwg3MB8GA1UdIwQYMBaAFC9zUGP9\n2i7eTw7JAp6M3sYV6m4lMGsGCCoDBAUGBwgBBF97ImF0dHJzIjp7ImhmLkFmZmls\naWF0aW9uIjoib3JnMS5kZXBhcnRtZW50MSIsImhmLkVucm9sbG1lbnRJRCI6ImFw\ncFVzZXIxIiwiaGYuVHlwZSI6ImNsaWVudCJ9fTAKBggqhkjOPQQDAgNHADBEAiBS\nvo0lHT3jtIJA37YsBsF4eLSRWgdIW7LN5J4ragl82QIgfX27hqGDO3L8/GPqxYpC\nZBsXsce6hU6Z9/16qg7jSL8=\n-----END CERTIFICATE-----\n',
-    privateKey:
-      '-----BEGIN PRIVATE KEY-----\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgE+3rM1YKIo1DNiDe\r\nViz92oPycdzYSWXlyWT7zOcvp6KhRANCAAT3LDhS/C880JIn4bdvK/3aweHTD2OP\r\ne00JDMi8tVbqcSKpc7rjiMnCLfLNLUIwhx5zbTBEDgiDbU5UERt6cNqI\r\n-----END PRIVATE KEY-----\r\n'
-  },
-  mspId: 'Org1MSP',
-  type: 'X.509'
-};
-
 class HLFService {
   public async createApp(user: User, appData: CreateAppDto) {
     const contract = await initContract(JSON.parse(user.x509Identity));
@@ -50,9 +39,9 @@ class HLFService {
     return result.toString();
   }
 
-  public async createProposal(proposalData: CreateProposalDto) {
+  public async createProposal(user: User, proposalData: CreateProposalDto) {
     try {
-      const contract = await initContract(testIdentity);
+      const contract = await initContract(JSON.parse(user.x509Identity));
       const { appId, proposedPrice, licenseDetails } = proposalData;
       const proposalId = uuidv4();
 
@@ -75,8 +64,11 @@ class HLFService {
     }
   }
 
-  public async acceptProposal(acceptProposalData: AcceptProposalDto) {
-    const contract = await initContract(testIdentity);
+  public async acceptProposal(
+    user: User,
+    acceptProposalData: AcceptProposalDto
+  ) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
     const { creatorId, proposalId } = acceptProposalData;
     const licenseId = uuidv4();
     const result = await contract.submitTransaction(
@@ -105,8 +97,8 @@ class HLFService {
     return JSON.parse(result.toString());
   }
 
-  public async getProposalsByAppId(appId: string) {
-    const contract = await initContract(testIdentity);
+  public async getProposalsByAppId(user: User, appId: string) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
       'QueryProposalsByAppId',
       appId
@@ -117,8 +109,8 @@ class HLFService {
     return JSON.parse(result.toString());
   }
 
-  public async getProposalsByBuyerId(buyerId: string) {
-    const contract = await initContract(testIdentity);
+  public async getProposalsByBuyerId(user: User, buyerId: string) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
       'QueryProposalsByBuyerId',
       buyerId
