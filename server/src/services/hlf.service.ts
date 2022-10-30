@@ -8,7 +8,6 @@ import {
 import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
-import { Proposal } from '@/interfaces/hlf.interface';
 
 class HLFService {
   public async createApp(user: User, appData: CreateAppDto) {
@@ -70,13 +69,27 @@ class HLFService {
     acceptProposalData: AcceptProposalDto
   ) {
     const contract = await initContract(JSON.parse(user.x509Identity));
-    const { creatorId, proposalId } = acceptProposalData;
+    const { proposalId } = acceptProposalData;
     const licenseId = uuidv4();
     const result = await contract.submitTransaction(
       'AcceptProposal',
-      proposalId,
       licenseId,
-      creatorId,
+      proposalId
+    );
+    console.log(
+      `Transaction has successfully created, result is: ${result.toString()}`
+    );
+    return result.toString();
+  }
+
+  public async rejectProposal(
+    user: User,
+    rejectProposalData: AcceptProposalDto
+  ) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const { proposalId } = rejectProposalData;
+    const result = await contract.submitTransaction(
+      'AcceptProposal',
       proposalId
     );
     console.log(
@@ -120,51 +133,6 @@ class HLFService {
       `Transaction has successfully created, result is: ${result.toString()}`
     );
     return JSON.parse(result.toString());
-  }
-
-  public async getAssetHistory(): Promise<Proposal[]> {
-    const mockResult: Proposal[] = [
-      {
-        assetType: 'proposal',
-        assetId: 'proposal1',
-        appId: 'app1',
-        buyerId: 'johnsmith',
-        sellerId: 'sarahbrown',
-        proposedPrice: 100,
-        licenseDetails: 'copyleft',
-        status: 'accepted'
-      },
-      {
-        assetType: 'proposal',
-        assetId: 'proposal2',
-        appId: 'app2',
-        buyerId: 'johnsmith',
-        sellerId: 'sarahbrown',
-        proposedPrice: 120,
-        licenseDetails: 'copyleft',
-        status: 'accepted'
-      },
-      {
-        assetType: 'proposal',
-        assetId: 'proposal3',
-        appId: 'app3',
-        buyerId: 'johnsmith',
-        sellerId: 'sarahbrown',
-        proposedPrice: 270,
-        licenseDetails: 'copyleft',
-        status: 'accepted'
-      }
-    ];
-
-    return mockResult;
-  }
-
-  public async getProposalsByBuyerID(buyerId: string) {
-    return 'hello';
-  }
-
-  public async denyProposal(proposalId: string) {
-    return 'hello';
   }
 }
 
