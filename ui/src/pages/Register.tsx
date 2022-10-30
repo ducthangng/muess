@@ -206,227 +206,235 @@ const Register = () => {
                     Account detail
                   </button>
                 </div>
-                <div
-                  className={
-                    toggleState === 1 ? 'contents active-contents' : 'contents'
-                  }
-                >
+
+                <div className="content-tabs">
                   <div
-                    className="line-1"
-                    style={{
-                      borderTop: '3px solid orange',
-                      position: 'absolute',
-                      left: '0',
-                      width: '40%'
-                    }}
-                  ></div>
-                  <div
-                    className="fullname"
-                    style={{
-                      position: 'relative',
-                      fontWeight: '400',
-                      fontSize: '12px',
-                      lineHeight: '28px',
-                      color: '#8C98A9',
-                      marginTop: '2%'
-                    }}
+                    className={
+                      toggleState === 1
+                        ? 'contents active-contents'
+                        : 'contents'
+                    }
                   >
-                    Full Name
+                    <div
+                      className="line-1"
+                      style={{
+                        borderTop: '3px solid orange',
+                        position: 'absolute',
+                        left: '0',
+                        width: '40%'
+                      }}
+                    ></div>
+                    <div
+                      className="fullname"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Full Name
+                    </div>
+                    <input
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        position: 'relative',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                      required={true}
+                    />
+                    <div
+                      className="DOB"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Date of Birth
+                    </div>
+                    <input
+                      type="date"
+                      name="dateofbirth"
+                      id="dateofbirth"
+                    ></input>
+                    <div
+                      className="email"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Email Address
+                    </div>
+                    <input
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        position: 'relative',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                    ></input>
                   </div>
-                  <input
-                    style={{
-                      fontWeight: 400,
-                      fontSize: '12px',
-                      width: '100%',
-                      position: 'relative',
-                      borderColor: '#FFE7D4',
-                      backgroundColor: '#FFFFFF',
-                      color: '#3A001E',
-                      borderWidth: '2px',
-                      borderRadius: '5px'
-                    }}
-                    required={true}
-                  />
+
                   <div
-                    className="DOB"
-                    style={{
-                      position: 'relative',
-                      fontWeight: '400',
-                      fontSize: '12px',
-                      lineHeight: '34px',
-                      color: '#8C98A9',
-                      marginTop: '2%'
-                    }}
+                    className={
+                      toggleState === 2
+                        ? 'contents active-contents'
+                        : 'contents'
+                    }
                   >
-                    Date of Birth
+                    <div
+                      className="line-2"
+                      style={{
+                        borderTop: '3px solid orange',
+                        position: 'absolute',
+                        right: '0',
+                        width: '40%'
+                      }}
+                    ></div>
+                    <div
+                      className="emailaddress"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Email Address
+                    </div>
+                    <input
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        position: 'relative',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                      type={'email'}
+                      required={true}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <div
+                      className="password"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Password
+                    </div>
+                    <div
+                      className="input_password"
+                      style={{
+                        display: 'flex',
+                        width: '100%',
+                        fontSize: '12px',
+                        position: 'relative',
+                        backgroundColor: 'transparent'
+                      }}
+                    >
+                      <input
+                        type={passwordShown ? 'text' : 'password'}
+                        style={{
+                          fontWeight: 400,
+                          height: '100%',
+                          width: '100%',
+                          position: 'relative',
+                          borderColor: '#FFE7D4',
+                          backgroundColor: '#FFFFFF',
+                          color: '#3A001E',
+                          borderWidth: '2px',
+                          borderRadius: '5px'
+                        }}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      ></input>
+                      <EyeInvisibleOutlined
+                        className={passwordShown ? 'shown' : 'not'}
+                        onClick={togglePassword}
+                      />
+                    </div>
+                    <div
+                      className="password"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Repeat Password
+                    </div>
+                    <div
+                      className="input_password"
+                      style={{
+                        display: 'flex',
+                        width: '100%',
+                        fontSize: '12px',
+                        position: 'relative',
+                        backgroundColor: 'transparent'
+                      }}
+                    >
+                      <input
+                        type={passwordShown ? 'text' : 'password'}
+                        style={{
+                          fontWeight: 400,
+                          height: '100%',
+                          width: '100%',
+                          position: 'relative',
+                          borderColor: '#FFE7D4',
+                          backgroundColor: '#FFFFFF',
+                          color: '#3A001E',
+                          borderWidth: '2px',
+                          borderRadius: '5px'
+                          // border: warningBorder
+                        }}
+                        value={repeatPassword}
+                        onChange={(e) => checkOnRepeat(e.target.value)}
+                      ></input>
+                      <EyeInvisibleOutlined
+                        className={passwordShown ? 'shown' : 'not'}
+                        onClick={togglePassword}
+                      />
+                    </div>
                   </div>
-                  <input
-                    type="date"
-                    name="dateofbirth"
-                    id="dateofbirth"
-                  ></input>
-                  <div
-                    className="email"
-                    style={{
-                      position: 'relative',
-                      fontWeight: '400',
-                      fontSize: '12px',
-                      lineHeight: '34px',
-                      color: '#8C98A9',
-                      marginTop: '2%'
-                    }}
-                  >
-                    Email Address
-                  </div>
-                  <input
-                    style={{
-                      fontWeight: 400,
-                      fontSize: '12px',
-                      width: '100%',
-                      position: 'relative',
-                      borderColor: '#FFE7D4',
-                      backgroundColor: '#FFFFFF',
-                      color: '#3A001E',
-                      borderWidth: '2px',
-                      borderRadius: '5px'
-                    }}
-                  ></input>
                 </div>
 
-                <div
-                  className={
-                    toggleState === 2 ? 'contents active-contents' : 'contents'
-                  }
-                >
-                  <div
-                    className="line-2"
-                    style={{
-                      borderTop: '3px solid orange',
-                      position: 'absolute',
-                      right: '0',
-                      width: '40%'
-                    }}
-                  ></div>
-                  <div
-                    className="emailaddress"
-                    style={{
-                      position: 'relative',
-                      fontWeight: '400',
-                      fontSize: '13px',
-                      lineHeight: '34px',
-                      color: '#8C98A9',
-                      marginTop: '2%'
-                    }}
-                  >
-                    Email
-                  </div>
-                  <input
-                    style={{
-                      fontWeight: 400,
-                      height: '8%',
-                      width: '100%',
-                      position: 'relative',
-                      borderColor: '#FFE7D4',
-                      backgroundColor: '#FFFFFF',
-                      color: '#3A001E',
-                      borderWidth: '2px',
-                      borderRadius: '5px'
-                    }}
-                    type={'email'}
-                    required={true}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <div
-                    className="password"
-                    style={{
-                      position: 'relative',
-                      fontWeight: '400',
-                      fontSize: '13px',
-                      lineHeight: '34px',
-                      color: '#8C98A9',
-                      marginTop: '2%'
-                    }}
-                  >
-                    Password
-                  </div>
-                  <div
-                    className="input_password"
-                    style={{
-                      display: 'flex',
-                      width: '100%',
-                      height: '8%',
-                      position: 'relative',
-                      backgroundColor: 'transparent'
-                    }}
-                  >
-                    <input
-                      type={passwordShown ? 'text' : 'password'}
-                      style={{
-                        fontWeight: 400,
-                        height: '100%',
-                        width: '100%',
-                        position: 'relative',
-                        borderColor: '#FFE7D4',
-                        backgroundColor: '#FFFFFF',
-                        color: '#3A001E',
-                        borderWidth: '2px',
-                        borderRadius: '5px'
-                      }}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    ></input>
-                    <EyeInvisibleOutlined
-                      className={passwordShown ? 'shown' : 'not'}
-                      onClick={togglePassword}
-                    />
-                  </div>
-                  <div
-                    className="password"
-                    style={{
-                      position: 'relative',
-                      fontWeight: '400',
-                      fontSize: '13px',
-                      lineHeight: '34px',
-                      color: '#8C98A9',
-                      marginTop: '2%'
-                    }}
-                  >
-                    Repeat Password
-                  </div>
-                  <div
-                    className="input_password"
-                    style={{
-                      display: 'flex',
-                      width: '100%',
-                      height: '8%',
-                      position: 'relative',
-                      backgroundColor: 'transparent'
-                    }}
-                  >
-                    <input
-                      type={passwordShown ? 'text' : 'password'}
-                      style={{
-                        fontWeight: 400,
-                        height: '100%',
-                        width: '100%',
-                        position: 'relative',
-                        borderColor: '#FFE7D4',
-                        backgroundColor: '#FFFFFF',
-                        color: '#3A001E',
-                        borderWidth: '2px',
-                        borderRadius: '5px'
-                        // border: warningBorder
-                      }}
-                      value={repeatPassword}
-                      onChange={(e) => checkOnRepeat(e.target.value)}
-                    ></input>
-                    <EyeInvisibleOutlined
-                      className={passwordShown ? 'shown' : 'not'}
-                      onClick={togglePassword}
-                    />
-                  </div>
-                </div>
                 <button
                   className="continue_button"
                   style={{

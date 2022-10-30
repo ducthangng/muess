@@ -1,6 +1,9 @@
-* {
-  padding: 0;
+*,
+::before,
+::after {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
 [type="date"] {
@@ -71,10 +74,16 @@ button {
   border: none;
 }
 
-.content {
-  display: none;
+.content-tabs {
+  flex-grow: 1;
 }
 
-.active-content {
+.contents {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.active-contents {
   display: block;
 }
