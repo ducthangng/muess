@@ -3,7 +3,8 @@ import HLFService from '@/services/hlf.service';
 import {
   AcceptProposalDto,
   CreateAppDto,
-  CreateProposalDto
+  CreateProposalDto,
+  RejectProposalDto
 } from '@/dtos/hlf.dto';
 import { User } from '@/interfaces/users.interface';
 import { RequestWithUser } from '@/interfaces/auth.interface';
@@ -57,6 +58,25 @@ class HLFController {
       const result: any = await this.hlfService.acceptProposal(
         user,
         acceptProposalData
+      );
+
+      res.status(201).json({ data: result, message: 'created' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public rejectProposal = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const user: User = req.user;
+      const rejectProposalData: RejectProposalDto = req.body;
+      const result: any = await this.hlfService.rejectProposal(
+        user,
+        rejectProposalData
       );
 
       res.status(201).json({ data: result, message: 'created' });

@@ -89,7 +89,7 @@ class HLFService {
     const contract = await initContract(JSON.parse(user.x509Identity));
     const { proposalId } = rejectProposalData;
     const result = await contract.submitTransaction(
-      'AcceptProposal',
+      'RejectProposal',
       proposalId
     );
     console.log(

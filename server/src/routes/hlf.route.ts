@@ -28,6 +28,11 @@ class HLFRoute implements Routes {
       authMiddleware,
       this.hlfController.acceptProposal
     );
+    this.router.post(
+      `${this.path}/reject-proposal`,
+      authMiddleware,
+      this.hlfController.rejectProposal
+    );
     // remember to encodeURIComponent(creatorId) before sending to server
     this.router.get(
       `${this.path}/apps-by-creator/:creatorId`,
