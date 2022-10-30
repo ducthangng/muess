@@ -14,21 +14,26 @@ class HLFRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.post(`${this.path}/create-app`, this.hlfController.createApp);
     this.router.post(
-      `${this.path}/createProposal`,
+      `${this.path}/create-proposal`,
       this.hlfController.createProposal
     );
     this.router.post(
-      `${this.path}/acceptProposal`,
+      `${this.path}/accept-proposal`,
       this.hlfController.acceptProposal
     );
     this.router.get(
+      `${this.path}/apps-by-creator/:creatorId`,
+      this.hlfController.getAppsByCreatorId
+    );
+    this.router.get(
       `${this.path}/proposals-by-app/:appId`,
-      this.hlfController.getProposalsByAppID
+      this.hlfController.getProposalsByAppId
     );
     this.router.get(
       `${this.path}/proposals-by-buyer/:buyerId`,
-      this.hlfController.getProposalsByBuyerID
+      this.hlfController.getProposalsByBuyerId
     );
   }
 }

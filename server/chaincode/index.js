@@ -7,7 +7,7 @@
 
 'use strict';
 
-const CC = require('./lib/asset_transfer_ledger_chaincode.js');
+const CC = require('./lib/app_chaincode.js');
 
 module.exports.CC = CC;
 module.exports.contracts = [CC];

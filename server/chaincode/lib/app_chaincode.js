@@ -4,6 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// how to run this thing
+// go to test-network, run
+//    ./network.sh down
+//    ./network.sh up createChannel -ca -s couchdb
+//    ./network.sh deployCC -ccn muess -ccp ../chaincode/ -ccl javascript
+// go to this directory (application-for-chaincode)
+//    npm install
+//    npm run start
+// common errors:
+//  - "appUser not found/already exists/Identity already registered"
+//    -> change org1UserId below to sth else and retry npm run start
+//  - "failed to register user/identity not found"
+//    -> delete wallet folder and retry npm run start
+
 "use strict";
 
 const { Contract } = require('fabric-contract-api');
@@ -19,7 +33,6 @@ class Chaincode extends Contract {
     appType,
     paymentMethod,
     appTags,
-    numDownloads,
     appIconURL,
   ) {
     const exists = await this.AssetExists(ctx, assetId);
@@ -27,7 +40,7 @@ class Chaincode extends Contract {
       throw new Error(`The assetId ${assetId} already exists`);
     }
 
-    const clientId = ctx.clientIdentity.getId();
+    const clientId = ctx.clientIdentity.getID();
 
     // ==== Create asset object and marshal to JSON ====
     let asset = {
@@ -40,7 +53,6 @@ class Chaincode extends Contract {
       appType: appType,
       paymentMethod: paymentMethod,
       appTags: appTags,
-      numDownloads: numDownloads,
       appIconURL: appIconURL,
     };
 
@@ -56,17 +68,17 @@ class Chaincode extends Contract {
     proposedPrice,
     licenseDetails
   ) {
-    const exists = await this.AssetExists(ctx, assetId);
-    if (exists) {
-      throw new Error(`The assetId ${assetId} already exists`);
+    const assetIdExists = await this.AssetExists(ctx, assetId);
+    if (assetIdExists) {
+      throw new Error(`The assetId ${assetId} already exists, find another one for the proposal`);
     }
 
-    const appBytes = await ctx.stub.getState(appId);
-    if (!appBytes) {
-      throw new Error("No such app exists");
+    const appIdExists = await this.AssetExists(ctx, appId);
+    if (!appIdExists) {
+      throw new Error(`There is no app with assetId ${appId} exists`);
     }
 
-    const clientId = ctx.clientIdentity.getId();
+    const clientId = ctx.clientIdentity.getID();
 
     // ==== Create asset object and marshal to JSON ====
     let asset = {
@@ -85,7 +97,7 @@ class Chaincode extends Contract {
 
   async AcceptProposal(ctx, assetId, proposalId) {
 
-    const clientId = ctx.clientIdentity.getId();
+    const clientId = ctx.clientIdentity.getID();
 
     const proposalBytes = await ctx.stub.getState(proposalId);
     if (!proposalBytes) {
