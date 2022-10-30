@@ -98,11 +98,6 @@ class AuthService {
       user: findUser
     };
   }
-
-  // logout
-  public logOut(): string {
-    return this.createCookie({ expiresIn: 0, token: '' });
-  }
 }
 
 export default AuthService;

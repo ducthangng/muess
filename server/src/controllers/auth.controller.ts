@@ -43,10 +43,8 @@ class AuthController {
     next: NextFunction
   ) => {
     try {
-      const cookie = await this.authService.logOut();
-
-      res.cookie('muess', cookie, { httpOnly: false });
-      res.status(200).json({ message: 'logout' });
+      res.clearCookie('muess');
+      res.status(200).json({ message: 'logout successfully' });
     } catch (error) {
       next(error);
     }
