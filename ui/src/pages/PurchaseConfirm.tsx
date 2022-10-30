@@ -4,43 +4,40 @@ import SideMenu from '../components/Header/SideMenu';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 
-import { Row, Divider } from 'antd';
-import { Card, Space, message } from 'antd';
+import { Row, Divider, Col } from 'antd';
+import { Card, Space, Select } from 'antd';
 import { Button } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Dropdown, Menu } from 'antd';
 import { Input } from 'antd';
+import { Checkbox } from 'antd';
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Collapse } from 'antd';
+
+const { Panel } = Collapse;
+const policy = `
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+`;
 
 const PurchaseConfirm = () => {
   const { data } = useQuery(['purchaseConfirm'], async () => {
     return await appApi.getAllApps();
   });
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
-    message.info('Click on menu item.');
-    console.log('click', e);
+  const { Option } = Select;
+
+  //handle value
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
   };
 
-  const menu = (
-    <Menu
-      onClick={handleMenuClick}
-      items={[
-        {
-          label: '1st menu item',
-          key: '1'
-        },
-        {
-          label: '2nd menu item',
-          key: '2'
-        },
-        {
-          label: '3rd menu item',
-          key: '3'
-        }
-      ]}
-    />
-  );
+  //handle checkbox
+  const onChange = (e: CheckboxChangeEvent) => {
+    console.log(`checked = ${e.target.checked}`);
+  };
+
+  //handle collapse Policy value
+  const onChangepolicy = (key: string | string[]) => {
+    console.log(key);
+  };
 
   return (
     <>
@@ -53,104 +50,184 @@ const PurchaseConfirm = () => {
                 width: '100%'
               }}
             >
-              {/* <Divider 
-             className=""
-             orientation="left"
-            > */}
               <Divider
                 className=""
                 orientation="left"
                 style={{
-                  fontSize: '48px',
+                  fontSize: '46px',
                   fontWeight: 'bold',
                   paddingTop: 100,
-                  paddingBottom: 5,
-                  // paddingLeft: 350,
+                  paddingLeft: 90,
                   color: '3A001E'
                 }}
               >
-                Purchase Product
+                Purchase Confirm
               </Divider>
 
-              <Space
-                direction="vertical"
-                size="large"
-                style={{
-                  paddingLeft: 200
-                }}
-              >
-                <Card title="1. Addition Request" size="small">
-                  <Row>
-                    <p>Category </p>
-                    <Dropdown overlay={menu} trigger={['click']}>
-                      <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                          Choose addition request
-                          <DownOutlined />
-                        </Space>
-                      </a>
-                    </Dropdown>
-                  </Row>
-                </Card>
+              {/* column left  */}
+              <Row>
+                <Col flex="1 1 200px">
+                  <Space
+                    direction="vertical"
+                    size="large"
+                    style={{
+                      paddingLeft: 200
+                    }}
+                  >
+                    <Card
+                      title="1. Addition Request"
+                      size="default"
+                      style={{
+                        width: 1100
+                      }}
+                    >
+                      <Row>
+                        <p
+                          style={{
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            paddingRight: 35,
+                            color: '3A001E'
+                          }}
+                        >
+                          Category
+                        </p>
+                        <Select
+                          mode="tags"
+                          style={{ width: '50%' }}
+                          placeholder="Choose your category"
+                          onChange={handleChange}
+                        >
+                          <Option value="game">Game</Option>
+                          <Option value="entertainment">Entertainment</Option>
+                          <Option value="social">Social</Option>
+                        </Select>
+                      </Row>
+                      <Row>
+                        <p
+                          style={{
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            paddingRight: 20,
+                            color: '3A001E'
+                          }}
+                        >
+                          Extensions{' '}
+                        </p>
+                        <Select
+                          mode="tags"
+                          style={{ width: '50%' }}
+                          placeholder="Choose your extentsion"
+                          onChange={handleChange}
+                        >
+                          <Option value="game">Game</Option>
+                          <Option value="entertainment">Entertainment</Option>
+                          <Option value="social">Social</Option>
+                        </Select>
+                      </Row>
+                    </Card>
 
-                <Card title="2. Offer Price" size="default">
-                  <Row>
-                    <p>Price: </p>
-                    <Input placeholder="Enter price" />
-                  </Row>
-                </Card>
-              </Space>
-              {/* </Divider> */}
+                    <Card
+                      title="2. Offer Price"
+                      size="default"
+                      style={{
+                        width: 1100
+                      }}
+                    >
+                      <Row>
+                        <p
+                          style={{
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            paddingRight: 60,
+                            color: '3A001E'
+                          }}
+                        >
+                          Price:{' '}
+                        </p>
+                        <Input
+                          style={{ width: '50%' }}
+                          placeholder="Enter price $"
+                        />
+                      </Row>
+                    </Card>
 
-              <Divider
-                className=""
-                orientation="left"
-                style={{
-                  paddingLeft: 370
-                }}
-              ></Divider>
-              <Divider
-                className=""
-                orientation="right"
-                style={{
-                  paddingRight: 370
-                }}
-              >
-                <div>
-                  <Card title="Order Review" size="small">
-                    {data &&
-                      data.map((item) => {
-                        return (
-                          <MockProduct
-                            _id={item._id}
-                            title={item.title}
-                            description={item.description}
-                            creatorId={item.creatorId}
-                            creatorName={item.creatorName}
-                            rated={item.rated}
-                            appType={item.appType}
-                            appPaymentMethod={item.appPaymentMethod}
-                            appCategories={item.appCategories}
-                            reviewer={item.reviewer}
-                            downloaded={item.downloaded}
-                            appIcon={item.appIcon} // link to database.
-                            feedbacks={item.feedbacks}
-                            appTags={item.appTags}
-                          />
-                        );
-                      })}
-                    <Divider orientation="left">
-                      <Button
-                        type="primary"
-                        shape="round"
-                        href="/productselection"
+                    <Card
+                      title="3. Confirm policies"
+                      size="default"
+                      style={{
+                        width: 1100
+                      }}
+                    >
+                      <Collapse
+                        defaultActiveKey={['1']}
+                        onChange={onChangepolicy}
                       >
-                        Confirm
-                      </Button>
-                    </Divider>
-                  </Card>
-                </div>
-              </Divider>
+                        <Panel header="Policies of our application" key="1">
+                          <p>{policy}</p>
+                        </Panel>
+                      </Collapse>
+                      <Checkbox onChange={onChange}>
+                        {' '}
+                        I have read and accept the terms of all of these
+                        policies{' '}
+                      </Checkbox>
+                    </Card>
+                  </Space>
+                </Col>
+
+                {/* column right */}
+                <Col
+                  flex="0 1 300px"
+                  style={{
+                    paddingRight: 200,
+                    paddingTop: 10,
+                    paddingLeft: 10
+                  }}
+                >
+                  <div>
+                    <Card
+                      title="Order Review"
+                      size="small"
+                      style={{
+                        width: 400
+                      }}
+                    >
+                      {data &&
+                        data.map((item) => {
+                          return (
+                            <MockProduct
+                              _id={item._id}
+                              title={item.title}
+                              description={item.description}
+                              creatorId={item.creatorId}
+                              creatorName={item.creatorName}
+                              rated={item.rated}
+                              appType={item.appType}
+                              appPaymentMethod={item.appPaymentMethod}
+                              appCategories={item.appCategories}
+                              reviewer={item.reviewer}
+                              downloaded={item.downloaded}
+                              appIcon={item.appIcon} // link to database.
+                              feedbacks={item.feedbacks}
+                              appTags={item.appTags}
+                            />
+                          );
+                        })}
+                      <Divider orientation="right">
+                        <Button
+                          type="primary"
+                          shape="round"
+                          href="/productselection"
+                        >
+                          Buy
+                        </Button>
+                      </Divider>
+                    </Card>
+                  </div>
+                </Col>
+                {/* </Divider> */}
+              </Row>
             </div>
           </Row>
         </body>

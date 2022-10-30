@@ -34,7 +34,6 @@ export default function AppRoute() {
           <Route path="/register" element={<Register />} />
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
-          <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route
             path="/products/id/123456"
             element={
@@ -56,6 +55,7 @@ export default function AppRoute() {
               />
             }
           />
+          <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
