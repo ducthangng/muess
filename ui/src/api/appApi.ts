@@ -110,6 +110,27 @@ export const appApi = {
     return response;
   },
 
+  getOwnedApps: async () => {
+    const response = await fetch(`${apiUrl}/all`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const apps: AppDetailData[] = data.data;
+        console.log('owneddd: ', data.data);
+        return apps;
+      });
+
+    return response;
+  },
+
   /**
    *  Returns app information of a specific app with the given app id.
    *

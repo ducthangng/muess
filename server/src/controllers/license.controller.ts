@@ -9,7 +9,7 @@ import {
 import { User } from '@/interfaces/users.interface';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 
-class HLFController {
+class LicenseController {
   public hlfService = new HLFService();
 
   public createApp = async (
@@ -141,6 +141,40 @@ class HLFController {
       next(error);
     }
   };
+
+  public getProposalsBySellerID = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const buyerId: string = req.params.buyerId;
+      const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
+        buyerId
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public denyProposal = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const buyerId: string = req.params.buyerId;
+      const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
+        buyerId
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
-export default HLFController;
+export default LicenseController;

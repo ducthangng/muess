@@ -20,6 +20,7 @@ class App {
   public port: string | number;
 
   constructor(routes: Routes[]) {
+    console.log('workinh');
     this.app = express();
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
@@ -29,7 +30,6 @@ class App {
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
-    // this.initHLF();
   }
 
   public listen() {

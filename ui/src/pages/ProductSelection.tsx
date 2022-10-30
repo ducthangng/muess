@@ -45,12 +45,7 @@ function ProductSelection() {
               }}
             >
               <div>
-                <Button
-                  ghost
-                  shape="default"
-                  size="middle"
-                  href="/productselection"
-                >
+                <Button ghost shape="default" size="middle">
                   Featured Apps
                 </Button>
                 <Button
