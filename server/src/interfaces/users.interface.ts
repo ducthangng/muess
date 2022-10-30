@@ -2,7 +2,7 @@ export interface User {
   _id: string;
   email: string;
   password: string;
-  identity: string;
+  x509Identity: string;
 }
 
 export interface CreateUserDTO {

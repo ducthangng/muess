@@ -6,7 +6,7 @@ import authMiddleware from '@middlewares/auth.middleware';
 import validationMiddleware from '@middlewares/validation.middleware';
 
 class AuthRoute implements Routes {
-  public path = '';
+  public path = '/auth';
   public router = Router();
   public authController = new AuthController();
 
@@ -18,11 +18,11 @@ class AuthRoute implements Routes {
     this.router.post(
       `${this.path}/register`,
       validationMiddleware(CreateUserDto, 'body'),
-      this.authController.signUp
+      this.authController.register
     );
-    this.router.get(
+    this.router.post(
       `${this.path}/login`,
-      // validationMiddleware(CreateUserDto, 'body'),
+      validationMiddleware(CreateUserDto, 'body'),
       this.authController.login
     );
     // this.router.post(
