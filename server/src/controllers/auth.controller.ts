@@ -7,14 +7,20 @@ import AuthService from '@services/auth.service';
 class AuthController {
   public authService = new AuthService();
 
-  public signUp = async (req: Request, res: Response, next: NextFunction) => {
+  public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDTO = req.body;
-      const result: { cookie: string; findUser: User } =
-        await this.authService.signUp(userData);
+      const result = await this.authService.register(userData);
 
-      res.cookie('muess', result.cookie, { httpOnly: true });
-      res.status(201).json({ data: result.findUser, message: 'signup' });
+      const options = {
+        maxAge: result.cookie.expiresIn * 1000, // would expire after 15 minutes
+        httpOnly: true // The cookie only accessible by the web server
+      };
+
+      res.cookie('muess', result.cookie.token, options);
+      res
+        .status(201)
+        .json({ data: result.user, message: 'register successfully' });
     } catch (error) {
       next(error);
     }
@@ -23,10 +29,16 @@ class AuthController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;
-      const { cookie } = await this.authService.logIn(userData);
+      const result = await this.authService.login(userData);
 
-      res.cookie('muess', cookie, { httpOnly: false });
-      res.status(200).json({ data: 'ok' });
+      const options = {
+        maxAge: result.cookie.expiresIn * 1000, // would expire after 15 minutes
+        httpOnly: true // The cookie only accessible by the web server
+      };
+      res.cookie('muess', result.cookie.token, options);
+      res
+        .status(201)
+        .json({ data: result.user, message: 'login successfully' });
     } catch (error) {
       next(error);
     }
@@ -38,10 +50,8 @@ class AuthController {
     next: NextFunction
   ) => {
     try {
-      const cookie = await this.authService.logOut();
-
-      res.cookie('muess', cookie, { httpOnly: false });
-      res.status(200).json({ message: 'logout' });
+      res.clearCookie('muess');
+      res.status(200).json({ message: 'logout successfully' });
     } catch (error) {
       next(error);
     }
