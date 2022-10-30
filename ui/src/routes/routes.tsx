@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
-// import Test from '../pages/Test';
 import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
 import { AdminEC, StudentEC } from '../models/Guard';
@@ -20,6 +19,7 @@ import ProductSelection from '../pages/ProductSelection';
 import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
 import Test from '../pages/Test';
+import PurchaseConfirm from '../pages/PurchaseConfirm';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -65,6 +65,7 @@ export default function AppRoute() {
               />
             }
           />
+          <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />

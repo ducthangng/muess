@@ -5,7 +5,7 @@
  */
 
 import FabricCAServices from 'fabric-ca-client';
-import { Wallet } from 'fabric-network';
+import { Wallet, X509Identity } from 'fabric-network';
 
 const adminUserId = 'admin';
 const adminUserPasswd = 'adminpw';
@@ -74,7 +74,7 @@ const registerAndEnrollUser = async (
   orgMspId: string,
   userId: string,
   affiliation: string
-): Promise<void> => {
+): Promise<X509Identity> => {
   try {
     // Check to see if we've already enrolled the user
     const userIdentity = await wallet.get(userId);
@@ -115,7 +115,7 @@ const registerAndEnrollUser = async (
       enrollmentID: userId,
       enrollmentSecret: secret
     });
-    const x509Identity = {
+    const x509Identity: X509Identity = {
       credentials: {
         certificate: enrollment.certificate,
         privateKey: enrollment.key.toBytes()
@@ -123,10 +123,12 @@ const registerAndEnrollUser = async (
       mspId: orgMspId,
       type: 'X.509'
     };
-    await wallet.put(userId, x509Identity);
+    // await wallet.put(userId, x509Identity);
     console.log(
       `Successfully registered and enrolled user ${userId} and imported it into the wallet`
     );
+
+    return x509Identity;
   } catch (error) {
     console.error(`Failed to register user : ${error}`);
   }

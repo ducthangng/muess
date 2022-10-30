@@ -10,6 +10,10 @@ const userSchema: Schema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  identity: {
+    type: String,
+    required: false
   }
 });
 

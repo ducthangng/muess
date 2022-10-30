@@ -29,7 +29,6 @@ class UsersRoute implements Routes {
       this.usersController.updateUser
     );
     this.router.delete(`${this.path}/:id`, this.usersController.deleteUser);
-    this.router.get(`${this.path}/:id/`, this.usersController.enrollUser);
 
     //mock app
     // this.router.get(`${this.path}/mockapp`, this.appsController);

@@ -381,6 +381,14 @@ class Chaincode extends Contract {
     iterator.close();
     return allResults;
   }
+
+  async GetClientIdentity(ctx) {
+
+    const clientId = ctx.clientIdentity.getID();
+
+    return clientId;
+    
+  }
 }
 
 module.exports = Chaincode;

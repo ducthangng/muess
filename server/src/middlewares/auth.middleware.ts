@@ -12,10 +12,8 @@ const authMiddleware = async (
 ) => {
   try {
     const Authorization =
-      req.cookies['Authorization'] ||
-      (req.header('Authorization')
-        ? req.header('Authorization').split('Bearer ')[1]
-        : null);
+      req.cookies['muess'] ||
+      (req.header('muess') ? req.header('muess').split('Bearer ')[1] : null);
 
     if (Authorization) {
       const secretKey: string = SECRET_KEY;
