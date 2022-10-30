@@ -41,7 +41,7 @@ export default function AppRoute() {
           <Route path="/solds" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
           <Route
-            path="/products/12"
+            path="/products/:id"
             element={
               <AppDetail
                 _id={'123456'}

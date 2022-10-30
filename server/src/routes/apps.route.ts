@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import AppsController from '@controllers/apps.controller';
+import AppsController from '@/controllers/app.controller';
 import { CreateAppDto } from '@dtos/apps.dto';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';

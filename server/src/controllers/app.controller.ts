@@ -1,13 +1,42 @@
-import { CreateAppDto } from '@dtos/apps.dto';
-import { App, CreateAppData } from '@interfaces/apps.interface';
-import appService from '@services/apps.service';
+import { App } from '@interfaces/apps.interface';
 import { Request, NextFunction, Response } from 'express';
+import { RequestWithUser } from '@/interfaces/auth.interface';
+import { User } from '@/interfaces/users.interface';
+import {
+  AcceptProposalDto,
+  CreateAppDto,
+  CreateProposalDto,
+  RejectProposalDto
+} from '@/dtos/hlf.dto';
+import AppService from '../services/app.service';
 
 class AppsController {
-  public appService = new appService();
+  public appService = new AppService();
 
   /**
-   * Get all the applicaitons currently available on the blockchain
+   * Contributor: Khang Nguyen
+   * @param req
+   * @param res
+   * @param next
+   */
+  public createApp = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const appData: CreateAppDto = req.body;
+      const user: User = req.user;
+      const result: any = await this.appService.createApp(user, appData);
+
+      res.status(201).json({ data: result, message: 'created' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Contributor: Siga
    * @param req
    * @param res
    * @param next
@@ -18,7 +47,7 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const findAllAppsData: App[] = await this.appService.findAllApp();
+      const findAllAppsData: App[] = await this.appService.getAllApss();
 
       res.status(200).json({ data: findAllAppsData, message: 'findAll' });
     } catch (error) {
@@ -39,7 +68,7 @@ class AppsController {
   ) => {
     try {
       const appId: string = req.params.id;
-      const findOneAppData: App = await this.appService.findAppById(appId);
+      const findOneAppData: App[] = await this.appService.getAppById(appId);
 
       res.status(200).json({ data: findOneAppData, message: 'findOne' });
     } catch (error) {
@@ -48,26 +77,25 @@ class AppsController {
   };
 
   /**
-   * Create an application on the blockchain
+   * Contributor: Khang Nguyen
    * @param req
    * @param res
    * @param next
    */
-  public createApp = async (
-    req: Request,
+  public getAppsByCreatorId = async (
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      console.log(req.body);
-      const appData: CreateAppData = req.body;
+      const user: User = req.user;
+      const creatorId: string = req.params.creatorId;
+      const appsData: any = await this.appService.getAppsByCreatorId(
+        user,
+        creatorId
+      );
 
-      appData.creatorId = 'ducthang_id';
-      appData.creatorName = 'ducthang';
-      appData.rated = '16+';
-      const createAppData: App = await this.appService.createApp(appData);
-
-      res.status(201).json({ data: createAppData, message: 'created' });
+      res.status(200).json({ data: appsData, message: 'Found' });
     } catch (error) {
       next(error);
     }

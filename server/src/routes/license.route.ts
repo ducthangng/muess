@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Routes } from '@/interfaces/routes.interface';
-import LicenseController from '../controllers/license.controller';
+import LicenseController from '../controllers/proposal.controller';
 import authMiddleware from '@/middlewares/auth.middleware';
 
 class HLFRoute implements Routes {

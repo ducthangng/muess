@@ -8,19 +8,7 @@ import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
 import AppIcon from '../assets/images/MOCK-TEST-2022-Apr_1.png';
 
-const AppDetail: React.FC<AppDetailData> = ({
-  _id,
-  title,
-  description,
-  appCategories,
-  appIcon,
-  appPaymentMethod,
-  appTags,
-  appType,
-  feedbacks,
-  creatorId,
-  creatorName
-}) => {
+const AppDetail: React.FC<AppDetailData> = () => {
   const navigate = useNavigate();
 
   const [buttonPopup, setButtonPopup] = useState(false);

@@ -36,11 +36,6 @@ export const appApi = {
   releaseApp: async (params: { app: CreateAppData }) => {
     const response = SENDPOST(`${apiUrl}`, params.app)
       .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
         const x: number = data.data;
         return x === 1 ? true : false;
       })

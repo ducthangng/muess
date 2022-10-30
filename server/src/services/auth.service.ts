@@ -30,10 +30,6 @@ class AuthService {
     };
   }
 
-  // public createCookie(tokenData: TokenData): string {
-  //   return `token=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
-  // }
-
   // sign up a user
   public async register(userData: CreateUserDTO) {
     if (isEmpty(userData))

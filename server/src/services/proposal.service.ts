@@ -8,37 +8,37 @@ import {
 import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
+import { App } from '../interfaces/apps.interface';
 
-class HLFService {
-  public async createApp(user: User, appData: CreateAppDto) {
-    const contract = await initContract(JSON.parse(user.x509Identity));
-    const {
-      title,
-      description,
-      rating,
-      appType,
-      paymentMethod,
-      appTags,
-      appIconURL
-    } = appData;
-    const appId = uuidv4();
-    const result = await contract.submitTransaction(
-      'CreateApp',
-      appId,
-      title,
-      description,
-      rating,
-      appType,
-      paymentMethod,
-      appTags.toString(),
-      appIconURL
-    );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
-    return result.toString();
+const sampleProposal: CreateProposalDto[] = [
+  {
+    appId: '1',
+    proposedPrice: 100,
+    licenseDetails: '1'
+  },
+  {
+    appId: '2',
+    proposedPrice: 200,
+    licenseDetails: '2'
+  },
+  {
+    appId: '3',
+    proposedPrice: 300,
+    licenseDetails: '3'
+  },
+  {
+    appId: '3',
+    proposedPrice: 300,
+    licenseDetails: '3'
+  },
+  {
+    appId: '3',
+    proposedPrice: 300,
+    licenseDetails: '3'
   }
+];
 
+class ProposalService {
   public async createProposal(user: User, proposalData: CreateProposalDto) {
     try {
       const contract = await initContract(JSON.parse(user.x509Identity));
@@ -98,19 +98,6 @@ class HLFService {
     return result.toString();
   }
 
-  public async getAppsByCreatorId(user: User, creatorId: string) {
-    const contract = await initContract(JSON.parse(user.x509Identity));
-    const decodedCreatorId = decodeURIComponent(creatorId);
-    const result = await contract.evaluateTransaction(
-      'QueryAppsByCreatorId',
-      decodedCreatorId
-    );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
-    return JSON.parse(result.toString());
-  }
-
   public async getProposalsByAppId(user: User, appId: string) {
     const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
@@ -123,7 +110,7 @@ class HLFService {
     return JSON.parse(result.toString());
   }
 
-  public async getProposalsByBuyerId(user: User, buyerId: string) {
+  public async getProposalsBySellerId(user: User, buyerId: string) {
     const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
       'QueryProposalsByBuyerId',
@@ -134,6 +121,10 @@ class HLFService {
     );
     return JSON.parse(result.toString());
   }
+
+  public async getProposalsByBuyerId(user: User, sellerId: string) {
+    return sampleProposal;
+  }
 }
 
-export default HLFService;
+export default ProposalService;

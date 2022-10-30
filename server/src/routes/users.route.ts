@@ -3,7 +3,7 @@ import UsersController from '@/controllers/users.controller';
 import { CreateUserDto } from '@/dtos/users.dto';
 import { Routes } from '@/interfaces/routes.interface';
 import validationMiddleware from '@/middlewares/validation.middleware';
-import LicenseController from '@/controllers/license.controller';
+import LicenseController from '@/controllers/proposal.controller';
 
 class UsersRoute implements Routes {
   public path = '/users';
@@ -38,10 +38,7 @@ class UsersRoute implements Routes {
       `${this.path}/acceptProposal`,
       this.licenseController.acceptProposal
     );
-    this.router.post(
-      `${this.path}/denyProposal`,
-      this.licenseController.denyProposal
-    );
+
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateUserDto, 'body'),
