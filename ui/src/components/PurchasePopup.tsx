@@ -4,9 +4,33 @@ import useCollapse from 'react-collapsed';
 import Checkbox from './Checkbox';
 import MultiSelectDetails from '../components/MultiSelectDetail';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function PurchasePopup(props) {
+  const notify = () =>
+    toast.success(
+      'Your offer has been accepted. You will be redirect shortly...',
+      {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      }
+    );
+
   let navigate = useNavigate();
+
+  function redirect() {
+    notify();
+    setTimeout(() => {
+      navigate('/purchases');
+    }, 6000);
+  }
 
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
 
@@ -14,7 +38,7 @@ function PurchasePopup(props) {
     <div
       className="purchase-popup"
       style={{
-        postion: 'fixed',
+        position: 'fixed',
         zIndex: '999',
         top: '0',
         left: '0',
@@ -206,7 +230,7 @@ function PurchasePopup(props) {
                   Please select the service you want to be provided:
                 </div>
                 <div className="purchase-popup-container-body-app-desired-serive-value">
-                  <MultiSelectDetails required />
+                  <MultiSelectDetails />
                 </div>
               </div>
               <div className="purchase-popup-container-body-app-policy">
@@ -318,10 +342,7 @@ function PurchasePopup(props) {
                     className="purchase-popup-container-body-app-policy-checkbox"
                     style={{ marginTop: '1rem' }}
                   >
-                    <Checkbox
-                      label="I have read and accept the policy."
-                      required="true"
-                    />
+                    <Checkbox label="I have read and accept the policy." />
                   </div>
                 </div>
               </div>
@@ -333,7 +354,7 @@ function PurchasePopup(props) {
                   marginTop: '1rem'
                 }}
               >
-                <input
+                <button
                   type="submit"
                   className="placeorder_button"
                   style={{
@@ -349,10 +370,25 @@ function PurchasePopup(props) {
                     marginTop: '1.2rem',
                     margin: '0 auto'
                   }}
-                  onClick={() => {
-                    navigate('/');
+                  onClick={(event) => {
+                    event.preventDefault();
+                    redirect();
                   }}
-                  value="Place Order"
+                >
+                  {' '}
+                  Place order
+                </button>
+                <ToastContainer
+                  position="bottom-left"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
                 />
               </div>
             </div>

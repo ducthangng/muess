@@ -8,8 +8,8 @@ export const COLUMNS = [
     accessor: 'product_name'
   },
   {
-    Header: 'Provider',
-    accessor: 'provider'
+    Header: 'Consumer',
+    accessor: 'consumer'
   },
   {
     Header: 'Price',

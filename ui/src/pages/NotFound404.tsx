@@ -17,7 +17,7 @@ export default function NotFound404() {
           <div
             className="text-5xl font-dark font-bold"
             style={{
-              color: '#8172d5',
+              color: '#FB7F4B',
               fontFamily: 'Roboto',
               fontWeight: 700,
               fontSize: '64px'
@@ -28,7 +28,7 @@ export default function NotFound404() {
           <p
             className="text-2xl md:text-3xl font-light leading-normal"
             style={{
-              color: '#8172d5',
+              color: '#FB7F4B',
               fontFamily: 'Roboto',
               fontSize: '32px'
             }}
@@ -39,7 +39,7 @@ export default function NotFound404() {
           <p
             className="mb-8"
             style={{
-              color: 'Black',
+              color: '#3A001E',
               fontFamily: 'Roboto',
               fontSize: '20px'
             }}
@@ -49,7 +49,13 @@ export default function NotFound404() {
 
           <button
             onClick={handleHome}
-            className="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-primary active:bg-primary hover:bg-primary/70"
+            style={{
+              backgroundColor: '#FB7F4B',
+              color: 'white',
+              fontSize: '1.3rem',
+              padding: '0.7rem',
+              borderRadius: '15px'
+            }}
           >
             Back to homepage
           </button>

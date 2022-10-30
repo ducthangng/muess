@@ -17,16 +17,18 @@ function App() {
 
       {/* <About /> */}
 
-      <ToastContainer
-        position="top-center"
-        autoClose={2500}
+      {/* <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
-      />
+        pauseOnHover
+        theme="light"
+      /> */}
       <QueryClientProvider client={queryClient}>
         <AppRoute />
       </QueryClientProvider>
