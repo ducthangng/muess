@@ -1,9 +1,10 @@
 .sign-up-background .sign-up-container .container-2 .input_password .shown{
-    position: absolute;
+    /* position: absolute; */
     opacity: 50%;
     font-size: 25px;
-    top: 0.2rem;
-    right: 0.5rem;
+    /* padding-left: 1rem; */
+    /* top: 0.2rem;
+    right: 0.5rem; */
 }
 
 .sign-up-background .sign-up-container .container-2 .input_password .not:hover {
@@ -17,11 +18,11 @@
 }
 
 .sign-up-background .sign-up-container .container-2 .input_password .not{
-    position: absolute;
+    /* position: absolute; */
     opacity: 50%;
     font-size: 25px;
-    top: 0.2rem;
-    right: 0.5rem;
+    /* top: 0.2rem;
+    right: 0.5rem; */
 
 }
 
