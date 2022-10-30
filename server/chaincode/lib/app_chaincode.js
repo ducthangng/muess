@@ -6,7 +6,7 @@
 
 "use strict";
 
-const { Contract } = require("fabric-contract-api");
+const { Contract } = require('fabric-contract-api');
 
 class Chaincode extends Contract {
 
@@ -89,7 +89,7 @@ class Chaincode extends Contract {
 
     const proposalBytes = await ctx.stub.getState(proposalId);
     if (!proposalBytes) {
-      throw new Error("No such proposal exists");
+      throw new Error('No such proposal exists');
     }
 
     const proposal = JSON.parse(proposalBytes.toString());
@@ -143,7 +143,7 @@ class Chaincode extends Contract {
   // delete - remove a asset key/value pair from state
   async DeleteAsset(ctx, id) {
     if (!id) {
-      throw new Error("Asset name must not be empty");
+      throw new Error('Asset name must not be empty');
     }
 
     let exists = await this.AssetExists(ctx, id);
@@ -343,23 +343,23 @@ class Chaincode extends Contract {
     while (!res.done) {
       if (res.value && res.value.value.toString()) {
         let jsonRes = {};
-        console.log(res.value.value.toString("utf8"));
+        console.log(res.value.value.toString('utf8'));
         if (isHistory && isHistory === true) {
           jsonRes.TxId = res.value.txId;
           jsonRes.Timestamp = res.value.timestamp;
           try {
-            jsonRes.Value = JSON.parse(res.value.value.toString("utf8"));
+            jsonRes.Value = JSON.parse(res.value.value.toString('utf8'));
           } catch (err) {
             console.log(err);
-            jsonRes.Value = res.value.value.toString("utf8");
+            jsonRes.Value = res.value.value.toString('utf8');
           }
         } else {
           jsonRes.Key = res.value.key;
           try {
-            jsonRes.Record = JSON.parse(res.value.value.toString("utf8"));
+            jsonRes.Record = JSON.parse(res.value.value.toString('utf8'));
           } catch (err) {
             console.log(err);
-            jsonRes.Record = res.value.value.toString("utf8");
+            jsonRes.Record = res.value.value.toString('utf8');
           }
         }
         allResults.push(jsonRes);

@@ -1,4 +1,4 @@
-* { 
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -56,7 +56,7 @@
 
 .side-menu .main-menu {
     position: fixed;
-    width:fit-content;
+    width: fit-content;
     height: auto;
     display: inline-block;
     text-align: center;
@@ -69,9 +69,176 @@
 
 }
 
+.account {
+    position: fixed;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    width: 12%;
+    height: 7.4%;
+    top: 0.5%;
+    right: 1%;
+    background-color: #F5F5F5;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #3A001E;
+}
 
+.account .account-info {
+    margin-top: 4px;
+    margin-left: 14px;
+    font-size: auto;
+    overflow: hidden;
 
+}
 
+.account .account-info .username {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Inter", sans-serif;
+    display: inline-block;
+}
 
+.account .dropdown-menu {
+    position: absolute;
+    top: -10000px;
+}
 
+.account .dropdown-menu.open {
+    position: absolute;
+    top: 120%;
+    right: 0px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ECE8E8;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: #ffffff;
+    overflow: hidden;
+}
 
+.account .dropdown-menu.open li {
+    list-style-type: none;
+}
+
+.account .dropdown-menu.open li a {
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item {
+    display: flex;
+    border-radius: 4px;
+    font-size: small;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    padding-bottom: 13px;
+    padding-top: 2px;
+    width: 100%;
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item .account-info {
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+    position: relative;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    /* margin-left: 30%;
+    margin-top: -70px; */
+    font-size: auto;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item .account-info .username {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 7px;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item .account-info .email {
+    font-family: "Inter", sans-serif;
+    display: flex;
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item:hover {
+    background-color: #19020251;
+}
+
+.account .dropdown-menu.open .profile-item .account-info .username a {
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item .account-info .small-text {
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item .account-info a {
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .profile-item a {
+    text-decoration: none;
+}
+
+.account .dropdown-menu.open .logout {
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    font-weight: 600;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    padding: auto;
+
+    /* margin-top: 5px; */
+    /* margin-bottom: 5px; */
+    /* margin-left: 0px;
+    padding-top: 4px;
+    padding-bottom: 4px; */
+}
+
+.account .dropdown-menu.open .logout .icon {
+    display: inline-block;
+    list-style-type: none;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    line-height: 40px;
+    /* text-align: center; */
+    /* margin-left: 13px; */
+    padding-top: 7px;
+    padding-right: -7px;
+    cursor: pointer;
+    background-color: #ECE8E8;
+    border-radius: 50%;
+
+}
+
+.account .dropdown-menu.open .logout span {
+    position: absolute;
+    display: inline-block;
+    line-height: 40px;
+    /* padding-left: 13px; */
+}
+
+.account .dropdown-menu.open .dropdown-menu.open {
+    text-decoration: none;
+    z-index: 998;
+}
+
+.account .dropdown-menu.open .logout:hover {
+    -webkit-filter: brightness(50%);
+    filter: brightness(50%);
+    background-color: #19020251;
+    cursor: pointer;
+}
