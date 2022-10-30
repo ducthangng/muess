@@ -32,6 +32,7 @@ class Chaincode extends Contract {
     appType,
     paymentMethod,
     appTags,
+    appCategories,
     appIconURL
   ) {
     const exists = await this.AssetExists(ctx, assetId);
@@ -52,6 +53,7 @@ class Chaincode extends Contract {
       appType: appType,
       paymentMethod: paymentMethod,
       appTags: appTags.split(','),
+      appCategories: appCategories.split(','),
       appIconURL: appIconURL
     };
 
@@ -97,7 +99,6 @@ class Chaincode extends Contract {
   }
 
   async AcceptProposal(ctx, assetId, proposalId) {
-    const clientId = ctx.clientIdentity.getID();
 
     const proposalBytes = await ctx.stub.getState(proposalId);
     if (!proposalBytes) {
@@ -107,6 +108,11 @@ class Chaincode extends Contract {
     const proposal = JSON.parse(proposalBytes.toString());
     if (!proposal) {
       throw new Error("Can't JSON parse proposalBytes");
+    }
+
+    const clientId = ctx.clientIdentity.getID();
+    if (clientId != proposal.sellerId) {
+      throw new Error("You must be the owner to accept this proposal.");
     }
 
     // create new asset
@@ -158,32 +164,32 @@ class Chaincode extends Contract {
   }
 
   // delete - remove a asset key/value pair from state
-  async DeleteAsset(ctx, id) {
-    if (!id) {
-      throw new Error('Asset name must not be empty');
-    }
+  // async DeleteAsset(ctx, id) {
+  //   if (!id) {
+  //     throw new Error('Asset name must not be empty');
+  //   }
 
-    let exists = await this.AssetExists(ctx, id);
-    if (!exists) {
-      throw new Error(`Asset ${id} does not exist`);
-    }
+  //   let exists = await this.AssetExists(ctx, id);
+  //   if (!exists) {
+  //     throw new Error(`Asset ${id} does not exist`);
+  //   }
 
-    let valAsbytes = await ctx.stub.getState(id); // get the asset from chaincode state
-    let jsonResp = {};
-    if (!valAsbytes) {
-      jsonResp.error = `Asset does not exist: ${id}`;
-      throw new Error(jsonResp);
-    }
-    let assetJSON;
-    try {
-      assetJSON = JSON.parse(valAsbytes.toString());
-    } catch (err) {
-      jsonResp = {};
-      jsonResp.error = `Failed to decode JSON of: ${id}`;
-      throw new Error(jsonResp);
-    }
-    await ctx.stub.deleteState(id); //remove the asset from chaincode state
-  }
+  //   let valAsbytes = await ctx.stub.getState(id); // get the asset from chaincode state
+  //   let jsonResp = {};
+  //   if (!valAsbytes) {
+  //     jsonResp.error = `Asset does not exist: ${id}`;
+  //     throw new Error(jsonResp);
+  //   }
+  //   let assetJSON;
+  //   try {
+  //     assetJSON = JSON.parse(valAsbytes.toString());
+  //   } catch (err) {
+  //     jsonResp = {};
+  //     jsonResp.error = `Failed to decode JSON of: ${id}`;
+  //     throw new Error(jsonResp);
+  //   }
+  //   await ctx.stub.deleteState(id); //remove the asset from chaincode state
+  // }
 
   // GetAssetsByRange performs a range query based on the start and end keys provided.
   // Read-only function results are not typically submitted to ordering. If the read-only
@@ -210,11 +216,11 @@ class Chaincode extends Contract {
       JSON.stringify(queryString)
     );
   }
-  async QueryAppsByCreatorId(ctx, appId) {
+  async QueryAppsByCreatorId(ctx, creatorId) {
     let queryString = {};
     queryString.selector = {};
     queryString.selector.assetType = 'app';
-    queryString.selector.creatorId = appId;
+    queryString.selector.creatorId = creatorId;
     return await this.GetQueryResultForQueryString(
       ctx,
       JSON.stringify(queryString)
