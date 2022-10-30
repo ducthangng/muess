@@ -18,12 +18,11 @@
 //  - "failed to register user/identity not found"
 //    -> delete wallet folder and retry npm run start
 
-"use strict";
+'use strict';
 
 const { Contract } = require('fabric-contract-api');
 
 class Chaincode extends Contract {
-
   async CreateApp(
     ctx,
     assetId,
@@ -33,7 +32,7 @@ class Chaincode extends Contract {
     appType,
     paymentMethod,
     appTags,
-    appIconURL,
+    appIconURL
   ) {
     const exists = await this.AssetExists(ctx, assetId);
     if (exists) {
@@ -44,7 +43,7 @@ class Chaincode extends Contract {
 
     // ==== Create asset object and marshal to JSON ====
     let asset = {
-      assetType: "app",
+      assetType: 'app',
       assetId: assetId,
       title: title,
       creatorId: clientId,
@@ -52,8 +51,8 @@ class Chaincode extends Contract {
       rating: rating,
       appType: appType,
       paymentMethod: paymentMethod,
-      appTags: appTags,
-      appIconURL: appIconURL,
+      appTags: appTags.split(','),
+      appIconURL: appIconURL
     };
 
     // === Save asset to state ===
@@ -61,34 +60,36 @@ class Chaincode extends Contract {
   }
 
   // CreateProposal - create a new proposal, store into chaincode state
-  async CreateProposal(
-    ctx,
-    assetId,
-    appId,
-    proposedPrice,
-    licenseDetails
-  ) {
+  async CreateProposal(ctx, assetId, appId, proposedPrice, licenseDetails) {
     const assetIdExists = await this.AssetExists(ctx, assetId);
     if (assetIdExists) {
-      throw new Error(`The assetId ${assetId} already exists, find another one for the proposal`);
+      throw new Error(
+        `The assetId ${assetId} already exists, find another one for the proposal`
+      );
     }
 
-    const appIdExists = await this.AssetExists(ctx, appId);
-    if (!appIdExists) {
+    const appBytes = await ctx.stub.getState(appId);
+    if (!appBytes) {
       throw new Error(`There is no app with assetId ${appId} exists`);
+    }
+
+    const app = JSON.parse(appBytes.toString());
+    if (!app) {
+      throw new Error("Can't JSON parse appBytes");
     }
 
     const clientId = ctx.clientIdentity.getID();
 
     // ==== Create asset object and marshal to JSON ====
     let asset = {
-      assetType: "proposal",
+      assetType: 'proposal',
       assetId: assetId,
       appId: appId,
       buyerId: clientId,
+      sellerId: app.ownerId,
       proposedPrice: proposedPrice,
       licenseDetails: licenseDetails,
-      status: "pending"
+      status: 'pending'
     };
 
     // === Save asset to state ===
@@ -96,7 +97,6 @@ class Chaincode extends Contract {
   }
 
   async AcceptProposal(ctx, assetId, proposalId) {
-
     const clientId = ctx.clientIdentity.getID();
 
     const proposalBytes = await ctx.stub.getState(proposalId);
@@ -111,25 +111,27 @@ class Chaincode extends Contract {
 
     // create new asset
     let asset = {
-      assetType: "license",
+      assetType: 'license',
       assetId: assetId,
       appId: proposal.appId,
       licenseDetails: proposal.licenseDetails,
       creatorId: clientId,
-      ownerId: proposal.buyerId,
+      ownerId: proposal.buyerId
     };
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
 
     // set proposal status to "accepted"
-    proposal.status = "accepted";
-    await ctx.stub.putState(proposal.assetId, Buffer.from(JSON.stringify(proposal)));
+    proposal.status = 'accepted';
+    await ctx.stub.putState(
+      proposal.assetId,
+      Buffer.from(JSON.stringify(proposal))
+    );
   }
 
   async RejectProposal(ctx, proposalId) {
-
     const proposalBytes = await ctx.stub.getState(proposalId);
     if (!proposalBytes) {
-      throw new Error("No such proposal exists");
+      throw new Error('No such proposal exists');
     }
 
     const proposal = JSON.parse(proposalBytes.toString());
@@ -138,8 +140,11 @@ class Chaincode extends Contract {
     }
 
     // set proposal status to "rejected"
-    proposal.status = "rejected";
-    await ctx.stub.putState(proposal.assetId, Buffer.from(JSON.stringify(proposal)));
+    proposal.status = 'rejected';
+    await ctx.stub.putState(
+      proposal.assetId,
+      Buffer.from(JSON.stringify(proposal))
+    );
   }
 
   // ReadAsset returns the asset stored in the world state with given id.
@@ -199,7 +204,7 @@ class Chaincode extends Contract {
   async QueryAppsByCreatorId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = "app";
+    queryString.selector.assetType = 'app';
     queryString.selector.creatorId = appId;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -209,7 +214,7 @@ class Chaincode extends Contract {
   async QueryProposalsByAppId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = "proposal";
+    queryString.selector.assetType = 'proposal';
     queryString.selector.appId = appId;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -219,7 +224,7 @@ class Chaincode extends Contract {
   async QueryProposalsByBuyerId(ctx, buyerId) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = "proposal";
+    queryString.selector.assetType = 'proposal';
     queryString.selector.buyerId = buyerId;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -229,7 +234,7 @@ class Chaincode extends Contract {
   async QueryLicensesByAppId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = "license";
+    queryString.selector.assetType = 'license';
     queryString.selector.appId = appId;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -239,7 +244,7 @@ class Chaincode extends Contract {
   async QueryLicensesByOwnerId(ctx, ownerId) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = "license";
+    queryString.selector.assetType = 'license';
     queryString.selector.ownerId = ownerId;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -249,7 +254,7 @@ class Chaincode extends Contract {
   async QueryLicensesByCreatorId(ctx, creatorId) {
     let queryString = {};
     queryString.selector = {};
-    queryString.selector.assetType = "license";
+    queryString.selector.assetType = 'license';
     queryString.selector.creatorId = creatorId;
     return await this.GetQueryResultForQueryString(
       ctx,
@@ -383,11 +388,9 @@ class Chaincode extends Contract {
   }
 
   async GetClientIdentity(ctx) {
-
     const clientId = ctx.clientIdentity.getID();
 
     return clientId;
-    
   }
 }
 
