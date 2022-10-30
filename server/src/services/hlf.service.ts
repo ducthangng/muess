@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 import { User } from '@/interfaces/users.interface';
 import userModel from '@/models/users.model';
+import { Proposal } from '@/interfaces/hlf.interface';
 
 export const channelName = 'mychannel';
 export const chaincodeName = 'muess';
@@ -183,6 +184,43 @@ class HLFService {
       `Transaction has successfully created, result is: ${result.toString()}`
     );
     return JSON.parse(result.toString());
+  }
+
+  public async getAssetHistory(): Promise<Proposal[]> {
+    const mockResult: Proposal[] = [
+      {
+        assetType: 'proposal',
+        assetId: 'proposal1',
+        appId: 'app1',
+        buyerId: 'johnsmith',
+        sellerId: 'sarahbrown',
+        proposedPrice: 100,
+        licenseDetails: 'copyleft',
+        status: 'accepted'
+      },
+      {
+        assetType: 'proposal',
+        assetId: 'proposal2',
+        appId: 'app2',
+        buyerId: 'johnsmith',
+        sellerId: 'sarahbrown',
+        proposedPrice: 120,
+        licenseDetails: 'copyleft',
+        status: 'accepted'
+      },
+      {
+        assetType: 'proposal',
+        assetId: 'proposal3',
+        appId: 'app3',
+        buyerId: 'johnsmith',
+        sellerId: 'sarahbrown',
+        proposedPrice: 270,
+        licenseDetails: 'copyleft',
+        status: 'accepted'
+      }
+    ];
+
+    return mockResult;
   }
 }
 

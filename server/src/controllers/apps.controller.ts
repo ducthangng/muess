@@ -6,6 +6,12 @@ import { Request, NextFunction, Response } from 'express';
 class AppsController {
   public appService = new appService();
 
+  /**
+   * Get all the applicaitons currently available on the blockchain
+   * @param req
+   * @param res
+   * @param next
+   */
   public getAllApps = async (
     req: Request,
     res: Response,
@@ -20,6 +26,12 @@ class AppsController {
     }
   };
 
+  /**
+   * Get the application details including the all the license proposal and the application details.
+   * @param req
+   * @param res
+   * @param next
+   */
   public getAppById = async (
     req: Request,
     res: Response,
@@ -35,6 +47,12 @@ class AppsController {
     }
   };
 
+  /**
+   * Create an application on the blockchain
+   * @param req
+   * @param res
+   * @param next
+   */
   public createApp = async (
     req: Request,
     res: Response,
@@ -55,6 +73,12 @@ class AppsController {
     }
   };
 
+  /**
+   * Update the application details
+   * @param req
+   * @param res
+   * @param next
+   */
   public updateApp = async (
     req: Request,
     res: Response,
@@ -70,6 +94,12 @@ class AppsController {
     }
   };
 
+  /**
+   * Deactivate the license generating feature fot this application
+   * @param req
+   * @param res
+   * @param next
+   */
   public deleteApp = async (
     req: Request,
     res: Response,

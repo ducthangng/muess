@@ -7,3 +7,14 @@ export interface License {
   ownerId: string;
   assetType: string;
 }
+
+export interface Proposal {
+  assetType: string;
+  assetId: string;
+  appId: string;
+  buyerId: string;
+  sellerId: string;
+  proposedPrice: number;
+  licenseDetails: string;
+  status: string;
+}

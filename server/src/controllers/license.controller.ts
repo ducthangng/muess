@@ -4,7 +4,7 @@ import { SECRET_KEY } from '@config';
 import { sign, verify, decode } from 'jsonwebtoken';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 
-class HLFController {
+class LicenseController {
   public hlfService: HLFService;
 
   constructor() {
@@ -13,7 +13,7 @@ class HLFController {
     this.hlfService.enrollAdmin();
   }
 
-  public createProposal = async (
+  public createLicenseProposal = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -32,7 +32,7 @@ class HLFController {
     }
   };
 
-  public acceptProposal = async (
+  public acceptLicenseProposal = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -50,7 +50,43 @@ class HLFController {
     }
   };
 
-  public getProposalsByAppID = async (
+  public getLicenseProposalsByAppID = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const appId: string = req.params.appId;
+      const proposalsData: any = await this.hlfService.getProposalsByAppID(
+        appId,
+        ''
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getLicenseDetail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const appId: string = req.params.appId;
+      const proposalsData: any = await this.hlfService.getProposalsByAppID(
+        appId,
+        ''
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getLicenseByAppID = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -85,6 +121,42 @@ class HLFController {
       next(error);
     }
   };
+
+  public getProposalsBySellerID = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const buyerId: string = req.params.buyerId;
+      const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
+        buyerId,
+        ''
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public denyProposal = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const buyerId: string = req.params.buyerId;
+      const proposalsData: any = await this.hlfService.getProposalsByBuyerID(
+        buyerId,
+        ''
+      );
+
+      res.status(200).json({ data: proposalsData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
-export default HLFController;
+export default LicenseController;
