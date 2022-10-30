@@ -20,7 +20,7 @@ class AuthRoute implements Routes {
       validationMiddleware(CreateUserDto, 'body'),
       this.authController.signUp
     );
-    this.router.post(
+    this.router.get(
       `${this.path}/login`,
       // validationMiddleware(CreateUserDto, 'body'),
       this.authController.login

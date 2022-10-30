@@ -5,7 +5,13 @@ import { sign, verify, decode } from 'jsonwebtoken';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 
 class HLFController {
-  public hlfService = new HLFService();
+  public hlfService: HLFService;
+
+  constructor() {
+    this.hlfService = new HLFService();
+    console.log('init hlf controller');
+    this.hlfService.enrollAdmin();
+  }
 
   public createProposal = async (
     req: Request,

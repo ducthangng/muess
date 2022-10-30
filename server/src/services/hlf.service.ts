@@ -1,19 +1,7 @@
-import { TextDecoder } from 'util';
-import { License } from '@/interfaces/hlf.interface';
-
-import {
-  Gateway,
-  GatewayOptions,
-  Contract,
-  X509Identity
-} from 'fabric-network';
+import { Gateway, GatewayOptions, X509Identity } from 'fabric-network';
 import * as path from 'path';
-import { buildCCPOrg1, buildWallet, prettyJSONString } from '../utils//AppUtil';
-import {
-  buildCAClient,
-  enrollAdmin,
-  registerAndEnrollUser
-} from '../utils/CAUtil';
+import { buildCCPOrg1, buildWallet } from '../utils//AppUtil';
+import { buildCAClient, enrollAdmin } from '../utils/CAUtil';
 import { v4 as uuidv4 } from 'uuid';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 import { User } from '@/interfaces/users.interface';
@@ -83,7 +71,7 @@ class HLFService {
 
    * @returns
    */
-  public async enrollAdmin() {
+  public async enrollAdmin(): Promise<void> {
     // build an in memory object with the network configuration (also known as a connection profile)
     const ccp = buildCCPOrg1();
 
