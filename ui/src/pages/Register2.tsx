@@ -7,9 +7,37 @@ import '../assets/css/Register.css';
 import LoginLogo from '../assets/images/logo.svg';
 import RegisterImage from '../assets/images/register.svg';
 import CSS from 'csstype';
+import { authApi } from '../api/authApi';
+import { User } from '../models/User';
+
+const Sign: CSS.Properties = {
+  position: 'relative',
+  fontWeight: '700',
+  fontSize: '24px',
+  lineHeight: '34px',
+  color: '#3A001E'
+};
+const InputPass: CSS.Properties = {
+  fontWeight: 400,
+  height: '40px',
+  width: '272px',
+  position: 'relative',
+  borderColor: '#FFE7D4',
+  color: '#3A001E',
+  borderWidth: '2px',
+  borderRadius: '5px',
+  left: '550px',
+  top: '160px',
+  paddingLeft: '10px'
+};
 
 const Register2 = () => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  // const [warningBorder, setWarningBorder] = useState('');
+
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -18,26 +46,38 @@ const Register2 = () => {
   const handleClick = () => {
     navigate(`/`);
   };
-  const Sign: CSS.Properties = {
-    position: 'relative',
-    fontWeight: '700',
-    fontSize: '24px',
-    lineHeight: '34px',
-    color: '#3A001E'
+
+  const checkOnRepeat = (value: string) => {
+    setRepeatPassword(value);
+
+    if (value !== password) {
+      // setWarningBorder('red');
+    }
   };
-  const InputPass: CSS.Properties = {
-    fontWeight: 400,
-    height: '40px',
-    width: '272px',
-    position: 'relative',
-    borderColor: '#FFE7D4',
-    color: '#3A001E',
-    borderWidth: '2px',
-    borderRadius: '5px',
-    left: '550px',
-    top: '160px',
-    paddingLeft: '10px'
+
+  const onRegister = async (e: any) => {
+    e.preventDefault();
+    if (password !== repeatPassword) {
+      alert('Wrong repeat password! Please retype.');
+      return;
+    }
+
+    await authApi
+      .register({
+        fullname: 'default',
+        dob: 'default',
+        username: 'default',
+        password: password,
+        email: email
+      })
+      .then((user) => {
+        console.log('user: ', user);
+        if (user._id.length !== 0) {
+          navigate('/login');
+        }
+      });
   };
+
   return (
     <>
       <div
@@ -177,7 +217,7 @@ const Register2 = () => {
                     marginTop: '2%'
                   }}
                 >
-                  Username
+                  Email
                 </div>
                 <input
                   style={{
@@ -191,7 +231,10 @@ const Register2 = () => {
                     borderWidth: '2px',
                     borderRadius: '5px'
                   }}
+                  type={'email'}
                   required={true}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div
                   className="password"
@@ -229,6 +272,8 @@ const Register2 = () => {
                       borderWidth: '2px',
                       borderRadius: '5px'
                     }}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   ></input>
                   <EyeInvisibleOutlined
                     className={passwordShown ? 'shown' : 'not'}
@@ -270,7 +315,10 @@ const Register2 = () => {
                       color: '#3A001E',
                       borderWidth: '2px',
                       borderRadius: '5px'
+                      // border: warningBorder
                     }}
+                    value={repeatPassword}
+                    onChange={(e) => checkOnRepeat(e.target.value)}
                   ></input>
                   <EyeInvisibleOutlined
                     className={passwordShown ? 'shown' : 'not'}
@@ -301,7 +349,7 @@ const Register2 = () => {
                       marginTop: '1rem',
                       marginRight: '2%'
                     }}
-                    onClick={() => navigate('/register')}
+                    onClick={() => navigate('/register-general-info')}
                   >
                     Return
                   </button>
@@ -320,7 +368,7 @@ const Register2 = () => {
                       marginTop: '1rem',
                       marginLeft: '2%'
                     }}
-                    onClick={() => navigate('/')}
+                    onClick={(e) => onRegister(e)}
                   >
                     Register
                   </button>

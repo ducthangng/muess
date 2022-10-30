@@ -244,7 +244,7 @@ const Register = () => {
                     position: 'relative',
                     marginTop: '1rem'
                   }}
-                  onClick={() => navigate('/register2')}
+                  onClick={() => navigate('/register-auth-info')}
                 >
                   Continue
                 </button>

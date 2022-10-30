@@ -9,11 +9,34 @@ import LoginImage from '../assets/images/login.svg';
 import CSS from 'csstype';
 import '../assets/css/Login.css';
 
+const Sign: CSS.Properties = {
+  position: 'relative',
+  fontWeight: '700',
+  fontSize: '24px',
+  lineHeight: '34px',
+  color: '#3A001E'
+};
+const InputPass: CSS.Properties = {
+  fontWeight: 400,
+  height: '8%',
+  width: '100%',
+  position: 'relative',
+  borderColor: '#FFE7D4',
+  backgroundColor: '#FFFFFF',
+  color: '#3A001E',
+  borderWidth: '2px',
+  borderRadius: '5px'
+};
+
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    checkLogin();
+  });
 
   const routeChange = async (path: string) => {
     navigate(`${path}`);
@@ -21,27 +44,24 @@ const Login = () => {
 
   const checkLogin = async () => {
     let data = await authApi.getId();
-    if (data !== null && data !== 0) {
-      routeChange('/');
+    if (data !== null && data._id.length !== 0) {
+      console.log('changing.... [cookie]');
+      routeChange('/release');
     }
   };
 
   const handleLogin = async () => {
-    // let data = authApi.login({ username, password }).then((res) => {
-    //   if (res.id !== 0) {
-    //     routeChange('/');
-    //   } else {
-    //     alert('Invalid username or password');
-    //   }
-    //   return res;
-    // });
-    // return data;
-    routeChange('/release');
+    let data = await authApi.login({ email, password }).then((res) => {
+      console.log('res: ', res);
+      if (res._id.length !== 0) {
+        console.log('changing.... [login]');
+        routeChange('/release');
+      } else {
+        alert('Invalid username or password');
+      }
+      return res;
+    });
   };
-
-  // useEffect(() => {
-  //     checkLogin();
-  // }, []);
 
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePassword = () => {
@@ -51,24 +71,7 @@ const Login = () => {
   const handleClick = () => {
     navigate(`/`);
   };
-  const Sign: CSS.Properties = {
-    position: 'relative',
-    fontWeight: '700',
-    fontSize: '24px',
-    lineHeight: '34px',
-    color: '#3A001E'
-  };
-  const InputPass: CSS.Properties = {
-    fontWeight: 400,
-    height: '8%',
-    width: '100%',
-    position: 'relative',
-    borderColor: '#FFE7D4',
-    backgroundColor: '#FFFFFF',
-    color: '#3A001E',
-    borderWidth: '2px',
-    borderRadius: '5px'
-  };
+
   return (
     <>
       <div
@@ -187,7 +190,7 @@ const Login = () => {
                   marginTop: '2%'
                 }}
               >
-                Username/Email
+                Email
               </div>
               <input
                 style={{
@@ -201,6 +204,9 @@ const Login = () => {
                   borderWidth: '2px',
                   borderRadius: '5px'
                 }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type={'email'}
               ></input>
               <div
                 className="password"
@@ -238,6 +244,8 @@ const Login = () => {
                     borderWidth: '2px',
                     borderRadius: '5px'
                   }}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                 ></input>
                 <EyeInvisibleOutlined
                   className={passwordShown ? 'shown' : 'not'}

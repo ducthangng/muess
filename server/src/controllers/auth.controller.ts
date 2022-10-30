@@ -1,11 +1,34 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@dtos/users.dto';
-import { RequestWithUser } from '@interfaces/auth.interface';
+import { CreateUserDto, LoginUserDto } from '@dtos/users.dto';
+import { RequestWithUser, TokenData } from '@interfaces/auth.interface';
 import { CreateUserDTO, User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
 
 class AuthController {
   public authService = new AuthService();
+
+  public returnOK = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const user: User = req.user;
+
+      // reset cookie after login
+      const token: TokenData = this.authService.createToken(user);
+      const options = {
+        maxAge: 10000,
+        httpOnly: false // The cookie only accessible by the web server
+      };
+
+      res.cookie('muess', token, options);
+
+      res.status(201).json({ data: user, message: 'register successfully' });
+    } catch (error) {
+      next(error);
+    }
+  };
 
   public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -14,7 +37,7 @@ class AuthController {
 
       const options = {
         maxAge: result.cookie.expiresIn * 1000, // would expire after 15 minutes
-        httpOnly: true // The cookie only accessible by the web server
+        httpOnly: false // The cookie only accessible by the web server
       };
 
       res.cookie('muess', result.cookie.token, options);
@@ -28,7 +51,7 @@ class AuthController {
 
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
+      const userData: LoginUserDto = req.body;
       const result = await this.authService.login(userData);
 
       const options = {

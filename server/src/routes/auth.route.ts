@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import AuthController from '@controllers/auth.controller';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateUserDto, LoginUserDto } from '@dtos/users.dto';
 import { Routes } from '@interfaces/routes.interface';
 import authMiddleware from '@middlewares/auth.middleware';
 import validationMiddleware from '@middlewares/validation.middleware';
@@ -22,8 +22,13 @@ class AuthRoute implements Routes {
     );
     this.router.post(
       `${this.path}/login`,
-      validationMiddleware(CreateUserDto, 'body'),
+      validationMiddleware(LoginUserDto, 'body'),
       this.authController.login
+    );
+    this.router.get(
+      `${this.path}/ID`,
+      authMiddleware,
+      this.authController.returnOK
     );
     // this.router.post(
     //   `${this.path}getRegisteredClient`,

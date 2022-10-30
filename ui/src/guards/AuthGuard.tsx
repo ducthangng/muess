@@ -3,24 +3,24 @@ import { authApi } from '../api/authApi';
 import { Outlet, Navigate } from 'react-router-dom';
 import { GuardEC } from '../models/Guard';
 
-const Guard = ({ guardEntity }: GuardEC) => {
-  const [isAuth, setIsAuth] = useState<null | boolean>(null);
+// const Guard = ({ guardEntity }: GuardEC) => {
+//   const [isAuth, setIsAuth] = useState<null | boolean>(null);
 
-  const handleGuard = async () => {
-    let data = await authApi.validateRole();
-    if (data === guardEntity) setIsAuth(true);
-    if (data !== guardEntity) setIsAuth(false);
-  };
+//   const handleGuard = async () => {
+//     let data = await authApi.validateRole();
+//     if (data === guardEntity) setIsAuth(true);
+//     if (data !== guardEntity) setIsAuth(false);
+//   };
 
-  useEffect(() => {
-    handleGuard();
-  }, []);
+//   useEffect(() => {
+//     handleGuard();
+//   }, []);
 
-  if (isAuth === true) return <Outlet />;
+//   if (isAuth === true) return <Outlet />;
 
-  if (isAuth === false) return <Navigate to={'/'} />;
+//   if (isAuth === false) return <Navigate to={'/'} />;
 
-  return null;
-};
+//   return null;
+// };
 
-export default Guard;
+// export default Guard;

@@ -144,7 +144,7 @@ const Landingpage = () => {
                   textAlign: 'justify',
                   marginLeft: '3rem'
                 }}
-                onClick={() => navigate('/register')}
+                onClick={() => navigate('/register-general-info')}
               >
                 Register
               </button>

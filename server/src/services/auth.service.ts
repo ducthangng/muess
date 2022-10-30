@@ -1,7 +1,7 @@
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { SECRET_KEY } from '@config';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateUserDto, LoginUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
 import userModel from '@models/users.model';
@@ -55,10 +55,15 @@ class AuthService {
       'GetClientIdentity'
     );
 
+    console.log('user: ', userData.fullname, userData.dob, userData.username);
+
     const createdUser: User = await this.users.create({
       _id: clientIdentity,
       email: userData.email,
       password: hashedPassword,
+      fullname: userData.fullname,
+      username: userData.username,
+      dob: userData.dob,
       x509Identity: JSON.stringify(x509Identity)
     });
 
@@ -69,7 +74,7 @@ class AuthService {
   }
 
   // login a user and return a cookie
-  public async login(userData: CreateUserDto) {
+  public async login(userData: LoginUserDto) {
     if (isEmpty(userData))
       throw new HttpException(400, 'userData cannot be empty');
 

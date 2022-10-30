@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
-import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
 import { AdminEC, StudentEC } from '../models/Guard';
 import Register from '../pages/Register';
@@ -35,8 +34,8 @@ export default function AppRoute() {
           {/* <Route path="/" element={<Landingpage />} /> */}
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/register2" element={<Register2 />} />
+          <Route path="/register-general-info" element={<Register />} />
+          <Route path="/register-auth-info" element={<Register2 />} />
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
           <Route path="/solds" element={<SoldList />} />

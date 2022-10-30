@@ -15,6 +15,19 @@ const userSchema: Schema = new Schema(
       type: String,
       required: true
     },
+    fullname: {
+      type: String,
+      required: false,
+      unique: false
+    },
+    username: {
+      type: String,
+      required: false
+    },
+    dob: {
+      type: String,
+      required: false
+    },
     x509Identity: {
       type: String,
       required: false,

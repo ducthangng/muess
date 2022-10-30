@@ -1,8 +1,8 @@
 import { AppError } from '../models/Error';
 import { User } from '../models/User';
 
-const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
-const apiUrl = `${BASE_API}/api`;
+const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8000';
+const apiUrl = `${BASE_API}/auth`;
 
 /**
  * functions that related to authentication/authorization.
@@ -12,8 +12,8 @@ export const authApi = {
     fullname: string;
     username: string;
     password: string;
-    date_of_birth: string;
-    mail: string;
+    dob: string;
+    email: string;
   }) => {
     const payload = parameter;
 
@@ -34,18 +34,14 @@ export const authApi = {
       })
       .then((data) => {
         console.log(data);
-        const err: AppError = data.error;
-        if (err.errorMsg.length !== 0) {
-          alert(err.errorMsg);
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
+        // const err: AppError = data.error;
+        // if (err.errorMsg.length !== 0) {
+        //   alert(err.errorMsg);
+        //   throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        // }
 
-        const response: number = data.data;
-        return response;
-      })
-      .catch((err) => {
-        //
-        return err;
+        const user: User = data.data;
+        return user;
       });
 
     return response;
@@ -58,9 +54,9 @@ export const authApi = {
    *
    * @returns userIndentity when success & Error otherwise.
    */
-  login: async (parameter: { username: string; password: string }) => {
+  login: async (parameter: { email: string; password: string }) => {
     const payload = {
-      username: parameter.username,
+      email: parameter.email,
       password: parameter.password
     };
 
@@ -80,13 +76,6 @@ export const authApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        console.log(data);
-        const err: AppError = data.error;
-        if (err.errorMsg.length !== 0) {
-          alert(err.errorMsg);
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
         const user: User = data.data;
         return user;
       })
@@ -104,7 +93,10 @@ export const authApi = {
   logout: async () => {
     const response = await fetch(`${apiUrl}/logout`, {
       method: 'POST',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then((res) => {
         if (res.ok) {
@@ -115,17 +107,17 @@ export const authApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode) {
-          return null;
-        }
+        // const err: AppError = data.error;
+        // if (err.errorCode) {
+        //   return null;
+        // }
 
         const response: number = data.data;
         return response;
-      })
-      .catch((err) => {
-        return err;
       });
+    // .catch((err) => {
+    //   return err;
+    // });
 
     return response;
   },
@@ -135,10 +127,13 @@ export const authApi = {
    *
    * @returns true if user is logged in, false otherwise.
    */
-  validateLoggedStatus: async () => {
-    const response = await fetch(`${apiUrl}/validateLoggedStatus`, {
+  getId: async () => {
+    const response = await fetch(`${apiUrl}/ID`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then((res) => {
         if (res.ok) {
@@ -148,72 +143,17 @@ export const authApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode) {
-          return null;
-        }
+        // const err: AppError = data.error;
+        // if (err.errorCode) {
+        //   return null;
+        // }
 
         const user: User = data.data;
         return user;
       });
-
-    return response;
-  },
-  /**
-   * Retrieve the role of user.
-   *
-   * @returns role of if user & error if failed.
-   */
-  validateRole: async () => {
-    const response = await fetch(`${apiUrl}/v1/validateRole`, {
-      method: 'GET',
-      credentials: 'include'
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode) {
-          return null;
-        }
-
-        return data.data;
-      })
-      .catch((error) => {
-        return error;
-      });
-
-    return response;
-  },
-
-  getId: async () => {
-    const response = await fetch(`${apiUrl}/v1/ID`, {
-      method: 'GET',
-      credentials: 'include'
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode) {
-          return null;
-        }
-
-        return data.data;
-      })
-      .catch((error) => {
-        return error;
-      });
+    // .catch((error) => {
+    //   return error;
+    // });
 
     return response;
   }
