@@ -200,7 +200,16 @@ class Chaincode extends Contract {
     return JSON.stringify(results);
   }
 
-  // Example: Parameterized rich query
+  // Queries for Apps
+  async GetAllApps(ctx) {
+    let queryString = {};
+    queryString.selector = {};
+    queryString.selector.assetType = 'app';
+    return await this.GetQueryResultForQueryString(
+      ctx,
+      JSON.stringify(queryString)
+    );
+  }
   async QueryAppsByCreatorId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
@@ -211,6 +220,8 @@ class Chaincode extends Contract {
       JSON.stringify(queryString)
     );
   }
+
+  // Queries for Proposals
   async QueryProposalsByAppId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
@@ -241,6 +252,8 @@ class Chaincode extends Contract {
       JSON.stringify(queryString)
     );
   }
+
+  // Queries for Licenses
   async QueryLicensesByAppId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
