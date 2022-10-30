@@ -15,6 +15,9 @@ export class CreateProposalDto {
 }
 
 export class AcceptProposalDto {
-  public creatorId: string;
+  public proposalId: string;
+}
+
+export class RejectProposalDto {
   public proposalId: string;
 }

@@ -34,7 +34,7 @@ class HLFService {
       appIconURL
     );
     console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
+      `Transaction has successfully submitted, result is: ${result.toString()}`
     );
     return result.toString();
   }
@@ -55,7 +55,7 @@ class HLFService {
         licenseDetails
       );
       console.log(
-        `Transaction has successfully created, result is: ${result.toString()}`
+        `Transaction has successfully submitted, result is: ${result.toString()}`
       );
       return result;
     } catch (error) {
@@ -69,17 +69,31 @@ class HLFService {
     acceptProposalData: AcceptProposalDto
   ) {
     const contract = await initContract(JSON.parse(user.x509Identity));
-    const { creatorId, proposalId } = acceptProposalData;
+    const { proposalId } = acceptProposalData;
     const licenseId = uuidv4();
     const result = await contract.submitTransaction(
       'AcceptProposal',
-      proposalId,
       licenseId,
-      creatorId,
       proposalId
     );
     console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
+      `Transaction has successfully submitted, result is: ${result.toString()}`
+    );
+    return result.toString();
+  }
+
+  public async rejectProposal(
+    user: User,
+    rejectProposalData: AcceptProposalDto
+  ) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const { proposalId } = rejectProposalData;
+    const result = await contract.submitTransaction(
+      'AcceptProposal',
+      proposalId
+    );
+    console.log(
+      `Transaction has successfully submitted, result is: ${result.toString()}`
     );
     return result.toString();
   }
@@ -92,7 +106,7 @@ class HLFService {
       decodedCreatorId
     );
     console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
+      `Transaction has successfully submitted, result is: ${result.toString()}`
     );
     return JSON.parse(result.toString());
   }
@@ -104,7 +118,7 @@ class HLFService {
       appId
     );
     console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
+      `Transaction has successfully submitted, result is: ${result.toString()}`
     );
     return JSON.parse(result.toString());
   }
@@ -116,7 +130,7 @@ class HLFService {
       buyerId
     );
     console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
+      `Transaction has successfully submitted, result is: ${result.toString()}`
     );
     return JSON.parse(result.toString());
   }

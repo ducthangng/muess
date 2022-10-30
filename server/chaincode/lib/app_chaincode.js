@@ -86,7 +86,7 @@ class Chaincode extends Contract {
       assetId: assetId,
       appId: appId,
       buyerId: clientId,
-      sellerId: app.ownerId,
+      sellerId: app.creatorId,
       proposedPrice: proposedPrice,
       licenseDetails: licenseDetails,
       status: 'pending'
@@ -115,7 +115,7 @@ class Chaincode extends Contract {
       assetId: assetId,
       appId: proposal.appId,
       licenseDetails: proposal.licenseDetails,
-      creatorId: clientId,
+      creatorId: proposal.sellerId,
       ownerId: proposal.buyerId
     };
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
@@ -226,6 +226,16 @@ class Chaincode extends Contract {
     queryString.selector = {};
     queryString.selector.assetType = 'proposal';
     queryString.selector.buyerId = buyerId;
+    return await this.GetQueryResultForQueryString(
+      ctx,
+      JSON.stringify(queryString)
+    );
+  }
+  async QueryProposalsBySellerId(ctx, sellerId) {
+    let queryString = {};
+    queryString.selector = {};
+    queryString.selector.assetType = 'proposal';
+    queryString.selector.sellerId = sellerId;
     return await this.GetQueryResultForQueryString(
       ctx,
       JSON.stringify(queryString)
