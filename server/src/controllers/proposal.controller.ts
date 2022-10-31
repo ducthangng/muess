@@ -32,7 +32,9 @@ class ProposalController {
         proposalData
       );
 
-      res.status(201).json({ data: result, message: 'created' });
+      res
+        .status(201)
+        .json({ data: result, message: 'Successfully created new proposal' });
     } catch (error) {
       next(error);
     }
@@ -57,7 +59,9 @@ class ProposalController {
         acceptProposalData
       );
 
-      res.status(201).json({ data: result, message: 'created' });
+      res
+        .status(201)
+        .json({ data: result, message: 'Successfully accepted proposal' });
     } catch (error) {
       next(error);
     }
@@ -82,7 +86,9 @@ class ProposalController {
         rejectProposalData
       );
 
-      res.status(201).json({ data: result, message: 'created' });
+      res
+        .status(201)
+        .json({ data: result, message: 'Successfully rejected proposal' });
     } catch (error) {
       next(error);
     }
@@ -107,7 +113,10 @@ class ProposalController {
         appId
       );
 
-      res.status(200).json({ data: proposalsData, message: 'Found' });
+      res.status(200).json({
+        data: proposalsData,
+        message: 'Successfully retrieved list of proposals'
+      });
     } catch (error) {
       next(error);
     }
