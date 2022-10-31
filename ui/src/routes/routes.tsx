@@ -18,6 +18,7 @@ import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
 import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
+import EditApp from '../pages/EditApp';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -43,6 +44,7 @@ export default function AppRoute() {
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/editapp" element={<EditApp />} />
           {/* </Route> */}
 
           {/* admin routes */}
