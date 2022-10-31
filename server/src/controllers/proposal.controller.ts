@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import HLFService from '@/services/proposal.service';
-import {
-  AcceptProposalDto,
-  CreateAppDto,
-  CreateProposalDto,
-  RejectProposalDto
-} from '@/dtos/hlf.dto';
 import { User } from '@/interfaces/users.interface';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import ProposalService from '../services/proposal.service';
+import {
+  AcceptProposalDto,
+  CreateProposalDto,
+  RejectProposalDto
+} from '@/dtos/proposal.dto';
 
 class ProposalController {
   public proposalService = new ProposalService();
@@ -33,7 +32,9 @@ class ProposalController {
         proposalData
       );
 
-      res.status(201).json({ data: result, message: 'created' });
+      res
+        .status(201)
+        .json({ data: result, message: 'Successfully created new proposal' });
     } catch (error) {
       next(error);
     }
@@ -58,7 +59,9 @@ class ProposalController {
         acceptProposalData
       );
 
-      res.status(201).json({ data: result, message: 'created' });
+      res
+        .status(201)
+        .json({ data: result, message: 'Successfully accepted proposal' });
     } catch (error) {
       next(error);
     }
@@ -83,7 +86,9 @@ class ProposalController {
         rejectProposalData
       );
 
-      res.status(201).json({ data: result, message: 'created' });
+      res
+        .status(201)
+        .json({ data: result, message: 'Successfully rejected proposal' });
     } catch (error) {
       next(error);
     }
@@ -108,7 +113,10 @@ class ProposalController {
         appId
       );
 
-      res.status(200).json({ data: proposalsData, message: 'Found' });
+      res.status(200).json({
+        data: proposalsData,
+        message: 'Successfully retrieved list of proposals'
+      });
     } catch (error) {
       next(error);
     }
@@ -131,7 +139,10 @@ class ProposalController {
       const proposalsData: any =
         await this.proposalService.getProposalsByBuyerId(user, buyerId);
 
-      res.status(200).json({ data: proposalsData, message: 'Found' });
+      res.status(200).json({
+        data: proposalsData,
+        message: 'Successfully retrieved list of proposals'
+      });
     } catch (error) {
       next(error);
     }
@@ -143,18 +154,21 @@ class ProposalController {
    * @param res
    * @param next
    */
-  public getProposalsBySellerID = async (
-    req: Request,
+  public getProposalsBySellerId = async (
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const buyerId: string = req.params.buyerId;
-      // const proposalsData: any = await this.hlfService.getProposalsBySellerId(
-      //   buyerId
-      // );
+      const user: User = req.user;
+      const sellerId: string = req.params.sellerId;
+      const proposalsData: any =
+        await this.proposalService.getProposalsBySellerId(user, sellerId);
 
-      res.status(200).json({ data: 'khang', message: 'Found' });
+      res.status(200).json({
+        data: proposalsData,
+        message: 'Successfully retrieved list of proposals'
+      });
     } catch (error) {
       next(error);
     }

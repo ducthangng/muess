@@ -35,7 +35,7 @@ class UsersRoute implements Routes {
     this.router.get(
       `${this.path}/soldLicense`,
       authMiddleware,
-      this.licenseController.getProposalsBySellerID
+      this.licenseController.getProposalsBySellerId
     );
     this.router.get(
       `${this.path}/app`,

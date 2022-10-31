@@ -9,20 +9,6 @@ export class CreateAppDto {
   public appIconURL: string;
 }
 
-export class CreateProposalDto {
-  public appId: string;
-  public proposedPrice: number;
-  public licenseDetails: string;
-}
-
-export class AcceptProposalDto {
-  public proposalId: string;
-}
-
-export class RejectProposalDto {
-  public proposalId: string;
-}
-
 export class LicenseDto {
   public appId: string;
   public title: string;
