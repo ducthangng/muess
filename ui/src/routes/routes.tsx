@@ -20,6 +20,8 @@ import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
 import EditApp from '../pages/EditApp';
 import Guard from '../guards/AuthGuard';
+import OwnedProducts from '../pages/OwnedProduct';
+import AppDetailLicense from '../pages/AppDetailLicense';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -31,8 +33,6 @@ export default function AppRoute() {
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          {/* <Route element={<LoginLayout />}> */}
-          {/* <Route path="/" element={<Landingpage />} /> */}
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -49,8 +49,13 @@ export default function AppRoute() {
           <Route path="/offers" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
           <Route path="/products/:appId" element={<AppDetail />} />
+          <Route path="/products/my-app" element={<OwnedProducts />} />
+          <Route
+            path="/products/my-app/:appId"
+            element={<AppDetailLicense />}
+          />
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
-          <Route path="/purchases" element={<PurchaseList />} />
+          <Route path="/proposals" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/editapp" element={<EditApp />} />

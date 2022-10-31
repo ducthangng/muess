@@ -40,11 +40,8 @@ const ReleaseApp = () => {
       appTags,
       paymentMethod: appPaymentMethod,
       appCategories: [''],
-      creatorId: '',
       rating: '',
-      appIconURL: '',
-      assetType: '',
-      assetId: ''
+      appIconURL: appImage
     };
 
     appApi.releaseApp({ app: req }).then((status) => {

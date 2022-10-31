@@ -72,7 +72,6 @@ export const CompleteTable = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
     setGlobalFilter,
