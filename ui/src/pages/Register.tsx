@@ -269,6 +269,43 @@ const Register = () => {
                       name="dateofbirth"
                       id="dateofbirth"
                     ></input>
+                    <div
+                      className="DOB"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Gender
+                    </div>
+                    <select
+                      name="gender"
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        padding: '0.25rem',
+                        position: 'relative',
+                        top: '0',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                    >
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="non-binary">Non-Binary</option>
+                      <option value="other">Other</option>
+                      <option value="Prefer not to answer">
+                        Perfer not to Answer
+                      </option>
+                    </select>
                   </div>
 
                   <div
