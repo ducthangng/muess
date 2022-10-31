@@ -21,3 +21,11 @@ export class AcceptProposalDto {
 export class RejectProposalDto {
   public proposalId: string;
 }
+
+export class LicenseDto {
+  public appId: string;
+  public title: string;
+  public appIconURL: string;
+  public description: string;
+  public license: string;
+}

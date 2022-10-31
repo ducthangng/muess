@@ -1,44 +1,45 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  AcceptProposalDto,
-  CreateAppDto,
-  CreateProposalDto
-} from '@/dtos/hlf.dto';
+import { LicenseDto } from '@/dtos/hlf.dto';
 
 import { initContract } from '@/utils/hlfUtils';
 //import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 
-const sampleLicense: CreateProposalDto[] = [
+const sampleLicense: LicenseDto[] = [
   {
     appId: '1',
-    proposedPrice: 100,
-    licenseDetails: '1'
+    title: 'Sample App 1',
+    appIconURL: 'https://picsum.photos/200',
+    description: 'Sample App 1 Description',
+    license: 'Sample License 1'
   },
   {
     appId: '2',
-    proposedPrice: 200,
-    licenseDetails: '2'
+    title: 'Sample App 2',
+    appIconURL: 'https://picsum.photos/200',
+    description: 'Sample App 2 Description',
+    license: 'Sample License 2'
   },
   {
     appId: '3',
-    proposedPrice: 300,
-    licenseDetails: '3'
+    title: 'Sample App 3',
+    appIconURL: 'https://picsum.photos/200',
+    description: 'Sample App 3 Description',
+    license: 'Sample License 3'
   },
   {
-    appId: '3',
-    proposedPrice: 300,
-    licenseDetails: '3'
-  },
-  {
-    appId: '3',
-    proposedPrice: 300,
-    licenseDetails: '3'
+    appId: '4',
+    title: 'Sample App 4',
+    appIconURL: 'https://picsum.photos/200',
+    description: 'Sample App 4 Description',
+    license: 'Sample License 4'
   }
 ];
 
 class LicenseService {
-  public async getLicensesByBuyerId() {
+  public async getLicenseByBuyerId(user: User, buyerId: string) {
     return sampleLicense;
   }
 }
+
+export default LicenseService;
