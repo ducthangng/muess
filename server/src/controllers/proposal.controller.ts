@@ -25,6 +25,7 @@ class ProposalController {
     next: NextFunction
   ) => {
     try {
+      console.log('inside createProposal controller');
       const proposalData: CreateProposalDto = req.body;
       const user: User = req.user;
       const result: any = await this.proposalService.createProposal(

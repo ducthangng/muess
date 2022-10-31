@@ -10,6 +10,7 @@ const validationMiddleware = (
   whitelist = true,
   forbidNonWhitelisted = true
 ): RequestHandler => {
+  console.log('inside validation middleware');
   return (req, res, next) => {
     validate(plainToClass(type, req[value]), {
       skipMissingProperties,
