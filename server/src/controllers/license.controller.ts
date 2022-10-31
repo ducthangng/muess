@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { User } from '@/interfaces/users.interface';
+import { License } from '@/interfaces/hlf.interface';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import LicenseService from '../services/license.service';
 
@@ -7,7 +8,6 @@ class LicenseController {
   public licenseService = new LicenseService();
 
   /**
-   * Contributor: Loc Bui
    * @param req
    * @param res
    * @param next
@@ -21,7 +21,6 @@ class LicenseController {
       const user: User = req.user;
       const buyerId: string = req.params.buyerId;
       const licenseData: any = await this.licenseService.getLicenseByBuyerId(
-        user,
         buyerId
       );
 
@@ -31,41 +30,5 @@ class LicenseController {
     }
   };
 }
-
-//   public getLicenseBySellerID = async (
-//     req: RequestWithUser,
-//     res: Response,
-//     next: NextFunction
-//     ) => {
-//   try {
-//     res.status(200).json({ data: sampleLicense, message: 'Found' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
-// }
-
-//   /**
-//    * @param req
-//    * @param res
-//    * @param next
-//    */
-//   public getLicenseBySellerID = async (
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-//   ) => {
-//     try {
-//       const buyerId: string = req.params.buyerId;
-//       // const proposalsData: any = await this.hlfService.getProposalsBySellerId(
-//       //   buyerId
-//       // );
-
-//       res.status(200).json({ data: 'khang', message: 'Found' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
-// }
 
 export default LicenseController;
