@@ -33,16 +33,6 @@ class UsersRoute implements Routes {
       this.usersController.getUserById
     );
     this.router.get(
-      `${this.path}/roposedLicense`,
-      authMiddleware,
-      this.licenseController.getProposalsByAppId
-    );
-    this.router.get(
-      `${this.path}/soldLicense`,
-      authMiddleware,
-      this.licenseController.getProposalsBySellerId
-    );
-    this.router.get(
       `${this.path}/app`,
       authMiddleware,
       this.licenseController.getProposalsByBuyerId
