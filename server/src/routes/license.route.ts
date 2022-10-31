@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { Routes } from '@/interfaces/routes.interface';
-import LicenseController from '../controllers/proposal.controller';
+import LicenseController from '../controllers/license.controller';
 import authMiddleware from '@/middlewares/auth.middleware';
 
 class HLFRoute implements Routes {
-  public path = '/hlf';
+  public path = '/apps';
   public router = Router();
   public licenseController = new LicenseController();
 
@@ -19,9 +19,9 @@ class HLFRoute implements Routes {
     //   this.licenseController.getProposalsByAppId
     // );
     this.router.get(
-      `${this.path}/proposals-by-buyer/:buyerId`,
+      `${this.path}/ownedapps/:buyerId`,
       authMiddleware,
-      this.licenseController.getProposalsByBuyerId
+      this.licenseController.getLicenseByBuyerId
     );
   }
 }

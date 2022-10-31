@@ -12,7 +12,7 @@ class LicenseController {
    * @param res
    * @param next
    */
-  public getLicensesByBuyerId = async (
+  public getLicenseByBuyerId = async (
     req: RequestWithUser,
     res: Response,
     next: NextFunction

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MockProduct from '../components/MockProduct';
+import MockProductLicense from '../components/MockProduct';
 import SideMenu from '../components/Header/SideMenu';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
@@ -62,7 +62,7 @@ function ProductLicense() {
               {data &&
                 data.map((item) => {
                   return (
-                    <MockProduct
+                    <MockProductLicense
                       _id={item._id}
                       title={item.title}
                       description={item.description}

@@ -1,16 +1,16 @@
 import { Card, Form, Tag } from 'antd';
 import React from 'react';
 import '../assets/css/MockTest.css';
-import mocktest from '../assets/images/Rectangle 6295.png';
-import { AppDetailData } from '../models/AppDetailData';
+import { AppDetailDataLicense } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const MockApp: React.FC<AppDetailData> = ({
+const MockApp: React.FC<AppDetailDataLicense> = ({
   _id,
   title,
   appTags,
   description,
-  imageSrc
+  imageSrc,
+  license
 }) => {
   const navigate = useNavigate();
   return (
@@ -34,6 +34,9 @@ const MockApp: React.FC<AppDetailData> = ({
         <Tag color="#F17B7B" style={{ bottom: 'left' }} className="tag_lon">
           {description}
         </Tag>
+        <div className="wrapper">
+          <h1 className="content">{license}</h1>
+        </div>
       </Card>
     </Form>
   );
