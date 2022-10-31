@@ -18,7 +18,7 @@ import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
 import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
-import EditApp from '../pages/EditApp';
+// import EditApp from '../pages/EditApp';
 import Guard from '../guards/AuthGuard';
 import OwnedProducts from '../pages/OwnedProduct';
 import AppDetailLicense from '../pages/AppDetailLicense';
@@ -58,7 +58,7 @@ export default function AppRoute() {
           <Route path="/proposals" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
-          <Route path="/editapp" element={<EditApp />} />
+          {/* <Route path="/editapp" element={<EditApp />} /> */}
           {/* </Route> */}
 
           {/* admin routes */}
