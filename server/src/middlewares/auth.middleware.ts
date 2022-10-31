@@ -11,6 +11,7 @@ const authMiddleware = async (
   next: NextFunction
 ) => {
   try {
+    console.log('inside auth middleware');
     req.user = null;
     const Authorization =
       req.cookies['muess'] ||

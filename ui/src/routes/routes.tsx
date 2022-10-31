@@ -38,7 +38,7 @@ export default function AppRoute() {
           <Route path="/register-auth-info" element={<Register2 />} />
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
-          <Route path="/solds" element={<SoldList />} />
+          <Route path="/offers" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
           <Route
             path="/products/:id"

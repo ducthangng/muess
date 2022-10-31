@@ -41,6 +41,7 @@ const sampleProposal: CreateProposalDto[] = [
 class ProposalService {
   public async createProposal(user: User, proposalData: CreateProposalDto) {
     try {
+      console.log('inside createProposal service');
       const contract = await initContract(JSON.parse(user.x509Identity));
       const { appId, proposedPrice, licenseDetails } = proposalData;
       const proposalId = uuidv4();
