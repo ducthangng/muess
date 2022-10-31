@@ -5,6 +5,7 @@ import UsersRoute from '@routes/users.route';
 import validateEnv from '@utils/validateEnv';
 import AppsRoute from '@/routes/app.route';
 import ProposalRoute from '@routes/proposal.route';
+import LicenseRoute from './routes/license.route';
 
 process.on('uncaughtException', function (exception) {
   console.log(exception); // to see your exception details in the console
@@ -25,7 +26,8 @@ try {
     new UsersRoute(),
     new AppsRoute(),
     new AuthRoute(),
-    new ProposalRoute()
+    new ProposalRoute(),
+    new LicenseRoute()
   ]);
   app.listen();
 } catch (error) {
