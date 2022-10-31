@@ -4,6 +4,7 @@ import { RequestWithUser } from '@/interfaces/auth.interface';
 import { User } from '@/interfaces/users.interface';
 import AppService from '../services/app.service';
 import UserService from '../services/users.service';
+import { CreateAppDto } from '@/dtos/hlf.dto';
 
 class AppsController {
   public appService = new AppService();

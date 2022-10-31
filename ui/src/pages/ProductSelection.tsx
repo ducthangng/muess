@@ -53,15 +53,7 @@ function ProductSelection() {
                   ghost
                   shape="default"
                   size="middle"
-                  href="/productselection"
-                >
-                  Owned Apps
-                </Button>
-                <Button
-                  ghost
-                  shape="default"
-                  size="middle"
-                  href="/productselection"
+                  href="/products/my-app"
                 >
                   My Apps
                 </Button>

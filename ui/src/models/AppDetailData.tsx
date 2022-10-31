@@ -29,9 +29,6 @@ interface AppDetailDataLicense {
 }
 
 interface CreateAppData {
-  assetType: string;
-  assetId: string; // queries
-  creatorId: string; // queries
   title: string;
   description: string;
   rating: string;

@@ -26,10 +26,10 @@ const defaultApp: App = {
   }
 };
 
-const AppDetail = () => {
+const AppDetailLicense = () => {
   const navigate = useNavigate();
-  const [app, SetApp] = useState<App>();
   const { appId } = useParams();
+  const [app, SetApp] = useState<App>();
   const [buttonPopup, setButtonPopup] = useState(false);
 
   useEffect(() => {
@@ -284,4 +284,4 @@ const AppDetail = () => {
   );
 };
 
-export default AppDetail;
+export default AppDetailLicense;

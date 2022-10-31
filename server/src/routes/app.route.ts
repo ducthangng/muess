@@ -18,7 +18,7 @@ class AppsRoute implements Routes {
     this.router.post(
       `${this.path}`,
       authMiddleware,
-      validationMiddleware(CreateAppDto, 'body', true),
+      validationMiddleware(CreateAppDto, 'body'),
       this.appsController.createApp
     );
     this.router.put(

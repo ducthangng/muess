@@ -8,7 +8,7 @@ import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 
 function OwnedProducts() {
-  const { data } = useQuery(['productSelection'], async () => {
+  const { data } = useQuery(['getOwnedApps'], async () => {
     return await appApi.getOwnedApps();
   });
 

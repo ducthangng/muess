@@ -3,7 +3,7 @@ import { User } from '../models/User';
 import { stringify } from 'querystring';
 import { Wallet } from '../models/Wallet';
 
-const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8080';
+const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8000';
 const apiUrl = `${BASE_API}/users`;
 
 /**

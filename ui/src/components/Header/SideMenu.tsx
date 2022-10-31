@@ -91,9 +91,9 @@ const SideMenu = (props) => {
               : {}
           }
           className="menu-item"
-          to="/purchases"
+          to="/proposals"
         >
-          Purchases
+          Proposals
         </NavLink>
 
         <NavLink

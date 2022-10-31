@@ -19,7 +19,7 @@ import { isNil, result } from 'lodash';
 import { GraphData } from '../models/Wallet';
 import { Wallet } from '../models/Wallet';
 
-function Wallet() {
+function WalletOutline() {
   const [selected, setSelected] = useState('Monthly progress');
   const [userData, setUserData] = useState<UserDataForWalletDisplay>();
   const defaultData = {
@@ -325,4 +325,4 @@ function Wallet() {
   );
 }
 
-export default Wallet;
+export default WalletOutline;
