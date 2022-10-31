@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 
 import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
 import { Proposal } from '@/interfaces/hlf.interface';
+import { AcceptProposalDto, CreateProposalDto } from '@/dtos/proposal.dto';
 
 const sampleProposal: Proposal[] = [
   {
@@ -125,7 +125,7 @@ class proposalService {
     const contract = await initContract(JSON.parse(user.x509Identity));
     const { proposalId } = rejectProposalData;
     const result = await contract.submitTransaction(
-      'AcceptProposal',
+      'RejectProposal',
       proposalId
     );
     console.log(
@@ -147,7 +147,6 @@ class proposalService {
   }
 
   public async getProposalsByBuyerId(user: User, buyerId: string) {
-    return sampleProposal2;
     const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
       'QueryProposalsByBuyerId',
@@ -160,7 +159,15 @@ class proposalService {
   }
 
   public async getProposalsBySellerId(user: User, sellerId: string) {
-    return sampleProposal;
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const result = await contract.evaluateTransaction(
+      'QueryProposalsBySellerId',
+      sellerId
+    );
+    console.log(
+      `Transaction has successfully created, result is: ${result.toString()}`
+    );
+    return JSON.parse(result.toString());
   }
 }
 

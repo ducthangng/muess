@@ -8,7 +8,7 @@ import {
   AcceptProposalDto,
   CreateProposalDto,
   RejectProposalDto
-} from '@/dtos/hlf.dto';
+} from '@/dtos/proposal.dto';
 
 class ProposalRoute implements Routes {
   public path = '/proposal';
@@ -22,29 +22,36 @@ class ProposalRoute implements Routes {
   private initializeRoutes() {
     this.router.post(
       `${this.path}/`,
-      // validationMiddleware(CreateProposalDto, 'body'),
+      validationMiddleware(CreateProposalDto, 'body'),
       authMiddleware,
       this.proposalController.createProposal
     );
     this.router.post(
       `${this.path}/accept`,
       validationMiddleware(AcceptProposalDto, 'body'),
+      authMiddleware,
       this.proposalController.acceptProposal
     );
     this.router.post(
       `${this.path}/reject`,
       validationMiddleware(RejectProposalDto, 'body'),
+      authMiddleware,
       this.proposalController.rejectProposal
     );
     this.router.get(
-      `${this.path}/buyer/ID`,
+      `${this.path}/buyer/:buyerId`,
       authMiddleware,
       this.proposalController.getProposalsByBuyerId
     );
     this.router.get(
-      `${this.path}/seller/ID`,
+      `${this.path}/seller/:sellerId`,
       authMiddleware,
-      this.proposalController.getProposalsBySellerID
+      this.proposalController.getProposalsBySellerId
+    );
+    this.router.get(
+      `${this.path}/app/:appId`,
+      authMiddleware,
+      this.proposalController.getProposalsByAppId
     );
   }
 }
