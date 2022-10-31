@@ -276,6 +276,17 @@ class Chaincode extends Contract {
   }
 
   // Queries for Proposals
+  // valid proposals = proposals with "pending" or "accepted" status
+  async GetAllAcceptedProposals(ctx) {
+    let queryString = {};
+    queryString.selector = {};
+    queryString.selector.assetType = 'proposal';
+    queryString.selector.status = 'accepted'
+    return await this.GetQueryResultForQueryString(
+      ctx,
+      JSON.stringify(queryString)
+    );
+  }
   async QueryProposalsByAppId(ctx, appId) {
     let queryString = {};
     queryString.selector = {};
