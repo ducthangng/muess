@@ -13,12 +13,6 @@ class HLFRoute implements Routes {
   }
 
   private initializeRoutes() {
-    // remember to encodeURIComponent(creatorId) before sending to server
-    // this.router.get(
-    //   `${this.path}/apps-by-creator/:creatorId`,
-    //   authMiddleware,
-    //   this.licenseController.getAppsByCreatorId
-    // // );
     // this.router.get(
     //   `${this.path}/proposals-by-app/:appId`,
     //   authMiddleware,
