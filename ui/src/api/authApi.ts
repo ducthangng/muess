@@ -10,41 +10,29 @@ const apiUrl = `${BASE_API}/auth`;
 export const authApi = {
   register: async (parameter: {
     fullname: string;
-    username: string;
     password: string;
     dob: string;
     email: string;
   }) => {
-    const payload = parameter;
+    try {
+      const payload = parameter;
 
-    const response = await fetch(`${apiUrl}/register`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        console.log(data);
-        // const err: AppError = data.error;
-        // if (err.errorMsg.length !== 0) {
-        //   alert(err.errorMsg);
-        //   throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        // }
-
-        const user: User = data.data;
-        return user;
+      const response = await fetch(`${apiUrl}/register`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
   },
   /**
    * Login Function.

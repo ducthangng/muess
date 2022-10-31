@@ -9,6 +9,8 @@ import { EyeInvisibleOutlined } from '@ant-design/icons';
 import '../assets/css/Register.css';
 import { authApi } from '../api/authApi';
 import { User } from '../models/User';
+import moment from 'moment';
+import { userApi } from '../api/userApi';
 
 const Register = () => {
   const [toggleState, setToggleState] = useState(1);
@@ -16,10 +18,14 @@ const Register = () => {
     setToggleState(index);
   };
 
+  const [fullname, setFullname] = useState('');
+  const [dob, setDob] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
   // const [warningBorder, setWarningBorder] = useState('');
 
   const togglePassword = () => {
@@ -31,6 +37,13 @@ const Register = () => {
     navigate(`/`);
   };
 
+  const checkLogin = async () => {
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      navigate('/release');
+    }
+  };
+
   const checkOnRepeat = (value: string) => {
     setRepeatPassword(value);
 
@@ -39,28 +52,39 @@ const Register = () => {
     }
   };
 
-  const onRegister = async (e: any) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault();
     if (password !== repeatPassword) {
-      alert('Wrong repeat password! Please retype.');
+      setHasError(true);
+      setMessage('Wrong repeat password! Please retype.');
       return;
     }
 
-    await authApi
-      .register({
-        fullname: 'default',
-        dob: 'default',
-        username: 'default',
-        password: password,
-        email: email
-      })
-      .then((user) => {
-        console.log('user: ', user);
-        if (user._id.length !== 0) {
-          navigate('/login');
-        }
-      });
+    // console.log({
+    //   fullname: fullname,
+    //   dob: dob,
+    //   password: password,
+    //   email: email
+    // });
+    const res = await authApi.register({
+      fullname: fullname,
+      dob: dob,
+      password: password,
+      email: email
+    });
+    console.log(res);
+    setMessage(res.message);
+    if (res.status === 201) {
+      setHasError(false);
+      navigate('/release');
+    } else {
+      setHasError(true);
+    }
   };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   const Sign: CSS.Properties = {
     position: 'relative',
@@ -175,7 +199,7 @@ const Register = () => {
               X
             </button>
 
-            <form>
+            <form onSubmit={handleRegister}>
               <div
                 className="Sign-up-info"
                 style={{
@@ -250,6 +274,8 @@ const Register = () => {
                         borderRadius: '5px'
                       }}
                       required={true}
+                      value={fullname}
+                      onChange={(e) => setFullname(e.target.value)}
                     />
                     <div
                       className="DOB"
@@ -268,6 +294,10 @@ const Register = () => {
                       type="date"
                       name="dateofbirth"
                       id="dateofbirth"
+                      value={moment(dob).format('YYYY-MM-DD')}
+                      onChange={(e) =>
+                        setDob(e.target.valueAsDate?.toISOString() as string)
+                      }
                     ></input>
                   </div>
 
@@ -312,7 +342,7 @@ const Register = () => {
                         borderWidth: '2px',
                         borderRadius: '5px'
                       }}
-                      type={'email'}
+                      type="email"
                       required={true}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -427,7 +457,17 @@ const Register = () => {
                 <div
                   style={{ position: 'absolute', bottom: '10%', width: '100%' }}
                 >
-                  <button
+                  {hasError && (
+                    <div
+                      className={`${
+                        hasError ? 'text-red-500' : 'text-green-500'
+                      }`}
+                    >
+                      {message}
+                    </div>
+                  )}
+                  <input
+                    type="submit"
                     className="continue_button"
                     style={{
                       background: '#FB7F4B',
@@ -442,10 +482,8 @@ const Register = () => {
                       position: 'relative',
                       marginTop: '1rem'
                     }}
-                    onClick={() => navigate('/register-auth-info')}
-                  >
-                    Register
-                  </button>
+                    value="Register"
+                  />
                   <div
                     className="return-signin"
                     style={{
