@@ -7,4 +7,17 @@ interface User {
   identity: string;
 }
 
-export type { User };
+interface UserDataForWalletDisplay {
+  labels: string[];
+  datasets: GraphDisplay[];
+}
+
+interface GraphDisplay {
+  label: string;
+  data: number[];
+  backgroundColor: string[];
+  borderColor: string;
+  borderWidth: number;
+}
+
+export type { User, UserDataForWalletDisplay, GraphDisplay };

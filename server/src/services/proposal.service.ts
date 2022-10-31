@@ -1,44 +1,79 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  AcceptProposalDto,
-  CreateAppDto,
-  CreateProposalDto
-} from '@/dtos/hlf.dto';
+import { AcceptProposalDto, CreateProposalDto } from '@/dtos/hlf.dto';
 
 import { initContract } from '@/utils/hlfUtils';
 import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
+import { Proposal } from '@/interfaces/hlf.interface';
 
-const sampleProposal: CreateProposalDto[] = [
+const sampleProposal: Proposal[] = [
   {
+    assetType: 'proposal',
+    assetId: '1',
     appId: '1',
+    buyerId: '1',
+    sellerId: '2',
     proposedPrice: 100,
-    licenseDetails: '1'
+    licenseDetails: 'test',
+    status: 'pending'
   },
   {
-    appId: '2',
-    proposedPrice: 200,
-    licenseDetails: '2'
+    assetType: 'proposal',
+    assetId: '2',
+    appId: '1',
+    buyerId: '1',
+    sellerId: '2',
+    proposedPrice: 220,
+    licenseDetails: 'test',
+    status: 'accepted'
   },
   {
-    appId: '3',
-    proposedPrice: 300,
-    licenseDetails: '3'
-  },
-  {
-    appId: '3',
-    proposedPrice: 300,
-    licenseDetails: '3'
-  },
-  {
-    appId: '3',
-    proposedPrice: 300,
-    licenseDetails: '3'
+    assetType: 'proposal',
+    assetId: '3',
+    appId: '1',
+    buyerId: '1',
+    sellerId: '2',
+    proposedPrice: 1,
+    licenseDetails: 'test',
+    status: 'rejected'
   }
 ];
 
-class ProposalService {
+const sampleProposal2: Proposal[] = [
+  {
+    assetType: 'proposal',
+    assetId: '1',
+    appId: '1',
+    buyerId: '1',
+    sellerId: '2',
+    proposedPrice: 5000,
+    licenseDetails: 'test',
+    status: 'pending'
+  },
+  {
+    assetType: 'proposal',
+    assetId: '2',
+    appId: '1',
+    buyerId: '1',
+    sellerId: '2',
+    proposedPrice: 120,
+    licenseDetails: 'test',
+    status: 'accepted'
+  },
+  {
+    assetType: 'proposal',
+    assetId: '3',
+    appId: '1',
+    buyerId: '1',
+    sellerId: '2',
+    proposedPrice: 150,
+    licenseDetails: 'test',
+    status: 'accepted'
+  }
+];
+
+class proposalService {
   public async createProposal(user: User, proposalData: CreateProposalDto) {
     try {
       const contract = await initContract(JSON.parse(user.x509Identity));
@@ -111,6 +146,7 @@ class ProposalService {
   }
 
   public async getProposalsBySellerId(user: User, buyerId: string) {
+    return sampleProposal2;
     const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
       'QueryProposalsByBuyerId',
@@ -127,4 +163,4 @@ class ProposalService {
   }
 }
 
-export default ProposalService;
+export default proposalService;

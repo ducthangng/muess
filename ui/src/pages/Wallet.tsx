@@ -13,11 +13,16 @@ import Balance from '../assets/images/balance.gif';
 import Spend from '../assets/images/spend.gif';
 import { Link } from 'react-router-dom';
 import SideMenu from '../components/Header/SideMenu';
+import { userApi } from '../api/userApi';
+import { GraphDisplay, UserDataForWalletDisplay } from '../models/User';
+import { isNil } from 'lodash';
+import { GraphData } from '../models/Wallet';
 
 function Wallet() {
   const [selected, setSelected] = useState('Monthly progress');
-  const [userData, setUserData] = useState({
-    labels: [...Import].map((data) => data.day),
+  const [userData, setUserData] = useState<UserDataForWalletDisplay>();
+  const defaultData = {
+    labels: [...Import].map((data) => data.day.toString()),
     datasets: [
       {
         label: 'Purchased',
@@ -34,58 +39,101 @@ function Wallet() {
         borderWidth: 2
       }
     ]
-  });
+  };
+
+  // let userData: UserDataForWalletDisplay;
+
+  // useEffect(() => {
+  //   if (selected === 'Monthly progress') {
+  //     changeToMonthly();
+  //   } else if (selected === 'Yearly progress') {
+  //     changeToYearly();
+  //   }
+  // }, [selected]);
 
   useEffect(() => {
-    console.log(selected);
-    if (selected === 'Monthly progress') {
-      changeToMonthly();
-    } else if (selected === 'Yearly progress') {
-      changeToYearly();
-    }
-  }, [selected]);
+    userApi.getWallet().then((result) => {
+      let largerGraphData: GraphData[] =
+        result.spending.length > result.income.length
+          ? result.spending
+          : result.income;
 
-  const changeToYearly = async () =>
-    setUserData({
-      labels: [...ImportYearly].map((data) => data.month),
-      datasets: [
-        {
-          label: 'Purchased',
-          data: [...ImportYearly].map((data) => data.value),
-          backgroundColor: ['#FB7F4B'],
-          borderColor: '#FB7F4B',
-          borderWidth: 2
-        },
-        {
-          label: 'Income',
-          data: [...ExportYearly].map((data) => data.value),
-          backgroundColor: ['#C4515F'],
-          borderColor: '#C4515F',
-          borderWidth: 2
-        }
-      ]
-    });
+      const labels = largerGraphData.map((spending) => {
+        return spending.unit;
+      });
 
-  const changeToMonthly = async () =>
-    setUserData({
-      labels: [...Import].map((data) => data.day),
-      datasets: [
-        {
-          label: 'Purchased',
-          data: [...Import].map((data) => data.value),
-          backgroundColor: ['#FB7F4B'],
-          borderColor: '#FB7F4B',
-          borderWidth: 2
-        },
-        {
-          label: 'Income',
-          data: [...Export].map((data) => data.value),
-          backgroundColor: ['#C4515F'],
-          borderColor: '#C4515F',
-          borderWidth: 2
-        }
-      ]
+      // Merge result.spending and result.income then sort from small to big (date/unit: '2022-10-31')
+
+      const purchased: GraphDisplay = {
+        label: 'Purchased',
+        data: result.spending.map((x) => {
+          return x.amount;
+        }),
+        backgroundColor: ['#FB7F4B'],
+        borderColor: '#FB7F4B',
+        borderWidth: 2
+      };
+
+      const sold: GraphDisplay = {
+        label: 'Income',
+        data: result.income.map((x) => {
+          return x.amount;
+        }),
+        backgroundColor: ['#C4515F'],
+        borderColor: '#C4515F',
+        borderWidth: 2
+      };
+
+      let sumDataSet: GraphDisplay[] = [purchased, sold];
+
+      setUserData({
+        datasets: sumDataSet,
+        labels: labels
+      });
     });
+  }, []);
+
+  // const changeToYearly = async () =>
+  //   setUserData({
+  //     labels: [...ImportYearly].map((data) => data.month),
+  //     datasets: [
+  //       {
+  //         label: 'Purchased',
+  //         data: [...ImportYearly].map((data) => data.value),
+  //         backgroundColor: ['#FB7F4B'],
+  //         borderColor: '#FB7F4B',
+  //         borderWidth: 2
+  //       },
+  //       {
+  //         label: 'Income',
+  //         data: [...ExportYearly].map((data) => data.value),
+  //         backgroundColor: ['#C4515F'],
+  //         borderColor: '#C4515F',
+  //         borderWidth: 2
+  //       }
+  //     ]
+  //   });
+
+  // const changeToMonthly = async () =>
+  //   setUserData({
+  //     labels: [...Import].map((data) => data.day),
+  //     datasets: [
+  //       {
+  //         label: 'Purchased',
+  //         data: [...Import].map((data) => data.value),
+  //         backgroundColor: ['#FB7F4B'],
+  //         borderColor: '#FB7F4B',
+  //         borderWidth: 2
+  //       },
+  //       {
+  //         label: 'Income',
+  //         data: [...Export].map((data) => data.value),
+  //         backgroundColor: ['#C4515F'],
+  //         borderColor: '#C4515F',
+  //         borderWidth: 2
+  //       }
+  //     ]
+  //   });
 
   return (
     <>
@@ -252,7 +300,7 @@ function Wallet() {
               <option value="3">Lifetime progress</option>
             </select>
           </div>
-          <LineChart chartData={userData} />
+          <LineChart chartData={isNil(userData) ? defaultData : userData} />
         </div>
       </div>
     </>
