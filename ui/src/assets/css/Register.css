@@ -1,28 +1,89 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 [type="date"] {
-    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
-  }
-  [type="date"]::-webkit-inner-spin-button {
-    display: none;
-  }
-  [type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  }
-  
-  /* custom styles */
-  body {
-    padding: 4em;
-    background: #e5e5e5;
-    font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
-  }
-  label {
-    display: block;
-  }
-  input {
-    border-color: #FFE7D4;
-    border-radius: 5px;
-    border-width: 2px;
-    background-color: #FFFFFF;
-    padding: 3px 5px;
-    width: 100%;
-    height: 8%;
-  }
+  background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+}
+
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+/* custom styles */
+body {
+  padding: 4em;
+  background: #e5e5e5;
+  font: 12px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+}
+
+label {
+  display: block;
+}
+
+input {
+  border-color: #FFE7D4;
+  border-radius: 5px;
+  border-width: 2px;
+  background-color: #FFFFFF;
+  padding: 3px 5px;
+  width: 100%;
+  height: 8%;
+}
+
+
+.tabs {
+  color: #8C98A9;
+  position: relative;
+  /* left: 0; */
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 30px;
+  margin-top: 2%;
+  cursor: pointer;
+  /* display: none; */
+}
+
+
+.active-tabs {
+  color: #3A001E;
+}
+
+.active-tabs::before {
+  content: "";
+  display: block;
+  position: absolute;
+  /* top: -5px; */
+  /* left: 50%; */
+  transform: translateX(-50%);
+  width: calc(100% + 2px);
+  height: 5px;
+  color: #8C98A9;
+  /* background: rgb(88, 147, 241); */
+}
+
+button {
+  border: none;
+}
+
+.content-tabs {
+  flex-grow: 1;
+}
+
+.contents {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.active-contents {
+  display: block;
+}

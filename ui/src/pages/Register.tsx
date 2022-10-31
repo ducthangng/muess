@@ -4,9 +4,24 @@ import '../assets/css/Register.css';
 import LoginLogo from '../assets/images/logo.svg';
 import RegisterImage from '../assets/images/register.svg';
 import CSS from 'csstype';
+import styled from 'styled-components';
+import { EyeInvisibleOutlined } from '@ant-design/icons';
+import '../assets/css/Register.css';
+import { authApi } from '../api/authApi';
+import { User } from '../models/User';
 
 const Register = () => {
+  const [toggleState, setToggleState] = useState(1);
+  const togggleTab = (index) => {
+    setToggleState(index);
+  };
+
   const [passwordShown, setPasswordShown] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  // const [warningBorder, setWarningBorder] = useState('');
+
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -15,10 +30,42 @@ const Register = () => {
   const handleClick = () => {
     navigate(`/`);
   };
+
+  const checkOnRepeat = (value: string) => {
+    setRepeatPassword(value);
+
+    if (value !== password) {
+      // setWarningBorder('red');
+    }
+  };
+
+  const onRegister = async (e: any) => {
+    e.preventDefault();
+    if (password !== repeatPassword) {
+      alert('Wrong repeat password! Please retype.');
+      return;
+    }
+
+    await authApi
+      .register({
+        fullname: 'default',
+        dob: 'default',
+        username: 'default',
+        password: password,
+        email: email
+      })
+      .then((user) => {
+        console.log('user: ', user);
+        if (user._id.length !== 0) {
+          navigate('/login');
+        }
+      });
+  };
+
   const Sign: CSS.Properties = {
     position: 'relative',
     fontWeight: '700',
-    fontSize: '24px',
+    fontSize: '20px',
     lineHeight: '34px',
     color: '#3A001E'
   };
@@ -52,10 +99,10 @@ const Register = () => {
             justifyContent: 'center',
             margin: '0 auto',
             backgroundColor: '#FFF7F1',
-            width: '56vw',
-            height: '60vh',
+            width: '60vw',
+            height: '72vh',
             position: 'relative',
-            top: '20vh',
+            top: '14vh',
             borderRadius: '10px',
             boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
           }}
@@ -66,7 +113,7 @@ const Register = () => {
               width: '50%',
               height: '100%',
               display: 'block',
-              position: 'relative',
+              position: 'absolute',
               top: '0',
               left: '0'
             }}
@@ -78,7 +125,7 @@ const Register = () => {
                 width: '18%',
                 height: '7%',
                 display: 'block',
-                position: 'relative',
+                position: 'absolute',
                 top: '5%',
                 left: '8%'
               }}
@@ -90,7 +137,7 @@ const Register = () => {
                 width: '80%',
                 height: '60%',
                 display: 'block',
-                margin: '15% auto'
+                margin: '20% auto'
               }}
             />
           </div>
@@ -102,7 +149,7 @@ const Register = () => {
               height: '100%',
               borderTopRightRadius: '10px',
               borderBottomRightRadius: '10px',
-              position: 'relative',
+              position: 'absolute',
               backgroundColor: 'white',
               top: '0',
               right: '0'
@@ -127,109 +174,267 @@ const Register = () => {
             >
               X
             </button>
+
             <form>
               <div
                 className="Sign-up-info"
                 style={{
-                  position: 'relative',
-                  display: 'block',
+                  position: 'absolute',
                   width: '60%',
-                  height: '90%',
+                  height: '80%',
+                  left: '20%',
                   backgroundColor: 'transparent',
                   margin: '0 auto',
-                  top: '1.5rem'
+                  top: '10%'
                 }}
               >
                 <div className="Sign-up-title" style={Sign}>
                   Sign Up
                 </div>
-                <div
-                  className="Personal-info"
-                  style={{
-                    position: 'relative',
-                    fontWeight: '400',
-                    fontSize: '16px',
-                    lineHeight: '34px',
-                    color: '#3A001E',
-                    marginTop: '2%'
-                  }}
-                >
-                  Personal Information
+                <div className="register-tabs" style={{ display: 'flex' }}>
+                  <button
+                    className={toggleState === 1 ? 'tabs active-tabs' : 'tabs'}
+                    onClick={() => togggleTab(1)}
+                  >
+                    Personal Info
+                  </button>
+                  <button
+                    style={{ position: 'absolute', right: '0' }}
+                    className={toggleState === 2 ? 'tabs active-tabs' : 'tabs'}
+                    onClick={() => togggleTab(2)}
+                  >
+                    Account detail
+                  </button>
                 </div>
-                <div
-                  className="line"
-                  style={{
-                    borderTop: '3px solid orange',
-                    width: '46%'
-                  }}
-                ></div>
-                <div
-                  className="fullname"
-                  style={{
-                    position: 'relative',
-                    fontWeight: '400',
-                    fontSize: '13px',
-                    lineHeight: '34px',
-                    color: '#8C98A9',
-                    marginTop: '2%'
-                  }}
-                >
-                  Full Name
+
+                <div className="content-tabs">
+                  <div
+                    className={
+                      toggleState === 1
+                        ? 'contents active-contents'
+                        : 'contents'
+                    }
+                  >
+                    <div
+                      className="line-1"
+                      style={{
+                        borderTop: '3px solid orange',
+                        position: 'absolute',
+                        left: '0',
+                        width: '40%'
+                      }}
+                    ></div>
+                    <div
+                      className="fullname"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Full Name
+                    </div>
+                    <input
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        position: 'relative',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                      required={true}
+                    />
+                    <div
+                      className="DOB"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Date of Birth
+                    </div>
+                    <input
+                      type="date"
+                      name="dateofbirth"
+                      id="dateofbirth"
+                    ></input>
+                    <div
+                      className="email"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Email Address
+                    </div>
+                    <input
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        position: 'relative',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                    ></input>
+                  </div>
+
+                  <div
+                    className={
+                      toggleState === 2
+                        ? 'contents active-contents'
+                        : 'contents'
+                    }
+                  >
+                    <div
+                      className="line-2"
+                      style={{
+                        borderTop: '3px solid orange',
+                        position: 'absolute',
+                        right: '0',
+                        width: '40%'
+                      }}
+                    ></div>
+                    <div
+                      className="emailaddress"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Email Address
+                    </div>
+                    <input
+                      style={{
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        width: '100%',
+                        position: 'relative',
+                        borderColor: '#FFE7D4',
+                        backgroundColor: '#FFFFFF',
+                        color: '#3A001E',
+                        borderWidth: '2px',
+                        borderRadius: '5px'
+                      }}
+                      type={'email'}
+                      required={true}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <div
+                      className="password"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Password
+                    </div>
+                    <div
+                      className="input_password"
+                      style={{
+                        display: 'flex',
+                        width: '100%',
+                        fontSize: '12px',
+                        position: 'relative',
+                        backgroundColor: 'transparent'
+                      }}
+                    >
+                      <input
+                        type={passwordShown ? 'text' : 'password'}
+                        style={{
+                          fontWeight: 400,
+                          height: '100%',
+                          width: '100%',
+                          position: 'relative',
+                          borderColor: '#FFE7D4',
+                          backgroundColor: '#FFFFFF',
+                          color: '#3A001E',
+                          borderWidth: '2px',
+                          borderRadius: '5px'
+                        }}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      ></input>
+                      <EyeInvisibleOutlined
+                        className={passwordShown ? 'shown' : 'not'}
+                        onClick={togglePassword}
+                      />
+                    </div>
+                    <div
+                      className="password"
+                      style={{
+                        position: 'relative',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        lineHeight: '28px',
+                        color: '#8C98A9',
+                        marginTop: '2%'
+                      }}
+                    >
+                      Repeat Password
+                    </div>
+                    <div
+                      className="input_password"
+                      style={{
+                        display: 'flex',
+                        width: '100%',
+                        fontSize: '12px',
+                        position: 'relative',
+                        backgroundColor: 'transparent'
+                      }}
+                    >
+                      <input
+                        type={passwordShown ? 'text' : 'password'}
+                        style={{
+                          fontWeight: 400,
+                          height: '100%',
+                          width: '100%',
+                          position: 'relative',
+                          borderColor: '#FFE7D4',
+                          backgroundColor: '#FFFFFF',
+                          color: '#3A001E',
+                          borderWidth: '2px',
+                          borderRadius: '5px'
+                          // border: warningBorder
+                        }}
+                        value={repeatPassword}
+                        onChange={(e) => checkOnRepeat(e.target.value)}
+                      ></input>
+                      <EyeInvisibleOutlined
+                        className={passwordShown ? 'shown' : 'not'}
+                        onClick={togglePassword}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <input
-                  style={{
-                    fontWeight: 400,
-                    height: '8%',
-                    width: '100%',
-                    position: 'relative',
-                    borderColor: '#FFE7D4',
-                    backgroundColor: '#FFFFFF',
-                    color: '#3A001E',
-                    borderWidth: '2px',
-                    borderRadius: '5px'
-                  }}
-                  required={true}
-                />
-                <div
-                  className="DOB"
-                  style={{
-                    position: 'relative',
-                    fontWeight: '400',
-                    fontSize: '13px',
-                    lineHeight: '34px',
-                    color: '#8C98A9',
-                    marginTop: '2%'
-                  }}
-                >
-                  Date of Birth
-                </div>
-                <input type="date" name="dateofbirth" id="dateofbirth"></input>
-                <div
-                  className="email"
-                  style={{
-                    position: 'relative',
-                    fontWeight: '400',
-                    fontSize: '13px',
-                    lineHeight: '34px',
-                    color: '#8C98A9',
-                    marginTop: '2%'
-                  }}
-                >
-                  Email Address
-                </div>
-                <input
-                  style={{
-                    fontWeight: 400,
-                    height: '8%',
-                    width: '100%',
-                    position: 'relative',
-                    borderColor: '#FFE7D4',
-                    backgroundColor: '#FFFFFF',
-                    color: '#3A001E',
-                    borderWidth: '2px',
-                    borderRadius: '5px'
-                  }}
-                ></input>
+
                 <button
                   className="continue_button"
                   style={{
@@ -238,7 +443,8 @@ const Register = () => {
                     fontWeight: 700,
                     fontSize: '16px',
                     lineHeight: '15px',
-                    height: '40px',
+                    height: 'fit-content',
+                    padding: '4%',
                     width: '100%',
                     borderRadius: '5px',
                     position: 'relative',
@@ -246,14 +452,14 @@ const Register = () => {
                   }}
                   onClick={() => navigate('/register-auth-info')}
                 >
-                  Continue
+                  Register
                 </button>
                 <div
                   className="return-signin"
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    marginTop: '0.5rem'
+                    marginTop: '0.5erm'
                   }}
                 >
                   <div
