@@ -1,15 +1,10 @@
 import { Card, Form, Tag } from 'antd';
 import React from 'react';
 import '../assets/css/MockTest.css';
-import { AppDetailDataLicense } from '../models/AppDetailData';
+import { App } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const MockProductLicense: React.FC<AppDetailDataLicense> = ({
-  _id,
-  title,
-  description,
-  imageSrc
-}) => {
+const MockProductLicense: React.FC<App> = ({ Key, Record }) => {
   const navigate = useNavigate();
   return (
     <Form>
@@ -19,7 +14,7 @@ const MockProductLicense: React.FC<AppDetailDataLicense> = ({
         className="card"
         cover={
           <img
-            src={imageSrc}
+            src={Record.appIconURL}
             alt="example"
             className="image_cover"
             style={{ alignItems: 'center', borderTop: 10 }}
@@ -27,10 +22,10 @@ const MockProductLicense: React.FC<AppDetailDataLicense> = ({
         }
       >
         <div className="wrapper">
-          <h1 className="content">{title} </h1>
+          <h1 className="content">{Record.title} </h1>
         </div>
         <div className="wrapper">
-          <h1 className="content">LicenseDetails</h1>
+          <h1 className="content">LicenseDetail</h1>
         </div>
       </Card>
     </Form>
