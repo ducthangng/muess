@@ -23,8 +23,9 @@ export const CompleteTable = () => {
   // const { data } = useQuery(['proposalSelection'], async () => {
   //   return await proposalApi.getProposalByBuyerId();
   // });
+  const [data, setData] = useState([]);
 
-  const data = MOCK_DATA;
+  // const data = MOCK_DATA;
   // API:
   // const displayData: SmartContract[] = smartContractAPI.getAllContracts();
 
@@ -34,11 +35,31 @@ export const CompleteTable = () => {
 
   const fetchData = async () => {
     const currentUserResponse = await userApi.getCurrentUser();
-    const buyerId = currentUserResponse.data._id;
-    const response = await proposalApi.getProposalByBuyerId(
-      encodeURIComponent(buyerId)
+    const sellerId = currentUserResponse.data._id;
+    const response = await proposalApi.getProposalBySellerId(
+      encodeURIComponent(sellerId)
     );
-    console.log(response);
+
+    const proposalsData = response.data.map((item) => item.Record);
+    setData(proposalsData);
+  };
+
+  const acceptProposal = async (proposalId) => {
+    const response = await proposalApi.acceptProposal(proposalId);
+    if (response.status === 201) {
+      fetchData();
+    } else {
+      console.log(response);
+    }
+  };
+
+  const rejectProposal = async (proposalId) => {
+    const response = await proposalApi.rejectProposal(proposalId);
+    if (response.status === 201) {
+      fetchData();
+    } else {
+      console.log(response);
+    }
   };
 
   const defaultColumn = useMemo(() => {
@@ -114,13 +135,19 @@ export const CompleteTable = () => {
                       );
                     })}
                     <td>
-                      <div
-                        className={
-                          'status-button-' + row.original.license_status
-                        }
-                      >
-                        <button className="table-btn-accept">Accept</button>
-                        <button className="table-btn-decline">Decline</button>
+                      <div className={'status-button-' + row.original.status}>
+                        <button
+                          className="table-btn-accept"
+                          onClick={() => acceptProposal(row.original.assetId)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="table-btn-decline"
+                          onClick={() => rejectProposal(row.original.assetId)}
+                        >
+                          Decline
+                        </button>
                       </div>
                     </td>
                   </tr>

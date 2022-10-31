@@ -57,56 +57,58 @@ export const proposalApi = {
   },
 
   getProposalBySellerId: async (BuyerId: string) => {
-    const response = await fetch(
-      `${apiUrl}/seller/seller_proposal?buyer_id=${BuyerId}`,
-      {
+    try {
+      const response = await fetch(`${apiUrl}/seller/${BuyerId}`, {
         method: 'GET',
         credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const proposals: any[] = data.data;
-        return proposals;
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
   },
 
-  acceptProposal: async (params: { proposalId: string }) => {
-    const response = SENDPOST(`${apiUrl}/accept`, params)
-      .then((data) => {
-        const x: number = data.data;
-        return x === 1 ? true : false;
-      })
-      .catch((err) => {
-        return err;
+  acceptProposal: async (proposalId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/accept`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ proposalId: proposalId })
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
   },
 
-  rejectProposal: async (params: { proposalId: string }) => {
-    const response = SENDPOST(`${apiUrl}/reject`, params)
-      .then((data) => {
-        const x: number = data.data;
-        return x === 1 ? true : false;
-      })
-      .catch((err) => {
-        return err;
+  rejectProposal: async (proposalId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/reject`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ proposalId: proposalId })
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
   }
 };

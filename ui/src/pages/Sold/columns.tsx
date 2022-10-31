@@ -1,26 +1,26 @@
 export const COLUMNS = [
   {
-    Header: 'Product ID',
-    accessor: 'product_id'
+    Header: 'Proposal ID',
+    accessor: 'assetId'
   },
   {
     Header: 'Product Name',
-    accessor: 'product_name'
+    accessor: 'appId'
   },
   {
     Header: 'Creator',
-    accessor: 'consumer'
+    accessor: 'buyerId'
   },
   {
     Header: 'Price',
-    accessor: 'price'
+    accessor: 'proposedPrice'
   },
   {
     Header: 'License ID',
     accessor: 'license_id'
   },
   {
-    Header: 'License Status',
-    accessor: 'license_status'
+    Header: 'Status',
+    accessor: 'status'
   }
 ];

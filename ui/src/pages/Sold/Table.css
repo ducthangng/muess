@@ -45,7 +45,7 @@ table th, tfoot td {
   padding-bottom: 20px;
 }
 
-.status-button-Non-binary{
+.status-button-pending{
   margin: auto;
   width: fit-content;
   height: fit-content;
@@ -54,7 +54,7 @@ table th, tfoot td {
   justify-content: center;
 }
 
-.status-button-Non-binary .table-btn-accept{
+.status-button-pending .table-btn-accept{
   background-color: #6FEDB7;
   color: white;
   border: none;
@@ -66,11 +66,11 @@ table th, tfoot td {
   width: 6rem;
 }
 
-.status-button-Non-binary .table-btn-accept:hover{
+.status-button-pending .table-btn-accept:hover{
   background-color: #16DB93;
 }
 
-.status-button-Non-binary .table-btn-decline{
+.status-button-pending .table-btn-decline{
   background-color: #FF5964;
   color: #fff;
   border: none;
@@ -82,14 +82,14 @@ table th, tfoot td {
   width: 6rem;
 }
 
-.status-button-Non-binary .table-btn-decline:hover{
+.status-button-pending .table-btn-decline:hover{
   background-color: #EA1744;
 }
 
-.status-button-Male {
+.status-button-accepted {
   visibility: hidden;
 }
 
-.status-button-Female {
+.status-button-rejected {
   visibility: hidden;
 }
