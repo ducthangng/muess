@@ -8,6 +8,8 @@ import LoginLogo from '../assets/images/logo.svg';
 import LoginImage from '../assets/images/login.svg';
 import CSS from 'csstype';
 import '../assets/css/Login.css';
+import { toast } from 'react-toastify';
+import { userApi } from '../api/userApi';
 
 const Sign: CSS.Properties = {
   position: 'relative',
@@ -32,35 +34,35 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
+
   let navigate = useNavigate();
 
   useEffect(() => {
     checkLogin();
-  });
-
-  const routeChange = async (path: string) => {
-    navigate(`${path}`);
-  };
+  }, []);
 
   const checkLogin = async () => {
-    let data = await authApi.getId();
-    if (data !== null && data._id.length !== 0) {
-      console.log('changing.... [cookie]');
-      routeChange('/release');
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      navigate('/release');
     }
   };
 
-  const handleLogin = async () => {
-    let data = await authApi.login({ email, password }).then((res) => {
-      console.log('res: ', res);
-      if (res._id.length !== 0) {
-        console.log('changing.... [login]');
-        routeChange('/release');
-      } else {
-        alert('Invalid username or password');
-      }
-      return res;
-    });
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let res = await authApi.login({ email, password });
+    setMessage(res.message);
+    alert(res.message);
+    if (res.status === 201) {
+      setHasError(false);
+      toast('Login successfully. Redirecting...');
+      navigate('/release');
+    } else {
+      setHasError(true);
+      console.log(res);
+    }
   };
 
   const [passwordShown, setPasswordShown] = useState(false);
@@ -82,7 +84,7 @@ const Login = () => {
           backgroundColor: '#FFFFFF'
         }}
       >
-        <div
+        <form
           className="sign-in-container"
           style={{
             display: 'flex',
@@ -96,6 +98,7 @@ const Login = () => {
             borderRadius: '10px',
             boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
           }}
+          onSubmit={handleLogin}
         >
           <div
             className="container-1"
@@ -160,6 +163,7 @@ const Login = () => {
                 top: '5%',
                 right: '5%'
               }}
+              type="button"
               onClick={() => handleClick()}
             >
               X
@@ -203,6 +207,7 @@ const Login = () => {
                   borderWidth: '2px',
                   borderRadius: '5px'
                 }}
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type={'email'}
@@ -243,6 +248,7 @@ const Login = () => {
                     borderWidth: '2px',
                     borderRadius: '5px'
                   }}
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 ></input>
@@ -258,7 +264,16 @@ const Login = () => {
                   onClick={togglePassword}
                 />
               </div>
-              <button
+              {message && (
+                <div
+                  className={`${
+                    hasError ? 'text-red-500' : 'text-green-500'
+                  } pt-5`}
+                >
+                  {message}
+                </div>
+              )}
+              <input
                 className="signin_button"
                 style={{
                   background: '#FB7F4B',
@@ -273,10 +288,10 @@ const Login = () => {
                   position: 'relative',
                   marginTop: '1rem'
                 }}
-                onClick={handleLogin}
-              >
-                Sign in
-              </button>
+                type="submit"
+                value="Sign in"
+              />
+
               <div
                 className="return-signup"
                 style={{
@@ -312,7 +327,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

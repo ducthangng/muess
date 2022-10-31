@@ -2,12 +2,6 @@ import { App, ChaincodeApp } from '@interfaces/apps.interface';
 import { Request, NextFunction, Response } from 'express';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import { User } from '@/interfaces/users.interface';
-import {
-  AcceptProposalDto,
-  CreateAppDto,
-  CreateProposalDto,
-  RejectProposalDto
-} from '@/dtos/hlf.dto';
 import AppService from '../services/app.service';
 import UserService from '../services/users.service';
 

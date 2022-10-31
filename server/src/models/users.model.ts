@@ -20,10 +20,6 @@ const userSchema: Schema = new Schema(
       required: false,
       unique: false
     },
-    username: {
-      type: String,
-      required: false
-    },
     dob: {
       type: String,
       required: false
