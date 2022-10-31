@@ -5,6 +5,7 @@ export class CreateAppDto {
   public appType: string;
   public paymentMethod: string;
   public appTags: string[];
+  public appCategories: string[];
   public appIconURL: string;
 }
 

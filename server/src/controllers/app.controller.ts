@@ -27,7 +27,7 @@ class AppsController {
     try {
       const appData: CreateAppDto = req.body;
       const user: User = req.user;
-      const result: any = await this.appService.createApp(user, appData);
+      const result: string = await this.appService.createApp(user, appData);
 
       res.status(201).json({ data: result, message: 'created' });
     } catch (error) {
@@ -42,12 +42,13 @@ class AppsController {
    * @param next
    */
   public getAllApps = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const findAllAppsData: App[] = await this.appService.getAllApss();
+      const user: User = req.user;
+      const findAllAppsData: App[] = await this.appService.getAllApps(user);
 
       res.status(200).json({ data: findAllAppsData, message: 'findAll' });
     } catch (error) {
@@ -62,23 +63,27 @@ class AppsController {
    * @param next
    */
   public getAppById = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const assetId: string = req.params.assetid;
-      console.log('assetId', assetId);
-      const findOneAppData: App[] = await this.appService.getAppById(assetId);
+      const assetId: string = req.params.assetId;
+      const user: User = req.user;
 
-      res.status(200).json({ data: findOneAppData, message: 'findOne' });
+      const findAllAppsData: App[] = await this.appService.getAllApps(user);
+      const app: App = findAllAppsData.find((app) => {
+        return app.assetId === assetId;
+      });
+
+      res.status(200).json({ data: app, message: 'findOne' });
     } catch (error) {
       next(error);
     }
   };
 
   /**
-   * Contributor: Khang Nguyen
+   * Contributor: Thang Nguyen
    * @param req
    * @param res
    * @param next
@@ -89,11 +94,10 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      // const user: User = req.user;
-      const creatorId: string = req.params.creatorid;
-      console.log('creatorId: ', creatorId);
+      const user: User = req.user;
+      const creatorId: string = req.params.creatorId;
       const findAllAppsData: App[] = await this.appService.getAppsByCreatorId(
-        // user,
+        user,
         creatorId
       );
 
@@ -116,30 +120,9 @@ class AppsController {
   ) => {
     try {
       const appData: App = req.body;
-      const updateAppData: App = await this.appService.updateApp(appData);
+      // const updateAppData: App = await this.appService.updateApp(appData);
 
-      res.status(200).json({ data: updateAppData, message: 'updated' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Deactivate the license generating feature fot this application
-   * @param req
-   * @param res
-   * @param next
-   */
-  public deleteApp = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const appId: string = req.params.id;
-      const deleteAppData: App = await this.appService.deleteApp(appId);
-
-      res.status(200).json({ data: deleteAppData, message: 'deleted' });
+      res.status(200).json({ data: appData, message: 'updated' });
     } catch (error) {
       next(error);
     }

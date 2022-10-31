@@ -146,7 +146,7 @@ class proposalService {
     return JSON.parse(result.toString());
   }
 
-  public async getProposalsBySellerId(user: User, buyerId: string) {
+  public async getProposalsByBuyerId(user: User, buyerId: string) {
     return sampleProposal2;
     const contract = await initContract(JSON.parse(user.x509Identity));
     const result = await contract.evaluateTransaction(
@@ -159,7 +159,7 @@ class proposalService {
     return JSON.parse(result.toString());
   }
 
-  public async getProposalsByBuyerId(user: User, sellerId: string) {
+  public async getProposalsBySellerId(user: User, sellerId: string) {
     return sampleProposal;
   }
 }
