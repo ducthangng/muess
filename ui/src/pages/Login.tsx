@@ -34,6 +34,9 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -50,11 +53,15 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let res = await authApi.login({ email, password });
+    setMessage(res.message);
+    alert(res.message);
     if (res.status === 201) {
+      setHasError(false);
       toast('Login successfully. Redirecting...');
       navigate('/release');
     } else {
-      alert(res.message);
+      setHasError(true);
+      console.log(res);
     }
   };
 
@@ -257,6 +264,15 @@ const Login = () => {
                   onClick={togglePassword}
                 />
               </div>
+              {message && (
+                <div
+                  className={`${
+                    hasError ? 'text-red-500' : 'text-green-500'
+                  } pt-5`}
+                >
+                  {message}
+                </div>
+              )}
               <input
                 className="signin_button"
                 style={{
@@ -275,6 +291,7 @@ const Login = () => {
                 type="submit"
                 value="Sign in"
               />
+
               <div
                 className="return-signup"
                 style={{

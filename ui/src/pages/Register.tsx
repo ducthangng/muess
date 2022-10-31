@@ -451,7 +451,7 @@ const Register = () => {
                 <div
                   style={{ position: 'absolute', bottom: '10%', width: '100%' }}
                 >
-                  {hasError && (
+                  {message && (
                     <div
                       className={`${
                         hasError ? 'text-red-500' : 'text-green-500'
