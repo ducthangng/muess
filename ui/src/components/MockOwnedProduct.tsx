@@ -1,10 +1,10 @@
 import { Card, Form, Tag } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../assets/css/MockTest.css';
 import { App } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const MockProductLicense: React.FC<App> = ({ Key, Record }) => {
+const MockOwnedProduct: React.FC<App> = ({ Key, Record }) => {
   const navigate = useNavigate();
   return (
     <Form>
@@ -32,4 +32,4 @@ const MockProductLicense: React.FC<App> = ({ Key, Record }) => {
   );
 };
 
-export default MockProductLicense;
+export default MockOwnedProduct;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MockProductLicense from '../components/MockProductLicense';
+import MockProductLicense from '../components/MockOwnedProduct';
 import SideMenu from '../components/Header/SideMenu';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
@@ -7,8 +7,8 @@ import { Button } from 'antd';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 
-function ProductLicense() {
-  const { data } = useQuery(['productLicense'], async () => {
+function OwnedProducts() {
+  const { data } = useQuery(['productSelection'], async () => {
     return await appApi.getOwnedApps();
   });
 
@@ -85,4 +85,4 @@ function ProductLicense() {
   );
 }
 
-export default ProductLicense;
+export default OwnedProducts;
