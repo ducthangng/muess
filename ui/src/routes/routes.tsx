@@ -7,7 +7,6 @@ import UserLayout from '../pages/Layout/UserLayout';
 import NotFound404 from '../pages/NotFound404';
 import { AdminEC, StudentEC } from '../models/Guard';
 import Register from '../pages/Register';
-import Register2 from '../pages/Register2';
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
 import ReleaseApp from '../pages/ReleaseApp';
@@ -34,8 +33,7 @@ export default function AppRoute() {
           {/* <Route path="/" element={<Landingpage />} /> */}
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register-general-info" element={<Register />} />
-          <Route path="/register-auth-info" element={<Register2 />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/release" element={<ReleaseApp />} />
           <Route path="/products" element={<ProductSelection />} />
           <Route path="/solds" element={<SoldList />} />

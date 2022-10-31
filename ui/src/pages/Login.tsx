@@ -247,6 +247,13 @@ const Login = () => {
                   value={password}
                 ></input>
                 <EyeInvisibleOutlined
+                  style={{
+                    position: 'absolute',
+                    right: '0',
+                    fontSize: '16px',
+                    marginRight: '4px',
+                    marginTop: '4px'
+                  }}
                   className={passwordShown ? 'shown' : 'not'}
                   onClick={togglePassword}
                 />
