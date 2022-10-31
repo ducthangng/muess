@@ -11,3 +11,8 @@ export interface App {
   appCategories: string[];
   appIconURL: string;
 }
+
+export interface ChaincodeApp {
+  Key: string;
+  Record: App;
+}

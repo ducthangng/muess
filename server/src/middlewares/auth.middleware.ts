@@ -33,7 +33,8 @@ const authMiddleware = async (
         next(new HttpException(401, 'Wrong authentication token'));
       }
     } else {
-      next(new HttpException(404, 'Authentication token missing'));
+      res.clearCookie('muess');
+      next(new HttpException(401, 'Wrong authentication token'));
     }
   } catch (error) {
     console.log(error);

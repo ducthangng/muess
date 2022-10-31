@@ -38,30 +38,10 @@ export default function AppRoute() {
           <Route path="/products" element={<ProductSelection />} />
           <Route path="/offers" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
-          <Route
+          {/* <Route
             path="/products/:id"
-            element={
-              <AppDetail
-                _id={'123456'}
-                creatorId={'789'}
-                creatorName={'HaiKao'}
-                title={'Suck My Balls'}
-                description={'App that suck dick'}
-                rated={'5.1'}
-                appType={'game'}
-                appPaymentMethod={'free'}
-                appCategories={'entertainment'}
-                appTags={['#NSFW']}
-                reviewer={''}
-                downloaded={0}
-                appIcon={''}
-                feedbacks={[{ name: 'bui nhien loc', content: 'dell on' }]}
-                imageSrc={
-                  'https://play-lh.googleusercontent.com/TLUeelx8wcpEzf3hoqeLxPs3ai1tdGtAZTIFkNqy3gbDp1NPpNFTOzSFJDvZ9narFS0'
-                }
-              />
-            }
-          />
+            element={<AppDetail Key="" Record={} />}
+          /> */}
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />

@@ -15,13 +15,23 @@ class AppsRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.post(
+      `${this.path}`,
+      authMiddleware,
+      validationMiddleware(CreateAppDto, 'body', true),
+      this.appsController.createApp
+    );
     this.router.put(
       `${this.path}/:id`,
       authMiddleware,
       validationMiddleware(CreateAppDto, 'body', true),
       this.appsController.updateApp
     );
-    this.router.get(`${this.path}/all`, this.appsController.getAllApps);
+    this.router.get(
+      `${this.path}/all`,
+      authMiddleware,
+      this.appsController.getAllApps
+    );
     this.router.get(
       `${this.path}/:appId`,
       authMiddleware,

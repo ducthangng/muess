@@ -1,4 +1,4 @@
-import { App } from '@interfaces/apps.interface';
+import { App, ChaincodeApp } from '@interfaces/apps.interface';
 import { Request, NextFunction, Response } from 'express';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import { User } from '@/interfaces/users.interface';
@@ -9,9 +9,11 @@ import {
   RejectProposalDto
 } from '@/dtos/hlf.dto';
 import AppService from '../services/app.service';
+import UserService from '../services/users.service';
 
 class AppsController {
   public appService = new AppService();
+  public userService = new UserService();
 
   /**
    * Contributor: Khang Nguyen
@@ -26,9 +28,14 @@ class AppsController {
   ) => {
     try {
       const appData: CreateAppDto = req.body;
-      const user: User = req.user;
-      const result: string = await this.appService.createApp(user, appData);
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
 
+      if (user.x509Identity.length === 0) {
+        throw new Error('User does not have Identity');
+      }
+
+      const result: string = await this.appService.createApp(user, appData);
       res.status(201).json({ data: result, message: 'created' });
     } catch (error) {
       next(error);
@@ -47,10 +54,17 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const user: User = req.user;
-      const findAllAppsData: App[] = await this.appService.getAllApps(user);
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
 
-      res.status(200).json({ data: findAllAppsData, message: 'findAll' });
+      if (user.x509Identity.length === 0) {
+        throw new Error('User does not have Identity');
+      }
+
+      const result: string = await this.appService.getAllApps(user);
+      const apps: ChaincodeApp[] = JSON.parse(result);
+
+      res.status(200).json({ data: apps, message: 'findAll' });
     } catch (error) {
       next(error);
     }
@@ -68,15 +82,21 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const assetId: string = req.params.assetId;
-      const user: User = req.user;
+      const appId: string = req.params.appId;
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
 
-      const findAllAppsData: App[] = await this.appService.getAllApps(user);
-      const app: App = findAllAppsData.find((app) => {
-        return app.assetId === assetId;
+      if (user.x509Identity.length === 0) {
+        throw new Error('User does not have Identity');
+      }
+
+      const result: string = await this.appService.getAllApps(user);
+      const apps: ChaincodeApp[] = JSON.parse(result);
+      const asset: ChaincodeApp = apps.find((app) => {
+        return app.Record.assetId === appId;
       });
 
-      res.status(200).json({ data: app, message: 'findOne' });
+      res.status(200).json({ data: asset, message: 'findOne' });
     } catch (error) {
       next(error);
     }
@@ -94,14 +114,22 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const user: User = req.user;
       const creatorId: string = req.params.creatorId;
-      const findAllAppsData: App[] = await this.appService.getAppsByCreatorId(
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
+
+      if (user.x509Identity.length === 0) {
+        throw new Error('User does not have Identity');
+      }
+
+      console.log('creatorId: ', creatorId);
+      const result: string = await this.appService.getAppsByCreatorId(
         user,
         creatorId
       );
+      const asset: ChaincodeApp[] = JSON.parse(result);
 
-      res.status(200).json({ data: findAllAppsData, message: 'findOne' });
+      res.status(200).json({ data: asset, message: 'findOne' });
     } catch (error) {
       next(error);
     }

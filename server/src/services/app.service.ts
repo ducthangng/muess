@@ -37,6 +37,7 @@ const samples: App[] = [
 
 class AppService {
   public async createApp(user: User, appData: CreateAppDto) {
+    console.log('user: ', user);
     const contract = await initContract(JSON.parse(user.x509Identity));
     const {
       title,
@@ -61,20 +62,16 @@ class AppService {
       appCategories.toString(),
       appIconURL
     );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
-    return JSON.parse(result.toString());
+    console.log(`Transaction has successfully created`);
+    return result.toString();
   }
 
   public async getAllApps(user: User) {
     const contract = await initContract(JSON.parse(user.x509Identity));
     const assetId = uuidv4();
     const result = await contract.submitTransaction('GetAllApps');
-    console.log(
-      `Transaction GetAllApps has successfully created, result is: ${result.toString()}`
-    );
-    return JSON.parse(result.toString());
+    console.log(`Transaction GetAllApps has successfully created`);
+    return result.toString();
   }
 
   public async getAppsByCreatorId(user: User, creatorId: string) {
@@ -83,11 +80,9 @@ class AppService {
       'QueryAppsByCreatorId',
       creatorId
     );
-    console.log(
-      `Transaction getAppsByCreatorId has successfully created, result is: ${result.toString()}`
-    );
+    console.log(`Transaction getAppsByCreatorId has successfully created`);
 
-    return JSON.parse(result.toString());
+    return result.toString();
   }
 }
 

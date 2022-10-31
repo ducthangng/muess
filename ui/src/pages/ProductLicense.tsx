@@ -60,24 +60,12 @@ function ProductLicense() {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto">
               {data &&
-                data.map((item) => {
+                data.map((item, index) => {
                   return (
                     <MockProductLicense
-                      _id={item._id}
-                      title={item.title}
-                      description={item.description}
-                      creatorId={item.creatorId}
-                      creatorName={item.creatorName}
-                      rated={item.rated}
-                      appType={item.appType}
-                      appPaymentMethod={item.appPaymentMethod}
-                      appCategories={item.appCategories}
-                      reviewer={item.reviewer}
-                      downloaded={item.downloaded}
-                      appIcon={item.appIcon} // link to database.
-                      feedbacks={item.feedbacks}
-                      appTags={item.appTags}
-                      imageSrc={item.imageSrc}
+                      key={index}
+                      Key={item.Key}
+                      Record={item.Record}
                     />
                   );
                 })}

@@ -8,7 +8,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import DragAndDropMulti from '../components/DragDropMulti';
 import SideMenu from '../components/Header/SideMenu';
 import { appApi } from '../api/appApi';
-import { AppDetailData, CreateAppData } from '../models/AppDetailData';
+import { App, CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
 const options = [
@@ -38,21 +38,13 @@ const ReleaseApp = () => {
       description,
       appType,
       appTags,
-      appPaymentMethod,
-      appCategories,
+      paymentMethod: appPaymentMethod,
+      appCategories: [''],
       creatorId: '',
-      creatorName: '',
-      rated: '',
-      reviewer: '',
-      downloaded: 0,
-      appIcon: '',
-      feedbacks: [
-        {
-          name: '',
-          content: ''
-        }
-      ],
-      imageSrc: appImage
+      rating: '',
+      appIconURL: '',
+      assetType: '',
+      assetId: ''
     };
 
     appApi.releaseApp({ app: req }).then((status) => {

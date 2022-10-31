@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
-import { AppDetailData } from '../models/AppDetailData';
+import { App } from '../models/AppDetailData';
 import { Divider } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
 import AppIcon from '../assets/images/MOCK-TEST-2022-Apr_1.png';
 
-const AppDetail: React.FC<AppDetailData> = () => {
+const AppDetail: React.FC<App> = () => {
   const navigate = useNavigate();
 
   const [buttonPopup, setButtonPopup] = useState(false);

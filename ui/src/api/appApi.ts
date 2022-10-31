@@ -1,5 +1,5 @@
 import { AppError } from '../models/Error';
-import { AppDetailData, CreateAppData } from '../models/AppDetailData';
+import { App, CreateAppData } from '../models/AppDetailData';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8000';
 const apiUrl = `${BASE_API}/apps`;
@@ -68,7 +68,7 @@ export const appApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const x: AppDetailData[] = data.data;
+        const x: App[] = data.data;
 
         return x;
       })
@@ -87,7 +87,10 @@ export const appApi = {
   getAllApps: async () => {
     const response = await fetch(`${apiUrl}/all`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then((res) => {
         if (res.ok) {
@@ -97,7 +100,7 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: AppDetailData[] = data.data;
+        const apps: App[] = data.data;
         console.log('app: ', data.data);
         return apps;
       });
@@ -118,7 +121,7 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: AppDetailData[] = data.data;
+        const apps: App[] = data.data;
         console.log('owneddd: ', data.data);
         return apps;
       });
@@ -150,7 +153,7 @@ export const appApi = {
           throw new Error(err.errorMsg + ' ++ ' + err.errorField);
         }
 
-        const apps: AppDetailData = data.data;
+        const apps: App = data.data;
         return apps;
       })
       .catch((err) => {
@@ -166,7 +169,7 @@ export const appApi = {
    * @param app app detail of the updated app. Note: all fields are required.
    * @returns status: true if success, false if not.
    */
-  updateApp: async (app: AppDetailData): Promise<Boolean> => {
+  updateApp: async (app: App): Promise<Boolean> => {
     const payload = app;
 
     const response = await fetch(`${apiUrl}`, {
