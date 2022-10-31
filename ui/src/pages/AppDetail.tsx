@@ -1,17 +1,43 @@
-import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import { App } from '../models/AppDetailData';
 import { Divider } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
-import AppIcon from '../assets/images/MOCK-TEST-2022-Apr_1.png';
+import { appApi } from '../api/appApi';
 
-const AppDetail: React.FC<App> = () => {
+const defaultApp: App = {
+  Key: '',
+  Record: {
+    assetType: '',
+    assetId: '',
+    creatorId: '',
+    title: '',
+    description: '',
+    rating: '',
+    appType: '',
+    paymentMethod: '',
+    appTags: [],
+    appCategories: [],
+    appIconURL: ''
+  }
+};
+
+const AppDetail = () => {
   const navigate = useNavigate();
-
+  const [app, SetApp] = useState<App>();
+  const { appId } = useParams();
   const [buttonPopup, setButtonPopup] = useState(false);
+
+  useEffect(() => {
+    if (appId?.length !== 0) {
+      appApi.getAppById(appId as string).then((result) => {
+        SetApp(result);
+      });
+    }
+  }, [appId]);
 
   return (
     <body className="app-detail-body">
@@ -82,7 +108,9 @@ const AppDetail: React.FC<App> = () => {
                 fontSize: '3rem'
               }}
             >
-              App 1
+              {app?.Record?.title.length === 0
+                ? defaultApp.Record.title
+                : app?.Record.title}
             </div>
             <div
               className="app-detail-author"
@@ -96,7 +124,7 @@ const AppDetail: React.FC<App> = () => {
                 color: '#FB7F4B'
               }}
             >
-              Nha cai uy tin so 1 vietnam
+              Do not have this
             </div>
             <div
               className="app-detail-types"
@@ -119,7 +147,9 @@ const AppDetail: React.FC<App> = () => {
                   fontSize: '1rem'
                 }}
               >
-                5.1*
+                {app?.Record.rating.length === 0
+                  ? defaultApp.Record.rating
+                  : app?.Record.rating}
               </div>
               <div
                 className="line"
@@ -138,7 +168,7 @@ const AppDetail: React.FC<App> = () => {
                   fontSize: '1rem'
                 }}
               >
-                420K
+                Do not have this (download)
               </div>
               <div
                 className="line"
@@ -157,7 +187,7 @@ const AppDetail: React.FC<App> = () => {
                   fontSize: '1rem'
                 }}
               >
-                18+
+                Display This (categories)
               </div>
             </div>
             <div
@@ -173,7 +203,7 @@ const AppDetail: React.FC<App> = () => {
                 marginBottom: '1rem'
               }}
             >
-              Price: 9.99$
+              Do not have this (Prices)
             </div>
             <button
               className="purchase_button"
@@ -193,7 +223,12 @@ const AppDetail: React.FC<App> = () => {
               Purchase
             </button>
             <img
-              src={AppIcon}
+              alt="AppImage"
+              src={
+                app?.Record.appIconURL.length === 0
+                  ? defaultApp.Record.appIconURL
+                  : app?.Record.appIconURL
+              }
               style={{
                 marginLeft: 'auto',
                 marginRight: '5%',
@@ -244,13 +279,9 @@ const AppDetail: React.FC<App> = () => {
                 fontWeight: '400'
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {app?.Record.description.length === 0
+                ? defaultApp.Record.description
+                : app?.Record.description}
             </div>
             <div
               className="app-feedback-title"
@@ -281,7 +312,7 @@ const AppDetail: React.FC<App> = () => {
                 color: '#FB7F4B'
               }}
             >
-              User1234
+              Do not have this (Username)
             </div>
             <div
               className="app-feedback-content"
@@ -296,13 +327,7 @@ const AppDetail: React.FC<App> = () => {
                 fontWeight: '400'
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Do not have this (feedback content)
             </div>
           </div>
         </div>
