@@ -20,7 +20,7 @@ const options = [
   { value: 'Game', label: 'Game' }
 ];
 
-const ReleaseApp = () => {
+const EditApp = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [appType, setAppType] = useState('');
@@ -71,7 +71,7 @@ const ReleaseApp = () => {
         }}
       >
         <div className="ReleaseTitle" style={{ fontWeight: '700' }}>
-          Upload an App
+          Edit App Detail
         </div>
         <div
           style={{
@@ -81,19 +81,6 @@ const ReleaseApp = () => {
           }}
         ></div>
         <div className="release-form-1">
-          <div
-            style={{
-              position: 'relative',
-              top: '45px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '16px',
-              lineHeight: '19px',
-              color: '#3A001E'
-            }}
-          >
-            App Details
-          </div>
           <div
             style={{
               position: 'relative',
@@ -113,20 +100,6 @@ const ReleaseApp = () => {
               onChange={(e) => setTitle(e.target.value)}
               value={title}
             ></input>
-            <div
-              style={{
-                position: 'relative',
-                top: '55px',
-                left: '150px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3',
-                width: 'fit-content'
-              }}
-            >
-              This is how your app will appear on Müss
-            </div>
             <div className="count1">{count}/50</div>
           </div>
           <div className="AppOrGame">
@@ -142,20 +115,6 @@ const ReleaseApp = () => {
               }}
             >
               App or game
-            </div>
-            <div
-              style={{
-                position: 'relative',
-                top: '38px',
-                left: '150px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3',
-                width: 'fit-content'
-              }}
-            >
-              You can change this later
             </div>
             <label
               style={{
@@ -200,20 +159,6 @@ const ReleaseApp = () => {
               }}
             >
               Free, paid or rent
-            </div>
-            <div
-              style={{
-                position: 'relative',
-                top: '23px',
-                left: '150px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3',
-                width: 'fit-content'
-              }}
-            >
-              You can change this later
             </div>
             <label
               style={{
@@ -269,43 +214,6 @@ const ReleaseApp = () => {
             >
               App categories
             </div>
-            <div
-              style={{
-                position: 'relative',
-                top: '5px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3'
-              }}
-            >
-              Choose categories and tags that best describe the content or main
-              functions of your app.These help{' '}
-            </div>
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              transform: 'rotate(90deg)',
-              left: '375px',
-              width: '300px',
-              top: '-100px',
-              borderTop: '2px solid #E3E3E3'
-            }}
-          />
-          <div
-            style={{
-              position: 'relative',
-              top: '5px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '9px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            customers discover apps{' '}
           </div>
           <div
             style={{
@@ -359,7 +267,16 @@ const ReleaseApp = () => {
             </select>
           </div>
           <MultiSelect />
-
+          <div
+            style={{
+              position: 'relative',
+              transform: 'rotate(90deg)',
+              left: '375px',
+              width: '300px',
+              top: '-100px',
+              borderTop: '2px solid #E3E3E3'
+            }}
+          />
           <div className="DescBox">
             <div
               style={{
@@ -387,22 +304,7 @@ const ReleaseApp = () => {
               left: '670px',
               top: '310px'
             }}
-          >
-            {/* <div
-              style={{
-                position: 'relative',
-                top: '28px',
-                left: '-100px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              App icon
-            </div> */}
-            {/* <DragAndDrop /> */}
-          </div>
+          ></div>
           <div
             style={{
               width: '310px',
@@ -458,4 +360,4 @@ const ReleaseApp = () => {
     </>
   );
 };
-export default ReleaseApp;
+export default EditApp;

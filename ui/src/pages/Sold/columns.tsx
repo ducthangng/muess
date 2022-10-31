@@ -8,16 +8,12 @@ export const COLUMNS = [
     accessor: 'product_name'
   },
   {
-    Header: 'Consumer',
+    Header: 'Creator',
     accessor: 'consumer'
   },
   {
     Header: 'Price',
     accessor: 'price'
-  },
-  {
-    Header: 'Purchased Date',
-    accessor: 'purchased_date'
   },
   {
     Header: 'License ID',
