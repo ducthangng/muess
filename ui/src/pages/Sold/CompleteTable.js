@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from 'react';
+import { useQuery } from 'react-query';
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination
 } from 'react-table';
-import MOCK_DATA from './MOCK_DATA.json';
+import { proposalApi } from '../../api/proposalApi';
 import { COLUMNS } from './columns.tsx';
+import {MOCK_DATA} from './MOCK_DATA.json';
 import { smartContractAPI } from '../../api/smartContract';
 import { SmartContract } from '../../models/hyperledger/smartContract';
 
@@ -17,7 +19,9 @@ import { GlobalFilter } from './GlobalFilter.tsx';
 export const CompleteTable = () => {
   const [visibility, setVisibility] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+  const { data } = useQuery(['proposalSelection'], async () => {
+    return await proposalApi.getProposalByBuyerId();
+  });
 
   // API:
   // const displayData: SmartContract[] = smartContractAPI.getAllContracts();
