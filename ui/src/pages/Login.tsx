@@ -47,7 +47,8 @@ const Login = () => {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     let res = await authApi.login({ email, password });
     if (res.status === 201) {
       toast('Login successfully. Redirecting...');
@@ -76,7 +77,7 @@ const Login = () => {
           backgroundColor: '#FFFFFF'
         }}
       >
-        <div
+        <form
           className="sign-in-container"
           style={{
             display: 'flex',
@@ -90,6 +91,7 @@ const Login = () => {
             borderRadius: '10px',
             boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
           }}
+          onSubmit={handleLogin}
         >
           <div
             className="container-1"
@@ -154,6 +156,7 @@ const Login = () => {
                 top: '5%',
                 right: '5%'
               }}
+              type="button"
               onClick={() => handleClick()}
             >
               X
@@ -197,6 +200,7 @@ const Login = () => {
                   borderWidth: '2px',
                   borderRadius: '5px'
                 }}
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type={'email'}
@@ -237,6 +241,7 @@ const Login = () => {
                     borderWidth: '2px',
                     borderRadius: '5px'
                   }}
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 ></input>
@@ -252,7 +257,7 @@ const Login = () => {
                   onClick={togglePassword}
                 />
               </div>
-              <button
+              <input
                 className="signin_button"
                 style={{
                   background: '#FB7F4B',
@@ -267,10 +272,9 @@ const Login = () => {
                   position: 'relative',
                   marginTop: '1rem'
                 }}
-                onClick={handleLogin}
-              >
-                Sign in
-              </button>
+                type="submit"
+                value="Sign in"
+              />
               <div
                 className="return-signup"
                 style={{
@@ -306,7 +310,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

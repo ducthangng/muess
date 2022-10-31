@@ -60,12 +60,6 @@ const Register = () => {
       return;
     }
 
-    // console.log({
-    //   fullname: fullname,
-    //   dob: dob,
-    //   password: password,
-    //   email: email
-    // });
     const res = await authApi.register({
       fullname: fullname,
       dob: dob,

@@ -4,23 +4,25 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { GuardEC } from '../models/Guard';
 import { userApi } from '../api/userApi';
 
-const Guard = ({ guardEntity }: GuardEC) => {
+const Guard = ({ children }) => {
   const [isAuth, setIsAuth] = useState<null | boolean>(null);
 
   const handleGuard = async () => {
-    let data = await userApi.getCurrentUser();
-    // if (data._id.length !== 0) setIsAuth(true);
-    // if (data._id.length === 0) setIsAuth(false);
-    setIsAuth(data as boolean);
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
   };
 
   useEffect(() => {
     handleGuard();
   }, []);
 
-  if (isAuth === true) return <Outlet />;
+  if (isAuth === true) return children;
 
-  if (isAuth === false) return <Navigate to={'/'} />;
+  if (isAuth === false) return <Navigate to={'/'} replace />;
 
   return null;
 };

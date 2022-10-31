@@ -72,34 +72,21 @@ export const authApi = {
    * @returns null when success & Error otherwise.
    */
   logout: async () => {
-    const response = await fetch(`${apiUrl}/logout`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) => {
-        if (res.ok) {
-          console.log(res);
-          return res.json();
+    try {
+      const response = await fetch(`${apiUrl}/logout`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
         }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        // const err: AppError = data.error;
-        // if (err.errorCode) {
-        //   return null;
-        // }
-
-        const response: number = data.data;
-        return response;
       });
-    // .catch((err) => {
-    //   return err;
-    // });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
