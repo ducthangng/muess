@@ -8,9 +8,11 @@ import {
   CreateProposalDto,
   RejectProposalDto
 } from '@/dtos/proposal.dto';
+import UserService from '@/services/users.service';
 
 class ProposalController {
   public proposalService = new ProposalService();
+  public userService = new UserService();
 
   /**
    * Contributed: Loc Bui
@@ -24,17 +26,81 @@ class ProposalController {
     next: NextFunction
   ) => {
     try {
-      console.log('inside createProposal controller');
       const proposalData: CreateProposalDto = req.body;
-      const user: User = req.user;
-      const result: any = await this.proposalService.createProposal(
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
+      if (user._id.length === 0) {
+        throw new Error('User not found');
+      }
+
+      const result: string = await this.proposalService.createProposal(
         user,
         proposalData
       );
 
-      res
-        .status(201)
-        .json({ data: result, message: 'Successfully created new proposal' });
+      res.status(201).json({ data: result, message: 'created' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Contributor: Loc Bui
+   * @param req
+   * @param res
+   * @param next
+   */
+  public getProposalsBySellerId = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const reqUser: User = req.user;
+      const sellerId: string = req.params.sellerId;
+      const user: User = await this.userService.findUserById(reqUser._id);
+      if (user._id.length === 0) {
+        throw new Error('User not found');
+      }
+
+      const proposalsData: any =
+        await this.proposalService.getProposalsBySellerId(user, sellerId);
+
+      res.status(200).json({
+        data: proposalsData,
+        message: 'Successfully retrieved list of proposals'
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Contributor: Loc Bui
+   * @param req
+   * @param res
+   * @param next
+   */
+  public getProposalsByBuyerId = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const reqUser: User = req.user;
+      const buyerId: string = req.params.buyerId;
+      const user: User = await this.userService.findUserById(reqUser._id);
+      if (user._id.length === 0) {
+        throw new Error('User not found');
+      }
+
+      const proposalsData: any =
+        await this.proposalService.getProposalsByBuyerId(user, buyerId);
+
+      res.status(200).json({
+        data: proposalsData,
+        message: 'Successfully retrieved list of proposals'
+      });
     } catch (error) {
       next(error);
     }
@@ -112,58 +178,6 @@ class ProposalController {
         user,
         appId
       );
-
-      res.status(200).json({
-        data: proposalsData,
-        message: 'Successfully retrieved list of proposals'
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Contributor: Loc Bui
-   * @param req
-   * @param res
-   * @param next
-   */
-  public getProposalsByBuyerId = async (
-    req: RequestWithUser,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const user: User = req.user;
-      const buyerId: string = req.params.buyerId;
-      const proposalsData: any =
-        await this.proposalService.getProposalsByBuyerId(user, buyerId);
-
-      res.status(200).json({
-        data: proposalsData,
-        message: 'Successfully retrieved list of proposals'
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  /**
-   * Contributor: Loc Bui
-   * @param req
-   * @param res
-   * @param next
-   */
-  public getProposalsBySellerId = async (
-    req: RequestWithUser,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const user: User = req.user;
-      const sellerId: string = req.params.sellerId;
-      const proposalsData: any =
-        await this.proposalService.getProposalsBySellerId(user, sellerId);
 
       res.status(200).json({
         data: proposalsData,

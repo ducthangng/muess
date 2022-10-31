@@ -95,5 +95,96 @@ export const userApi = {
       });
 
     return response;
+  },
+
+  getInfoByFullname: async (fullname: string) => {
+    const response = await fetch(
+      `${apiUrl}?` + new URLSearchParams({ fullname }),
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const users: User[] = data.data;
+        return users;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  updateInfo: async (parameter: User) => {
+    const payload = parameter;
+
+    const response = await fetch(`${apiUrl}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log(data);
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const response: number = data.data;
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  /**
+   * Get the info of the current user.
+   *
+   * @returns user data.
+   */
+  getCurrentUser: async () => {
+    try {
+      const response = await fetch(`${apiUrl}/current`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

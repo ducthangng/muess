@@ -4,10 +4,19 @@ import Logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import * as BIIcons from 'react-icons/bi';
+import { authApi } from '../../api/authApi';
 
 const SideMenu = (props) => {
   const [open, setOpen] = useState(false);
   let navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const res = await authApi.logout();
+    console.log(res);
+    if (res.status === 200) {
+      navigate('/');
+    }
+  };
 
   return (
     <div className="side-menu">
@@ -166,7 +175,7 @@ const SideMenu = (props) => {
                 </div>
               </a>
             </li>
-            <li>
+            <li onClick={handleLogout}>
               <a className="logout">
                 <div className="icon">
                   <BIIcons.BiLogOut></BIIcons.BiLogOut>

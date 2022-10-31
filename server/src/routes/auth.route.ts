@@ -30,6 +30,11 @@ class AuthRoute implements Routes {
       authMiddleware,
       this.authController.returnOK
     );
+    this.router.get(
+      `${this.path}/logout`,
+      authMiddleware,
+      this.authController.logOut
+    );
     // this.router.post(
     //   `${this.path}getRegisteredClient`,
     //   validationMiddleware(CreateUserDto, 'body'),
@@ -49,11 +54,6 @@ class AuthRoute implements Routes {
     //   `${this.path}login`,
     //   validationMiddleware(CreateUserDto, 'body'),
     //   this.authController.logIn
-    // );
-    // this.router.post(
-    //   `${this.path}logout`,
-    //   authMiddleware,
-    //   this.authController.logOut
     // );
   }
 }

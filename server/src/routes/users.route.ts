@@ -23,19 +23,14 @@ class UsersRoute implements Routes {
       this.usersController.getUsers
     );
     this.router.get(
-      `${this.path}`,
+      `${this.path}/current`,
+      authMiddleware,
+      this.usersController.getCurrentUser
+    );
+    this.router.get(
+      `${this.path}/:userId`,
       authMiddleware,
       this.usersController.getUserById
-    );
-    this.router.get(
-      `${this.path}/roposedLicense`,
-      authMiddleware,
-      this.licenseController.getProposalsByAppId
-    );
-    this.router.get(
-      `${this.path}/soldLicense`,
-      authMiddleware,
-      this.licenseController.getProposalsBySellerId
     );
     this.router.get(
       `${this.path}/app`,
