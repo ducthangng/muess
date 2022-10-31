@@ -61,6 +61,54 @@ class Chaincode extends Contract {
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
   }
 
+  async UpdateApp(
+    ctx,
+    assetId,
+    title,
+    description,
+    rating,
+    appType,
+    paymentMethod,
+    appTags,
+    appCategories,
+    appIconURL
+  ) {
+
+    const appBytes = await ctx.stub.getState(assetId);
+    if (!appBytes) {
+      throw new Error(`There is no app with assetId ${assetId} exists`);
+    }
+
+    const app = JSON.parse(appBytes.toString());
+    if (!app) {
+      throw new Error("Can't JSON parse appBytes");
+    }
+
+    const clientId = ctx.clientIdentity.getID();
+
+    if (clientId != app.creatorId) {
+      throw new Error("You must be the creator to update this app.");
+    }
+
+    // ==== Create asset object and marshal to JSON ====
+    let asset = {
+      assetType: app.assetType, // isn't allowed to change
+      assetId: app.assetId, // isn't allowed to change
+      title: title,
+      creatorId: app.creatorId, // isn't allowed to change
+      description: description,
+      rating: rating,
+      appType: appType,
+      paymentMethod: paymentMethod,
+      appTags: appTags.split(','),
+      appCategories: appCategories.split(','),
+      appIconURL: appIconURL
+    };
+
+    // === Save asset to state ===
+    await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+  }
+
   // CreateProposal - create a new proposal, store into chaincode state
   async CreateProposal(ctx, assetId, appId, proposedPrice, licenseDetails) {
     const assetIdExists = await this.AssetExists(ctx, assetId);
