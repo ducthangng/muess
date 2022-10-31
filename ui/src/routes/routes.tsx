@@ -18,6 +18,7 @@ import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
 import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
+import Guard from '../guards/AuthGuard';
 
 export default function AppRoute() {
   const AdminGuard: GuardEC = {
@@ -32,7 +33,15 @@ export default function AppRoute() {
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/release" element={<ReleaseApp />} />
+
+          <Route
+            path="/release"
+            element={
+              <Guard>
+                <ReleaseApp />
+              </Guard>
+            }
+          />
           <Route path="/products" element={<ProductSelection />} />
           <Route path="/offers" element={<SoldList />} />
           <Route path="/test" element={<Test />} />

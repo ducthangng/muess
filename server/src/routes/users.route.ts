@@ -23,7 +23,12 @@ class UsersRoute implements Routes {
       this.usersController.getUsers
     );
     this.router.get(
-      `${this.path}`,
+      `${this.path}/current`,
+      authMiddleware,
+      this.usersController.getCurrentUser
+    );
+    this.router.get(
+      `${this.path}/:userId`,
       authMiddleware,
       this.usersController.getUserById
     );
