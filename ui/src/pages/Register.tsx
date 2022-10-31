@@ -269,32 +269,6 @@ const Register = () => {
                       name="dateofbirth"
                       id="dateofbirth"
                     ></input>
-                    <div
-                      className="email"
-                      style={{
-                        position: 'relative',
-                        fontWeight: '400',
-                        fontSize: '12px',
-                        lineHeight: '28px',
-                        color: '#8C98A9',
-                        marginTop: '2%'
-                      }}
-                    >
-                      Email Address
-                    </div>
-                    <input
-                      style={{
-                        fontWeight: 400,
-                        fontSize: '12px',
-                        width: '100%',
-                        position: 'relative',
-                        borderColor: '#FFE7D4',
-                        backgroundColor: '#FFFFFF',
-                        color: '#3A001E',
-                        borderWidth: '2px',
-                        borderRadius: '5px'
-                      }}
-                    ></input>
                   </div>
 
                   <div
@@ -383,6 +357,13 @@ const Register = () => {
                         onChange={(e) => setPassword(e.target.value)}
                       ></input>
                       <EyeInvisibleOutlined
+                        style={{
+                          position: 'absolute',
+                          right: '0',
+                          fontSize: '16px',
+                          marginRight: '4px',
+                          marginTop: '4px'
+                        }}
                         className={passwordShown ? 'shown' : 'not'}
                         onClick={togglePassword}
                       />
@@ -422,12 +403,20 @@ const Register = () => {
                           color: '#3A001E',
                           borderWidth: '2px',
                           borderRadius: '5px'
+
                           // border: warningBorder
                         }}
                         value={repeatPassword}
                         onChange={(e) => checkOnRepeat(e.target.value)}
                       ></input>
                       <EyeInvisibleOutlined
+                        style={{
+                          position: 'absolute',
+                          right: '0',
+                          fontSize: '16px',
+                          marginRight: '4px',
+                          marginTop: '4px'
+                        }}
                         className={passwordShown ? 'shown' : 'not'}
                         onClick={togglePassword}
                       />
@@ -435,57 +424,61 @@ const Register = () => {
                   </div>
                 </div>
 
-                <button
-                  className="continue_button"
-                  style={{
-                    background: '#FB7F4B',
-                    color: '#FFFFFF',
-                    fontWeight: 700,
-                    fontSize: '16px',
-                    lineHeight: '15px',
-                    height: 'fit-content',
-                    padding: '4%',
-                    width: '100%',
-                    borderRadius: '5px',
-                    position: 'relative',
-                    marginTop: '1rem'
-                  }}
-                  onClick={() => navigate('/register-auth-info')}
-                >
-                  Register
-                </button>
                 <div
-                  className="return-signin"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '0.5erm'
-                  }}
+                  style={{ position: 'absolute', bottom: '10%', width: '100%' }}
                 >
-                  <div
-                    className="ahaa"
-                    style={{
-                      fontSize: '12px',
-                      color: '#8C98A9'
-                    }}
-                  >
-                    Already Have An Account?
-                  </div>
                   <button
-                    className="signin_button"
+                    className="continue_button"
                     style={{
-                      background: 'transparent',
-                      fontWeight: 400,
-                      fontSize: '12px',
-                      border: 'none',
+                      background: '#FB7F4B',
+                      color: '#FFFFFF',
+                      fontWeight: 700,
+                      fontSize: '16px',
+                      lineHeight: '15px',
+                      height: 'fit-content',
+                      padding: '4%',
+                      width: '100%',
+                      borderRadius: '5px',
                       position: 'relative',
-                      color: '#FB7F4B',
-                      marginLeft: '0.2rem'
+                      marginTop: '1rem'
                     }}
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/register-auth-info')}
                   >
-                    Sign in
+                    Register
                   </button>
+                  <div
+                    className="return-signin"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginTop: '1erm'
+                    }}
+                  >
+                    <div
+                      className="ahaa"
+                      style={{
+                        fontSize: '12px',
+                        color: '#8C98A9'
+                      }}
+                    >
+                      Already Have An Account?
+                    </div>
+                    <button
+                      className="signin_button"
+                      style={{
+                        background: 'transparent',
+                        fontWeight: 400,
+                        fontSize: '12px',
+                        border: 'none',
+                        position: 'relative',
+                        color: '#FB7F4B',
+                        marginLeft: '0.2rem'
+                      }}
+                      onClick={() => navigate('/login')}
+                    >
+                      Sign in
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
