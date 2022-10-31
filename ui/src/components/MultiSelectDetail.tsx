@@ -25,7 +25,7 @@ const App: React.FC = () => (
       mode="multiple"
       allowClear
       style={{
-        width: '50%',
+        width: '100%',
         overflow: 'auto',
         position: 'relative',
         marginTop: '1rem'

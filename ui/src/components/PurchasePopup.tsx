@@ -6,6 +6,7 @@ import MultiSelectDetails from '../components/MultiSelectDetail';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginLogo from '../assets/images/logo.svg';
 
 function PurchasePopup(props) {
   const notify = () =>
@@ -50,350 +51,455 @@ function PurchasePopup(props) {
         alignItems: 'center'
       }}
     >
+      <button
+        className="close-button"
+        onClick={() => props.setTrigger(false)}
+        style={{
+          background: '#DCE1EE',
+          color: '#2E384D',
+          fontWeight: 400,
+          fontSize: '12px',
+          height: '20px',
+          width: '20px',
+          borderRadius: '50%',
+          position: 'absolute',
+          float: 'right',
+          top: '10%',
+          right: '10%'
+        }}
+      >
+        X
+      </button>
+      {props.children}
       <div
         className="purchase-popup-inner"
         style={{
           position: 'relative',
-          padding: '20px',
-          width: '50%',
+          // padding: '20px',
+          width: '80%',
           height: '80%',
           marginTop: '3rem',
           backgroundColor: '#fff',
-          borderRadius: '10px',
+          borderRadius: '5px',
           boxShadow: '0 0 10px 0 rgba(0,0,0,0.2)',
           overflowY: 'auto'
         }}
       >
-        <button
-          className="close-button"
-          onClick={() => props.setTrigger(false)}
+        <div
+          className="header-section"
           style={{
-            background: '#DCE1EE',
-            color: '#2E384D',
-            fontWeight: 400,
-            fontSize: '12px',
-            height: '20px',
-            width: '20px',
-            borderRadius: '50%',
+            display: 'flex',
             position: 'relative',
-            float: 'right',
-            top: '5%',
-            right: '5%'
+            width: '100%',
+            height: '15%',
+            backgroundColor: 'white',
+            borderBottom: '1px solid #E3E3E3'
           }}
         >
-          X
-        </button>
-        {props.children}
+          <img
+            src={LoginLogo}
+            alt="logo"
+            style={{
+              width: '10%',
+              height: '50%',
+              display: 'flex',
+              position: 'absolute',
+              top: '25%',
+              left: '3%'
+              // margin: '0 auto',
+            }}
+          />
+          <div
+            style={{
+              borderLeft: '1px solid #E3E3E3',
+              height: '30%',
+              position: 'absolute',
+              left: '13%',
+              top: '35%'
+            }}
+          ></div>
+          <div
+            className="purchase-popup-container-header"
+            style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              color: '#3A001E',
+              position: 'absolute',
+              height: '60%',
+              left: '15%',
+              top: '30%'
+            }}
+          >
+            Order Summary
+          </div>
+        </div>
 
-        <form>
-          <div className="purchase-popup-container">
+        <div className="detail-section" style={{ display: 'flex' }}>
+          <div style={{ width: '50%' }}>
             <div
-              className="purchase-popup-container-header"
-              style={{
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                color: '#3A001E'
-              }}
-            >
-              Order Summary
-            </div>
-            <div
-              className="purchase-popup-container-subheader"
+              className="purchase-popup-container-body-app-desired-price-header"
               style={{
                 fontSize: '1rem',
-                fontWeight: '500',
-                color: '#A3A3A3'
+                fontWeight: 'bold',
+                color: '#3A001E',
+                margin: '1rem 1.5rem'
               }}
             >
-              Please confirm your order before placing.
+              1. Order Options:
             </div>
             <div
+              className="section order-section"
               style={{
-                borderTop: '1px solid #E3E3E3',
-                position: 'relative',
-                marginTop: '1rem'
-              }}
-            ></div>
-            <div
-              className="purchase-popup-container-body"
-              style={{
-                marginTop: '1rem'
+                width: '92.5%',
+                height: 'fit-content',
+                margin: '3% 2.5% 3% 5%',
+                border: '1px solid #E3E3E3',
+                padding: '1%',
+                borderRadius: '5px'
               }}
             >
-              <div
-                className="purchase-popup-container-body-app-name"
-                style={{
-                  display: 'flex',
-                  marginTop: '1rem'
-                }}
-              >
+              <div style={{ padding: '1rem' }}>
                 <div
-                  className="purchase-popup-container-body-app-name-label"
+                  className="purchase-popup-container-body-app-desired-price"
                   style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    color: '#3A001E'
+                    display: 'flex'
                   }}
                 >
-                  App Name:
-                </div>
-                <div
-                  className="purchase-popup-container-body-app-name-value"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    marginLeft: '0.5rem',
-                    color: '#FB7F4B'
-                  }}
-                >
-                  App 1
-                </div>
-              </div>
-              <div
-                className="purchase-popup-container-body-app-author"
-                style={{
-                  display: 'flex',
-                  marginTop: '1rem'
-                }}
-              >
-                <div
-                  className="purchase-popup-container-body-app-author-label"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    color: '#3A001E'
-                  }}
-                >
-                  App Author:
-                </div>
-                <div
-                  className="purchase-popup-container-body-app-author-value"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    marginLeft: '0.5rem',
-                    color: '#FB7F4B'
-                  }}
-                >
-                  Nha cai uy tin
-                </div>
-              </div>
-              <div
-                className="purchase-popup-container-body-app-desired-price"
-                style={{
-                  display: 'flex',
-                  marginTop: '0.5rem'
-                }}
-              >
-                <div
-                  className="purchase-popup-container-body-app-desired-price-label"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    color: '#3A001E',
-                    padding: '0.5rem 0'
-                  }}
-                >
-                  Enter your desired price (in $):
-                </div>
-                <div className="purchase-popup-container-body-app-desired-price-value">
-                  <input
-                    className="purchase-popup-container-body-app-desired-price-value-input"
-                    type="number"
-                    defaultValue={0}
-                    max={100}
-                    min="0"
-                    style={{
-                      width: '3rem',
-                      height: '2.5rem',
-                      borderRadius: '10px',
-                      marginLeft: '0.5rem',
-                      fontSize: '1.25rem',
-                      border: '1px solid #FB7F4B'
-                    }}
-                    required
-                  />
-                </div>
-              </div>
-              <div
-                className="purchase-popup-container-body-app-desired-serive"
-                style={{ marginTop: '1rem' }}
-              >
-                <div
-                  className="purchase-popup-container-body-app-desired-serive-label"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    color: '#3A001E'
-                  }}
-                >
-                  Please select the service you want to be provided:
-                </div>
-                <div className="purchase-popup-container-body-app-desired-serive-value">
-                  <MultiSelectDetails />
-                </div>
-              </div>
-              <div className="purchase-popup-container-body-app-policy">
-                <div
-                  className="purchase-popup-container-body-app-policy-label"
-                  style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    color: '#3A001E',
-                    marginTop: '1rem'
-                  }}
-                >
-                  Please read and accept our policy before buy:
-                </div>
-                <div className="purchase-popup-container-body-app-policy-content">
                   <div
-                    className="policy"
+                    className="purchase-popup-container-body-app-desired-price-label"
                     style={{
-                      backgroundColor: '#dddddd',
-                      fontSize: '1.25rem',
+                      fontSize: '1rem',
                       fontWeight: 'bold',
-                      padding: '1rem',
-                      cursor: 'pointer',
-                      marginTop: '0.5rem'
+                      color: '#3A001E'
                     }}
-                    {...getToggleProps()}
                   >
-                    {isExpanded ? 'Policy of Services' : 'Policy of Services'}
+                    Enter your desired price (in $):
                   </div>
-                  <div {...getCollapseProps()}>
-                    <div
-                      className="policy-content1"
+                  <div className="purchase-popup-container-body-app-desired-price-value">
+                    <input
+                      className="purchase-popup-container-body-app-desired-price-value-input"
+                      type="number"
+                      defaultValue={0}
+                      max={100}
+                      min="0"
                       style={{
-                        padding: '1.5rem 1rem 1rem 1rem',
-                        backgroundColor: '#eeeeee',
-                        fontSize: '1.15rem',
-                        fontWeight: 'bold',
-                        color: '#FB7F4B'
+                        width: '3rem',
+                        height: '2rem',
+                        borderRadius: '10px',
+                        marginLeft: '0.5rem',
+                        fontSize: '1rem',
+                        border: '1px solid #FB7F4B'
                       }}
-                    >
-                      Agreement to Terms
-                    </div>
-                    <div
-                      className="policy-content2"
-                      style={{
-                        padding: '0 1rem 1rem 1rem',
-                        backgroundColor: '#eeeeee'
-                      }}
-                    >
-                      By using the Game and/or Services, you agree to be bound
-                      by these Terms and the Privacy Policy (available at{' '}
-                      <a
-                        style={{ display: 'inline' }}
-                        href="https://www.recroom.com/privacy-policy"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        https://www.recroom.com/privacy-policy
-                      </a>{' '}
-                      ) (the "Privacy Policy") that is incorporated by reference
-                      into these Terms. If you don't agree to be bound by these
-                      Terms, do not use the Game or Services. If you are
-                      accessing or using the Game or Services on behalf of a
-                      company (such as your employer) or other legal entity, you
-                      represent and warrant that you have the authority to bind
-                      that company or other legal entity to these Terms. In that
-                      case, "you" and "your" will refer to that company or other
-                      legal entity. Otherwise, "you" and "your" will refer to
-                      you, individually.
-                    </div>
-                    <div
-                      className="policy-content3"
-                      style={{
-                        padding: '1rem',
-                        backgroundColor: '#eeeeee',
-                        fontSize: '1.15rem',
-                        fontWeight: 'bold',
-                        color: '#FB7F4B'
-                      }}
-                    >
-                      Grant of License
-                    </div>
-                    <div
-                      className="policy-content4"
-                      style={{
-                        padding: '0 1rem 1rem 1rem',
-                        backgroundColor: '#eeeeee'
-                      }}
-                    >
-                      Subject to these Terms, Munich Software as Service Inc
-                      grants you a nonexclusive, non-sublicensable, limited
-                      right and license to use one copy of the Game for your
-                      personal non-commercial use for gameplay. The term of your
-                      license begins on the date that you install or otherwise
-                      use the Game and ends on the earlier date of either your
-                      disposal of the Game or Munich Software as Service Inc's
-                      termination of this Agreement. Your license terminates
-                      immediately if you attempt to circumvent any technical
-                      protection measures used in connection with the Game or if
-                      you violate these Terms. The Game is being licensed to you
-                      and you hereby acknowledge that no title or ownership in
-                      the Game is being transferred or assigned and these Terms
-                      should not be construed as a sale of any rights in the
-                      Game. All rights not specifically granted under these
-                      Terms are reserved by Munich Software as Service Inc.
-                    </div>
+                      required
+                    />
                   </div>
+                </div>
+                <div
+                  className="purchase-popup-container-body-app-desired-serive"
+                  style={{ marginTop: '1rem' }}
+                >
                   <div
-                    className="purchase-popup-container-body-app-policy-checkbox"
-                    style={{ marginTop: '1rem' }}
+                    className="purchase-popup-container-body-app-desired-serive-label"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      color: '#3A001E'
+                    }}
                   >
-                    <Checkbox label="I have read and accept the policy." />
+                    Please select the service you want to be provided:
+                  </div>
+                  <div className="purchase-popup-container-body-app-desired-serive-value">
+                    <MultiSelectDetails />
                   </div>
                 </div>
               </div>
-              <div
-                className="purchase-popup-container-body-app-button"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  marginTop: '1rem'
-                }}
-              >
-                <button
-                  type="submit"
-                  className="placeorder_button"
-                  style={{
-                    background: '#FB7F4B',
-                    color: '#FFFFFF',
-                    fontWeight: 700,
-                    fontSize: '16px',
-                    lineHeight: '15px',
-                    height: '2.5rem',
-                    width: '20%',
-                    borderRadius: '5px',
-                    position: 'relative',
-                    marginTop: '1.2rem',
-                    margin: '0 auto'
-                  }}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    redirect();
-                  }}
-                >
-                  {' '}
-                  Place order
-                </button>
-                <ToastContainer
-                  position="bottom-left"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
+            </div>
+            <div
+              className="purchase-popup-container-body-app-desired-price-header"
+              style={{
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                color: '#3A001E',
+                margin: '2rem 1.5rem 1rem 1.5rem'
+              }}
+            >
+              2. Order Policies:
+            </div>
+            <div
+              className="section policy-section"
+              style={{
+                width: '92.5%',
+                height: 'fit-content',
+                margin: '3% 2.5% 3% 5%',
+                border: '1px solid #E3E3E3',
+                padding: '1%',
+                borderRadius: '5px'
+              }}
+            >
+              <div style={{ padding: '1rem' }}>
+                <div className="purchase-popup-container-body-app-policy">
+                  <div
+                    className="purchase-popup-container-body-app-policy-label"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      color: '#3A001E'
+                    }}
+                  >
+                    Please read and accept our policy before buy:
+                  </div>
+                  <div className="purchase-popup-container-body-app-policy-content">
+                    <div
+                      className="policy"
+                      style={{
+                        backgroundColor: '#dddddd',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        padding: '1rem',
+                        cursor: 'pointer',
+                        marginTop: '0.5rem'
+                      }}
+                      {...getToggleProps()}
+                    >
+                      {isExpanded ? 'Policy of Services' : 'Policy of Services'}
+                    </div>
+                    <div {...getCollapseProps()}>
+                      <div
+                        className="policy-content1"
+                        style={{
+                          padding: '1.5rem 1rem 1rem 1rem',
+                          backgroundColor: '#eeeeee',
+                          fontSize: '1rem',
+                          fontWeight: 'bold',
+                          color: '#FB7F4B'
+                        }}
+                      >
+                        Agreement to Terms
+                      </div>
+                      <div
+                        className="policy-content2"
+                        style={{
+                          padding: '0 1rem 1rem 1rem',
+                          backgroundColor: '#eeeeee'
+                        }}
+                      >
+                        By using the Game and/or Services, you agree to be bound
+                        by these Terms and the Privacy Policy (available at{' '}
+                        <a
+                          style={{ display: 'inline' }}
+                          href="https://www.recroom.com/privacy-policy"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          https://www.recroom.com/privacy-policy
+                        </a>{' '}
+                        ) (the "Privacy Policy") that is incorporated by
+                        reference into these Terms. If you don't agree to be
+                        bound by these Terms, do not use the Game or Services.
+                        If you are accessing or using the Game or Services on
+                        behalf of a company (such as your employer) or other
+                        legal entity, you represent and warrant that you have
+                        the authority to bind that company or other legal entity
+                        to these Terms. In that case, "you" and "your" will
+                        refer to that company or other legal entity. Otherwise,
+                        "you" and "your" will refer to you, individually.
+                      </div>
+                      <div
+                        className="policy-content3"
+                        style={{
+                          padding: '1rem',
+                          backgroundColor: '#eeeeee',
+                          fontSize: '1.15rem',
+                          fontWeight: 'bold',
+                          color: '#FB7F4B'
+                        }}
+                      >
+                        Grant of License
+                      </div>
+                      <div
+                        className="policy-content4"
+                        style={{
+                          padding: '0 1rem 1rem 1rem',
+                          backgroundColor: '#eeeeee'
+                        }}
+                      >
+                        Subject to these Terms, Munich Software as Service Inc
+                        grants you a nonexclusive, non-sublicensable, limited
+                        right and license to use one copy of the Game for your
+                        personal non-commercial use for gameplay. The term of
+                        your license begins on the date that you install or
+                        otherwise use the Game and ends on the earlier date of
+                        either your disposal of the Game or Munich Software as
+                        Service Inc's termination of this Agreement. Your
+                        license terminates immediately if you attempt to
+                        circumvent any technical protection measures used in
+                        connection with the Game or if you violate these Terms.
+                        The Game is being licensed to you and you hereby
+                        acknowledge that no title or ownership in the Game is
+                        being transferred or assigned and these Terms should not
+                        be construed as a sale of any rights in the Game. All
+                        rights not specifically granted under these Terms are
+                        reserved by Munich Software as Service Inc.
+                      </div>
+                    </div>
+                    <div
+                      className="purchase-popup-container-body-app-policy-checkbox"
+                      style={{ marginTop: '1rem' }}
+                    >
+                      <Checkbox label="I have read and accept the policy." />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </form>
+
+          <div style={{ width: '50%' }}>
+            <div
+              className="purchase-popup-container-body-app-desired-price-header"
+              style={{
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                color: '#3A001E',
+                margin: '1rem 0 1rem 0.5rem'
+              }}
+            >
+              3. Order Detail:
+            </div>
+            <div
+              className="section detail-section"
+              style={{
+                width: '92.5%',
+                height: 'fit-content',
+                margin: '0 5% 3% 2.5%',
+                border: '1px solid #E3E3E3',
+                padding: '1%',
+                borderRadius: '5px',
+                float: 'right',
+                position: 'relative'
+              }}
+            >
+              <div style={{ padding: '1rem' }}>
+                <div
+                  className="purchase-popup-container-body-app-name"
+                  style={{
+                    display: 'flex'
+                  }}
+                >
+                  <div
+                    className="purchase-popup-container-body-app-name-label"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      color: '#3A001E'
+                    }}
+                  >
+                    App Name:
+                  </div>
+                  <div
+                    className="purchase-popup-container-body-app-name-value"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      marginLeft: '0.5rem',
+                      color: '#FB7F4B'
+                    }}
+                  >
+                    App 1
+                  </div>
+                </div>
+                <div
+                  className="purchase-popup-container-body-app-author"
+                  style={{
+                    display: 'flex',
+                    marginTop: '1rem'
+                  }}
+                >
+                  <div
+                    className="purchase-popup-container-body-app-author-label"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      color: '#3A001E'
+                    }}
+                  >
+                    App Author:
+                  </div>
+                  <div
+                    className="purchase-popup-container-body-app-author-value"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      marginLeft: '0.5rem',
+                      color: '#FB7F4B'
+                    }}
+                  >
+                    Nha cai uy tin
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    width: '15%',
+                    height: '50%',
+                    backgroundColor: '#FB7F4B',
+                    float: 'right',
+                    position: 'absolute',
+                    margin: '1rem',
+                    top: '0',
+                    borderRadius: '10px',
+                    right: '0'
+                  }}
+                ></div>
+                <div
+                  className="purchase-popup-container-body-app-button"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    marginTop: '1rem'
+                  }}
+                >
+                  <button
+                    type="submit"
+                    className="placeorder_button"
+                    style={{
+                      background: '#FB7F4B',
+                      color: '#FFFFFF',
+                      fontWeight: 700,
+                      fontSize: '16px',
+                      lineHeight: '15px',
+                      height: '2rem',
+                      width: '30%',
+                      borderRadius: '5px',
+                      position: 'relative',
+                      marginTop: '1rem',
+                      margin: '0 auto'
+                    }}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      redirect();
+                    }}
+                  >
+                    {' '}
+                    Place order
+                  </button>
+                  <ToastContainer
+                    position="bottom-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   ) : null;

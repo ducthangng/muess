@@ -11,8 +11,8 @@ export class CreateAppDto {
 
 export class LicenseDto {
   public appId: string;
-  public title: string;
-  public appIconURL: string;
-  public description: string;
-  public license: string;
+  public creatorId: string;
+  public ownerId: string;
+  public licenseId: string;
+  public licenseDetails: string;
 }
