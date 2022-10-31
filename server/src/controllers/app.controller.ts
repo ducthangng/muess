@@ -67,8 +67,9 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const appId: string = req.params.id;
-      const findOneAppData: App[] = await this.appService.getAppById(appId);
+      const assetId: string = req.params.assetid;
+      console.log('assetId', assetId);
+      const findOneAppData: App[] = await this.appService.getAppById(assetId);
 
       res.status(200).json({ data: findOneAppData, message: 'findOne' });
     } catch (error) {
@@ -88,14 +89,15 @@ class AppsController {
     next: NextFunction
   ) => {
     try {
-      const user: User = req.user;
-      const creatorId: string = req.params.creatorId;
-      const appsData: any = await this.appService.getAppsByCreatorId(
-        user,
+      // const user: User = req.user;
+      const creatorId: string = req.params.creatorid;
+      console.log('creatorId: ', creatorId);
+      const findAllAppsData: App[] = await this.appService.getAppsByCreatorId(
+        // user,
         creatorId
       );
 
-      res.status(200).json({ data: appsData, message: 'Found' });
+      res.status(200).json({ data: findAllAppsData, message: 'findOne' });
     } catch (error) {
       next(error);
     }
