@@ -93,7 +93,7 @@ class proposalService {
       console.log(
         `Transaction has successfully created, result is: ${result.toString()}`
       );
-      return result;
+      return result.toString();
     } catch (error) {
       console.log(error);
       throw new Error('Submit Transaction Failed');

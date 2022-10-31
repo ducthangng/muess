@@ -279,7 +279,7 @@ class Chaincode extends Contract {
     let queryString = {};
     queryString.selector = {};
     queryString.selector.assetType = 'proposal';
-    queryString.selector.status = 'accepted'
+    queryString.selector.status = 'accepted';
     return await this.GetQueryResultForQueryString(
       ctx,
       JSON.stringify(queryString)

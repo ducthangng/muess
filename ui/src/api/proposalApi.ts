@@ -21,3 +21,104 @@ const SENDPOST = async (url: string, data: any) => {
 
   return response.json();
 };
+
+export const proposalApi = {
+  createProposal: async (params: {
+    appId: string;
+    proposedPrice: number;
+    licenseDetails: string;
+  }) => {
+    const response = SENDPOST(`${apiUrl}`, params)
+      .then((data) => {
+        const x: number = data.data;
+        return x === 1 ? true : false;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  getProposalByBuyerId: async (BuyerId: string) => {
+    const response = await fetch(
+      `${apiUrl}/buyer/buyer_proposal?buyer_id=${BuyerId}`,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const proposals: any[] = data.data;
+        return proposals;
+      });
+
+    return response;
+  },
+
+  getProposalBySellerId: async (BuyerId: string) => {
+    const response = await fetch(
+      `${apiUrl}/seller/seller_proposal?buyer_id=${BuyerId}`,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const err: AppError = data.error;
+        if (err.errorCode !== 0) {
+          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        }
+
+        const proposals: any[] = data.data;
+        return proposals;
+      });
+
+    return response;
+  },
+
+  acceptProposal: async (params: { proposalId: string }) => {
+    const response = SENDPOST(`${apiUrl}/accept`, params)
+      .then((data) => {
+        const x: number = data.data;
+        return x === 1 ? true : false;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  rejectProposal: async (params: { proposalId: string }) => {
+    const response = SENDPOST(`${apiUrl}/reject`, params)
+      .then((data) => {
+        const x: number = data.data;
+        return x === 1 ? true : false;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  }
+};

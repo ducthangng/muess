@@ -37,18 +37,40 @@ const sampleLicense: LicenseDto[] = [
 class LicenseService {
   public users = userModel;
 
-  public async findAllUser(): Promise<User[]> {
-    const users: User[] = await this.users.find();
-    return users;
+  public async getLicenseByAppId(user: User, appId: string) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const result = await contract.submitTransaction(
+      'QueryLicensesByAppId',
+      appId
+    );
+
+    console.log(`Transaction QueryLicensesByAppId has successfully done.`);
+
+    return result.toString();
   }
 
-  public async getLicenseByBuyerId(userId: string): Promise<User> {
-    if (isEmpty(userId)) throw new HttpException(400, 'UserId is empty');
+  public async getLicenseByOwnerId(user: User, ownerId: string) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const result = await contract.submitTransaction(
+      'QueryLicensesByOwnerId',
+      ownerId
+    );
 
-    const findUser: User = await this.users.findOne({ _id: userId });
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
+    console.log(`Transaction QueryLicensesByOwnerId has successfully done.`);
 
-    return;
+    return result.toString();
+  }
+
+  public async getLicenseByCreatorId(user: User, creatorId: string) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const result = await contract.submitTransaction(
+      'QueryLicensesByCreatorId',
+      creatorId
+    );
+
+    console.log(`Transaction QueryLicensesByOwnerId has successfully done.`);
+
+    return result.toString();
   }
 
   // public async getLicenseByBuyerId(user: User, buyerId: string) {

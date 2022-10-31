@@ -3,8 +3,10 @@ import { IsNumber, IsString } from 'class-validator';
 export class CreateProposalDto {
   @IsString()
   public appId: string;
+
   @IsNumber()
   public proposedPrice: number;
+
   @IsString()
   public licenseDetails: string;
 }
