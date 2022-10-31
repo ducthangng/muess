@@ -26,5 +26,6 @@ export class LicenseDto {
   public appId: string;
   public creatorId: string;
   public ownerId: string;
-  public licenseDetail: string;
+  public licenseId: string;
+  public licenseDetails: string;
 }

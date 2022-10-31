@@ -3,7 +3,7 @@ import { Routes } from '@/interfaces/routes.interface';
 import LicenseController from '../controllers/license.controller';
 import authMiddleware from '@/middlewares/auth.middleware';
 
-class HLFRoute implements Routes {
+class LicenseRoute implements Routes {
   public path = '/apps';
   public router = Router();
   public licenseController = new LicenseController();
@@ -19,11 +19,11 @@ class HLFRoute implements Routes {
     //   this.licenseController.getProposalsByAppId
     // );
     this.router.get(
-      `${this.path}/ownedapps`,
+      `${this.path}/ownedapps/:id`,
       authMiddleware,
       this.licenseController.getLicenseByBuyerId
     );
   }
 }
 
-export default HLFRoute;
+export default LicenseRoute;
