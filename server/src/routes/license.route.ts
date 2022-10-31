@@ -19,7 +19,7 @@ class HLFRoute implements Routes {
     //   this.licenseController.getProposalsByAppId
     // );
     this.router.get(
-      `${this.path}/ownedapps/:buyerId`,
+      `${this.path}/ownedapps`,
       authMiddleware,
       this.licenseController.getLicenseByBuyerId
     );

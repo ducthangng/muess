@@ -24,8 +24,7 @@ export class RejectProposalDto {
 
 export class LicenseDto {
   public appId: string;
-  public title: string;
-  public appIconURL: string;
-  public description: string;
-  public license: string;
+  public creatorId: string;
+  public ownerId: string;
+  public licenseDetail: string;
 }

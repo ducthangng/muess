@@ -37,14 +37,8 @@ interface AppDetailDataLicense {
   reviewer: string;
   downloaded: number;
   imageSrc: string;
-  license: string;
-  appIcon: string;
-  feedbacks: [
-    {
-      name: string;
-      content: string;
-    }
-  ];
+  licenseDetails: string;
+  appIcon: string; // link to database.
 }
 
 interface CreateAppData {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MockProductLicense from '../components/MockProduct';
+import MockProductLicense from '../components/MockProductLicense';
 import SideMenu from '../components/Header/SideMenu';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
@@ -52,7 +52,7 @@ function ProductLicense() {
                 >
                   Featured Apps
                 </Button>
-                <Button ghost shape="default" size="middle" href="/ownedapps">
+                <Button shape="default" size="middle" href="/ownedapps">
                   Owned Apps
                 </Button>
               </div>
@@ -75,9 +75,9 @@ function ProductLicense() {
                       reviewer={item.reviewer}
                       downloaded={item.downloaded}
                       appIcon={item.appIcon} // link to database.
-                      feedbacks={item.feedbacks}
                       appTags={item.appTags}
                       imageSrc={item.imageSrc}
+                      licenseDetails={''}
                     />
                   );
                 })}
