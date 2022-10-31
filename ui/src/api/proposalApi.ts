@@ -41,31 +41,19 @@ export const proposalApi = {
   },
 
   getProposalByBuyerId: async (BuyerId: string) => {
-    const response = await fetch(
-      `${apiUrl}/buyer/buyer_proposal?buyer_id=${BuyerId}`,
-      {
+    try {
+      const response = await fetch(`${apiUrl}/buyer/${BuyerId}`, {
         method: 'GET',
         credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const proposals: any[] = data.data;
-        return proposals;
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   getProposalBySellerId: async (BuyerId: string) => {

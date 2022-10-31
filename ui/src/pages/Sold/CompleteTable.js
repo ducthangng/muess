@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import {
   useTable,
@@ -8,23 +8,38 @@ import {
 } from 'react-table';
 import { proposalApi } from '../../api/proposalApi';
 import { COLUMNS } from './columns.tsx';
-import {MOCK_DATA} from './MOCK_DATA.json';
+import MOCK_DATA from './MOCK_DATA.json';
 import { smartContractAPI } from '../../api/smartContract';
 import { SmartContract } from '../../models/hyperledger/smartContract';
 
 import './Table.css';
 
 import { GlobalFilter } from './GlobalFilter.tsx';
+import { userApi } from '../../api/userApi';
 
 export const CompleteTable = () => {
   const [visibility, setVisibility] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
-  const { data } = useQuery(['proposalSelection'], async () => {
-    return await proposalApi.getProposalByBuyerId();
-  });
+  // const { data } = useQuery(['proposalSelection'], async () => {
+  //   return await proposalApi.getProposalByBuyerId();
+  // });
 
+  const data = MOCK_DATA;
   // API:
   // const displayData: SmartContract[] = smartContractAPI.getAllContracts();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const currentUserResponse = await userApi.getCurrentUser();
+    const buyerId = currentUserResponse.data._id;
+    const response = await proposalApi.getProposalByBuyerId(
+      encodeURIComponent(buyerId)
+    );
+    console.log(response);
+  };
 
   const defaultColumn = useMemo(() => {
     return {
