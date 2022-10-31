@@ -8,6 +8,8 @@ import LoginLogo from '../assets/images/logo.svg';
 import LoginImage from '../assets/images/login.svg';
 import CSS from 'csstype';
 import '../assets/css/Login.css';
+import { toast } from 'react-toastify';
+import { userApi } from '../api/userApi';
 
 const Sign: CSS.Properties = {
   position: 'relative',
@@ -36,31 +38,23 @@ const Login = () => {
 
   useEffect(() => {
     checkLogin();
-  });
-
-  const routeChange = async (path: string) => {
-    navigate(`${path}`);
-  };
+  }, []);
 
   const checkLogin = async () => {
-    let data = await authApi.getId();
-    if (data !== null && data._id.length !== 0) {
-      console.log('changing.... [cookie]');
-      routeChange('/release');
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      navigate('/release');
     }
   };
 
   const handleLogin = async () => {
-    let data = await authApi.login({ email, password }).then((res) => {
-      console.log('res: ', res);
-      if (res._id.length !== 0) {
-        console.log('changing.... [login]');
-        routeChange('/release');
-      } else {
-        alert('Invalid username or password');
-      }
-      return res;
-    });
+    let res = await authApi.login({ email, password });
+    if (res.status === 201) {
+      toast('Login successfully. Redirecting...');
+      navigate('/release');
+    } else {
+      alert(res.message);
+    }
   };
 
   const [passwordShown, setPasswordShown] = useState(false);

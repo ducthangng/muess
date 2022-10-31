@@ -26,6 +26,20 @@ class UsersController {
     }
   };
 
+  public getCurrentUser = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const user: User = req.user;
+
+      res.status(200).json({ data: user, message: 'findOne' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getUserById = async (
     req: Request,
     res: Response,

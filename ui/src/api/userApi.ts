@@ -191,5 +191,29 @@ export const userApi = {
       });
 
     return response;
+  },
+
+  /**
+   * Get the info of the current user.
+   *
+   * @returns user data.
+   */
+  getCurrentUser: async () => {
+    try {
+      const response = await fetch(`${apiUrl}/current`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

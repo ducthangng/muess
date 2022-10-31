@@ -60,30 +60,23 @@ export const authApi = {
       password: parameter.password
     };
 
-    const response = await fetch(`${apiUrl}/login`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        const user: User = data.data;
-        return user;
-      })
-      .catch((err) => {
-        return err;
+    try {
+      const response = await fetch(`${apiUrl}/login`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (err) {
+      console.log(err);
+    }
   },
   /**
    * Logout Function.
@@ -117,42 +110,6 @@ export const authApi = {
       });
     // .catch((err) => {
     //   return err;
-    // });
-
-    return response;
-  },
-
-  /**
-   * Check if user is logged in.
-   *
-   * @returns true if user is logged in, false otherwise.
-   */
-  getId: async () => {
-    const response = await fetch(`${apiUrl}/ID`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        // const err: AppError = data.error;
-        // if (err.errorCode) {
-        //   return null;
-        // }
-
-        const user: User = data.data;
-        return user;
-      });
-    // .catch((error) => {
-    //   return error;
     // });
 
     return response;
