@@ -18,21 +18,14 @@ interface App {
 }
 
 interface AppDetailDataLicense {
-  _id: string;
-  creatorId: string;
-  creatorName: string;
-  title: string;
-  description: string;
-  rated: string;
-  appType: string;
-  appPaymentMethod: string;
-  appCategories: string;
-  appTags: string[];
-  reviewer: string;
-  downloaded: number;
-  imageSrc: string;
-  licenseDetails: string;
-  appIcon: string; // link to database.
+  Key: string;
+  Record: {
+    assetType: string;
+    assetId: string;
+    creatorId: string;
+    licenseDetails: string;
+    ownerId: string;
+  };
 }
 
 interface CreateAppData {
