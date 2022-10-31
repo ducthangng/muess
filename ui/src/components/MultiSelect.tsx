@@ -25,12 +25,12 @@ const App: React.FC = () => (
       mode="multiple"
       allowClear
       style={{
-        width: '325px',
+        width: '313px',
         height: '33px',
         overflow: 'auto',
         position: 'relative',
-        top: '30px',
-        left: '-175px'
+        top: '25px',
+        left: '147px'
       }}
       placeholder="Please select"
       onChange={handleChange}
