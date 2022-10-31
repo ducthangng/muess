@@ -14,7 +14,7 @@ const samples: App[] = [
   {
     assetType: 'App',
     assetId: '1',
-    creatorId: '1',
+    creatorId: '3',
     title: 'test',
     description: 'test',
     appType: 'test',
@@ -28,7 +28,7 @@ const samples: App[] = [
   {
     assetType: 'App',
     assetId: '2',
-    creatorId: '1',
+    creatorId: '4',
     title: 'xxxxx',
     description: 'xxxxx',
     appType: 'xxxxx',
@@ -53,10 +53,10 @@ class AppService {
       appTags,
       appIconURL
     } = appData;
-    const appId = uuidv4();
+    const assetId = uuidv4();
     const result = await contract.submitTransaction(
       'CreateApp',
-      appId,
+      assetId,
       title,
       description,
       rating,
@@ -75,8 +75,11 @@ class AppService {
     return samples;
   }
 
-  public getAppById(appId: string) {
-    return samples;
+  public getAppById(assetId: string) {
+    return samples.filter((app) => app.assetId === assetId);
+  }
+  public getAppsByCreatorId(creatorId: string) {
+    return samples.filter((app) => app.creatorId === creatorId);
   }
 }
 
