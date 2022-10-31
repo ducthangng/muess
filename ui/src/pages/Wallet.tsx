@@ -295,8 +295,8 @@ function Wallet() {
               value={selected}
               className="dropdown"
             >
-              <option value="Monthly progress">Monthly progress</option>
-              <option value="Yearly progress">Yearly progress</option>
+              <option value="Monthly progress">Daily progress</option>
+              <option value="Yearly progress">Weekly progress</option>
               <option value="3">Lifetime progress</option>
             </select>
           </div>

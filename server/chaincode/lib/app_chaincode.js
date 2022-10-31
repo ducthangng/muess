@@ -73,7 +73,6 @@ class Chaincode extends Contract {
     appCategories,
     appIconURL
   ) {
-
     const appBytes = await ctx.stub.getState(assetId);
     if (!appBytes) {
       throw new Error(`There is no app with assetId ${assetId} exists`);
@@ -87,7 +86,7 @@ class Chaincode extends Contract {
     const clientId = ctx.clientIdentity.getID();
 
     if (clientId != app.creatorId) {
-      throw new Error("You must be the creator to update this app.");
+      throw new Error('You must be the creator to update this app.');
     }
 
     // ==== Create asset object and marshal to JSON ====
@@ -147,7 +146,6 @@ class Chaincode extends Contract {
   }
 
   async AcceptProposal(ctx, assetId, proposalId) {
-
     const proposalBytes = await ctx.stub.getState(proposalId);
     if (!proposalBytes) {
       throw new Error('No such proposal exists');
@@ -160,7 +158,7 @@ class Chaincode extends Contract {
 
     const clientId = ctx.clientIdentity.getID();
     if (clientId != proposal.sellerId) {
-      throw new Error("You must be the owner to accept this proposal.");
+      throw new Error('You must be the owner to accept this proposal.');
     }
 
     // create new asset

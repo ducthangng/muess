@@ -10,7 +10,7 @@ const MockApp: React.FC<App> = ({ Key, Record }) => {
   return (
     <Form>
       <Card
-        onClick={() => navigate('/products/12')}
+        onClick={() => navigate(`/products/${Record.assetId}`)}
         hoverable
         className="card"
         cover={

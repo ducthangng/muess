@@ -4,13 +4,11 @@ import '../assets/css/MockTest.css';
 import { AppDetailDataLicense } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const MockApp: React.FC<AppDetailDataLicense> = ({
+const MockProductLicense: React.FC<AppDetailDataLicense> = ({
   _id,
   title,
-  appTags,
   description,
-  imageSrc,
-  license
+  imageSrc
 }) => {
   const navigate = useNavigate();
   return (
@@ -31,15 +29,12 @@ const MockApp: React.FC<AppDetailDataLicense> = ({
         <div className="wrapper">
           <h1 className="content">{title} </h1>
         </div>
-        <Tag color="#F17B7B" style={{ bottom: 'left' }} className="tag_lon">
-          {description}
-        </Tag>
         <div className="wrapper">
-          <h1 className="content">{license}</h1>
+          <h1 className="content">LicenseDetails</h1>
         </div>
       </Card>
     </Form>
   );
 };
 
-export default MockApp;
+export default MockProductLicense;
