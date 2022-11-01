@@ -47,7 +47,7 @@ function ProductSelection() {
               }}
             >
               <div>
-                <Button ghost shape="default" size="middle">
+                <Button shape="default" size="middle">
                   Featured Apps
                 </Button>
                 <Button

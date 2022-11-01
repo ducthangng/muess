@@ -1,7 +1,6 @@
 import { Card, Form, Tag } from 'antd';
 import React from 'react';
 import '../assets/css/MockTest.css';
-import mocktest from '../assets/images/Rectangle 6295.png';
 import { App } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 

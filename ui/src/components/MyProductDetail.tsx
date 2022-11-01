@@ -11,22 +11,33 @@ const MyProductDetail: React.FC<App> = ({ Key, Record }) => {
       <Card
         onClick={() => navigate(`/products/my-app/${Record.assetId}`)}
         hoverable
-        className="card"
         cover={
           <img
             src={Record.appIconURL}
             alt="example"
-            className="image_cover"
-            style={{ alignItems: 'center', borderTop: 10 }}
+            style={{
+              alignItems: 'center',
+              borderTop: 10,
+              height: '200px',
+              objectFit: 'cover'
+            }}
           />
         }
       >
-        <div className="wrapper">
-          <h1 className="content">{Record.title} </h1>
+        <div className="flex justify-center">
+          <h1 className="font-bold text-lg">{Record.title}</h1>
         </div>
-        <div className="wrapper">
-          <h1 className="content">LicenseDetail</h1>
-        </div>
+        {Record.appTags.length > 0 &&
+          Record.appTags[0] &&
+          Record.appTags.map((tag, index) => (
+            <Tag
+              key={index}
+              color="#F17B7B"
+              style={{ bottom: 'left', marginBottom: '5px' }}
+            >
+              {tag}
+            </Tag>
+          ))}
       </Card>
     </Form>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import MyProductDetail from '../components/MyProductDetail';
 import SideMenu from '../components/Header/SideMenu';
-import { Row, Divider } from 'antd';
+import { Row, Divider, Empty } from 'antd';
 import { Pagination } from 'antd';
 import { Button } from 'antd';
 import { appApi } from '../api/appApi';
@@ -67,6 +67,11 @@ function OwnedProducts() {
                   );
                 })}
             </div>
+            {(!data || data.length <= 0) && (
+              <div className="mx-auto my-auto">
+                <Empty />
+              </div>
+            )}
             <br></br>
             <Row justify="center">
               <Pagination
