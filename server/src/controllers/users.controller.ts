@@ -46,7 +46,7 @@ class UsersController {
     next: NextFunction
   ) => {
     try {
-      const userId: string = req.params.id;
+      const userId: string = req.params.userId;
       const findOneUserData: User = await this.userService.findUserById(userId);
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });

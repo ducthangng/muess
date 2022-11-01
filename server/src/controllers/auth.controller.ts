@@ -18,7 +18,7 @@ class AuthController {
       // reset cookie after login
       const token: TokenData = this.authService.createToken(user);
       const options = {
-        maxAge: 10000,
+        maxAge: 100000,
         httpOnly: false // The cookie only accessible by the web server
       };
 
@@ -36,7 +36,7 @@ class AuthController {
       const result = await this.authService.register(userData);
 
       const options = {
-        maxAge: result.cookie.expiresIn * 1000, // would expire after 15 minutes
+        maxAge: result.cookie.expiresIn * 100000, // would expire after 15 minutes
         httpOnly: false // The cookie only accessible by the web server
       };
 

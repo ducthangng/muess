@@ -66,14 +66,11 @@ export const userApi = {
     return response;
   },
 
-  getInfoById: async (id: number) => {
-    const response = await fetch(
-      `${apiUrl}/?` + new URLSearchParams({ user_id: id.toString() }),
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    )
+  getInfoById: async (id: string) => {
+    const response = await fetch(`${apiUrl}/${encodeURIComponent(id)}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -82,16 +79,8 @@ export const userApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const users: User[] = data.data;
+        const users: User = data.data;
         return users;
-      })
-      .catch((err) => {
-        return err;
       });
 
     return response;
