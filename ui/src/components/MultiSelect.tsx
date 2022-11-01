@@ -10,13 +10,9 @@ const MultiSelect: React.FC<{
 }> = ({ options, handleChange }) => (
   <>
     <Select
+      className="min-w-[300px]"
       mode="multiple"
       allowClear
-      style={{
-        width: '313px',
-        height: '33px',
-        overflow: 'auto'
-      }}
       placeholder="Please select"
       onChange={handleChange}
     >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SideMenu.css';
 import Logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +8,18 @@ import { authApi } from '../../api/authApi';
 import { userApi } from '../../api/userApi';
 const SideMenu = (props) => {
   const [open, setOpen] = useState(false);
+  const [fullname, setFullname] = useState('');
   let navigate = useNavigate();
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
+
+  const getUserInfo = async () => {
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      setFullname(res.data.fullname);
+      setEmail(res.data.email);
+    }
+  };
 
   const handleLogout = async () => {
     const res = await authApi.logout();
@@ -21,16 +30,8 @@ const SideMenu = (props) => {
   };
 
   useEffect(() => {
-    fetchData();
+    getUserInfo();
   }, []);
-
-  const fetchData = async () => {
-    const currentUserResponse = await userApi.getCurrentUser();
-    const res = currentUserResponse.data.fullname;
-    const email = currentUserResponse.data.email;
-    setUser(res);
-    setEmail(email);
-  };
 
   return (
     <div className="side-menu">
@@ -175,22 +176,22 @@ const SideMenu = (props) => {
 
       <div className="account" onClick={() => setOpen(!open)}>
         <div className="account-info">
-          <div className="username">{user}</div>
+          <div className="username">{fullname}</div>
           <div>{email}</div>
         </div>
         <div className={`dropdown-menu ${open ? 'open' : ''}`}>
           <ul>
-            <li>
+            {/* <li>
               <a className="profile-item">
                 <div className="account-info">
-                  <div className="username">{user}</div>
+                  <div className="username">{fullname}</div>
                   <div className="email">{email}</div>
                   <div className="small-text">View account's information</div>
                 </div>
               </a>
-            </li>
-            <li onClick={handleLogout}>
-              <a className="logout">
+            </li> */}
+            <li className="pt-3" onClick={handleLogout}>
+              <a className="flex items-center justify-center gap-5">
                 <div className="icon">
                   <BIIcons.BiLogOut></BIIcons.BiLogOut>
                 </div>
