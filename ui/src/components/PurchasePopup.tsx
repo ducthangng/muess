@@ -7,8 +7,22 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoginLogo from '../assets/images/logo.svg';
+import MultiSelect from './MultiSelect';
 
 function PurchasePopup(props) {
+  const licenseDetailsOptions = [
+    { value: 'noncommercial_use', label: 'Noncommercial Use' },
+    { value: 'commercial_use', label: 'Commercial Use' },
+    { value: 'resell', label: 'Resell license' },
+    { value: 'read', label: 'Read Source Code' },
+    { value: 'modify', label: 'Modify Source Code' },
+    { value: 'derivative', label: 'Sell derivatives' }
+  ];
+
+  const handleLicenseDetailsChange = (value: string[]) => {
+    console.log(`selected ${value}`);
+  };
+
   const notify = () =>
     toast.success(
       'Your offer has been accepted. You will be redirect shortly...',
@@ -209,7 +223,11 @@ function PurchasePopup(props) {
                     Please select the service you want to be provided:
                   </div>
                   <div className="purchase-popup-container-body-app-desired-serive-value">
-                    <MultiSelectDetails />
+                    {/* <MultiSelectDetails /> */}
+                    <MultiSelect
+                      options={licenseDetailsOptions}
+                      handleChange={handleLicenseDetailsChange}
+                    />
                   </div>
                 </div>
               </div>

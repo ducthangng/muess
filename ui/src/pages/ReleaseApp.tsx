@@ -10,6 +10,7 @@ import SideMenu from '../components/Header/SideMenu';
 import { appApi } from '../api/appApi';
 import { App, CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
+import { TagsInput } from 'react-tag-input-component';
 
 const categoriesOptions = [
   { value: 'educational', label: 'Educational' },
@@ -18,15 +19,6 @@ const categoriesOptions = [
   { value: 'productivity', label: 'Productivity' },
   { value: 'entertainment', label: 'Entertainment' },
   { value: 'game', label: 'Game' }
-];
-
-const licenseDetailsOptions = [
-  { value: 'noncommercial_use', label: 'Noncommercial Use' },
-  { value: 'commercial_use', label: 'Commercial Use' },
-  { value: 'resell', label: 'Resell license' },
-  { value: 'read', label: 'Read Source Code' },
-  { value: 'modify', label: 'Modify Source Code' },
-  { value: 'derivative', label: 'Sell derivatives' }
 ];
 
 const ReleaseApp = () => {
@@ -61,10 +53,6 @@ const ReleaseApp = () => {
 
       // proceed fail
     });
-  };
-
-  const handleLicenseDetailsChange = (value: string[]) => {
-    console.log(`selected ${value}`);
   };
 
   const handleCategoriesChange = (value: string[]) => {
@@ -147,7 +135,7 @@ const ReleaseApp = () => {
             <div
               style={{
                 position: 'relative',
-                top: '50px',
+                top: '75px',
                 left: '50px',
                 fontWeight: 700,
                 fontSize: '12px',
@@ -205,7 +193,7 @@ const ReleaseApp = () => {
             <div
               style={{
                 position: 'relative',
-                top: '35px',
+                top: '45px',
                 left: '50px',
                 fontWeight: 700,
                 fontSize: '12px',
@@ -213,12 +201,12 @@ const ReleaseApp = () => {
                 color: '#3A001E'
               }}
             >
-              Free, paid or rent
+              Payment
             </div>
             <div
               style={{
                 position: 'relative',
-                top: '23px',
+                top: '10px',
                 left: '150px',
                 fontWeight: 700,
                 fontSize: '9px',
@@ -232,7 +220,7 @@ const ReleaseApp = () => {
             <label
               style={{
                 position: 'relative',
-                top: '35px',
+                top: '20px',
                 left: '50px',
                 fontWeight: 700,
                 fontSize: '9px',
@@ -329,26 +317,29 @@ const ReleaseApp = () => {
                 color: '#A3A3A3'
               }}
             >
-              Category
+              Categories
             </div>
             <MultiSelect
-              options={licenseDetailsOptions}
-              handleChange={handleLicenseDetailsChange}
+              options={categoriesOptions}
+              handleChange={handleCategoriesChange}
             />
           </div>
           <div className="flex gap-10 pl-12 pt-5">
             <div
+              className="pr-8"
               style={{
                 fontWeight: 700,
                 fontSize: '12px',
                 color: '#A3A3A3'
               }}
             >
-              Services
+              Tags
             </div>
-            <MultiSelect
-              options={categoriesOptions}
-              handleChange={handleCategoriesChange}
+            <TagsInput
+              value={appTags}
+              onChange={setAppTags}
+              name="app tags"
+              placeHolder="tags"
             />
           </div>
 
