@@ -107,7 +107,10 @@ const ReleaseApp = () => {
           <div className="AppNameFill">
             <input
               maxLength={50}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                setCount(e.target.value.length);
+              }}
               value={title}
             ></input>
             <div
@@ -348,11 +351,11 @@ const ReleaseApp = () => {
                 borderRadius: '5px'
               }}
             >
-              <option value="female">Family</option>
-              <option value="male">Cặc</option>
-              <option value="non-binary">Địt mẹ</option>
-              <option value="other">Suck my dick</option>
-              <option value="Prefer not to answer">Perfer not to Answer</option>
+              <option value="family">Family</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="game">Game</option>
+              <option value="other">Other</option>
             </select>
           </div>
           <MultiSelect />
@@ -373,7 +376,10 @@ const ReleaseApp = () => {
             </div>
             <TextArea
               maxLength={1000}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                setCount1(e.target.value.length);
+              }}
             ></TextArea>
             <div className="count2">{count1}/1000</div>
           </div>
