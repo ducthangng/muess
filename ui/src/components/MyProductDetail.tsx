@@ -4,12 +4,12 @@ import '../assets/css/MockTest.css';
 import { App } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const MockOwnedProduct: React.FC<App> = ({ Key, Record }) => {
+const MyProductDetail: React.FC<App> = ({ Key, Record }) => {
   const navigate = useNavigate();
   return (
     <Form>
       <Card
-        onClick={() => navigate('/products/12')}
+        onClick={() => navigate(`/products/my-app/${Record.assetId}`)}
         hoverable
         className="card"
         cover={
@@ -32,4 +32,4 @@ const MockOwnedProduct: React.FC<App> = ({ Key, Record }) => {
   );
 };
 
-export default MockOwnedProduct;
+export default MyProductDetail;

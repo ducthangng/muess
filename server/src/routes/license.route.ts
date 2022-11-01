@@ -35,6 +35,12 @@ class LicenseRoute implements Routes {
       authMiddleware,
       this.licenseController.getLicenseByAppId
     );
+
+    this.router.get(
+      `${this.path}/my-app/:appId/`,
+      authMiddleware,
+      this.licenseController.getMyLicenseByAppId
+    );
   }
 }
 

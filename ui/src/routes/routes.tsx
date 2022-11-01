@@ -20,14 +20,10 @@ import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
 // import EditApp from '../pages/EditApp';
 import Guard from '../guards/AuthGuard';
-import OwnedProducts from '../pages/OwnedProduct';
-import AppDetailLicense from '../pages/AppDetailLicense';
+import OwnedProducts from '../pages/MyProduct';
+import MyProductLicense from '../pages/MyProductLicense';
 
 export default function AppRoute() {
-  const AdminGuard: GuardEC = {
-    guardEntity: AdminEC
-  };
-
   return (
     <BrowserRouter>
       <CookiesProvider>
@@ -52,7 +48,7 @@ export default function AppRoute() {
           <Route path="/products/my-app" element={<OwnedProducts />} />
           <Route
             path="/products/my-app/:appId"
-            element={<AppDetailLicense />}
+            element={<MyProductLicense />}
           />
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route path="/proposals" element={<PurchaseList />} />

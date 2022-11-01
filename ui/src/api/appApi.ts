@@ -109,7 +109,7 @@ export const appApi = {
   },
 
   getOwnedApps: async () => {
-    const response = await fetch(`${apiUrl}/all`, {
+    const response = await fetch(`${apiUrl}/my-app`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -136,7 +136,7 @@ export const appApi = {
    * @returns app detail data
    */
   getAppById: async (id: string) => {
-    const response = await fetch(`${apiUrl}/${id}`, {
+    const response = await fetch(`${apiUrl}/appId/${id}`, {
       method: 'GET',
       credentials: 'include'
     })

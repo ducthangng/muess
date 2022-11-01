@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import MockProductLicense from '../components/MockOwnedProduct';
+import MyProductDetail from '../components/MyProductDetail';
 import SideMenu from '../components/Header/SideMenu';
 import { Row, Divider } from 'antd';
 import { Pagination } from 'antd';
 import { Button } from 'antd';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 function OwnedProducts() {
+  const navigate = useNavigate();
   const { data } = useQuery(['getOwnedApps'], async () => {
     return await appApi.getOwnedApps();
   });
@@ -44,15 +46,10 @@ function OwnedProducts() {
               }}
             >
               <div>
-                <Button
-                  ghost
-                  shape="default"
-                  size="middle"
-                  href="/productSelection"
-                >
+                <Button ghost shape="default" size="middle" href="/products">
                   Featured Apps
                 </Button>
-                <Button shape="default" size="middle" href="/ownedapps">
+                <Button shape="default" size="middle" href="/my-app">
                   Owned Apps
                 </Button>
               </div>
@@ -62,7 +59,7 @@ function OwnedProducts() {
               {data &&
                 data.map((item, index) => {
                   return (
-                    <MockProductLicense
+                    <MyProductDetail
                       key={index}
                       Key={item.Key}
                       Record={item.Record}

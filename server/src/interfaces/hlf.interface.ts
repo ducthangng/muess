@@ -5,6 +5,7 @@ export interface License {
   creatorId: string;
   ownerId: string;
   assetType: string;
+  assetId: string;
 }
 
 export interface Proposal {
@@ -16,4 +17,9 @@ export interface Proposal {
   proposedPrice: number;
   licenseDetails: string;
   status: string;
+}
+
+export interface LicenseData {
+  Key: string;
+  Record: License;
 }

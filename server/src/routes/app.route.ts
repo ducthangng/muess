@@ -28,12 +28,17 @@ class AppsRoute implements Routes {
       this.appsController.updateApp
     );
     this.router.get(
+      `${this.path}/my-app`,
+      authMiddleware,
+      this.appsController.getMyApp
+    );
+    this.router.get(
       `${this.path}/all`,
       authMiddleware,
       this.appsController.getAllApps
     );
     this.router.get(
-      `${this.path}/:appId`,
+      `${this.path}/appId/:appId`,
       authMiddleware,
       this.appsController.getAppById
     );

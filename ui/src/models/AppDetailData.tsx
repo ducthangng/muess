@@ -17,7 +17,7 @@ interface App {
   };
 }
 
-interface AppDetailDataLicense {
+interface License {
   Key: string;
   Record: {
     assetType: string;
@@ -25,6 +25,7 @@ interface AppDetailDataLicense {
     creatorId: string;
     licenseDetails: string;
     ownerId: string;
+    appId: string;
   };
 }
 
@@ -39,4 +40,4 @@ interface CreateAppData {
   appIconURL: string;
 }
 
-export type { App, AppDetailDataLicense, CreateAppData };
+export type { App, License, CreateAppData };
