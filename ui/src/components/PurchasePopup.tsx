@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../assets/css/PurchasePopup.css';
 import useCollapse from 'react-collapsed';
 import Checkbox from './Checkbox';
@@ -8,6 +8,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoginLogo from '../assets/images/logo.svg';
 import MultiSelect from './MultiSelect';
+import { App } from '../models/AppDetailData';
+import { User } from '../models/User';
+import { proposalApi } from '../api/proposalApi';
 
 function PurchasePopup(props) {
   const licenseDetailsOptions = [
@@ -19,13 +22,35 @@ function PurchasePopup(props) {
     { value: 'derivative', label: 'Sell derivatives' }
   ];
 
+  const app: App = props.AppDetails;
+  const user: User = props.Creator;
+  const [price, setPrice] = useState(0);
+  const [checked, setCheck] = useState(false);
+  const [details, setDetails] = useState([] as string[]);
+
   const handleLicenseDetailsChange = (value: string[]) => {
     console.log(`selected ${value}`);
+    setDetails(value);
   };
 
   const notify = () =>
     toast.success(
-      'Your offer has been accepted. You will be redirect shortly...',
+      'Your offer has been sent to the creator. You will be redirect shortly...',
+      {
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      }
+    );
+
+  const notifyFailure = () =>
+    toast.error(
+      'Your offer has not been accepted. Please review your proposal and rey again',
       {
         position: 'bottom-left',
         autoClose: 5000,
@@ -41,10 +66,33 @@ function PurchasePopup(props) {
   let navigate = useNavigate();
 
   function redirect() {
-    notify();
-    setTimeout(() => {
-      navigate('/proposals');
-    }, 6000);
+    console.log('price: ', price);
+    console.log('check: ', checked);
+    console.log('details: ', details);
+
+    if (price === 0 || details.length === 0) {
+      notifyFailure();
+      return;
+    }
+
+    proposalApi
+      .createProposal({
+        appId: app.Record.assetId,
+        proposedPrice: price,
+        licenseDetails: details.join(';')
+      })
+      .then((result) => {
+        if (result === 'created') {
+          notify();
+          setTimeout(() => {
+            navigate('/proposals');
+          }, 6000);
+        }
+
+        if (result !== 'created') {
+          notifyFailure();
+        }
+      });
   }
 
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
@@ -204,6 +252,8 @@ function PurchasePopup(props) {
                         fontSize: '1rem',
                         border: '1px solid #FB7F4B'
                       }}
+                      value={price}
+                      onChange={(e) => setPrice(parseInt(e.target.value))}
                       required
                     />
                   </div>
@@ -364,7 +414,32 @@ function PurchasePopup(props) {
                       className="purchase-popup-container-body-app-policy-checkbox"
                       style={{ marginTop: '1rem' }}
                     >
-                      <Checkbox label="I have read and accept the policy." />
+                      <div
+                        className="checkbox-wrapper"
+                        style={{ display: 'flex' }}
+                      >
+                        <input
+                          type="checkbox"
+                          style={{
+                            display: 'flex',
+                            width: '1.25rem',
+                            height: '1.25rem',
+                            margin: '0.5rem'
+                          }}
+                          onChange={(e) => setCheck(e.target.checked)}
+                        />
+                        <span
+                          style={{
+                            display: 'flex',
+                            margin: '0.5rem',
+                            fontWeight: 'bold',
+                            fontSize: '1rem'
+                          }}
+                        >
+                          {'I have read and accept the policy.'}
+                        </span>
+                      </div>
+                      {/* <Checkbox label="I have read and accept the policy." /> */}
                     </div>
                   </div>
                 </div>
@@ -423,7 +498,7 @@ function PurchasePopup(props) {
                       color: '#FB7F4B'
                     }}
                   >
-                    App 1
+                    {app.Record.title}
                   </div>
                 </div>
                 <div
@@ -452,15 +527,17 @@ function PurchasePopup(props) {
                       color: '#FB7F4B'
                     }}
                   >
-                    Nha cai uy tin
+                    {user.fullname}
                   </div>
                 </div>
 
-                <div
+                <img
+                  src={app.Record.appIconURL}
+                  alt={'sample'}
                   style={{
                     width: '15%',
                     height: '50%',
-                    backgroundColor: '#FB7F4B',
+                    backgroundImage: app.Record.appIconURL,
                     float: 'right',
                     position: 'absolute',
                     margin: '1rem',
@@ -468,7 +545,7 @@ function PurchasePopup(props) {
                     borderRadius: '10px',
                     right: '0'
                   }}
-                ></div>
+                ></img>
                 <div
                   className="purchase-popup-container-body-app-button"
                   style={{

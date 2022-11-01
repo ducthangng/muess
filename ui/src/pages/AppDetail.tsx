@@ -7,6 +7,8 @@ import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
 import { appApi } from '../api/appApi';
+import { userApi } from '../api/userApi';
+import { User } from '../models/User';
 
 const defaultApp: App = {
   Key: '',
@@ -25,24 +27,52 @@ const defaultApp: App = {
   }
 };
 
+const defaultUser: User = {
+  _id: '',
+  email: '',
+  fullname: '',
+  username: '',
+  password: '',
+  identity: ''
+};
+
 const AppDetail = () => {
   const navigate = useNavigate();
-  const [app, SetApp] = useState<App>();
+  const [data, setData] = useState({
+    app: defaultApp,
+    user: defaultUser
+  });
+
   const { appId } = useParams();
   const [buttonPopup, setButtonPopup] = useState(false);
 
   useEffect(() => {
     if (appId?.length !== 0) {
       appApi.getAppById(appId as string).then((result) => {
-        SetApp(result);
+        setData((state) => ({ ...state, app: result }));
       });
     }
   }, [appId]);
 
+  useEffect(() => {
+    if (data?.app?.Record?.creatorId?.length !== 0) {
+      userApi
+        .getInfoById(data?.app?.Record?.creatorId as string)
+        .then((user) => {
+          setData((state) => ({ ...state, user: user }));
+        });
+    }
+  }, [data.app]);
+
   return (
     <body className="app-detail-body">
       <SideMenu />
-      <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup} />
+      <PurchasePopup
+        trigger={buttonPopup}
+        setTrigger={setButtonPopup}
+        AppDetails={data.app}
+        Creator={data.user}
+      />
 
       <div
         className="app-detail"
@@ -108,9 +138,9 @@ const AppDetail = () => {
                 fontSize: '3rem'
               }}
             >
-              {app?.Record?.title.length === 0
+              {data.app?.Record?.title.length === 0
                 ? defaultApp.Record.title
-                : app?.Record.title}
+                : data.app?.Record.title}
             </div>
             <div
               className="app-detail-author"
@@ -147,9 +177,9 @@ const AppDetail = () => {
                   fontSize: '1rem'
                 }}
               >
-                {app?.Record.rating.length === 0
+                {data.app?.Record.rating.length === 0
                   ? defaultApp.Record.rating
-                  : app?.Record.rating}
+                  : data.app?.Record.rating}
               </div>
               <div
                 className="line"
@@ -225,9 +255,9 @@ const AppDetail = () => {
             <img
               alt="AppImage"
               src={
-                app?.Record.appIconURL.length === 0
+                data.app?.Record.appIconURL.length === 0
                   ? defaultApp.Record.appIconURL
-                  : app?.Record.appIconURL
+                  : data.app?.Record.appIconURL
               }
               style={{
                 marginLeft: 'auto',
@@ -279,9 +309,9 @@ const AppDetail = () => {
                 fontWeight: '400'
               }}
             >
-              {app?.Record.description.length === 0
+              {data.app?.Record.description.length === 0
                 ? defaultApp.Record.description
-                : app?.Record.description}
+                : data.app?.Record.description}
             </div>
             <div
               className="app-feedback-title"
@@ -312,7 +342,7 @@ const AppDetail = () => {
                 color: '#FB7F4B'
               }}
             >
-              Do not have this (Username)
+              {data.user?.fullname}
             </div>
             <div
               className="app-feedback-content"

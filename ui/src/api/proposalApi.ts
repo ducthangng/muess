@@ -19,7 +19,7 @@ const SENDPOST = async (url: string, data: any) => {
     throw new Error('Network response was not ok.');
   });
 
-  return response.json();
+  return response;
 };
 
 export const proposalApi = {
@@ -30,8 +30,9 @@ export const proposalApi = {
   }) => {
     const response = SENDPOST(`${apiUrl}`, params)
       .then((data) => {
-        const x: number = data.data;
-        return x === 1 ? true : false;
+        const x: string = data.message;
+        console.log('received: ', x);
+        return x;
       })
       .catch((err) => {
         return err;
