@@ -20,6 +20,15 @@ const options = [
   { value: 'Game', label: 'Game' }
 ];
 
+const licenseDetailsOptions = [
+  { value: 'noncommercial_use', label: 'Noncommercial Use' },
+  { value: 'commercial_use', label: 'Commercial Use' },
+  { value: 'resell', label: 'Resell license' },
+  { value: 'read', label: 'Read Source Code' },
+  { value: 'modify', label: 'Modify Source Code' },
+  { value: 'derivative', label: 'Sell derivatives' }
+];
+
 const ReleaseApp = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -52,6 +61,10 @@ const ReleaseApp = () => {
 
       // proceed fail
     });
+  };
+
+  const handleLicenseDetailsChange = (value: string[]) => {
+    console.log(`selected ${value}`);
   };
 
   return (
@@ -332,7 +345,7 @@ const ReleaseApp = () => {
           </div>
           <div>
             <select
-              name="gender"
+              name="categories"
               style={{
                 fontWeight: 400,
                 fontSize: '12px',
@@ -355,7 +368,10 @@ const ReleaseApp = () => {
               <option value="Prefer not to answer">Perfer not to Answer</option>
             </select>
           </div>
-          <MultiSelect />
+          <MultiSelect
+            options={licenseDetailsOptions}
+            handleChange={handleLicenseDetailsChange}
+          />
 
           <div className="DescBox">
             <div
