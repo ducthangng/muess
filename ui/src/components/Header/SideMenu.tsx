@@ -35,7 +35,7 @@ const SideMenu = (props) => {
 
   return (
     <div className="side-menu">
-      <div className="logo">
+      <div className="logo" onClick={() => navigate('/')}>
         <img src={Logo} alt="logo" />
       </div>
       <div
