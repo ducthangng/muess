@@ -174,6 +174,7 @@ const ReleaseApp = () => {
                 </div>
                 <div className="col-span-9 h-full flex flex-col gap-1">
                   <input
+                    type="text"
                     required
                     className="h-full"
                     maxLength={50}
@@ -389,6 +390,7 @@ const ReleaseApp = () => {
                 </div>
                 <div className="col-span-9">
                   <input
+                    type="url"
                     className="h-full"
                     maxLength={50}
                     onChange={(e) => {
