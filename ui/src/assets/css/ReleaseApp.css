@@ -5,6 +5,37 @@ body {
   padding: 0;
 }
 
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  padding: 3px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 1.5px solid #bbbbbb;
+  background-color: #e7e6e7;
+  border-radius: 50%;
+}
+
+input[type='radio']:checked {
+  background-color: #3a001e;
+}
+
+.rti--container {
+  height: 35px;
+  overflow-y: scroll;
+  --rti-bg: '#fff';
+  --rti-border: '#ccc';
+  --rti-main: '#3182ce';
+  --rti-radius: '0.375rem';
+  --rti-s: '0.5rem'; /* spacing */
+  --rti-tag: '#edf2f7';
+  --rti-tag-remove: '#e53e3e';
+}
+
 .Publish_Block {
   position: relative;
   margin: 0 auto;
@@ -16,7 +47,7 @@ body {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
-.ReleaseTitle {
+/* .ReleaseTitle {
   position: relative;
   top: 20px;
   left: 50px;
@@ -24,7 +55,7 @@ body {
   font-size: 18px;
   line-height: 24px;
   color: #3a001e;
-}
+} */
 
 .AppNameFill input {
   position: relative;
