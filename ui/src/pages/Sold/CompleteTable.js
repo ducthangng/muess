@@ -23,6 +23,7 @@ export const CompleteTable = () => {
   const [data, setData] = useState([]);
   const [currentFolderData, setCurrentFolderData] = useState();
   const [currentBuyerData, setCurrentBuyerData] = useState();
+  const [currentLicenseData, setCurrentLicenseData] = useState();
 
   useEffect(() => {
     fetchData();
