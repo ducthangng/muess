@@ -315,7 +315,7 @@ const AppDetail = () => {
                 ? defaultApp.Record.description
                 : data.app?.Record.description}
             </div>
-            <div
+            {/* <div
               className="app-feedback-title"
               style={{
                 position: 'relative',
@@ -360,7 +360,7 @@ const AppDetail = () => {
               }}
             >
               Do not have this (feedback content)
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
