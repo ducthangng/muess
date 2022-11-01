@@ -54,7 +54,6 @@ const Login = () => {
     e.preventDefault();
     let res = await authApi.login({ email, password });
     setMessage(res.message);
-    alert(res.message);
     if (res.status === 201) {
       setHasError(false);
       toast('Login successfully. Redirecting...');

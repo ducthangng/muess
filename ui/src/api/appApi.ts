@@ -34,16 +34,23 @@ export const appApi = {
    * @returns true if scuccess, false otherwise
    */
   releaseApp: async (params: { app: CreateAppData }) => {
-    const response = SENDPOST(`${apiUrl}`, params.app)
-      .then((data) => {
-        const x: number = data.data;
-        return x === 1 ? true : false;
-      })
-      .catch((err) => {
-        return err;
+    try {
+      const response = await fetch(`${apiUrl}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params.app)
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   getAppByCreatorId: async (creatorId: string) => {

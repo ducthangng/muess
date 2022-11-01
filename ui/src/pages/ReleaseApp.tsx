@@ -1,14 +1,11 @@
 import '../assets/css/ReleaseApp.css';
 import React, { useEffect } from 'react';
-import { Checkbox, Divider, Select } from 'antd';
+import { Select } from 'antd';
 import { useState } from 'react';
 import MultiSelect from '../components/MultiSelect';
-import DragAndDrop from '../components/DragDrop';
-import TextArea from 'antd/lib/input/TextArea';
-import DragAndDropMulti from '../components/DragDropMulti';
 import SideMenu from '../components/Header/SideMenu';
 import { appApi } from '../api/appApi';
-import { App, CreateAppData } from '../models/AppDetailData';
+import { CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 import { TagsInput } from 'react-tag-input-component';
 const { Option } = Select;
@@ -41,9 +38,11 @@ const ReleaseApp = () => {
   const [appTags, setAppTags] = useState([] as string[]);
   const [titleCount, setTitleCount] = React.useState(0);
   const [descriptionCount, setDescriptionCount] = React.useState(0);
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
   let navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const req: CreateAppData = {
       title,
@@ -56,16 +55,54 @@ const ReleaseApp = () => {
       appIconURL: appImage
     };
 
-    console.log(req);
+    if (!title) {
+      setHasError(true);
+      setMessage('App Name cannot be empty!');
+      return;
+    }
+    if (!description) {
+      setHasError(true);
+      setMessage('Description cannot be empty!');
+      return;
+    }
+    if (!rating) {
+      setHasError(true);
+      setMessage('Please choose a Rating!');
+      return;
+    }
+    if (!appType) {
+      setHasError(true);
+      setMessage('Please choose a Type!');
+      return;
+    }
+    if (!appPaymentMethod) {
+      setHasError(true);
+      setMessage('Please choose a Payment method!');
+      return;
+    }
+    if (appCategories.length === 0) {
+      setHasError(true);
+      setMessage('Please choose at least 1 Category!');
+      return;
+    }
+    if (!appImage) {
+      setHasError(true);
+      setMessage('Please insert an App Image URL!');
+      return;
+    }
 
-    appApi.releaseApp({ app: req }).then((status) => {
-      if (status) {
-        // proceed success
-        navigate('/products');
-      }
+    setHasError(false);
 
-      // proceed fail
-    });
+    const res = await appApi.releaseApp({ app: req });
+    if (res.status === 201) {
+      setHasError(false);
+      setMessage('Created app successfully');
+      navigate('/products');
+    } else {
+      setHasError(true);
+      setMessage(res.message);
+      console.log(res);
+    }
   };
 
   const handleCategoriesChange = (value: string[]) => {
@@ -137,6 +174,7 @@ const ReleaseApp = () => {
                 </div>
                 <div className="col-span-9 h-full flex flex-col gap-1">
                   <input
+                    type="text"
                     required
                     className="h-full"
                     maxLength={50}
@@ -325,7 +363,7 @@ const ReleaseApp = () => {
                 <div className="col-span-9 h-full flex flex-col gap-1">
                   <textarea
                     required
-                    className="h-full border-2"
+                    className="p-2 h-full border-2"
                     maxLength={1000}
                     onChange={(e) => {
                       setDescription(e.target.value);
@@ -352,6 +390,7 @@ const ReleaseApp = () => {
                 </div>
                 <div className="col-span-9">
                   <input
+                    type="url"
                     className="h-full"
                     maxLength={50}
                     onChange={(e) => {
@@ -363,9 +402,18 @@ const ReleaseApp = () => {
               </div>
             </div>
           </div>
-          <div className="py-10 flex justify-center">
+          <div className="py-10 flex items-center flex flex-col">
+            {message && (
+              <div
+                className={`${
+                  hasError ? 'text-red-500' : 'text-green-500'
+                } py-2`}
+              >
+                {message}
+              </div>
+            )}
             <input
-              className="w-fit px-4 py-2 bg-[#FB7F4B] text-white text-[15px]"
+              className="w-fit px-4 my-2 py-2 bg-[#FB7F4B] text-white text-[15px]"
               type="submit"
               value="Release"
             />
