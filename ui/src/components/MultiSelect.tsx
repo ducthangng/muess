@@ -15,10 +15,7 @@ const MultiSelect: React.FC<{
       style={{
         width: '313px',
         height: '33px',
-        overflow: 'auto',
-        position: 'relative',
-        top: '25px',
-        left: '147px'
+        overflow: 'auto'
       }}
       placeholder="Please select"
       onChange={handleChange}
