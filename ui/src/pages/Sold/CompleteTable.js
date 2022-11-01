@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useQuery } from 'react-query';
 import {
   useTable,
   useSortBy,
@@ -8,26 +7,22 @@ import {
 } from 'react-table';
 import { proposalApi } from '../../api/proposalApi';
 import { COLUMNS } from './columns.tsx';
-import MOCK_DATA from './MOCK_DATA.json';
-import { smartContractAPI } from '../../api/smartContract';
-import { SmartContract } from '../../models/hyperledger/smartContract';
+import { Button, Popover } from 'antd';
 
 import './Table.css';
 
 import { GlobalFilter } from './GlobalFilter.tsx';
 import { userApi } from '../../api/userApi';
+import { appApi } from '../../api/appApi';
+import moment from 'moment';
+import { ratings } from '../../consts/ratings';
 
 export const CompleteTable = () => {
   const [visibility, setVisibility] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
-  // const { data } = useQuery(['proposalSelection'], async () => {
-  //   return await proposalApi.getProposalByBuyerId();
-  // });
   const [data, setData] = useState([]);
-
-  // const data = MOCK_DATA;
-  // API:
-  // const displayData: SmartContract[] = smartContractAPI.getAllContracts();
+  const [currentFolderData, setCurrentFolderData] = useState();
+  const [currentBuyerData, setCurrentBuyerData] = useState();
 
   useEffect(() => {
     fetchData();
@@ -68,6 +63,92 @@ export const CompleteTable = () => {
     };
   }, []);
 
+  const renderPopoverContent = (cell) => {
+    if (cell.column.id === 'appId') {
+      return (
+        <div>
+          <div className="flex gap-2">
+            <p className="font-semibold">AppId: </p>
+            <p>{cell.value}</p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Title: </p>
+            <p>{currentFolderData ? currentFolderData.title : 'Loading...'}</p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Type: </p>
+            <p>
+              {currentFolderData ? currentFolderData.appType : 'Loading...'}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Categories: </p>
+            <p>
+              {currentFolderData
+                ? currentFolderData.appCategories.join(', ')
+                : 'Loading...'}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Rating: </p>
+            <p>
+              {currentFolderData
+                ? ratings[currentFolderData.rating]
+                : 'Loading...'}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Tags: </p>
+            <p>
+              {currentFolderData
+                ? currentFolderData.appTags.join(', ')
+                : 'Loading...'}
+            </p>
+          </div>
+        </div>
+      );
+    }
+    if (cell.column.id === 'buyerId') {
+      return (
+        <div className="max-w-[300px]">
+          <div className="flex gap-2">
+            <p className="font-semibold">BuyerId: </p>
+            <p className="w-3/4 break-words">{cell.value}</p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Full Name: </p>
+            <p>{currentBuyerData ? currentBuyerData.fullname : 'Loading...'}</p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Email: </p>
+            <p>{currentBuyerData ? currentBuyerData.email : 'Loading...'}</p>
+          </div>
+          <div className="flex gap-2">
+            <p className="font-semibold">Birthdate: </p>
+            <p>
+              {currentBuyerData
+                ? moment(currentBuyerData.dob).format('DD/MM/YYYY')
+                : 'Loading...'}
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="max-w-[300px] break-words">
+        <p>{cell.value}</p>
+      </div>
+    );
+  };
+
+  const handleHover = async (row) => {
+    const appRes = await appApi.getAppById(row.values.appId);
+    console.log(appRes);
+    setCurrentFolderData(appRes.Record);
+    const userRes = await userApi.getInfoById(row.values.buyerId);
+    setCurrentBuyerData(userRes);
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -102,7 +183,7 @@ export const CompleteTable = () => {
     <>
       <div className="table-container">
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-        <table {...getTableProps()}>
+        <table {...getTableProps()} style={{ tableLayout: 'fixed' }}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -127,10 +208,25 @@ export const CompleteTable = () => {
               prepareRow(row);
               return (
                 <>
-                  <tr {...row.getRowProps()}>
+                  <tr
+                    {...row.getRowProps()}
+                    onMouseOver={() => handleHover(row)}
+                  >
                     {row.cells.map((cell) => {
                       return (
-                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                        <td {...cell.getCellProps()}>
+                          <Popover
+                            content={() => renderPopoverContent(cell)}
+                            arrowPointAtCenter
+                          >
+                            <Button
+                              className="w-full text-ellipsis overflow-hidden"
+                              type="text"
+                            >
+                              {cell.render('Cell')}
+                            </Button>
+                          </Popover>
+                        </td>
                       );
                     })}
                     <td>
