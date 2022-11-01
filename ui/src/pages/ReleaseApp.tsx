@@ -9,6 +9,7 @@ import { CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 import { TagsInput } from 'react-tag-input-component';
 import { ratings } from '../consts/ratings';
+import { useGlobalContext } from '../context/global/GlobalContext';
 const { Option } = Select;
 
 const categoriesOptions = [
@@ -29,6 +30,7 @@ const ratingOptions = [
 ];
 
 const ReleaseApp = () => {
+  const { setIsLoading } = useGlobalContext();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [rating, setRating] = useState('');
@@ -94,6 +96,7 @@ const ReleaseApp = () => {
 
     setHasError(false);
 
+    setIsLoading(true);
     const res = await appApi.releaseApp({ app: req });
     if (res.status === 201) {
       setHasError(false);
@@ -104,6 +107,7 @@ const ReleaseApp = () => {
       setMessage(res.message);
       console.log(res);
     }
+    setIsLoading(false);
   };
 
   const handleCategoriesChange = (value: string[]) => {

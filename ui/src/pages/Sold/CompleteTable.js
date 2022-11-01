@@ -43,21 +43,25 @@ export const CompleteTable = () => {
   };
 
   const acceptProposal = async (proposalId) => {
+    setIsLoading(true);
     const response = await proposalApi.acceptProposal(proposalId);
     if (response.status === 201) {
       fetchData();
     } else {
       console.log(response);
     }
+    setIsLoading(false);
   };
 
   const rejectProposal = async (proposalId) => {
+    setIsLoading(true);
     const response = await proposalApi.rejectProposal(proposalId);
     if (response.status === 201) {
       fetchData();
     } else {
       console.log(response);
     }
+    setIsLoading(false);
   };
 
   const defaultColumn = useMemo(() => {

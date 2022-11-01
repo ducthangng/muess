@@ -11,8 +11,10 @@ import MultiSelect from './MultiSelect';
 import { App } from '../models/AppDetailData';
 import { User } from '../models/User';
 import { proposalApi } from '../api/proposalApi';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function PurchasePopup(props) {
+  const { setIsLoading } = useGlobalContext();
   const licenseDetailsOptions = [
     { value: 'noncommercial_use', label: 'Noncommercial Use' },
     { value: 'commercial_use', label: 'Commercial Use' },
@@ -65,7 +67,7 @@ function PurchasePopup(props) {
 
   let navigate = useNavigate();
 
-  function redirect() {
+  const redirect = async () => {
     console.log('price: ', price);
     console.log('check: ', checked);
     console.log('details: ', details);
@@ -75,25 +77,22 @@ function PurchasePopup(props) {
       return;
     }
 
-    proposalApi
-      .createProposal({
-        appId: app.Record.assetId,
-        proposedPrice: price,
-        licenseDetails: details.join(';')
-      })
-      .then((result) => {
-        if (result === 'created') {
-          notify();
-          setTimeout(() => {
-            navigate('/proposals');
-          }, 6000);
-        }
-
-        if (result !== 'created') {
-          notifyFailure();
-        }
-      });
-  }
+    setIsLoading(true);
+    const result = await proposalApi.createProposal({
+      appId: app.Record.assetId,
+      proposedPrice: price,
+      licenseDetails: details.join(';')
+    });
+    setIsLoading(false);
+    if (result === 'created') {
+      notify();
+      setTimeout(() => {
+        navigate('/purchases');
+      }, 6000);
+    } else {
+      notifyFailure();
+    }
+  };
 
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
 
