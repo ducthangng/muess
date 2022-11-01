@@ -144,17 +144,24 @@ const AppDetail = () => {
             </div>
             <div
               className="app-detail-author"
-              style={{
-                position: 'relative',
-                top: '0',
-                left: '0',
-                backgroundColor: '#ffffff',
-                fontSize: '1.25rem',
-                fontWeight: '400',
-                color: '#FB7F4B'
-              }}
+              // style={{
+              //   position: 'relative',
+              //   top: '0',
+              //   left: '0',
+              //   width: '50%',
+              //   backgroundColor: '#ffffff',
+              //   fontSize: '1.25rem',
+              //   fontWeight: '400',
+              //   color: '#FB7F4B',
+              //   textOverflow: 'ellipsis',
+              //   whiteSpace: 'nowrap',
+              //   overflow: 'hidden',
+              //   cursor: 'pointer',
+              // }}
             >
-              Do not have this
+              {data.app?.Record?.creatorId.length === 0
+                ? defaultApp.Record.creatorId
+                : data.app?.Record.creatorId}
             </div>
             <div
               className="app-detail-types"
@@ -181,25 +188,25 @@ const AppDetail = () => {
                   ? defaultApp.Record.rating
                   : data.app?.Record.rating}
               </div>
-              <div
-                className="line"
-                style={{
-                  borderRight: '3px solid black',
-                  height: '30%',
-                  marginLeft: '0.5rem',
-                  marginRight: '0.5rem'
-                }}
-              ></div>
-              <div
-                className="app-detail-downloads"
-                style={{
-                  position: 'relative',
-                  backgroundColor: '#ffffff',
-                  fontSize: '1rem'
-                }}
-              >
-                Do not have this (download)
-              </div>
+              {/* <div
+              className="line"
+              style={{
+                borderRight: '3px solid black',
+                height: '30%',
+                marginLeft: '0.5rem',
+                marginRight: '0.5rem'
+              }}
+            ></div> */}
+              {/* <div
+              className="app-detail-downloads"
+              style={{
+                position: 'relative',
+                backgroundColor: '#ffffff',
+                fontSize: '1rem'
+              }}
+            >
+              Do not have this (download)
+            </div> */}
               <div
                 className="line"
                 style={{
@@ -235,7 +242,7 @@ const AppDetail = () => {
                 marginBottom: '1rem'
               }}
             >
-              Do not have this (Prices)
+              Average Prices
             </div>
             <button
               className="purchase_button"

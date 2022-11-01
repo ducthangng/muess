@@ -41,3 +41,22 @@
   height: 100vh;
   overflow-y: hidden;
 }
+
+.app-detail-author{
+  position: relative;
+  top: '0';
+  left: '0 ';
+  width: 50%;
+  background-color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 400px;
+  color: #FB7F4B;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.app-detail-author:hover{
+  overflow: visible;
+}
