@@ -217,7 +217,9 @@ const AppDetail = () => {
                   fontSize: '1rem'
                 }}
               >
-                Display This (categories)
+                {data.app?.Record.appCategories.length === 0
+                  ? defaultApp.Record.appCategories
+                  : data.app?.Record.appCategories}
               </div>
             </div>
             <div
