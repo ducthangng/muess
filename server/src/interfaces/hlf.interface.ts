@@ -19,6 +19,20 @@ export interface Proposal {
   status: string;
 }
 
+export interface ChaincodeProposal {
+  Key: string;
+  Record: {
+    assetType: string;
+    assetId: string;
+    appId: string;
+    buyerId: string;
+    sellerId: string;
+    proposedPrice: string;
+    licenseDetails: string;
+    status: string;
+  };
+}
+
 export interface LicenseData {
   Key: string;
   Record: License;

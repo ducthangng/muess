@@ -67,7 +67,7 @@ export const userApi = {
   },
 
   getInfoById: async (id: string) => {
-    const response = await fetch(`${apiUrl}/${encodeURIComponent(id)}`, {
+    const response = await fetch(`${apiUrl}/detail/${encodeURIComponent(id)}`, {
       method: 'GET',
       credentials: 'include'
     })

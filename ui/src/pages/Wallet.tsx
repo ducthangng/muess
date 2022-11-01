@@ -21,6 +21,7 @@ import { Wallet } from '../models/Wallet';
 
 function WalletOutline() {
   const [selected, setSelected] = useState('Monthly progress');
+  const [wallet, SetWallet] = useState<Wallet>();
   const [userData, setUserData] = useState<UserDataForWalletDisplay>();
   const defaultData = {
     labels: [...Import].map((data) => data.day.toString()),
@@ -42,22 +43,11 @@ function WalletOutline() {
     ]
   };
 
-  // let userData: UserDataForWalletDisplay;
-
-  // useEffect(() => {
-  //   if (selected === 'Monthly progress') {
-  //     changeToMonthly();
-  //   } else if (selected === 'Yearly progress') {
-  //     changeToYearly();
-  //   }
-  // }, [selected]);
-
-  const [wallet, SetWallet] = useState<Wallet>();
   useEffect(() => {
     userApi.getWallet().then((result) => {
       SetWallet(result);
     });
-  });
+  }, [wallet]);
 
   useEffect(() => {
     userApi.getWallet().then((result) => {
