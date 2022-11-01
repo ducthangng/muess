@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SideMenu.css';
 import Logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import * as BIIcons from 'react-icons/bi';
 import { authApi } from '../../api/authApi';
-
+import { userApi } from '../../api/userApi';
 const SideMenu = (props) => {
   const [open, setOpen] = useState(false);
   let navigate = useNavigate();
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleLogout = async () => {
     const res = await authApi.logout();
@@ -16,6 +18,18 @@ const SideMenu = (props) => {
     if (res.status === 200) {
       navigate('/');
     }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const currentUserResponse = await userApi.getCurrentUser();
+    const res = currentUserResponse.data.fullname;
+    const email = currentUserResponse.data.email;
+    setUser(res);
+    setEmail(email);
   };
 
   return (
@@ -161,16 +175,16 @@ const SideMenu = (props) => {
 
       <div className="account" onClick={() => setOpen(!open)}>
         <div className="account-info">
-          <div className="username">Bui Nhien Loc</div>
-          <div>nhienloc@gmail.com</div>
+          <div className="username">{user}</div>
+          <div>{email}</div>
         </div>
         <div className={`dropdown-menu ${open ? 'open' : ''}`}>
           <ul>
             <li>
               <a className="profile-item">
                 <div className="account-info">
-                  <div className="username">Bui Nhien Loc</div>
-                  <div className="email">nhienloc@gmail.com</div>
+                  <div className="username">{user}</div>
+                  <div className="email">{email}</div>
                   <div className="small-text">View account's information</div>
                 </div>
               </a>

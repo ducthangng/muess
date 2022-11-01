@@ -245,7 +245,7 @@ function PurchasePopup(props) {
                       max={100}
                       min="0"
                       style={{
-                        width: '3rem',
+                        width: '5rem',
                         height: '2rem',
                         borderRadius: '10px',
                         marginLeft: '0.5rem',
@@ -272,7 +272,10 @@ function PurchasePopup(props) {
                   >
                     Please select the service you want to be provided:
                   </div>
-                  <div className="purchase-popup-container-body-app-desired-serive-value">
+                  <div
+                    className="purchase-popup-container-body-app-desired-serive-value"
+                    style={{ margin: '1rem' }}
+                  >
                     {/* <MultiSelectDetails /> */}
                     <MultiSelect
                       options={licenseDetailsOptions}
