@@ -1,15 +1,15 @@
 import { Card, Form, Tag } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../assets/css/MockTest.css';
 import { App } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const MockProductLicense: React.FC<App> = ({ Key, Record }) => {
+const MyProductDetail: React.FC<App> = ({ Key, Record }) => {
   const navigate = useNavigate();
   return (
     <Form>
       <Card
-        onClick={() => navigate('/products/12')}
+        onClick={() => navigate(`/products/my-app/${Record.assetId}`)}
         hoverable
         className="card"
         cover={
@@ -32,4 +32,4 @@ const MockProductLicense: React.FC<App> = ({ Key, Record }) => {
   );
 };
 
-export default MockProductLicense;
+export default MyProductDetail;

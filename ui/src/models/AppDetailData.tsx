@@ -17,28 +17,19 @@ interface App {
   };
 }
 
-interface AppDetailDataLicense {
-  _id: string;
-  creatorId: string;
-  creatorName: string;
-  title: string;
-  description: string;
-  rated: string;
-  appType: string;
-  appPaymentMethod: string;
-  appCategories: string;
-  appTags: string[];
-  reviewer: string;
-  downloaded: number;
-  imageSrc: string;
-  licenseDetails: string;
-  appIcon: string; // link to database.
+interface License {
+  Key: string;
+  Record: {
+    assetType: string;
+    assetId: string;
+    creatorId: string;
+    licenseDetails: string;
+    ownerId: string;
+    appId: string;
+  };
 }
 
 interface CreateAppData {
-  assetType: string;
-  assetId: string; // queries
-  creatorId: string; // queries
   title: string;
   description: string;
   rating: string;
@@ -49,4 +40,4 @@ interface CreateAppData {
   appIconURL: string;
 }
 
-export type { App, AppDetailDataLicense, CreateAppData };
+export type { App, License, CreateAppData };

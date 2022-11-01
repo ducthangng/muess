@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Collapse } from 'antd';
 import Popup from 'reactjs-popup';
-import { App } from '../models/AppDetailData';
+import { App, License } from '../models/AppDetailData';
 import { Divider } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
 import { appApi } from '../api/appApi';
 import { userApi } from '../api/userApi';
+import { licenseApi } from '../api/licenseApi';
 import { User } from '../models/User';
+
+const { Panel } = Collapse;
 
 const defaultApp: App = {
   Key: '',
@@ -36,20 +40,39 @@ const defaultUser: User = {
   identity: ''
 };
 
-const AppDetail = () => {
+const defaultLicense: License[] = [
+  {
+    Key: '',
+    Record: {
+      appId: '',
+      assetType: '',
+      assetId: '',
+      creatorId: '',
+      licenseDetails: '',
+      ownerId: ''
+    }
+  }
+];
+
+const MyProductLicense = () => {
   const navigate = useNavigate();
+  const { appId } = useParams();
   const [data, setData] = useState({
     app: defaultApp,
-    user: defaultUser
+    user: defaultUser,
+    license: defaultLicense
   });
 
-  const { appId } = useParams();
   const [buttonPopup, setButtonPopup] = useState(false);
 
   useEffect(() => {
     if (appId?.length !== 0) {
       appApi.getAppById(appId as string).then((result) => {
         setData((state) => ({ ...state, app: result }));
+      });
+
+      licenseApi.getMyLicenseByAppId(appId as string).then((license) => {
+        setData((state) => ({ ...state, license: license }));
       });
     }
   }, [appId]);
@@ -64,15 +87,20 @@ const AppDetail = () => {
     }
   }, [data.app]);
 
+  const onChange = (key: string | string[]) => {
+    console.log(key);
+  };
+
+  // useEffect(() => {
+  //   if (data?.user?._id?.length !== 0) {
+
+  //   }
+  // }, [data.user]);
+
   return (
     <body className="app-detail-body">
       <SideMenu />
-      <PurchasePopup
-        trigger={buttonPopup}
-        setTrigger={setButtonPopup}
-        AppDetails={data.app}
-        Creator={data.user}
-      />
+      <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup} />
 
       <div
         className="app-detail"
@@ -143,20 +171,6 @@ const AppDetail = () => {
                 : data.app?.Record.title}
             </div>
             <div
-              className="app-detail-author"
-              style={{
-                position: 'relative',
-                top: '0',
-                left: '0',
-                backgroundColor: '#ffffff',
-                fontSize: '1.25rem',
-                fontWeight: '400',
-                color: '#FB7F4B'
-              }}
-            >
-              Do not have this
-            </div>
-            <div
               className="app-detail-types"
               style={{
                 position: 'relative',
@@ -191,16 +205,6 @@ const AppDetail = () => {
                 }}
               ></div>
               <div
-                className="app-detail-downloads"
-                style={{
-                  position: 'relative',
-                  backgroundColor: '#ffffff',
-                  fontSize: '1rem'
-                }}
-              >
-                Do not have this (download)
-              </div>
-              <div
                 className="line"
                 style={{
                   borderRight: '3px solid black',
@@ -220,38 +224,22 @@ const AppDetail = () => {
                 Display This (categories)
               </div>
             </div>
-            <div
-              className="app-detail-author"
-              style={{
-                position: 'relative',
-                top: '0',
-                left: '0',
-                backgroundColor: '#ffffff',
-                fontSize: '1.25rem',
-                fontWeight: '400',
-                color: '#FB7F4B',
-                marginBottom: '1rem'
-              }}
-            >
-              Do not have this (Prices)
-            </div>
-            <button
-              className="purchase_button"
-              onClick={() => setButtonPopup(true)}
-              style={{
-                background: '#FB7F4B',
-                color: '#FFFFFF',
-                fontWeight: 700,
-                fontSize: '14px',
-                lineHeight: '15px',
-                height: '2.25rem',
-                width: '20%',
-                borderRadius: '10px',
-                position: 'relative'
-              }}
-            >
-              Purchase
-            </button>
+
+            {/* <LicenseAppDetails /> */}
+            <Collapse defaultActiveKey={['1']} onChange={onChange}>
+              <Panel header="License Key" key="1">
+                {data?.license?.length !== 0 ? (
+                  <div>
+                    {data.license.map((license) => {
+                      return <p>{license.Record.assetId}</p>;
+                    })}
+                  </div>
+                ) : (
+                  <p>N/A</p>
+                )}
+              </Panel>
+            </Collapse>
+
             <img
               alt="AppImage"
               src={
@@ -342,7 +330,7 @@ const AppDetail = () => {
                 color: '#FB7F4B'
               }}
             >
-              {data.user?.fullname}
+              Do not have this (Username)
             </div>
             <div
               className="app-feedback-content"
@@ -366,4 +354,4 @@ const AppDetail = () => {
   );
 };
 
-export default AppDetail;
+export default MyProductLicense;

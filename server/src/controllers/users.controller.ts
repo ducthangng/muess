@@ -5,6 +5,7 @@ import userService from '@services/users.service';
 import { Proposal } from '@/interfaces/hlf.interface';
 import proposalService from '../services/proposal.service';
 import { RequestWithUser } from '../interfaces/auth.interface';
+import { ChaincodeProposal } from '../interfaces/hlf.interface';
 
 class UsersController {
   public userService = new userService();
@@ -46,7 +47,7 @@ class UsersController {
     next: NextFunction
   ) => {
     try {
-      const userId: string = req.params.id;
+      const userId: string = req.params.userId;
       const findOneUserData: User = await this.userService.findUserById(userId);
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
@@ -125,55 +126,58 @@ class UsersController {
     next: NextFunction
   ) => {
     try {
-      const userFromReq: User = req.user;
-      const user: User = await this.userService.findUserById(userFromReq._id);
+      console.log('start');
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
 
       if (user._id.length === 0) {
         res.status(404).json({ data: user, message: 'not found' });
         return;
       }
 
-      const userBoughtProposal: Proposal[] =
-        await this.proposalService.getProposalsByBuyerId(user, user._id);
+      const userBoughtProposal: ChaincodeProposal[] =
+        await this.proposalService.getProposalsByBuyerId(user, reqUser._id);
 
-      const userSoldProposal: Proposal[] =
-        await this.proposalService.getProposalsBySellerId(user, user._id);
+      const userSoldProposal: ChaincodeProposal[] =
+        await this.proposalService.getProposalsBySellerId(user, reqUser._id);
 
-      const boughtProposal: Proposal[] = userBoughtProposal.filter(
+      const boughtProposal: ChaincodeProposal[] = userBoughtProposal.filter(
         (proposal) => {
-          return proposal.status === 'accepted';
+          return proposal.Record.status === 'accepted';
         }
       );
-
-      const soldProposal: Proposal[] = userSoldProposal.filter((proposal) => {
-        return proposal.status === 'accepted';
-      });
+      const soldProposal: ChaincodeProposal[] = userSoldProposal.filter(
+        (proposal) => {
+          return proposal.Record.status === 'accepted';
+        }
+      );
 
       const spending: GraphData[] = [];
       const income: GraphData[] = [];
       let sumSpending = 0;
       let sumIncome = 0;
-      const today = new Date();
 
       boughtProposal.forEach((proposal, index) => {
         const graphData: GraphData = {
           unit: this.getTmr(index),
-          amount: proposal.proposedPrice
+          amount: parseInt(proposal.Record.proposedPrice)
         };
 
         spending.push(graphData);
-        sumSpending += proposal.proposedPrice;
+        sumSpending += parseInt(proposal.Record.proposedPrice);
       });
 
       soldProposal.forEach((proposal, index) => {
         const graphData: GraphData = {
           unit: this.getTmr(index),
-          amount: proposal.proposedPrice
+          amount: parseInt(proposal.Record.proposedPrice)
         };
 
         income.push(graphData);
-        sumIncome += proposal.proposedPrice;
+        sumIncome += parseInt(proposal.Record.proposedPrice);
       });
+
+      console.log('sum: ', sumIncome, sumSpending);
 
       const wallet: Wallet = {
         purchasedAppNumber: boughtProposal.length,

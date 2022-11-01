@@ -28,9 +28,14 @@ class UsersRoute implements Routes {
       this.usersController.getCurrentUser
     );
     this.router.get(
-      `${this.path}/:userId`,
+      `${this.path}/detail/:userId`,
       authMiddleware,
       this.usersController.getUserById
+    );
+    this.router.get(
+      `${this.path}/wallet`,
+      authMiddleware,
+      this.usersController.getWallet
     );
     this.router.get(
       `${this.path}/app`,
@@ -54,11 +59,6 @@ class UsersRoute implements Routes {
       this.usersController.updateUser
     );
     this.router.delete(`${this.path}`, this.usersController.deleteUser);
-    this.router.get(
-      `${this.path}/wallet`,
-      authMiddleware,
-      this.usersController.getWallet
-    );
   }
 }
 

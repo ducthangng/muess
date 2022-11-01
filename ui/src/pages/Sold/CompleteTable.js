@@ -1,26 +1,66 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useQuery } from 'react-query';
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination
 } from 'react-table';
-import MOCK_DATA from './MOCK_DATA.json';
+import { proposalApi } from '../../api/proposalApi';
 import { COLUMNS } from './columns.tsx';
+import MOCK_DATA from './MOCK_DATA.json';
 import { smartContractAPI } from '../../api/smartContract';
 import { SmartContract } from '../../models/hyperledger/smartContract';
 
 import './Table.css';
 
 import { GlobalFilter } from './GlobalFilter.tsx';
+import { userApi } from '../../api/userApi';
 
 export const CompleteTable = () => {
   const [visibility, setVisibility] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+  // const { data } = useQuery(['proposalSelection'], async () => {
+  //   return await proposalApi.getProposalByBuyerId();
+  // });
+  const [data, setData] = useState([]);
 
+  // const data = MOCK_DATA;
   // API:
   // const displayData: SmartContract[] = smartContractAPI.getAllContracts();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const currentUserResponse = await userApi.getCurrentUser();
+    const sellerId = currentUserResponse.data._id;
+    const response = await proposalApi.getProposalBySellerId(
+      encodeURIComponent(sellerId)
+    );
+
+    const proposalsData = response.data.map((item) => item.Record);
+    setData(proposalsData);
+  };
+
+  const acceptProposal = async (proposalId) => {
+    const response = await proposalApi.acceptProposal(proposalId);
+    if (response.status === 201) {
+      fetchData();
+    } else {
+      console.log(response);
+    }
+  };
+
+  const rejectProposal = async (proposalId) => {
+    const response = await proposalApi.rejectProposal(proposalId);
+    if (response.status === 201) {
+      fetchData();
+    } else {
+      console.log(response);
+    }
+  };
 
   const defaultColumn = useMemo(() => {
     return {
@@ -32,7 +72,6 @@ export const CompleteTable = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     state,
     setGlobalFilter,
@@ -95,13 +134,19 @@ export const CompleteTable = () => {
                       );
                     })}
                     <td>
-                      <div
-                        className={
-                          'status-button-' + row.original.license_status
-                        }
-                      >
-                        <button className="table-btn-accept">Accept</button>
-                        <button className="table-btn-decline">Decline</button>
+                      <div className={'status-button-' + row.original.status}>
+                        <button
+                          className="table-btn-accept"
+                          onClick={() => acceptProposal(row.original.assetId)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="table-btn-decline"
+                          onClick={() => rejectProposal(row.original.assetId)}
+                        >
+                          Decline
+                        </button>
                       </div>
                     </td>
                   </tr>

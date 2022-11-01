@@ -19,5 +19,97 @@ const SENDPOST = async (url: string, data: any) => {
     throw new Error('Network response was not ok.');
   });
 
-  return response.json();
+  return response;
+};
+
+export const proposalApi = {
+  createProposal: async (params: {
+    appId: string;
+    proposedPrice: number;
+    licenseDetails: string;
+  }) => {
+    const response = SENDPOST(`${apiUrl}`, params)
+      .then((data) => {
+        const x: string = data.message;
+        console.log('received: ', x);
+        return x;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  getProposalByBuyerId: async (BuyerId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/buyer/${BuyerId}`, {
+        method: 'GET',
+        credentials: 'include'
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getProposalBySellerId: async (BuyerId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/seller/${BuyerId}`, {
+        method: 'GET',
+        credentials: 'include'
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  acceptProposal: async (proposalId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/accept`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ proposalId: proposalId })
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  rejectProposal: async (proposalId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/reject`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ proposalId: proposalId })
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

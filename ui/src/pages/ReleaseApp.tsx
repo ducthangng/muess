@@ -1,67 +1,123 @@
 import '../assets/css/ReleaseApp.css';
-import React from 'react';
-import { Checkbox, Select } from 'antd';
+import React, { useEffect } from 'react';
+import { Select } from 'antd';
 import { useState } from 'react';
 import MultiSelect from '../components/MultiSelect';
-import DragAndDrop from '../components/DragDrop';
-import TextArea from 'antd/lib/input/TextArea';
-import DragAndDropMulti from '../components/DragDropMulti';
 import SideMenu from '../components/Header/SideMenu';
 import { appApi } from '../api/appApi';
-import { App, CreateAppData } from '../models/AppDetailData';
+import { CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
+import { TagsInput } from 'react-tag-input-component';
+const { Option } = Select;
 
-const options = [
-  { value: 'Educational', label: 'Educational' },
-  { value: 'Lifestyle', label: 'Lifestyle' },
-  { value: 'SocialMedia', label: 'Social media' },
-  { value: 'Productivity', label: 'Productivity' },
-  { value: 'Entertainment', label: 'Entertainment' },
-  { value: 'Game', label: 'Game' }
+const categoriesOptions = [
+  { value: 'educational', label: 'Educational' },
+  { value: 'lifestyle', label: 'Lifestyle' },
+  { value: 'social_media', label: 'Social Media' },
+  { value: 'productivity', label: 'Productivity' },
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'game', label: 'Game' }
+];
+
+const ratingOptions = [
+  { value: 'pegi3', label: 'PEGI 3 - Suitable for all ages' },
+  { value: 'pegi7', label: 'PEGI 7 - Suitable for young children' },
+  { value: 'pegi12', label: 'PEGI 12 - Suitable for children 12 and over' },
+  { value: 'pegi16', label: 'PEGI 16 - Suitable for children 16 and over' },
+  { value: 'pegi18', label: 'PEGI18 - Only suitable for adults' }
 ];
 
 const ReleaseApp = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [rating, setRating] = useState('');
   const [appType, setAppType] = useState('');
   const [appPaymentMethod, setAppPaymentMethod] = useState('');
-  const [appCategories, setAppCategories] = useState('');
+  const [appCategories, setAppCategories] = useState<string[]>([]);
   const [appImage, setAppImage] = useState('');
   const [appTags, setAppTags] = useState([] as string[]);
-  const [count, setCount] = React.useState(0);
-  const [count1, setCount1] = React.useState(0);
+  const [titleCount, setTitleCount] = React.useState(0);
+  const [descriptionCount, setDescriptionCount] = React.useState(0);
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
   let navigate = useNavigate();
 
-  const onRelease = () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const req: CreateAppData = {
       title,
       description,
       appType,
       appTags,
       paymentMethod: appPaymentMethod,
-      appCategories: [''],
-      creatorId: '',
-      rating: '',
-      appIconURL: '',
-      assetType: '',
-      assetId: ''
+      appCategories: appCategories,
+      rating: rating,
+      appIconURL: appImage
     };
 
-    appApi.releaseApp({ app: req }).then((status) => {
-      if (status) {
-        // proceed success
-        navigate('/products');
-      }
+    if (!title) {
+      setHasError(true);
+      setMessage('App Name cannot be empty!');
+      return;
+    }
+    if (!description) {
+      setHasError(true);
+      setMessage('Description cannot be empty!');
+      return;
+    }
+    if (!rating) {
+      setHasError(true);
+      setMessage('Please choose a Rating!');
+      return;
+    }
+    if (!appType) {
+      setHasError(true);
+      setMessage('Please choose a Type!');
+      return;
+    }
+    if (!appPaymentMethod) {
+      setHasError(true);
+      setMessage('Please choose a Payment method!');
+      return;
+    }
+    if (appCategories.length === 0) {
+      setHasError(true);
+      setMessage('Please choose at least 1 Category!');
+      return;
+    }
+    if (!appImage) {
+      setHasError(true);
+      setMessage('Please insert an App Image URL!');
+      return;
+    }
 
-      // proceed fail
-    });
+    setHasError(false);
+
+    const res = await appApi.releaseApp({ app: req });
+    if (res.status === 201) {
+      setHasError(false);
+      setMessage('Created app successfully');
+      navigate('/products');
+    } else {
+      setHasError(true);
+      setMessage(res.message);
+      console.log(res);
+    }
+  };
+
+  const handleCategoriesChange = (value: string[]) => {
+    setAppCategories(value);
+  };
+
+  const handleRatingChange = (value: string) => {
+    setRating(value);
   };
 
   return (
     <>
       <SideMenu />
       <div
-        className="Publish_Block"
+        className="Publish_Block py-10"
         style={{
           float: 'none',
           position: 'absolute',
@@ -70,372 +126,299 @@ const ReleaseApp = () => {
           transform: 'translate(-50%, -50%)'
         }}
       >
-        <div className="ReleaseTitle" style={{ fontWeight: '700' }}>
-          Upload an App
+        <div className="px-10">
+          <p
+            style={{
+              fontWeight: 600,
+              fontSize: '18px',
+              lineHeight: '24px',
+              color: '#3a001e'
+            }}
+          >
+            Upload an App
+          </p>
         </div>
         <div
           style={{
             border: '1px solid #E3E3E3',
-            position: 'relative',
-            top: '2rem'
+            marginBottom: '15px'
           }}
-        ></div>
-        <div className="release-form-1">
-          <div
+        />
+        <div className="px-10">
+          <p
             style={{
-              position: 'relative',
-              top: '45px',
-              left: '50px',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: '16px',
-              lineHeight: '19px',
-              color: '#3A001E'
+              lineHeight: '24px',
+              color: '#3a001e'
             }}
           >
             App Details
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              top: '70px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '12px',
-              lineHeight: '15px',
-              color: '#3A001E'
-            }}
-          >
-            App name
-          </div>
-          <div className="AppNameFill">
-            <input
-              maxLength={50}
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-            ></input>
-            <div
-              style={{
-                position: 'relative',
-                top: '55px',
-                left: '150px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3',
-                width: 'fit-content'
-              }}
-            >
-              This is how your app will appear on Müss
-            </div>
-            <div className="count1">{count}/50</div>
-          </div>
-          <div className="AppOrGame">
-            <div
-              style={{
-                position: 'relative',
-                top: '50px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              App or game
-            </div>
-            <div
-              style={{
-                position: 'relative',
-                top: '38px',
-                left: '150px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3',
-                width: 'fit-content'
-              }}
-            >
-              You can change this later
-            </div>
-            <label
-              style={{
-                position: 'relative',
-                top: '50px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              <input
-                type="radio"
-                name="choices1"
-                value="app"
-                className="form-check-input1"
-                onClick={(e) => setAppType('app')}
-              />
-              <div className="AppBox">App</div>
-
-              <input
-                type="radio"
-                name="choices1"
-                value="game"
-                className="form-check-input2"
-                onClick={(e) => setAppType('game')}
-              />
-              <div className="GameBox">Game</div>
-            </label>
-          </div>
-          <div className="FreeOrPaidOrRent">
-            <div
-              style={{
-                position: 'relative',
-                top: '35px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              Free, paid or rent
-            </div>
-            <div
-              style={{
-                position: 'relative',
-                top: '23px',
-                left: '150px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3',
-                width: 'fit-content'
-              }}
-            >
-              You can change this later
-            </div>
-            <label
-              style={{
-                position: 'relative',
-                top: '35px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              <input
-                type="radio"
-                name="choices2"
-                value="free"
-                className="form-check-input3"
-                onClick={(e) => setAppPaymentMethod('Free')}
-              />
-              <div className="FreeBox">Free</div>
-
-              <input
-                type="radio"
-                name="choices2"
-                value="game"
-                className="form-check-input4"
-                onClick={(e) => setAppPaymentMethod('Paid')}
-              />
-              <div className="PaidBox">Paid</div>
-
-              <input
-                type="radio"
-                name="choices2"
-                value="game"
-                className="form-check-input5"
-                onClick={(e) => setAppPaymentMethod('Rent')}
-              />
-              <div className="RentBox">Rent</div>
-            </label>
-          </div>
-
-          <div className="Appcategories">
-            <div
-              style={{
-                position: 'relative',
-                top: '0px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              App categories
-            </div>
-            <div
-              style={{
-                position: 'relative',
-                top: '5px',
-                left: '50px',
-                fontWeight: 700,
-                fontSize: '9px',
-                lineHeight: '11px',
-                color: '#A3A3A3'
-              }}
-            >
-              Choose categories and tags that best describe the content or main
-              functions of your app.These help{' '}
-            </div>
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              transform: 'rotate(90deg)',
-              left: '375px',
-              width: '300px',
-              top: '-100px',
-              borderTop: '2px solid #E3E3E3'
-            }}
-          />
-          <div
-            style={{
-              position: 'relative',
-              top: '5px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '9px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            customers discover apps{' '}
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              top: '20px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '12px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            Category
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              top: '50px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '12px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            Services
-          </div>
-          <Select
-            options={options}
-            placeholder={'Select a category'}
-            style={{
-              width: '325px',
-              position: 'relative',
-              left: '150px',
-              top: '-25px'
-            }}
-            onChange={(value) => setAppCategories(value)}
-          ></Select>
-          <MultiSelect />
-
-          <div className="DescBox">
-            <div
-              style={{
-                position: 'relative',
-                top: '22px',
-                left: '-30px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              Description
-            </div>
-            <TextArea
-              maxLength={1000}
-              onChange={(e) => setDescription(e.target.value)}
-            ></TextArea>
-            <div className="count2">{count1}/1000</div>
-          </div>
-          <div
-            style={{
-              width: '310px',
-              position: 'absolute',
-              left: '670px',
-              top: '310px'
-            }}
-          >
-            <div
-              style={{
-                position: 'relative',
-                top: '28px',
-                left: '-100px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              App icon
-            </div>
-            <DragAndDrop />
-          </div>
-          <div
-            style={{
-              width: '310px',
-              position: 'absolute',
-              left: '670px',
-              top: '402px'
-            }}
-          >
-            <div
-              style={{
-                position: 'relative',
-                top: '28px',
-                left: '-100px',
-                fontWeight: 700,
-                fontSize: '12px',
-                lineHeight: '15px',
-                color: '#3A001E'
-              }}
-            >
-              App Image
-            </div>
-            <input
-              style={{ borderColor: '#D7DBDB' }}
-              maxLength={1000}
-              onChange={(e) => setAppImage(e.target.value)}
-              value={appImage}
-            ></input>
-
-            <div className="count1">{count}/50</div>
-          </div>
-          <button
-            style={{
-              backgroundColor: '#FB7F4B',
-              color: 'white',
-              fontSize: '15px',
-              position: 'absolute',
-              top: '495px',
-              left: '485px',
-              borderRadius: '5px',
-              width: '80px',
-              height: '30px'
-            }}
-            onClick={onRelease}
-          >
-            Release
-          </button>
+          </p>
         </div>
+        <form onSubmit={handleSubmit}>
+          <div className="px-10 grid grid-cols-2 gap-20">
+            {/* Left Side */}
+            <div className="flex flex-col gap-3">
+              {/* Name */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  App Name
+                </div>
+                <div className="col-span-9 h-full flex flex-col gap-1">
+                  <input
+                    type="text"
+                    required
+                    className="h-full"
+                    maxLength={50}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      setTitleCount(e.target.value.length);
+                    }}
+                    value={title}
+                  />
+                  <div className="flex justify-between">
+                    <small
+                      style={{
+                        fontWeight: 700,
+                        fontSize: '9px',
+                        color: '#A3A3A3'
+                      }}
+                    >
+                      This is how your app will appear on Müss
+                    </small>
+                    <small>{titleCount}/50</small>
+                  </div>
+                </div>
+              </div>
+              {/* Type */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  Type
+                </div>
+                <div className="col-span-9 h-full flex gap-10">
+                  <div className="flex gap-1">
+                    <input
+                      type="radio"
+                      name="app_choice"
+                      value="app"
+                      checked={appType === 'app'}
+                      onChange={(e) => setAppType('app')}
+                    />
+                    <p>App</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <input
+                      type="radio"
+                      name="game_choice"
+                      value="game"
+                      checked={appType === 'game'}
+                      onChange={(e) => setAppType('game')}
+                    />
+                    <p>Game</p>
+                  </div>
+                </div>
+              </div>
+              {/* Payment */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  Payment via
+                </div>
+                <div className="col-span-9 h-full flex gap-10">
+                  <div className="flex gap-1">
+                    <input
+                      type="radio"
+                      name="paypal_choice"
+                      value="paypal"
+                      checked={appPaymentMethod === 'paypal'}
+                      onChange={(e) => setAppPaymentMethod('paypal')}
+                    />
+                    <p>Paypal</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <input
+                      type="radio"
+                      name="bitcoin_choice"
+                      value="bitcoin"
+                      checked={appPaymentMethod === 'bitcoin'}
+                      onChange={(e) => setAppPaymentMethod('bitcoin')}
+                    />
+                    <p>Bitcoin</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <input
+                      type="radio"
+                      name="ethereum_choice"
+                      value="ethereum"
+                      checked={appPaymentMethod === 'ethereum'}
+                      onChange={(e) => setAppPaymentMethod('ethereum')}
+                    />
+                    <p>Ethereum</p>
+                  </div>
+                </div>
+              </div>
+              {/* Rating */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3 my-auto"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  Rating
+                </div>
+                <div className="col-span-9 h-full flex flex-col gap-1">
+                  <Select onChange={handleRatingChange}>
+                    {ratingOptions.map((rating) => (
+                      <Option key={rating.value} value={rating.value}>
+                        {rating.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              {/* Categories */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3 my-auto"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  Categories
+                </div>
+                <div className="col-span-9 h-full flex flex-col gap-1">
+                  <MultiSelect
+                    options={categoriesOptions}
+                    handleChange={handleCategoriesChange}
+                  />
+                </div>
+              </div>
+              {/* Tags */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3 my-auto"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  Tags
+                </div>
+                <div className="col-span-9 h-full flex flex-col gap-1">
+                  <TagsInput
+                    classNames={{
+                      input: 'h-full w-full',
+                      tag: ''
+                    }}
+                    value={appTags}
+                    onChange={setAppTags}
+                    name="app tags"
+                    placeHolder="Add tags and hit Enter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side */}
+            <div className="flex flex-col gap-3">
+              {/* Description */}
+              <div className="grid grid-cols-12 h-full">
+                <div
+                  className="col-span-3"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  Description
+                </div>
+                <div className="col-span-9 h-full flex flex-col gap-1">
+                  <textarea
+                    required
+                    className="p-2 h-full border-2"
+                    maxLength={1000}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                      setDescriptionCount(e.target.value.length);
+                    }}
+                    value={description}
+                  />
+                  <div className="flex justify-end">
+                    <small>{descriptionCount}/1000</small>
+                  </div>
+                </div>
+              </div>
+              {/* App Image */}
+              <div className="grid grid-cols-12 h-[30px]">
+                <div
+                  className="col-span-3 my-auto"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    color: '#3A001E'
+                  }}
+                >
+                  App Image
+                </div>
+                <div className="col-span-9">
+                  <input
+                    type="url"
+                    className="h-full"
+                    maxLength={1000}
+                    onChange={(e) => {
+                      setAppImage(e.target.value);
+                    }}
+                    value={appImage}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="py-10 flex items-center flex flex-col">
+            {message && (
+              <div
+                className={`${
+                  hasError ? 'text-red-500' : 'text-green-500'
+                } py-2`}
+              >
+                {message}
+              </div>
+            )}
+            <input
+              className="w-fit px-4 my-2 py-2 bg-[#FB7F4B] text-white text-[15px]"
+              type="submit"
+              value="Release"
+            />
+          </div>
+        </form>
       </div>
     </>
   );

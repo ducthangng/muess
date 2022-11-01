@@ -18,20 +18,17 @@ import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
 import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
+// import EditApp from '../pages/EditApp';
 import Guard from '../guards/AuthGuard';
+import OwnedProducts from '../pages/MyProduct';
+import MyProductLicense from '../pages/MyProductLicense';
 
 export default function AppRoute() {
-  const AdminGuard: GuardEC = {
-    guardEntity: AdminEC
-  };
-
   return (
     <BrowserRouter>
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          {/* <Route element={<LoginLayout />}> */}
-          {/* <Route path="/" element={<Landingpage />} /> */}
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -48,10 +45,16 @@ export default function AppRoute() {
           <Route path="/offers" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
           <Route path="/products/:appId" element={<AppDetail />} />
+          <Route path="/products/my-app" element={<OwnedProducts />} />
+          <Route
+            path="/products/my-app/:appId"
+            element={<MyProductLicense />}
+          />
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
-          <Route path="/purchases" element={<PurchaseList />} />
+          <Route path="/proposals" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
+          {/* <Route path="/editapp" element={<EditApp />} /> */}
           {/* </Route> */}
 
           {/* admin routes */}

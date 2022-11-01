@@ -15,11 +15,13 @@ import { Link } from 'react-router-dom';
 import SideMenu from '../components/Header/SideMenu';
 import { userApi } from '../api/userApi';
 import { GraphDisplay, UserDataForWalletDisplay } from '../models/User';
-import { isNil } from 'lodash';
+import { isNil, result } from 'lodash';
 import { GraphData } from '../models/Wallet';
+import { Wallet } from '../models/Wallet';
 
-function Wallet() {
+function WalletOutline() {
   const [selected, setSelected] = useState('Monthly progress');
+  const [wallet, SetWallet] = useState<Wallet>();
   const [userData, setUserData] = useState<UserDataForWalletDisplay>();
   const defaultData = {
     labels: [...Import].map((data) => data.day.toString()),
@@ -41,15 +43,11 @@ function Wallet() {
     ]
   };
 
-  // let userData: UserDataForWalletDisplay;
-
-  // useEffect(() => {
-  //   if (selected === 'Monthly progress') {
-  //     changeToMonthly();
-  //   } else if (selected === 'Yearly progress') {
-  //     changeToYearly();
-  //   }
-  // }, [selected]);
+  useEffect(() => {
+    userApi.getWallet().then((result) => {
+      SetWallet(result);
+    });
+  }, []);
 
   useEffect(() => {
     userApi.getWallet().then((result) => {
@@ -185,8 +183,12 @@ function Wallet() {
                 style={{ width: '40%' }}
               ></img>
               <div className="purchased-data">
-                <div className="purchased-data-info">1,234 </div>
-                <div className="purchased-data-data">USD</div>
+                <div className="purchased-data-info">
+                  {/* {result.purchasedAppNumber} */}
+                </div>
+                <div className="purchased-data-data">
+                  {wallet?.purchasedAppNumber} License(s)
+                </div>
               </div>
             </div>
           </div>
@@ -205,8 +207,12 @@ function Wallet() {
                 style={{ width: '40%' }}
               ></img>
               <div className="sold-data">
-                <div className="sold-data-info">275</div>
-                <div className="sold-data-data">USD</div>
+                <div className="sold-data-info">
+                  {/* {result.soldAppNumber} */}
+                </div>
+                <div className="sold-data-data">
+                  {wallet?.soldAppNumber} License (s)
+                </div>
               </div>
             </div>
           </div>
@@ -225,8 +231,10 @@ function Wallet() {
                 style={{ width: '40%' }}
               ></img>
               <div className="income-data">
-                <div className="income-data-info">50,057</div>
-                <div className="income-data-data">USD</div>
+                <div className="income-data-info">
+                  {/* {result.moneyMade} */}
+                </div>
+                <div className="income-data-data">{wallet?.moneyMade} USD</div>
               </div>
             </div>
           </div>
@@ -245,8 +253,12 @@ function Wallet() {
                 style={{ width: '40%' }}
               ></img>
               <div className="balance-data">
-                <div className="balance-data-info">50,057</div>
-                <div className="balance-data-data">USD</div>
+                <div className="balance-data-info">
+                  {/* {result.totalBalance} */}
+                </div>
+                <div className="balance-data-data">
+                  {wallet?.totalBalance} USD
+                </div>
               </div>
             </div>
           </div>
@@ -265,8 +277,12 @@ function Wallet() {
                 style={{ width: '40%' }}
               ></img>
               <div className="purchased-data">
-                <div className="purchased-data-info">12,345</div>
-                <div className="purchased-data-data">USD</div>
+                <div className="purchased-data-info">
+                  {/* {result.moneySpend} */}
+                </div>
+                <div className="purchased-data-data">
+                  {wallet?.moneySpend} USD
+                </div>
               </div>
             </div>
           </div>
@@ -307,4 +323,4 @@ function Wallet() {
   );
 }
 
-export default Wallet;
+export default WalletOutline;

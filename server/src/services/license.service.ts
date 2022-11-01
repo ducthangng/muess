@@ -72,10 +72,6 @@ class LicenseService {
 
     return result.toString();
   }
-
-  // public async getLicenseByBuyerId(user: User, buyerId: string) {
-  //   return sampleLicense;
-  // }
 }
 
 export default LicenseService;

@@ -4,6 +4,7 @@ import { License } from '@/interfaces/hlf.interface';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import LicenseService from '../services/license.service';
 import UserService from '../services/users.service';
+import { LicenseData } from '../interfaces/hlf.interface';
 
 class LicenseController {
   public licenseService = new LicenseService();
@@ -82,6 +83,35 @@ class LicenseController {
       );
 
       res.status(200).json({ data: licenseData, message: 'Found' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getMyLicenseByAppId = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const reqUser: User = req.user;
+      const appId: string = req.params.appId;
+
+      const user: User = await this.userService.findUserById(reqUser._id);
+      if (user._id.length === 0) {
+        throw new Error('User not found');
+      }
+
+      const data: string = await this.licenseService.getLicenseByOwnerId(
+        user,
+        user._id
+      );
+
+      const license = JSON.parse(data) as LicenseData[];
+      console.log('data: ', data);
+      const result = license.filter((l) => l.Record.appId === appId);
+
+      res.status(200).json({ data: result, message: 'Found' });
     } catch (error) {
       next(error);
     }
