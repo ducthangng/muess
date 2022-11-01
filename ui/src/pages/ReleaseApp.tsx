@@ -11,13 +11,22 @@ import { appApi } from '../api/appApi';
 import { App, CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 
-const options = [
-  { value: 'Educational', label: 'Educational' },
-  { value: 'Lifestyle', label: 'Lifestyle' },
-  { value: 'SocialMedia', label: 'Social media' },
-  { value: 'Productivity', label: 'Productivity' },
-  { value: 'Entertainment', label: 'Entertainment' },
-  { value: 'Game', label: 'Game' }
+const categoriesOptions = [
+  { value: 'educational', label: 'Educational' },
+  { value: 'lifestyle', label: 'Lifestyle' },
+  { value: 'social_media', label: 'Social Media' },
+  { value: 'productivity', label: 'Productivity' },
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'game', label: 'Game' }
+];
+
+const licenseDetailsOptions = [
+  { value: 'noncommercial_use', label: 'Noncommercial Use' },
+  { value: 'commercial_use', label: 'Commercial Use' },
+  { value: 'resell', label: 'Resell license' },
+  { value: 'read', label: 'Read Source Code' },
+  { value: 'modify', label: 'Modify Source Code' },
+  { value: 'derivative', label: 'Sell derivatives' }
 ];
 
 const ReleaseApp = () => {
@@ -52,6 +61,14 @@ const ReleaseApp = () => {
 
       // proceed fail
     });
+  };
+
+  const handleLicenseDetailsChange = (value: string[]) => {
+    console.log(`selected ${value}`);
+  };
+
+  const handleCategoriesChange = (value: string[]) => {
+    console.log(`selected ${value}`);
   };
 
   return (
@@ -307,58 +324,36 @@ const ReleaseApp = () => {
           >
             customers discover apps{' '}
           </div>
-          <div
-            style={{
-              position: 'relative',
-              top: '27px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '12px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            Category
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              top: '74px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '12px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            Services
-          </div>
-          <div>
-            <select
-              name="gender"
+          <div className="flex gap-10 pl-12 pt-5">
+            <div
               style={{
-                fontWeight: 400,
+                fontWeight: 700,
                 fontSize: '12px',
-                width: '30%',
-                left: '14%',
-                padding: '0.25rem',
-                position: 'relative',
-                top: '0',
-                borderColor: '#FFE7D4',
-                backgroundColor: '#FFFFFF',
-                color: '#3A001E',
-                borderWidth: '2px',
-                borderRadius: '5px'
+                color: '#A3A3A3'
               }}
             >
-              <option value="family">Family</option>
-              <option value="entertainment">Entertainment</option>
-              <option value="lifestyle">Lifestyle</option>
-              <option value="game">Game</option>
-              <option value="other">Other</option>
-            </select>
+              Category
+            </div>
+            <MultiSelect
+              options={licenseDetailsOptions}
+              handleChange={handleLicenseDetailsChange}
+            />
           </div>
-          <MultiSelect />
+          <div className="flex gap-10 pl-12 pt-5">
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: '12px',
+                color: '#A3A3A3'
+              }}
+            >
+              Services
+            </div>
+            <MultiSelect
+              options={categoriesOptions}
+              handleChange={handleCategoriesChange}
+            />
+          </div>
 
           <div className="DescBox">
             <div
