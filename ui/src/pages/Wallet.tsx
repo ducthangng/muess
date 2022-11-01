@@ -43,53 +43,57 @@ function WalletOutline() {
     ]
   };
 
+  const fetchWallet = async () => {
+    const res = await userApi.getWallet();
+    SetWallet(res);
+  };
+
   useEffect(() => {
-    userApi.getWallet().then((result) => {
-      SetWallet(result);
-    });
+    fetchWallet();
   }, []);
 
   useEffect(() => {
-    userApi.getWallet().then((result) => {
-      let largerGraphData: GraphData[] =
-        result.spending.length > result.income.length
-          ? result.spending
-          : result.income;
+    if (!wallet) {
+      return;
+    }
+    let largerGraphData: GraphData[] =
+      wallet.spending.length > wallet.income.length
+        ? wallet.spending
+        : wallet.income;
 
-      const labels = largerGraphData.map((spending) => {
-        return spending.unit;
-      });
-
-      // Merge result.spending and result.income then sort from small to big (date/unit: '2022-10-31')
-
-      const purchased: GraphDisplay = {
-        label: 'Purchased',
-        data: result.spending.map((x) => {
-          return x.amount;
-        }),
-        backgroundColor: ['#FB7F4B'],
-        borderColor: '#FB7F4B',
-        borderWidth: 2
-      };
-
-      const sold: GraphDisplay = {
-        label: 'Income',
-        data: result.income.map((x) => {
-          return x.amount;
-        }),
-        backgroundColor: ['#C4515F'],
-        borderColor: '#C4515F',
-        borderWidth: 2
-      };
-
-      let sumDataSet: GraphDisplay[] = [purchased, sold];
-
-      setUserData({
-        datasets: sumDataSet,
-        labels: labels
-      });
+    const labels = largerGraphData.map((spending) => {
+      return spending.unit;
     });
-  }, []);
+
+    // Merge wallet.spending and wallet.income then sort from small to big (date/unit: '2022-10-31')
+
+    const purchased: GraphDisplay = {
+      label: 'Purchased',
+      data: wallet.spending.map((x) => {
+        return x.amount;
+      }),
+      backgroundColor: ['#FB7F4B'],
+      borderColor: '#FB7F4B',
+      borderWidth: 2
+    };
+
+    const sold: GraphDisplay = {
+      label: 'Income',
+      data: wallet.income.map((x) => {
+        return x.amount;
+      }),
+      backgroundColor: ['#C4515F'],
+      borderColor: '#C4515F',
+      borderWidth: 2
+    };
+
+    let sumDataSet: GraphDisplay[] = [purchased, sold];
+
+    setUserData({
+      datasets: sumDataSet,
+      labels: labels
+    });
+  }, [wallet]);
 
   // const changeToYearly = async () =>
   //   setUserData({
