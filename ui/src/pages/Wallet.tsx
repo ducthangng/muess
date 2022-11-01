@@ -18,8 +18,10 @@ import { GraphDisplay, UserDataForWalletDisplay } from '../models/User';
 import { isNil, result } from 'lodash';
 import { GraphData } from '../models/Wallet';
 import { Wallet } from '../models/Wallet';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function WalletOutline() {
+  const { setIsLoading } = useGlobalContext();
   const [selected, setSelected] = useState('Monthly progress');
   const [wallet, SetWallet] = useState<Wallet>();
   const [userData, setUserData] = useState<UserDataForWalletDisplay>();
@@ -44,8 +46,10 @@ function WalletOutline() {
   };
 
   const fetchWallet = async () => {
+    setIsLoading(true);
     const res = await userApi.getWallet();
     SetWallet(res);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -56,6 +60,7 @@ function WalletOutline() {
     if (!wallet) {
       return;
     }
+    setIsLoading(true);
     let largerGraphData: GraphData[] =
       wallet.spending.length > wallet.income.length
         ? wallet.spending
@@ -93,6 +98,7 @@ function WalletOutline() {
       datasets: sumDataSet,
       labels: labels
     });
+    setIsLoading(false);
   }, [wallet]);
 
   // const changeToYearly = async () =>
@@ -173,7 +179,7 @@ function WalletOutline() {
           }}
         >
           <div className="purchased-container">
-            <div className="purchased-header">Purchased Apps</div>
+            <div className="purchased-header">Purchased</div>
             <div
               style={{
                 display: 'flex',
@@ -197,7 +203,7 @@ function WalletOutline() {
             </div>
           </div>
           <div className="sold-container">
-            <div className="sold-header">Sold-App Numbers</div>
+            <div className="sold-header">Sold</div>
             <div
               style={{
                 display: 'flex',

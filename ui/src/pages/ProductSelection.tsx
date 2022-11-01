@@ -12,7 +12,7 @@ import { Empty } from 'antd';
 import { useGlobalContext } from '../context/global/GlobalContext';
 
 function ProductSelection() {
-  const { setIsLoading, isLoading } = useGlobalContext();
+  const { setIsLoading } = useGlobalContext();
   const { data } = useQuery(['productSelection'], async () => {
     setIsLoading(true);
     const res = await appApi.getAllApps();

@@ -6,12 +6,15 @@ import { Pagination } from 'antd';
 import { Button } from 'antd';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function OwnedProducts() {
-  const navigate = useNavigate();
+  const { setIsLoading } = useGlobalContext();
   const { data } = useQuery(['getOwnedApps'], async () => {
-    return await appApi.getOwnedApps();
+    setIsLoading(true);
+    const res = await appApi.getOwnedApps();
+    setIsLoading(false);
+    return res;
   });
 
   return (
