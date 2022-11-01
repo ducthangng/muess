@@ -6,12 +6,12 @@ import { NavLink } from 'react-router-dom';
 import * as BIIcons from 'react-icons/bi';
 import { authApi } from '../../api/authApi';
 import { userApi } from '../../api/userApi';
-
 const SideMenu = (props) => {
   const [open, setOpen] = useState(false);
   const [fullname, setFullname] = useState('');
-  const [email, setEmail] = useState('');
   let navigate = useNavigate();
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
 
   const getUserInfo = async () => {
     let res = await userApi.getCurrentUser();
