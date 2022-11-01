@@ -47,7 +47,7 @@ function WalletOutline() {
     userApi.getWallet().then((result) => {
       SetWallet(result);
     });
-  }, [wallet]);
+  }, []);
 
   useEffect(() => {
     userApi.getWallet().then((result) => {
@@ -186,7 +186,9 @@ function WalletOutline() {
                 <div className="purchased-data-info">
                   {/* {result.purchasedAppNumber} */}
                 </div>
-                <div className="purchased-data-data">USD</div>
+                <div className="purchased-data-data">
+                  {wallet?.purchasedAppNumber} License(s)
+                </div>
               </div>
             </div>
           </div>
@@ -208,7 +210,9 @@ function WalletOutline() {
                 <div className="sold-data-info">
                   {/* {result.soldAppNumber} */}
                 </div>
-                <div className="sold-data-data">USD</div>
+                <div className="sold-data-data">
+                  {wallet?.soldAppNumber} License (s)
+                </div>
               </div>
             </div>
           </div>
@@ -230,7 +234,7 @@ function WalletOutline() {
                 <div className="income-data-info">
                   {/* {result.moneyMade} */}
                 </div>
-                <div className="income-data-data">USD</div>
+                <div className="income-data-data">{wallet?.moneyMade} USD</div>
               </div>
             </div>
           </div>
@@ -252,7 +256,9 @@ function WalletOutline() {
                 <div className="balance-data-info">
                   {/* {result.totalBalance} */}
                 </div>
-                <div className="balance-data-data">USD</div>
+                <div className="balance-data-data">
+                  {wallet?.totalBalance} USD
+                </div>
               </div>
             </div>
           </div>
@@ -274,7 +280,9 @@ function WalletOutline() {
                 <div className="purchased-data-info">
                   {/* {result.moneySpend} */}
                 </div>
-                <div className="purchased-data-data">USD</div>
+                <div className="purchased-data-data">
+                  {wallet?.moneySpend} USD
+                </div>
               </div>
             </div>
           </div>
