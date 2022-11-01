@@ -16,8 +16,12 @@ export const COLUMNS = [
     accessor: 'proposedPrice'
   },
   {
+    Header: 'License Details',
+    accessor: 'licenseDetails'
+  },
+  {
     Header: 'License ID',
-    accessor: 'license_id'
+    accessor: 'licenseId'
   },
   {
     Header: 'Status',

@@ -18,8 +18,10 @@ import { GraphDisplay, UserDataForWalletDisplay } from '../models/User';
 import { isNil, result } from 'lodash';
 import { GraphData } from '../models/Wallet';
 import { Wallet } from '../models/Wallet';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function WalletOutline() {
+  const { setIsLoading } = useGlobalContext();
   const [selected, setSelected] = useState('Monthly progress');
   const [wallet, SetWallet] = useState<Wallet>();
   const [userData, setUserData] = useState<UserDataForWalletDisplay>();
@@ -43,53 +45,61 @@ function WalletOutline() {
     ]
   };
 
+  const fetchWallet = async () => {
+    setIsLoading(true);
+    const res = await userApi.getWallet();
+    SetWallet(res);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    userApi.getWallet().then((result) => {
-      SetWallet(result);
-    });
+    fetchWallet();
   }, []);
 
   useEffect(() => {
-    userApi.getWallet().then((result) => {
-      let largerGraphData: GraphData[] =
-        result.spending.length > result.income.length
-          ? result.spending
-          : result.income;
+    if (!wallet) {
+      return;
+    }
+    setIsLoading(true);
+    let largerGraphData: GraphData[] =
+      wallet.spending.length > wallet.income.length
+        ? wallet.spending
+        : wallet.income;
 
-      const labels = largerGraphData.map((spending) => {
-        return spending.unit;
-      });
-
-      // Merge result.spending and result.income then sort from small to big (date/unit: '2022-10-31')
-
-      const purchased: GraphDisplay = {
-        label: 'Purchased',
-        data: result.spending.map((x) => {
-          return x.amount;
-        }),
-        backgroundColor: ['#FB7F4B'],
-        borderColor: '#FB7F4B',
-        borderWidth: 2
-      };
-
-      const sold: GraphDisplay = {
-        label: 'Income',
-        data: result.income.map((x) => {
-          return x.amount;
-        }),
-        backgroundColor: ['#C4515F'],
-        borderColor: '#C4515F',
-        borderWidth: 2
-      };
-
-      let sumDataSet: GraphDisplay[] = [purchased, sold];
-
-      setUserData({
-        datasets: sumDataSet,
-        labels: labels
-      });
+    const labels = largerGraphData.map((spending) => {
+      return spending.unit;
     });
-  }, []);
+
+    // Merge wallet.spending and wallet.income then sort from small to big (date/unit: '2022-10-31')
+
+    const purchased: GraphDisplay = {
+      label: 'Purchased',
+      data: wallet.spending.map((x) => {
+        return x.amount;
+      }),
+      backgroundColor: ['#FB7F4B'],
+      borderColor: '#FB7F4B',
+      borderWidth: 2
+    };
+
+    const sold: GraphDisplay = {
+      label: 'Income',
+      data: wallet.income.map((x) => {
+        return x.amount;
+      }),
+      backgroundColor: ['#C4515F'],
+      borderColor: '#C4515F',
+      borderWidth: 2
+    };
+
+    let sumDataSet: GraphDisplay[] = [purchased, sold];
+
+    setUserData({
+      datasets: sumDataSet,
+      labels: labels
+    });
+    setIsLoading(false);
+  }, [wallet]);
 
   // const changeToYearly = async () =>
   //   setUserData({
@@ -163,13 +173,13 @@ function WalletOutline() {
           style={{
             float: 'none',
             position: 'absolute',
-            top: '13%',
+            top: '15%',
             left: '48.61%',
             transform: 'translate(-50%, -50%)'
           }}
         >
           <div className="purchased-container">
-            <div className="purchased-header">Purchased Apps</div>
+            <div className="purchased-header">Purchased</div>
             <div
               style={{
                 display: 'flex',
@@ -184,16 +194,16 @@ function WalletOutline() {
               ></img>
               <div className="purchased-data">
                 <div className="purchased-data-info">
-                  {/* {result.purchasedAppNumber} */}
+                  {wallet?.purchasedAppNumber}
                 </div>
-                <div className="purchased-data-data">
-                  {wallet?.purchasedAppNumber} License(s)
+                <div className="purchased-data-data" style={{ width: '65%' }}>
+                  License(s)
                 </div>
               </div>
             </div>
           </div>
           <div className="sold-container">
-            <div className="sold-header">Sold-App Numbers</div>
+            <div className="sold-header">Sold</div>
             <div
               style={{
                 display: 'flex',
@@ -207,11 +217,9 @@ function WalletOutline() {
                 style={{ width: '40%' }}
               ></img>
               <div className="sold-data">
-                <div className="sold-data-info">
-                  {/* {result.soldAppNumber} */}
-                </div>
-                <div className="sold-data-data">
-                  {wallet?.soldAppNumber} License (s)
+                <div className="sold-data-info">{wallet?.soldAppNumber}</div>
+                <div className="sold-data-data" style={{ width: '65%' }}>
+                  License(s)
                 </div>
               </div>
             </div>
@@ -231,10 +239,11 @@ function WalletOutline() {
                 style={{ width: '40%' }}
               ></img>
               <div className="income-data">
-                <div className="income-data-info">
-                  {/* {result.moneyMade} */}
+                <div className="income-data-info">{wallet?.moneyMade}</div>
+                <div className="income-data-data" style={{ width: '65%' }}>
+                  {' '}
+                  USD
                 </div>
-                <div className="income-data-data">{wallet?.moneyMade} USD</div>
               </div>
             </div>
           </div>
@@ -253,11 +262,9 @@ function WalletOutline() {
                 style={{ width: '40%' }}
               ></img>
               <div className="balance-data">
-                <div className="balance-data-info">
-                  {/* {result.totalBalance} */}
-                </div>
-                <div className="balance-data-data">
-                  {wallet?.totalBalance} USD
+                <div className="balance-data-info">{wallet?.totalBalance}</div>
+                <div className="balance-data-data" style={{ width: '65%' }}>
+                  USD
                 </div>
               </div>
             </div>
@@ -277,11 +284,9 @@ function WalletOutline() {
                 style={{ width: '40%' }}
               ></img>
               <div className="purchased-data">
-                <div className="purchased-data-info">
-                  {/* {result.moneySpend} */}
-                </div>
-                <div className="purchased-data-data">
-                  {wallet?.moneySpend} USD
+                <div className="purchased-data-info">{wallet?.moneySpend}</div>
+                <div className="purchased-data-data" style={{ width: '65%' }}>
+                  USD
                 </div>
               </div>
             </div>

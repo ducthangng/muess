@@ -42,7 +42,7 @@ export default function AppRoute() {
             }
           />
           <Route path="/products" element={<ProductSelection />} />
-          <Route path="/offers" element={<SoldList />} />
+          <Route path="/sales" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
           <Route path="/products/:appId" element={<AppDetail />} />
           <Route path="/products/my-app" element={<OwnedProducts />} />
@@ -51,7 +51,7 @@ export default function AppRoute() {
             element={<MyProductLicense />}
           />
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
-          <Route path="/proposals" element={<PurchaseList />} />
+          <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
           {/* <Route path="/editapp" element={<EditApp />} /> */}

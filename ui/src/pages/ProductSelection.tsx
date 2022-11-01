@@ -8,10 +8,16 @@ import { App } from '../models/AppDetailData';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 import { isMapIterator } from 'util/types';
+import { Empty } from 'antd';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function ProductSelection() {
+  const { setIsLoading } = useGlobalContext();
   const { data } = useQuery(['productSelection'], async () => {
-    return await appApi.getAllApps();
+    setIsLoading(true);
+    const res = await appApi.getAllApps();
+    setIsLoading(false);
+    return res;
   });
 
   return (
@@ -46,7 +52,7 @@ function ProductSelection() {
               }}
             >
               <div>
-                <Button ghost shape="default" size="middle">
+                <Button shape="default" size="middle">
                   Featured Apps
                 </Button>
                 <Button
@@ -72,6 +78,11 @@ function ProductSelection() {
                   );
                 })}
             </div>
+            {(!data || data.length <= 0) && (
+              <div className="mx-auto my-auto">
+                <Empty />
+              </div>
+            )}
             <br></br>
             <Row justify="center">
               <Pagination

@@ -16,8 +16,10 @@ import { GlobalFilter } from './GlobalFilter.tsx';
 import { userApi } from '../../api/userApi';
 import { appApi } from '../../api/appApi';
 import moment from 'moment';
+import { useGlobalContext } from '../../context/global/GlobalContext';
 
 export const CompleteTable = () => {
+  const { setIsLoading } = useGlobalContext();
   const columns = useMemo(() => COLUMNS, []);
   const [data, setData] = useState([]);
   const [currentFolderData, setCurrentFolderData] = useState();
@@ -28,6 +30,7 @@ export const CompleteTable = () => {
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     const currentUserResponse = await userApi.getCurrentUser();
     const buyerId = currentUserResponse.data._id;
     const response = await proposalApi.getProposalByBuyerId(
@@ -37,6 +40,7 @@ export const CompleteTable = () => {
     const proposalsData = response.data.map((item) => item.Record);
     console.log(proposalsData);
     setData(proposalsData);
+    setIsLoading(false);
   };
 
   // API:

@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 import MyProductDetail from '../components/MyProductDetail';
 import SideMenu from '../components/Header/SideMenu';
-import { Row, Divider } from 'antd';
+import { Row, Divider, Empty } from 'antd';
 import { Pagination } from 'antd';
 import { Button } from 'antd';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function OwnedProducts() {
-  const navigate = useNavigate();
+  const { setIsLoading } = useGlobalContext();
   const { data } = useQuery(['getOwnedApps'], async () => {
-    return await appApi.getOwnedApps();
+    setIsLoading(true);
+    const res = await appApi.getOwnedApps();
+    setIsLoading(false);
+    return res;
   });
 
   return (
@@ -67,6 +70,11 @@ function OwnedProducts() {
                   );
                 })}
             </div>
+            {(!data || data.length <= 0) && (
+              <div className="mx-auto my-auto">
+                <Empty />
+              </div>
+            )}
             <br></br>
             <Row justify="center">
               <Pagination

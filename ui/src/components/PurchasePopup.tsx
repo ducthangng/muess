@@ -535,15 +535,16 @@ function PurchasePopup(props) {
                   src={app.Record.appIconURL}
                   alt={'sample'}
                   style={{
-                    width: '15%',
-                    height: '50%',
+                    width: '80px',
+                    height: '80px',
                     backgroundImage: app.Record.appIconURL,
                     float: 'right',
                     position: 'absolute',
                     margin: '1rem',
                     top: '0',
                     borderRadius: '10px',
-                    right: '0'
+                    right: '0',
+                    objectFit: 'cover'
                   }}
                 ></img>
                 <div

@@ -217,7 +217,9 @@ const AppDetail = () => {
                   fontSize: '1rem'
                 }}
               >
-                Display This (categories)
+                {data.app?.Record.appCategories.length === 0
+                  ? defaultApp.Record.appCategories
+                  : data.app?.Record.appCategories}
               </div>
             </div>
             <div
@@ -313,7 +315,7 @@ const AppDetail = () => {
                 ? defaultApp.Record.description
                 : data.app?.Record.description}
             </div>
-            <div
+            {/* <div
               className="app-feedback-title"
               style={{
                 position: 'relative',
@@ -358,7 +360,7 @@ const AppDetail = () => {
               }}
             >
               Do not have this (feedback content)
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

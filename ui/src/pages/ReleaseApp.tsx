@@ -8,6 +8,7 @@ import { appApi } from '../api/appApi';
 import { CreateAppData } from '../models/AppDetailData';
 import { useNavigate } from 'react-router-dom';
 import { TagsInput } from 'react-tag-input-component';
+import { ratings } from '../consts/ratings';
 const { Option } = Select;
 
 const categoriesOptions = [
@@ -20,11 +21,11 @@ const categoriesOptions = [
 ];
 
 const ratingOptions = [
-  { value: 'pegi3', label: 'PEGI 3 - Suitable for all ages' },
-  { value: 'pegi7', label: 'PEGI 7 - Suitable for young children' },
-  { value: 'pegi12', label: 'PEGI 12 - Suitable for children 12 and over' },
-  { value: 'pegi16', label: 'PEGI 16 - Suitable for children 16 and over' },
-  { value: 'pegi18', label: 'PEGI18 - Only suitable for adults' }
+  { value: 'pegi3', label: ratings['pegi3'] },
+  { value: 'pegi7', label: ratings['pegi7'] },
+  { value: 'pegi12', label: ratings['pegi12'] },
+  { value: 'pegi16', label: ratings['pegi16'] },
+  { value: 'pegi18', label: ratings['pegi18'] }
 ];
 
 const ReleaseApp = () => {

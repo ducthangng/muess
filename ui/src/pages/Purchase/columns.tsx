@@ -15,13 +15,13 @@ export const COLUMNS = [
     Header: 'Price',
     accessor: 'proposedPrice'
   },
-  // {
-  //   Header: 'Purchased Date',
-  //   accessor: 'purchased_date'
-  // },
+  {
+    Header: 'License Details',
+    accessor: 'licenseDetails'
+  },
   {
     Header: 'License ID',
-    accessor: 'license_id'
+    accessor: 'licenseId'
   },
   {
     Header: 'License Status',
