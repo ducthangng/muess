@@ -16,20 +16,21 @@ import { userApi } from '../../api/userApi';
 import { appApi } from '../../api/appApi';
 import moment from 'moment';
 import { ratings } from '../../consts/ratings';
+import { useGlobalContext } from '../../context/global/GlobalContext';
 
 export const CompleteTable = () => {
-  const [visibility, setVisibility] = useState(true);
+  const { setIsLoading } = useGlobalContext();
   const columns = useMemo(() => COLUMNS, []);
   const [data, setData] = useState([]);
   const [currentFolderData, setCurrentFolderData] = useState();
   const [currentBuyerData, setCurrentBuyerData] = useState();
-  const [currentLicenseData, setCurrentLicenseData] = useState();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     const currentUserResponse = await userApi.getCurrentUser();
     const sellerId = currentUserResponse.data._id;
     const response = await proposalApi.getProposalBySellerId(
@@ -38,6 +39,7 @@ export const CompleteTable = () => {
 
     const proposalsData = response.data.map((item) => item.Record);
     setData(proposalsData);
+    setIsLoading(false);
   };
 
   const acceptProposal = async (proposalId) => {

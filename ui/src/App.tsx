@@ -6,17 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppRoute from './routes/routes';
+import LoadingOverlay from './components/LoadingOverlay';
+import { GlobalProvider } from './context/global/GlobalContext';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      {/* <ToastContainer */}
-      {/* <ReleaseApp/> */}
-
-      {/* <About /> */}
-
       {/* <ToastContainer
         position="bottom-left"
         autoClose={5000}
@@ -30,7 +27,11 @@ function App() {
         theme="light"
       /> */}
       <QueryClientProvider client={queryClient}>
-        <AppRoute />
+        <GlobalProvider>
+          <LoadingOverlay>
+            <AppRoute />
+          </LoadingOverlay>
+        </GlobalProvider>
       </QueryClientProvider>
     </>
   );

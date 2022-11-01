@@ -9,10 +9,15 @@ import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 import { isMapIterator } from 'util/types';
 import { Empty } from 'antd';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 function ProductSelection() {
+  const { setIsLoading, isLoading } = useGlobalContext();
   const { data } = useQuery(['productSelection'], async () => {
-    return await appApi.getAllApps();
+    setIsLoading(true);
+    const res = await appApi.getAllApps();
+    setIsLoading(false);
+    return res;
   });
 
   return (
