@@ -8,6 +8,7 @@ import { App } from '../models/AppDetailData';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 import { isMapIterator } from 'util/types';
+import { Empty } from 'antd';
 
 function ProductSelection() {
   const { data } = useQuery(['productSelection'], async () => {
@@ -72,6 +73,11 @@ function ProductSelection() {
                   );
                 })}
             </div>
+            {(!data || data.length <= 0) && (
+              <div className="mx-auto my-auto">
+                <Empty />
+              </div>
+            )}
             <br></br>
             <Row justify="center">
               <Pagination

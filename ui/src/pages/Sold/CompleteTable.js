@@ -199,7 +199,7 @@ export const CompleteTable = () => {
                     </span>
                   </th>
                 ))}
-                <th>Pending</th>
+                <th>Action</th>
               </tr>
             ))}
           </thead>

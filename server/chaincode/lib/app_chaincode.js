@@ -138,6 +138,7 @@ class Chaincode extends Contract {
       sellerId: app.creatorId,
       proposedPrice: proposedPrice,
       licenseDetails: licenseDetails,
+      licenseId: "",
       status: 'pending'
     };
 
@@ -174,6 +175,10 @@ class Chaincode extends Contract {
 
     // set proposal status to "accepted"
     proposal.status = 'accepted';
+    // set the proposal's associated license to be
+    // the above newly created license
+    proposal.licenseId = assetId;
+    
     await ctx.stub.putState(
       proposal.assetId,
       Buffer.from(JSON.stringify(proposal))

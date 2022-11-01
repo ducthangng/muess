@@ -29,6 +29,7 @@ const MockApp: React.FC<App> = ({ Key, Record }) => {
           <h1 className="font-bold text-lg">{Record.title} </h1>
         </div>
         {Record.appTags.length > 0 &&
+          Record.appTags[0] &&
           Record.appTags.map((tag, index) => (
             <Tag
               key={index}

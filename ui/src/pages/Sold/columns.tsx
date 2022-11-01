@@ -17,7 +17,7 @@ export const COLUMNS = [
   },
   {
     Header: 'License ID',
-    accessor: 'license_id'
+    accessor: 'licenseId'
   },
   {
     Header: 'Status',

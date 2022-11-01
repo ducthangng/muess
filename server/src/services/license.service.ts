@@ -9,31 +9,6 @@ import { isEmpty } from '@utils/util';
 import { HttpException } from '@/exceptions/HttpException';
 import userModel from '@/models/users.model';
 
-//LicenseDto in hlf.dto
-const sampleLicense: LicenseDto[] = [
-  {
-    appId: '1',
-    creatorId: 'A',
-    ownerId: 'B',
-    licenseId: '12345',
-    licenseDetails: 'Sample License 1'
-  },
-  {
-    appId: '2',
-    creatorId: 'B',
-    ownerId: 'C',
-    licenseId: '123',
-    licenseDetails: 'Sample License 2'
-  },
-  {
-    appId: '3',
-    creatorId: 'AB',
-    ownerId: 'BC',
-    licenseId: '1',
-    licenseDetails: 'Sample License 1A'
-  }
-];
-
 class LicenseService {
   public users = userModel;
 
