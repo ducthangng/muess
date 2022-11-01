@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SideMenu.css';
 import Logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import * as BIIcons from 'react-icons/bi';
 import { authApi } from '../../api/authApi';
+import { userApi } from '../../api/userApi';
 
 const SideMenu = (props) => {
   const [open, setOpen] = useState(false);
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
   let navigate = useNavigate();
+
+  const getUserInfo = async () => {
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      setFullname(res.data.fullname);
+      setEmail(res.data.email);
+    }
+  };
 
   const handleLogout = async () => {
     const res = await authApi.logout();
@@ -17,6 +28,10 @@ const SideMenu = (props) => {
       navigate('/');
     }
   };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <div className="side-menu">
@@ -161,22 +176,22 @@ const SideMenu = (props) => {
 
       <div className="account" onClick={() => setOpen(!open)}>
         <div className="account-info">
-          <div className="username">Bui Nhien Loc</div>
-          <div>nhienloc@gmail.com</div>
+          <div className="username">{fullname}</div>
+          <div>{email}</div>
         </div>
         <div className={`dropdown-menu ${open ? 'open' : ''}`}>
           <ul>
-            <li>
+            {/* <li>
               <a className="profile-item">
                 <div className="account-info">
-                  <div className="username">Bui Nhien Loc</div>
-                  <div className="email">nhienloc@gmail.com</div>
+                  <div className="username">{fullname}</div>
+                  <div className="email">{email}</div>
                   <div className="small-text">View account's information</div>
                 </div>
               </a>
-            </li>
-            <li onClick={handleLogout}>
-              <a className="logout">
+            </li> */}
+            <li className="pt-3" onClick={handleLogout}>
+              <a className="flex items-center justify-center gap-5">
                 <div className="icon">
                   <BIIcons.BiLogOut></BIIcons.BiLogOut>
                 </div>
