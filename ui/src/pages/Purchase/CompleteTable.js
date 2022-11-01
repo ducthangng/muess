@@ -17,6 +17,7 @@ import { userApi } from '../../api/userApi';
 import { appApi } from '../../api/appApi';
 import moment from 'moment';
 import { useGlobalContext } from '../../context/global/GlobalContext';
+import { ratings } from '../../consts/ratings';
 
 export const CompleteTable = () => {
   const { setIsLoading } = useGlobalContext();
@@ -80,7 +81,11 @@ export const CompleteTable = () => {
           </div>
           <div className="flex gap-2">
             <p className="font-semibold">Rating: </p>
-            <p>{currentFolderData ? currentFolderData.rating : 'Loading...'}</p>
+            <p>
+              {currentFolderData
+                ? ratings[currentFolderData.rating]
+                : 'Loading...'}
+            </p>
           </div>
           <div className="flex gap-2">
             <p className="font-semibold">Tags: </p>

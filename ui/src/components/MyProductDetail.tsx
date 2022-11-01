@@ -9,7 +9,7 @@ const MyProductDetail: React.FC<App> = ({ Key, Record }) => {
   return (
     <Form>
       <Card
-        onClick={() => navigate(`/products/my-app/${Record.assetId}`)}
+        onClick={() => navigate(`/my-app/${Record.assetId}`)}
         hoverable
         cover={
           <img
