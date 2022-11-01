@@ -392,7 +392,7 @@ const ReleaseApp = () => {
                   <input
                     type="url"
                     className="h-full"
-                    maxLength={50}
+                    maxLength={1000}
                     onChange={(e) => {
                       setAppImage(e.target.value);
                     }}
