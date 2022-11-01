@@ -43,7 +43,7 @@ function PurchasePopup(props) {
   function redirect() {
     notify();
     setTimeout(() => {
-      navigate('/purchases');
+      navigate('/proposals');
     }, 6000);
   }
 

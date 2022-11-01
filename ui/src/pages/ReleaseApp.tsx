@@ -112,7 +112,10 @@ const ReleaseApp = () => {
           <div className="AppNameFill">
             <input
               maxLength={50}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                setCount(e.target.value.length);
+              }}
               value={title}
             ></input>
             <div
@@ -359,7 +362,10 @@ const ReleaseApp = () => {
             </div>
             <TextArea
               maxLength={1000}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                setCount1(e.target.value.length);
+              }}
             ></TextArea>
             <div className="count2">{count1}/1000</div>
           </div>
