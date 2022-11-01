@@ -26,7 +26,7 @@ const MockApp: React.FC<App> = ({ Key, Record }) => {
           <h1 className="content">{Record.title} </h1>
         </div>
         <Tag color="#F17B7B" style={{ bottom: 'left' }} className="tag_lon">
-          {Record.description}
+          {Record.appTags}
         </Tag>
       </Card>
     </Form>

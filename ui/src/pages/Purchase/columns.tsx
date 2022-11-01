@@ -1,6 +1,6 @@
 export const COLUMNS = [
   {
-    Header: 'Product ID',
+    Header: 'Proposal ID',
     accessor: 'assetId'
   },
   {
