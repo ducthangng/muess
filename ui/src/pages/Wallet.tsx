@@ -163,7 +163,7 @@ function WalletOutline() {
           style={{
             float: 'none',
             position: 'absolute',
-            top: '13%',
+            top: '15%',
             left: '48.61%',
             transform: 'translate(-50%, -50%)'
           }}
@@ -186,7 +186,9 @@ function WalletOutline() {
                 <div className="purchased-data-info">
                   {wallet?.purchasedAppNumber}
                 </div>
-                <div className="purchased-data-data">License(s)</div>
+                <div className="purchased-data-data" style={{ width: '65%' }}>
+                  License(s)
+                </div>
               </div>
             </div>
           </div>
@@ -206,7 +208,9 @@ function WalletOutline() {
               ></img>
               <div className="sold-data">
                 <div className="sold-data-info">{wallet?.soldAppNumber}</div>
-                <div className="sold-data-data">License (s)</div>
+                <div className="sold-data-data" style={{ width: '65%' }}>
+                  License(s)
+                </div>
               </div>
             </div>
           </div>
@@ -226,7 +230,10 @@ function WalletOutline() {
               ></img>
               <div className="income-data">
                 <div className="income-data-info">{wallet?.moneyMade}</div>
-                <div className="income-data-data"> USD</div>
+                <div className="income-data-data" style={{ width: '65%' }}>
+                  {' '}
+                  USD
+                </div>
               </div>
             </div>
           </div>
@@ -246,7 +253,9 @@ function WalletOutline() {
               ></img>
               <div className="balance-data">
                 <div className="balance-data-info">{wallet?.totalBalance}</div>
-                <div className="balance-data-data">USD</div>
+                <div className="balance-data-data" style={{ width: '65%' }}>
+                  USD
+                </div>
               </div>
             </div>
           </div>
@@ -266,7 +275,9 @@ function WalletOutline() {
               ></img>
               <div className="purchased-data">
                 <div className="purchased-data-info">{wallet?.moneySpend}</div>
-                <div className="purchased-data-data">USD</div>
+                <div className="purchased-data-data" style={{ width: '65%' }}>
+                  USD
+                </div>
               </div>
             </div>
           </div>
