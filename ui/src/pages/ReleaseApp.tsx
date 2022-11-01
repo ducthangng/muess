@@ -138,7 +138,7 @@ const ReleaseApp = () => {
             <div
               style={{
                 position: 'relative',
-                top: '75px',
+                top: '65px',
                 left: '50px',
                 fontWeight: 700,
                 fontSize: '12px',
@@ -148,7 +148,7 @@ const ReleaseApp = () => {
             >
               App or game
             </div>
-            <div
+            {/* <div
               style={{
                 position: 'relative',
                 top: '38px',
@@ -160,8 +160,8 @@ const ReleaseApp = () => {
                 width: 'fit-content'
               }}
             >
-              You can change this later
-            </div>
+              {"You can change this later"}
+            </div> */}
             <label
               style={{
                 position: 'relative',
@@ -196,7 +196,7 @@ const ReleaseApp = () => {
             <div
               style={{
                 position: 'relative',
-                top: '45px',
+                top: '32px',
                 left: '50px',
                 fontWeight: 700,
                 fontSize: '12px',
@@ -206,7 +206,7 @@ const ReleaseApp = () => {
             >
               Payment
             </div>
-            <div
+            {/* <div
               style={{
                 position: 'relative',
                 top: '10px',
@@ -219,7 +219,7 @@ const ReleaseApp = () => {
               }}
             >
               You can change this later
-            </div>
+            </div> */}
             <label
               style={{
                 position: 'relative',
@@ -260,7 +260,7 @@ const ReleaseApp = () => {
             </label>
           </div>
 
-          <div className="Appcategories">
+          <div className="relative top-[-30px]">
             <div
               style={{
                 position: 'relative',
@@ -286,33 +286,11 @@ const ReleaseApp = () => {
               }}
             >
               Choose categories and tags that best describe the content or main
-              functions of your app.These help{' '}
+              functions of your app. These help <br />
+              customers discover apps.{' '}
             </div>
           </div>
-          <div
-            style={{
-              position: 'relative',
-              transform: 'rotate(90deg)',
-              left: '375px',
-              width: '300px',
-              top: '-100px',
-              borderTop: '2px solid #E3E3E3'
-            }}
-          />
-          <div
-            style={{
-              position: 'relative',
-              top: '5px',
-              left: '50px',
-              fontWeight: 700,
-              fontSize: '9px',
-              lineHeight: '11px',
-              color: '#A3A3A3'
-            }}
-          >
-            customers discover apps{' '}
-          </div>
-          <div className="flex gap-10 pl-12 pt-5">
+          <div className="flex gap-10 pl-12 pt-0">
             <div
               style={{
                 fontWeight: 700,
@@ -339,6 +317,7 @@ const ReleaseApp = () => {
               Tags
             </div>
             <TagsInput
+              classNames={{ input: 'py-2', tag: '' }}
               value={appTags}
               onChange={setAppTags}
               name="app tags"
