@@ -79,54 +79,45 @@ const sampleProposal2: Proposal[] = [
 
 class proposalService {
   public async createProposal(user: User, proposalData: CreateProposalDto) {
-    try {
-      const contract = await initContract(JSON.parse(user.x509Identity));
-      const { appId, proposedPrice, licenseDetails } = proposalData;
-      const proposalId = uuidv4();
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const { appId, proposedPrice, licenseDetails } = proposalData;
+    const proposalId = uuidv4();
 
-      const proposedPriceString = proposedPrice.toString();
+    const proposedPriceString = proposedPrice.toString();
 
-      const result = await contract.submitTransaction(
-        'CreateProposal',
-        proposalId,
-        appId,
-        proposedPriceString,
-        licenseDetails
-      );
-      console.log(
-        `Transaction has successfully created, result is: ${result.toString()}`
-      );
-      return result.toString();
-    } catch (error) {
-      console.log(error);
-      throw new Error('Submit Transaction Failed');
-    }
+    const result = await contract.submitTransaction(
+      'CreateProposal',
+      proposalId,
+      appId,
+      proposedPriceString,
+      licenseDetails
+    );
+    console.log(
+      `Transaction has successfully created, result is: ${result.toString()}`
+    );
+    return result.toString();
   }
 
   public async createSecondhandProposal(
     user: User,
     proposalData: CreateSecondhandProposalDto
   ) {
-    try {
-      const contract = await initContract(JSON.parse(user.x509Identity));
-      const { licenseId, proposedPrice } = proposalData;
-      const proposalId = uuidv4();
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const { licenseId, proposedPrice } = proposalData;
+    const proposalId = uuidv4();
 
-      const proposedPriceString = proposedPrice.toString();
+    const proposedPriceString = proposedPrice.toString();
 
-      const result = await contract.submitTransaction(
-        'CreateSecondhandProposal',
-        proposalId,
-        licenseId,
-        proposedPriceString
-      );
-      console.log(
-        `Transaction has successfully created, result is: ${result.toString()}`
-      );
-      return result.toString();
-    } catch (error) {
-      throw new Error('Submit Transaction Failed');
-    }
+    const result = await contract.submitTransaction(
+      'CreateSecondhandProposal',
+      proposalId,
+      licenseId,
+      proposedPriceString
+    );
+    console.log(
+      `Transaction has successfully created, result is: ${result.toString()}`
+    );
+    return result.toString();
   }
 
   public async acceptProposal(

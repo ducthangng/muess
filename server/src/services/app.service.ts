@@ -4,37 +4,6 @@ import { initContract } from '@/utils/hlfUtils';
 import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
 
-const samples: App[] = [
-  {
-    assetType: 'App',
-    assetId: '1',
-    creatorId: '3',
-    title: 'test',
-    description: 'test',
-    appType: 'test',
-    paymentMethod: 'visa',
-    appTags: ['test'],
-    appIconURL:
-      'https://upload.wikimedia.org/wikipedia/fi/a/a7/Candy_Crush_Saga.png',
-    rating: '09999999',
-    appCategories: ['test']
-  },
-  {
-    assetType: 'App',
-    assetId: '2',
-    creatorId: '4',
-    title: 'xxxxx',
-    description: 'xxxxx',
-    appType: 'xxxxx',
-    paymentMethod: 'visa',
-    appTags: ['test'],
-    appIconURL:
-      'https://upload.wikimedia.org/wikipedia/en/b/bc/Candy_Crush_logo.png',
-    rating: '10000',
-    appCategories: ['xyz']
-  }
-];
-
 class AppService {
   public async createApp(user: User, appData: CreateAppDto) {
     console.log('user: ', user);
