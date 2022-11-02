@@ -56,7 +56,7 @@ function ProductSelection() {
                   Featured Apps
                 </Button>
                 <Button ghost shape="default" size="middle" href="/my-app">
-                  My Apps
+                  Owned Apps
                 </Button>
               </div>
             </Divider>

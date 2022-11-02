@@ -47,10 +47,14 @@ export default function AppRoute() {
             <Route path=":appId" element={<AppDetail />} />
           </Route>
 
+          <Route path="/my-app/*">
+            <Route path="" element={<OwnedProducts />} />
+            <Route path=":appId" element={<MyProductLicense />} />
+          </Route>
+
           <Route path="/sales" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/my-app" element={<OwnedProducts />} />
-          <Route path="/my-app/:appId" element={<MyProductLicense />} />
+
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />

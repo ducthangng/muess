@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import { App } from '../models/AppDetailData';
-import { Divider } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
 import { appApi } from '../api/appApi';
 import { userApi } from '../api/userApi';
 import { User } from '../models/User';
-import { Statistic, Tag, Badge } from 'antd';
+import { Statistic, Tag, Skeleton } from 'antd';
 import { CloudDownloadOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { useGlobalContext } from '../context/global/GlobalContext';
+import SkeletonButton from 'antd/lib/skeleton/Button';
+import SkeletonInput from 'antd/lib/skeleton/Input';
 
 const defaultApp: App = {
   Key: '',
@@ -43,7 +44,7 @@ const defaultUser: User = {
 };
 
 const AppDetail = () => {
-  const { setIsLoading } = useGlobalContext();
+  const { setIsLoading, isLoading } = useGlobalContext();
   const navigate = useNavigate();
   const [data, setData] = useState({
     app: defaultApp,
@@ -111,56 +112,106 @@ const AppDetail = () => {
             {/* content divided into 2 columns, left and right */}
             <div className="grid grid-cols-2">
               {/* left column */}
-              <div>
-                <div
-                  style={{
-                    fontWeight: '700',
-                    backgroundColor: '#ffffff',
-                    fontSize: '3rem'
-                  }}
-                >
-                  {data.app.Record.title}
-                </div>
-                <div className="app-detail-author">
-                  {data.app.Record.creatorName}
-                </div>
-                <div
-                  className="py-10"
-                  style={{
-                    backgroundColor: '#ffffff',
-                    display: 'flex',
-                    justifyContent: 'left',
-                    alignItems: 'center'
-                  }}
-                >
-                  <Tag color="geekblue" style={{ fontSize: '16px' }}>
-                    {data.app.Record.rating}
-                  </Tag>
+              <div className="flex flex-col">
+                {isLoading ? (
+                  <>
+                    <SkeletonInput
+                      active={isLoading}
+                      style={{
+                        width: '200px',
+                        height: '50px',
+                        marginBottom: '20px'
+                      }}
+                    />
+                    <SkeletonInput
+                      active={isLoading}
+                      style={{
+                        width: '100px',
+                        height: '20px',
+                        marginBottom: '20px'
+                      }}
+                    />
+                    <SkeletonInput
+                      active={isLoading}
+                      style={{
+                        width: '100px',
+                        height: '30px',
+                        marginBottom: '20px'
+                      }}
+                    />
+                    <div className="flex gap-10 py-15">
+                      <SkeletonInput
+                        active={isLoading}
+                        style={{
+                          width: '40px',
+                          height: '70px',
+                          marginBottom: '20px'
+                        }}
+                      />
+                      <SkeletonInput
+                        active={isLoading}
+                        style={{
+                          width: '40px',
+                          height: '70px',
+                          marginBottom: '20px'
+                        }}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      style={{
+                        fontWeight: '700',
+                        backgroundColor: '#ffffff',
+                        fontSize: '3rem'
+                      }}
+                    >
+                      {data.app.Record.title}
+                    </div>
+                    <div className="app-detail-author">
+                      {data.app.Record.creatorName}
+                    </div>
+                    <div
+                      className="py-10"
+                      style={{
+                        backgroundColor: '#ffffff',
+                        display: 'flex',
+                        justifyContent: 'left',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <Tag color="geekblue" style={{ fontSize: '16px' }}>
+                        {data.app.Record.rating}
+                      </Tag>
 
-                  <Tag color="magenta" style={{ fontSize: '16px' }}>
-                    {data.app.Record.appCategories}
-                  </Tag>
-                </div>
-                <div className="flex gap-10 py-5">
-                  <Statistic
-                    title="Average Prices"
-                    value={
-                      data.app?.Record?.averageProposedPrice === 0
-                        ? 'N/A'
-                        : data.app?.Record?.averageProposedPrice
-                    }
-                    precision={2}
-                    valueStyle={{ color: '#3f8600' }}
-                    prefix={<ArrowUpOutlined />}
-                    suffix="$"
-                  />
+                      <Tag color="magenta" style={{ fontSize: '16px' }}>
+                        {data.app.Record.appCategories}
+                      </Tag>
+                    </div>
+                    <div className="flex gap-10 py-5">
+                      <Statistic
+                        title="Average Prices"
+                        value={
+                          data.app?.Record?.averageProposedPrice === 0
+                            ? 'N/A'
+                            : data.app?.Record?.averageProposedPrice
+                        }
+                        precision={2}
+                        valueStyle={{ color: '#3f8600' }}
+                        prefix={<ArrowUpOutlined />}
+                        suffix="$"
+                      />
 
-                  <Statistic
-                    title="Downloads"
-                    value={data.app?.Record?.proposalQuantity}
-                    prefix={<CloudDownloadOutlined />}
-                  ></Statistic>
-                </div>
+                      <Statistic
+                        title="Downloads"
+                        value={data.app?.Record?.proposalQuantity}
+                        prefix={<CloudDownloadOutlined />}
+                      ></Statistic>
+                    </div>
+                  </>
+                )}
+
                 <div className="w-[1000px]">
                   <button
                     className="purchase_button"
@@ -190,21 +241,25 @@ const AppDetail = () => {
                   >
                     About this app
                   </div>
-                  <div
-                    className="app-description"
-                    style={{
-                      border: 'none',
-                      background: 'none',
-                      fontSize: '1rem',
-                      fontWeight: '400'
-                    }}
-                  >
-                    {data.app.Record.description}
-                  </div>
+                  {isLoading ? (
+                    <Skeleton active={isLoading} />
+                  ) : (
+                    <div
+                      className="app-description"
+                      style={{
+                        border: 'none',
+                        background: 'none',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      }}
+                    >
+                      {data.app.Record.description}
+                    </div>
+                  )}
                 </div>
 
                 <div
-                  className="app-feedback-title"
+                  className="app-feedback-title flex gap-2"
                   style={{
                     border: 'none',
                     background: 'none',
@@ -212,21 +267,36 @@ const AppDetail = () => {
                     fontWeight: '700'
                   }}
                 >
-                  Generated: November 2022
+                  <div>Generated:</div>
+                  {isLoading ? (
+                    <SkeletonInput active={isLoading} />
+                  ) : (
+                    <div>November 2022</div>
+                  )}
                 </div>
               </div>
               {/* right column */}
               <div className="flex justify-end">
-                <img
-                  alt="AppImage"
-                  src={data.app.Record.appIconURL}
-                  style={{
-                    width: '300px',
-                    height: '300px',
-                    objectFit: 'cover',
-                    display: 'flex'
-                  }}
-                />
+                <div style={{ width: '300px', height: '300px' }}>
+                  {isLoading ? (
+                    <SkeletonButton
+                      active={isLoading}
+                      style={{ height: '300px' }}
+                      block
+                    />
+                  ) : (
+                    <img
+                      alt="AppImage"
+                      src={data.app.Record.appIconURL}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'flex'
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             </div>
             {/* footer */}
