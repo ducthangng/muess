@@ -75,30 +75,20 @@ export const licenseApi = {
     return response;
   },
 
-  getLicenseByAppId: async (id: string) => {
-    const response = await fetch(
-      `${apiUrl}` + new URLSearchParams({ user_id: id.toString() }),
-      {
+  getLicenseByAppId: async (appId: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/app/${appId}`, {
         method: 'GET',
         credentials: 'include'
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        const license: License = data.data;
-        return license;
-      })
-      .catch((err) => {
-        return err;
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   getMyLicenseByAppId: async (appId: string) => {

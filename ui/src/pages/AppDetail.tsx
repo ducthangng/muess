@@ -346,11 +346,10 @@ const AppDetail = () => {
                 backgroundColor: '#ffffff',
                 borderRadius: '10px',
                 border: '1px solid #e8e8e8',
-                boxShadow: '0 0 10px 0 #e8e8e8',
-                overflowY: 'scroll'
+                boxShadow: '0 0 10px 0 #e8e8e8'
               }}
             >
-              <LicenseList />
+              <LicenseList appId={appId} />
             </div>
           </div>
         </div>
