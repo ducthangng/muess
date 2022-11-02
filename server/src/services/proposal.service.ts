@@ -6,6 +6,9 @@ import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
 import { Proposal } from '@/interfaces/hlf.interface';
 import { AcceptProposalDto, CreateProposalDto } from '@/dtos/proposal.dto';
+import { ChaincodeProposal } from '../interfaces/hlf.interface';
+import mongoose from 'mongoose';
+import proposalModel from '../models/proposal.models';
 
 const sampleProposal: Proposal[] = [
   {
@@ -74,9 +77,10 @@ const sampleProposal2: Proposal[] = [
 ];
 
 class proposalService {
+  public proposals = proposalModel;
+
   public async createProposal(user: User, proposalData: CreateProposalDto) {
     try {
-      console.log('inside createProposal service');
       const contract = await initContract(JSON.parse(user.x509Identity));
       const { appId, proposedPrice, licenseDetails } = proposalData;
       const proposalId = uuidv4();
@@ -90,7 +94,24 @@ class proposalService {
         proposedPriceString,
         licenseDetails
       );
-      console.log(`Transaction has successfully created`);
+
+      const chaincodeProposal: ChaincodeProposal = JSON.parse(
+        result.toString()
+      );
+
+      const mresult = await this.proposals.create({
+        assetType: 'proposal',
+        assetId: proposalId,
+        appId: proposalData.appId,
+        buyerId: user._id,
+        sellerId: '',
+        proposedPrice: proposalData.proposedPrice,
+        licenseDetails: proposalData.licenseDetails,
+        status: 'pending'
+      });
+
+      console.log(mresult);
+
       return result.toString();
     } catch (error) {
       console.log(error);
@@ -110,6 +131,14 @@ class proposalService {
       licenseId,
       proposalId
     );
+
+    const updateProposal = await this.proposals.findOneAndUpdate(
+      { assetId: proposalId },
+      { status: 'accepted' }
+    );
+
+    console.log('accepted proposals: ', updateProposal);
+
     console.log(`Transaction has successfully created,  `);
     return result.toString();
   }
@@ -124,6 +153,13 @@ class proposalService {
       'RejectProposal',
       proposalId
     );
+    const updateProposal = await this.proposals.findOneAndUpdate(
+      { assetId: proposalId },
+      { status: 'rejected' }
+    );
+
+    console.log('rejected proposals: ', updateProposal);
+
     console.log(`Transaction has successfully created`);
     return result.toString();
   }
