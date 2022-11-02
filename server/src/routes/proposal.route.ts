@@ -7,6 +7,7 @@ import validationMiddleware from '@middlewares/validation.middleware';
 import {
   AcceptProposalDto,
   CreateProposalDto,
+  CreateSecondhandProposalDto,
   RejectProposalDto
 } from '@/dtos/proposal.dto';
 
@@ -25,6 +26,12 @@ class ProposalRoute implements Routes {
       validationMiddleware(CreateProposalDto, 'body'),
       authMiddleware,
       this.proposalController.createProposal
+    );
+    this.router.post(
+      `${this.path}/secondhand`,
+      validationMiddleware(CreateSecondhandProposalDto, 'body'),
+      authMiddleware,
+      this.proposalController.createSecondhandProposal
     );
     this.router.post(
       `${this.path}/accept`,

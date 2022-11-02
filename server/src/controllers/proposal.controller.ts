@@ -6,6 +6,7 @@ import ProposalService from '../services/proposal.service';
 import {
   AcceptProposalDto,
   CreateProposalDto,
+  CreateSecondhandProposalDto,
   RejectProposalDto
 } from '@/dtos/proposal.dto';
 import UserService from '@/services/users.service';
@@ -37,6 +38,28 @@ class ProposalController {
         user,
         proposalData
       );
+
+      res.status(201).json({ data: result, message: 'created' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public createSecondhandProposal = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const proposalData: CreateSecondhandProposalDto = req.body;
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
+      if (user._id.length === 0) {
+        throw new Error('User not found');
+      }
+
+      const result: string =
+        await this.proposalService.createSecondhandProposal(user, proposalData);
 
       res.status(201).json({ data: result, message: 'created' });
     } catch (error) {

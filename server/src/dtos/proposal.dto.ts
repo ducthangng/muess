@@ -11,6 +11,14 @@ export class CreateProposalDto {
   public licenseDetails: string;
 }
 
+export class CreateSecondhandProposalDto {
+  @IsString()
+  public licenseId: string;
+
+  @IsNumber()
+  public proposedPrice: number;
+}
+
 export class AcceptProposalDto {
   @IsString()
   public proposalId: string;

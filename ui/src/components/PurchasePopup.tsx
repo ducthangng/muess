@@ -81,7 +81,7 @@ function PurchasePopup(props) {
     const result = await proposalApi.createProposal({
       appId: app.Record.assetId,
       proposedPrice: price,
-      licenseDetails: details.join(';')
+      licenseDetails: details.toString()
     });
     setIsLoading(false);
     if (result === 'created') {

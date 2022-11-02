@@ -5,7 +5,11 @@ import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
 import { Proposal } from '@/interfaces/hlf.interface';
-import { AcceptProposalDto, CreateProposalDto } from '@/dtos/proposal.dto';
+import {
+  AcceptProposalDto,
+  CreateProposalDto,
+  CreateSecondhandProposalDto
+} from '@/dtos/proposal.dto';
 
 const sampleProposal: Proposal[] = [
   {
@@ -76,7 +80,6 @@ const sampleProposal2: Proposal[] = [
 class proposalService {
   public async createProposal(user: User, proposalData: CreateProposalDto) {
     try {
-      console.log('inside createProposal service');
       const contract = await initContract(JSON.parse(user.x509Identity));
       const { appId, proposedPrice, licenseDetails } = proposalData;
       const proposalId = uuidv4();
@@ -96,6 +99,32 @@ class proposalService {
       return result.toString();
     } catch (error) {
       console.log(error);
+      throw new Error('Submit Transaction Failed');
+    }
+  }
+
+  public async createSecondhandProposal(
+    user: User,
+    proposalData: CreateSecondhandProposalDto
+  ) {
+    try {
+      const contract = await initContract(JSON.parse(user.x509Identity));
+      const { licenseId, proposedPrice } = proposalData;
+      const proposalId = uuidv4();
+
+      const proposedPriceString = proposedPrice.toString();
+
+      const result = await contract.submitTransaction(
+        'CreateSecondhandProposal',
+        proposalId,
+        licenseId,
+        proposedPriceString
+      );
+      console.log(
+        `Transaction has successfully created, result is: ${result.toString()}`
+      );
+      return result.toString();
+    } catch (error) {
       throw new Error('Submit Transaction Failed');
     }
   }
