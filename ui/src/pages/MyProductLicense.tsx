@@ -167,23 +167,7 @@ const MyProductLicense = () => {
                 ? defaultApp.Record.title
                 : data.app?.Record.title}
             </div>
-            <div
-              className="app-detail-author"
-              // style={{
-              //   position: 'relative',
-              //   top: '0',
-              //   left: '0',
-              //   width: '50%',
-              //   backgroundColor: '#ffffff',
-              //   fontSize: '1.25rem',
-              //   fontWeight: '400',
-              //   color: '#FB7F4B',
-              //   textOverflow: 'ellipsis',
-              //   whiteSpace: 'nowrap',
-              //   overflow: 'hidden',
-              //   cursor: 'pointer',
-              // }}
-            >
+            <div className="app-detail-author">
               {data.app?.Record?.creatorName.length === 0
                 ? defaultApp.Record.creatorId
                 : data.app?.Record.creatorName}

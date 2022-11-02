@@ -16,7 +16,7 @@ const LoadingOverlay: React.FunctionComponent<ILoadingOverlayProps> = ({
           className="fixed top-0 right-0 bg-black/50 w-screen h-screen flex justify-center items-center"
           style={{ zIndex: 1000 }}
         >
-          <img src="loading-pacman.svg" alt="loading pacman" />
+          <img src="/loading-pacman.svg" alt="loading pacman" />
         </div>
       )}
 

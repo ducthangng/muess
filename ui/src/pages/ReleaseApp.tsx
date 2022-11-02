@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { TagsInput } from 'react-tag-input-component';
 import { ratings } from '../consts/ratings';
 import { useGlobalContext } from '../context/global/GlobalContext';
-import { isImageExists } from '../utils/isImageExists';
+import { checkImageExists } from '../utils/checkImageExists';
 const { Option } = Select;
 
 const categoriesOptions = [
@@ -91,7 +91,7 @@ const ReleaseApp = () => {
       setMessage('Please choose at least 1 Category!');
       return;
     }
-    if (!isImageExists(appImage)) {
+    if (!checkImageExists(appImage)) {
       setHasError(true);
       setMessage('Please insert a valid App Image URL!');
       return;

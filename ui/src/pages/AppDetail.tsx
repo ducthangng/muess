@@ -71,24 +71,6 @@ const AppDetail = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (appId?.length !== 0) {
-  //     appApi.getAppById(appId as string).then((result) => {
-  //       setData((state) => ({ ...state, app: result }));
-  //     });
-  //   }
-  // }, [appId]);
-
-  // useEffect(() => {
-  //   if (data?.app?.Record?.creatorId?.length !== 0) {
-  //     userApi
-  //       .getInfoById(data?.app?.Record?.creatorId as string)
-  //       .then((user) => {
-  //         setData((state) => ({ ...state, user: user }));
-  //       });
-  //   }
-  // }, [data.app]);
-
   useEffect(() => {
     fetchData();
   }, []);

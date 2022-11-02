@@ -41,10 +41,14 @@ export default function AppRoute() {
               </Guard>
             }
           />
-          <Route path="/products" element={<ProductSelection />} />
+
+          <Route path="/products/*">
+            <Route path="" element={<ProductSelection />} />
+            <Route path=":appId" element={<AppDetail />} />
+          </Route>
+
           <Route path="/sales" element={<SoldList />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/products/:appId" element={<AppDetail />} />
           <Route path="/my-app" element={<OwnedProducts />} />
           <Route path="/my-app/:appId" element={<MyProductLicense />} />
           <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
