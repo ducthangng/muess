@@ -58,7 +58,7 @@ export const CompleteTable = () => {
       return (
         <div>
           <div className="flex gap-2">
-            <p className="font-semibold">AppId: </p>
+            <p className="font-semibold">AppIdxx: </p>
             <p>{cell.value}</p>
           </div>
           <div className="flex gap-2">
