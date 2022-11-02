@@ -32,11 +32,11 @@ function OwnedProducts() {
               className=""
               orientation="left"
               style={{
-                fontSize: '48px',
+                fontSize: '30px',
                 fontWeight: 'bold',
                 paddingTop: 100,
                 paddingBottom: 5,
-                paddingLeft: 350,
+                paddingLeft: 100,
                 color: '3A001E'
               }}
             >
@@ -46,7 +46,7 @@ function OwnedProducts() {
               className=""
               orientation="left"
               style={{
-                paddingLeft: 370
+                paddingLeft: 100
               }}
             >
               <div>

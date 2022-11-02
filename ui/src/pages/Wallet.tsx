@@ -296,7 +296,7 @@ function WalletOutline() {
           className="graph"
           style={{
             display: 'flex',
-            height: '350px',
+            height: '330px',
             width: '95%',
             backgroundColor: '#FFF8F2',
             // left: '3%',

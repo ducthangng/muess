@@ -198,9 +198,9 @@ const SideMenu = (props) => {
             <li className="py-3 hover:bg-gray-100/30" onClick={handleLogout}>
               <a className="flex items-center justify-center gap-5">
                 <div>
-                  <BIIcons.BiLogOut />
+                  <BIIcons.BiLogOut color="black" />
                 </div>
-                <span>Logout</span>
+                <span className="text-black">Logout</span>
               </a>
             </li>
           </ul>
