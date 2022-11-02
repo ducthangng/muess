@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
-import { List, Avatar, Tag } from 'antd';
+import { useEffect, useState } from 'react';
+import { List, Avatar, Tag, Modal } from 'antd';
 import { licenseApi } from '../api/licenseApi';
+import { proposalApi } from '../api/proposalApi';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 interface ILicenseListProps {
   appId: string | undefined;
@@ -59,21 +61,63 @@ const mockData = [
 ];
 
 const LicenseList: React.FunctionComponent<ILicenseListProps> = ({ appId }) => {
+  const { setIsLoading } = useGlobalContext();
+  const [licenses, setLicenses] = useState<any[]>([]);
+  const [selectedLicense, setSelectedLicense] = useState<any>(undefined);
+  const [proposedPrice, setProposedPrice] = useState(0);
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
+
   const fetchData = async () => {
     if (!appId) {
       return;
     }
     try {
+      setIsLoading(true);
       const res = await licenseApi.getLicenseByAppId(appId);
-      console.log(res);
+      const data = JSON.parse(res.data).filter((item) =>
+        item.Record.licenseDetails.split(',').includes('resell')
+      );
+      console.log(data);
+      setLicenses(data);
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
+  };
+
+  const handlePurchase = async () => {
+    if (!selectedLicense?.Record?.assetId || !proposedPrice) {
+      console.log(selectedLicense.Record?.licenseId);
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const res = await proposalApi.createSecondhandProposal({
+        licenseId: selectedLicense.Record?.assetId,
+        proposedPrice: proposedPrice
+      });
+      console.log(res);
+      setMessage(res.message);
+      if (res.status === 201) {
+        setHasError(false);
+      } else {
+        setHasError(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setTimeout(() => {
+      setIsLoading(false);
+      setSelectedLicense(undefined);
+      setMessage('');
+    }, 500);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div className="h-full flex flex-col">
       <div className="text-center text-lg font-bold">
@@ -88,8 +132,8 @@ const LicenseList: React.FunctionComponent<ILicenseListProps> = ({ appId }) => {
       <div className="overflow-y-scroll">
         <List
           itemLayout="vertical"
-          dataSource={mockData}
-          renderItem={(item) => (
+          dataSource={licenses}
+          renderItem={(license) => (
             <List.Item>
               <List.Item.Meta
                 avatar={
@@ -97,7 +141,7 @@ const LicenseList: React.FunctionComponent<ILicenseListProps> = ({ appId }) => {
                 }
                 title={
                   <a href="https://ant.design" className="text-[14px]">
-                    {item.assetId}
+                    {license.Record.assetId}
                   </a>
                 }
                 //   description="Ant Design, a design language for background applications, is refined by Ant UED Team"
@@ -105,24 +149,34 @@ const LicenseList: React.FunctionComponent<ILicenseListProps> = ({ appId }) => {
               <div className="flex flex-col gap-2">
                 <div className="grid grid-cols-5">
                   <div className="col-span-1 font-bold">Owner:</div>
-                  <div className="col-span-4">{item.ownerId}</div>
+                  <div className="col-span-4 break-words">
+                    {license.Record.ownerId}
+                  </div>
                 </div>
-                <div className="grid grid-cols-5">
+                {/* <div className="grid grid-cols-5">
                   <div className="col-span-1 font-bold">Price:</div>
-                  <div className="col-span-4">{item.proposedPrice}</div>
-                </div>
+                  <div className="col-span-4">
+                    {license.Record.proposedPrice}
+                  </div>
+                </div> */}
                 <div className="grid grid-cols-5">
                   <div className="col-span-1 font-bold">Details:</div>
                   <div className="col-span-4">
-                    {item.licenseDetails.map((item) => (
+                    {license.Record.licenseDetails.split(',').map((item) => (
                       <Tag color="geekblue" style={{ fontSize: '14px' }}>
                         {item}
                       </Tag>
                     ))}
                   </div>
                 </div>
+
                 <div className="my-5 flex justify-center items-center">
-                  <button className="bg-[#ffe4c4] text-gray-700 rounded-lg font-bold border py-1 px-10">
+                  <button
+                    className="bg-[#ffe4c4] text-gray-700 rounded-lg font-bold border py-1 px-10"
+                    onClick={() => {
+                      setSelectedLicense(license);
+                    }}
+                  >
                     Purchase
                   </button>
                 </div>
@@ -131,6 +185,59 @@ const LicenseList: React.FunctionComponent<ILicenseListProps> = ({ appId }) => {
           )}
         />
       </div>
+      <Modal
+        title={<div className="font-bold">Buy Secondhand License</div>}
+        visible={selectedLicense !== undefined}
+        onCancel={() => setSelectedLicense(undefined)}
+        footer={null}
+        zIndex={80}
+      >
+        <div className="flex flex-col gap-2">
+          <div className="grid grid-cols-5">
+            <div className="col-span-1 font-bold">Owner:</div>
+            <div className="col-span-4">{selectedLicense?.Record.ownerId}</div>
+          </div>
+          <div className="grid grid-cols-5">
+            <div className="col-span-1 font-bold">Details:</div>
+            <div className="col-span-4">
+              {selectedLicense?.Record.licenseDetails.split(',').map((item) => (
+                <Tag color="geekblue" style={{ fontSize: '14px' }}>
+                  {item}
+                </Tag>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-5">
+            <div className="col-span-1 font-bold">Price:</div>
+            <div className="col-span-4">
+              <input
+                className="h-full"
+                type="number"
+                min={0}
+                value={proposedPrice}
+                onChange={(e) => setProposedPrice(parseInt(e.target.value))}
+              />
+            </div>
+          </div>
+          {message && (
+            <div
+              className={`text-center font-semibold ${
+                hasError ? 'text-red-500' : 'text-green-500'
+              } pt-5`}
+            >
+              {message}
+            </div>
+          )}
+          <div className="my-5 flex justify-center items-center">
+            <button
+              className="bg-[#ffe4c4] text-gray-700 rounded-lg font-bold border py-1 px-10"
+              onClick={handlePurchase}
+            >
+              Purchase
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

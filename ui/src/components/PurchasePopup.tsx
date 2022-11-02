@@ -241,7 +241,6 @@ function PurchasePopup(props) {
                       className="purchase-popup-container-body-app-desired-price-value-input"
                       type="number"
                       defaultValue={0}
-                      max={100}
                       min="0"
                       style={{
                         width: '5rem',
