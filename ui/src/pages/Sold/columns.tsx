@@ -8,7 +8,7 @@ export const COLUMNS = [
     accessor: 'appId'
   },
   {
-    Header: 'Creator',
+    Header: 'Buyer',
     accessor: 'buyerId'
   },
   {

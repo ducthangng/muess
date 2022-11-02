@@ -41,6 +41,29 @@ export const proposalApi = {
     return response;
   },
 
+  createSecondhandProposal: async (data: {
+    licenseId: string;
+    proposedPrice: number;
+  }) => {
+    try {
+      const response = await fetch(`${apiUrl}/secondhand`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getProposalByBuyerId: async (BuyerId: string) => {
     try {
       const response = await fetch(`${apiUrl}/buyer/${BuyerId}`, {

@@ -150,7 +150,6 @@ export const CompleteTable = () => {
 
   const handleHover = async (row) => {
     const appRes = await appApi.getAppById(row.values.appId);
-    console.log(appRes);
     setCurrentFolderData(appRes.Record);
     const userRes = await userApi.getInfoById(row.values.buyerId);
     setCurrentBuyerData(userRes);

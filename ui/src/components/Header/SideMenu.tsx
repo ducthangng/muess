@@ -39,13 +39,15 @@ const SideMenu = (props) => {
         <img src={Logo} alt="logo" />
       </div>
       <div
-        className="main-menu"
+        className="main-menu flex w-[80vw]"
         style={{
           float: 'none',
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)'
+          transform: 'translate(-50%, -50%)',
+          fontWeight: 700,
+          fontSize: '16px'
         }}
       >
         <NavLink
@@ -175,11 +177,11 @@ const SideMenu = (props) => {
       </div>
 
       <div
-        className="account bg-[#f5f5f5] px-10 py-1"
+        className="account bg-[#f5f5f5] px-5 py-1"
         onClick={() => setOpen(!open)}
       >
         <div className="text-[#45102b] flex flex-col justify-center items-center">
-          <div className="font-bold text-xl">{fullname}</div>
+          <div className="font-bold text-lg">{fullname}</div>
           <div>{email}</div>
         </div>
         <div className={`dropdown-menu ${open ? 'open' : ''}`}>
