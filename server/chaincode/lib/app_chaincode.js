@@ -146,6 +146,51 @@ class Chaincode extends Contract {
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
   }
 
+  // CreateSecondhandProposal - create a proposal for an already existing license
+  async CreateSecondhandProposal(ctx, assetId, licenseId, proposedPrice) {
+    const assetIdExists = await this.AssetExists(ctx, assetId);
+    if (assetIdExists) {
+      throw new Error(
+        `The assetId ${assetId} already exists, find another one for the proposal`
+      );
+    }
+
+    const licenseBytes = await ctx.stub.getState(licenseId);
+    if (!licenseBytes) {
+      throw new Error(`There is no license with assetId ${licenseId} exists`);
+    }
+
+    const license = JSON.parse(licenseBytes.toString());
+    if (!license) {
+      throw new Error("Can't JSON parse licenseBytes");
+    }
+
+    // throws error if license can't be resold
+    if (!license.licenseDetails.includes("resell")) {
+      throw new Error("This license doesn't have resell rights");
+    }
+
+    const clientId = ctx.clientIdentity.getID();
+
+    // ==== Create proposal asset object and marshal to JSON ====
+    // Except for proposed price, other info needs to stay
+    // the same as the original license
+    let asset = {
+      assetType: 'proposal',
+      assetId: assetId,
+      appId: license.appId,
+      buyerId: clientId,
+      sellerId: license.ownerId,
+      proposedPrice: proposedPrice,
+      licenseDetails: license.licenseDetails,
+      licenseId: license.assetId,
+      status: 'pending'
+    };
+
+    // === Save asset to state ===
+    await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+  }
+
   async AcceptProposal(ctx, assetId, proposalId) {
     const proposalBytes = await ctx.stub.getState(proposalId);
     if (!proposalBytes) {
@@ -162,16 +207,43 @@ class Chaincode extends Contract {
       throw new Error('You must be the owner to accept this proposal.');
     }
 
-    // create new asset
-    let asset = {
-      assetType: 'license',
-      assetId: assetId,
-      appId: proposal.appId,
-      licenseDetails: proposal.licenseDetails,
-      creatorId: proposal.sellerId,
-      ownerId: proposal.buyerId
-    };
-    await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+    // if no license associated with this proposal exists
+    if (proposal.licenseId == '') {
+      // create new asset
+      let asset = {
+        assetType: 'license',
+        assetId: assetId,
+        appId: proposal.appId,
+        licenseDetails: proposal.licenseDetails,
+        creatorId: proposal.sellerId,
+        ownerId: proposal.buyerId // owner is buyer
+      };
+      await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+    } else {
+
+      // otherwise, find the license
+      const licenseBytes = await ctx.stub.getState(proposal.licenseId);
+      if (!licenseBytes) {
+        throw new Error('No such license exists');
+      }
+
+      const license = JSON.parse(licenseBytes.toString());
+      if (!license) {
+        throw new Error("Can't JSON parse licenseBytes");
+      }
+
+      // throws error if license can't be resold
+      if (!license.licenseDetails.includes("resell")) {
+        throw new Error("This license doesn't have resell rights");
+      }
+
+      // changes ownerId to buyerId
+      license.ownerId = proposal.buyerId;
+      await ctx.stub.putState(
+        license.assetId,
+        Buffer.from(JSON.stringify(license))
+      );
+    }
 
     // set proposal status to "accepted"
     proposal.status = 'accepted';
