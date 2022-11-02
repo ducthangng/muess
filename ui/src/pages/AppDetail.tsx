@@ -76,7 +76,7 @@ const AppDetail = () => {
   }, []);
 
   return (
-    <body className="app-detail-body">
+    <body className="">
       <SideMenu />
       <PurchasePopup
         trigger={buttonPopup}
@@ -149,31 +149,11 @@ const AppDetail = () => {
                 fontSize: '3rem'
               }}
             >
-              {data.app?.Record?.title.length === 0
-                ? defaultApp.Record.title
-                : data.app?.Record.title}
+              {data.app.Record.title}
             </div>
 
-            <div
-              className="app-detail-author"
-              // style={{
-              //   position: 'relative',
-              //   top: '0',
-              //   left: '0',
-              //   width: '50%',
-              //   backgroundColor: '#ffffff',
-              //   fontSize: '1.25rem',
-              //   fontWeight: '400',
-              //   color: '#FB7F4B',
-              //   textOverflow: 'ellipsis',
-              //   whiteSpace: 'nowrap',
-              //   overflow: 'hidden',
-              //   cursor: 'pointer',
-              // }}
-            >
-              {data.app?.Record?.creatorName.length === 0
-                ? defaultApp.Record.creatorId
-                : data.app?.Record.creatorName}
+            <div className="app-detail-author">
+              {data.app.Record.creatorName}
             </div>
 
             <div
@@ -184,7 +164,6 @@ const AppDetail = () => {
                 height: '30%',
                 backgroundColor: '#ffffff',
                 display: 'flex',
-                // margin: 'auto',
                 justifyContent: 'left',
                 alignItems: 'center'
               }}
@@ -256,12 +235,12 @@ const AppDetail = () => {
                   ? defaultApp.Record.rating
                   : '#' + data.app?.Record.rating}
               </Tag>
-
-              <Tag color="magenta" style={{ fontSize: '18px' }}>
-                {data.app?.Record.appCategories.length === 0
-                  ? defaultApp.Record.appCategories
-                  : '#' + data.app?.Record.appCategories}
-              </Tag>
+              {data.app?.Record.appCategories.length > 0 &&
+                data.app?.Record.appCategories.map((category) => (
+                  <Tag color="magenta" style={{ fontSize: '18px' }}>
+                    {'#' + category}
+                  </Tag>
+                ))}
             </div>
             <div
               className="app-detail-author"
@@ -323,16 +302,14 @@ const AppDetail = () => {
 
             <img
               alt="AppImage"
-              src={
-                data.app?.Record.appIconURL.length === 0
-                  ? defaultApp.Record.appIconURL
-                  : data.app?.Record.appIconURL
-              }
+              src={data.app?.Record.appIconURL}
               style={{
                 marginLeft: 'auto',
                 marginRight: '5%',
-                marginTop: '-27%',
-                width: '30%',
+                marginTop: '-320px',
+                width: '300px',
+                height: '300px',
+                objectFit: 'cover',
                 display: 'flex',
                 position: 'relative'
               }}
@@ -378,9 +355,7 @@ const AppDetail = () => {
                 fontWeight: '400'
               }}
             >
-              {data.app?.Record.description.length === 0
-                ? defaultApp.Record.description
-                : data.app?.Record.description}
+              {data.app?.Record.description}
             </div>
             <div
               className="app-feedback-title"

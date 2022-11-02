@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Collapse } from 'antd';
-import Popup from 'reactjs-popup';
 import { App, License } from '../models/AppDetailData';
-import { Divider, Tag } from 'antd';
+import { Tag } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
@@ -11,6 +10,7 @@ import { appApi } from '../api/appApi';
 import { userApi } from '../api/userApi';
 import { licenseApi } from '../api/licenseApi';
 import { User } from '../models/User';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 const { Panel } = Collapse;
 
@@ -58,6 +58,7 @@ const defaultLicense: License[] = [
 ];
 
 const MyProductLicense = () => {
+  const { setIsLoading } = useGlobalContext();
   const navigate = useNavigate();
   const { appId } = useParams();
   const [data, setData] = useState({
@@ -68,34 +69,30 @@ const MyProductLicense = () => {
 
   const [buttonPopup, setButtonPopup] = useState(false);
 
-  useEffect(() => {
-    if (appId?.length !== 0) {
-      appApi.getAppById(appId as string).then((result) => {
-        setData((state) => ({ ...state, app: result }));
-      });
-
-      licenseApi.getMyLicenseByAppId(appId as string).then((license) => {
-        setData((state) => ({ ...state, license: license }));
-      });
+  const fetchData = async () => {
+    if (!appId || appId.length === 0) {
+      return;
     }
-  }, [appId]);
-
-  useEffect(() => {
-    if (data?.app?.Record?.creatorId?.length !== 0) {
-      userApi
-        .getInfoById(data?.app?.Record?.creatorId as string)
-        .then((user) => {
-          setData((state) => ({ ...state, user: user }));
-        });
+    try {
+      setIsLoading(true);
+      const appRes = await appApi.getAppById(appId);
+      setData((state) => ({ ...state, app: appRes }));
+      const userRes = await userApi.getInfoById(appRes.Record.creatorId);
+      setData((state) => ({ ...state, user: userRes }));
+      const licenseRes = await licenseApi.getMyLicenseByAppId(appId);
+      setData((state) => ({ ...state, license: licenseRes }));
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
-  }, [data.app]);
-
-  const onChange = (key: string | string[]) => {
-    console.log(key);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <body className="app-detail-body">
+    <div className="app-detail-body">
       <SideMenu />
       <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup} />
 
@@ -163,14 +160,10 @@ const MyProductLicense = () => {
                 fontSize: '3rem'
               }}
             >
-              {data.app?.Record?.title.length === 0
-                ? defaultApp.Record.title
-                : data.app?.Record.title}
+              {data.app.Record.title}
             </div>
             <div className="app-detail-author">
-              {data.app?.Record?.creatorName.length === 0
-                ? defaultApp.Record.creatorId
-                : data.app?.Record.creatorName}
+              {data.app.Record.creatorName}
             </div>
             <div
               className="app-detail-types"
@@ -186,45 +179,39 @@ const MyProductLicense = () => {
               }}
             >
               <Tag color="geekblue" style={{ fontSize: '16px' }}>
-                {data.app?.Record.rating.length === 0
-                  ? defaultApp.Record.rating
-                  : data.app?.Record.rating}
+                {data.app.Record.rating}
               </Tag>
 
               <Tag color="magenta" style={{ fontSize: '16px' }}>
-                {data.app?.Record.appCategories.length === 0
-                  ? defaultApp.Record.appCategories
-                  : data.app?.Record.appCategories}
+                {data.app.Record.appCategories}
               </Tag>
             </div>
-
-            {/* <LicenseAppDetails /> */}
-            <Collapse defaultActiveKey={['1']} onChange={onChange}>
-              <Panel header="License Key" key="1">
-                {data?.license?.length !== 0 ? (
-                  <div>
-                    {data.license.map((license) => {
-                      return <p>{license.Record.assetId}</p>;
-                    })}
-                  </div>
-                ) : (
-                  <p>N/A</p>
-                )}
-              </Panel>
-            </Collapse>
+            <div className="w-[400px]">
+              <Collapse defaultActiveKey={['1']}>
+                <Panel header="License Key" key="1">
+                  {data?.license?.length !== 0 ? (
+                    <div>
+                      {data.license.map((license) => {
+                        return <p>{license.Record.assetId}</p>;
+                      })}
+                    </div>
+                  ) : (
+                    <p>N/A</p>
+                  )}
+                </Panel>
+              </Collapse>
+            </div>
 
             <img
               alt="AppImage"
-              src={
-                data.app?.Record.appIconURL.length === 0
-                  ? defaultApp.Record.appIconURL
-                  : data.app?.Record.appIconURL
-              }
+              src={data.app.Record.appIconURL}
               style={{
                 marginLeft: 'auto',
                 marginRight: '5%',
-                marginTop: '-27%',
-                width: '30%',
+                marginTop: '-320px',
+                width: '300px',
+                height: '300px',
+                objectFit: 'cover',
                 display: 'flex',
                 position: 'relative'
               }}
@@ -270,9 +257,7 @@ const MyProductLicense = () => {
                 fontWeight: '400'
               }}
             >
-              {data.app?.Record.description.length === 0
-                ? defaultApp.Record.description
-                : data.app?.Record.description}
+              {data.app.Record.description}
             </div>
             <div
               className="app-feedback-title"
@@ -316,7 +301,7 @@ const MyProductLicense = () => {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

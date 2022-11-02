@@ -37,10 +37,10 @@
   padding-bottom: 0;
 }
 
-.app-detail-body {
+/* .app-detail-body {
   height: 100vh;
   overflow-y: hidden;
-}
+} */
 
 .app-detail-author {
   background-color: #ffffff;
