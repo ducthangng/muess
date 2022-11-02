@@ -24,135 +24,61 @@ const Landingpage = () => {
     //   ><button onClick={() => console.log('hello')}>Click me</button></ContentBlock>
 
     // </Container>
-    <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <div
-          className="first-part-landing"
+    <div className="w-screen h-screen grid grid-cols-2 px-10">
+      <div className="flex justify-center items-center">
+        <img
+          src={DeveloperImg}
+          alt="welcome"
           style={{
-            width: '50%',
-            height: '100vh',
-            margin: '0 auto',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            width: '40vw',
+            height: 'auto'
           }}
-        >
-          <img
-            src={DeveloperImg}
-            alt="welcome"
+        />
+      </div>
+      <div className="flex flex-col justify-center items-center text-lg">
+        <h1 className="text-[#FB7F4B] font-bold text-4xl">
+          Munich Software as a Service
+        </h1>
+        <p>
+          Welcome to our application. MÜSS is a software where customer can
+          access to limited apps from providers and select which ever services
+          they desired with a negociable price.
+        </p>
+        <p>
+          To start using our platform and enjoy all the perks, please log in.
+          Don't have an account? Don't worry, you can register as a user today.
+        </p>
+        <div className="flex gap-5">
+          <button
             style={{
-              width: '40vw',
-              height: 'auto',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
+              color: 'white',
+              fontSize: '1.2rem',
+              backgroundColor: '#FB7F4B',
+              padding: '8px 38px',
+              borderRadius: '8px',
+              fontWeight: '600'
             }}
-          />
-        </div>
-        <div
-          className="second-part-landing"
-          style={{
-            width: '50%',
-            height: '100vh',
-            margin: '0 auto',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <div
-            className="second-part-container"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
+            onClick={() => navigate('/login')}
           >
-            <h1
-              style={{
-                color: '#FB7F4B',
-                fontSize: '50px',
-                fontWeight: '600',
-                width: '50vw',
-                justifyContent: 'center',
-                marginTop: '13rem'
-              }}
-            >
-              Munich Software as Service
-            </h1>
-            <p
-              style={{
-                color: '#3A001E',
-                fontSize: '20px',
-                width: '43vw',
-                justifyContent: 'center',
-                textAlign: 'justify'
-              }}
-            >
-              Welcome to our application. MÜSS is a software where customer can
-              access to limited apps from providers and select which ever
-              services they desired with a negociable price.
-            </p>
-            <p
-              style={{
-                color: '#3A001E',
-                fontSize: '20px',
-                width: '43vw',
-                justifyContent: 'center'
-              }}
-            >
-              To start using our platform and enjoy all the perks, please log
-              in. Don't have an account? Don't worry, you can register as a user
-              today.
-            </p>
-            <div
-              style={{
-                width: '43vw',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <button
-                style={{
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '20px',
-                  backgroundColor: '#FB7F4B',
-                  padding: '8px 38px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  textAlign: 'justify'
-                }}
-                onClick={() => navigate('/login')}
-              >
-                Sign in
-              </button>
-              <button
-                style={{
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '20px',
-                  backgroundColor: '#FB7F4B',
-                  padding: '8px 38px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  textAlign: 'justify',
-                  marginLeft: '3rem'
-                }}
-                onClick={() => navigate('/register')}
-              >
-                Register
-              </button>
-            </div>
-          </div>
+            Sign in
+          </button>
+          <button
+            style={{
+              color: 'white',
+              fontSize: '1.2rem',
+              backgroundColor: '#FB7F4B',
+              padding: '8px 38px',
+              borderRadius: '8px',
+              fontWeight: '600',
+              textAlign: 'justify'
+            }}
+            onClick={() => navigate('/register')}
+          >
+            Register
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
