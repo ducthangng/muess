@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Collapse } from 'antd';
 import Popup from 'reactjs-popup';
 import { App, License } from '../models/AppDetailData';
-import { Divider } from 'antd';
+import { Divider, Tag } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
 import '../assets/css/AppDetail.css';
 import PurchasePopup from '../components/PurchasePopup';
@@ -20,6 +20,7 @@ const defaultApp: App = {
     assetType: '',
     assetId: '',
     creatorId: '',
+    creatorName: '',
     title: '',
     description: '',
     rating: '',
@@ -27,7 +28,9 @@ const defaultApp: App = {
     paymentMethod: '',
     appTags: [],
     appCategories: [],
-    appIconURL: ''
+    appIconURL: '',
+    averageProposedPrice: 0,
+    proposalQuantity: 0
   }
 };
 
@@ -90,12 +93,6 @@ const MyProductLicense = () => {
   const onChange = (key: string | string[]) => {
     console.log(key);
   };
-
-  // useEffect(() => {
-  //   if (data?.user?._id?.length !== 0) {
-
-  //   }
-  // }, [data.user]);
 
   return (
     <body className="app-detail-body">
@@ -171,6 +168,27 @@ const MyProductLicense = () => {
                 : data.app?.Record.title}
             </div>
             <div
+              className="app-detail-author"
+              // style={{
+              //   position: 'relative',
+              //   top: '0',
+              //   left: '0',
+              //   width: '50%',
+              //   backgroundColor: '#ffffff',
+              //   fontSize: '1.25rem',
+              //   fontWeight: '400',
+              //   color: '#FB7F4B',
+              //   textOverflow: 'ellipsis',
+              //   whiteSpace: 'nowrap',
+              //   overflow: 'hidden',
+              //   cursor: 'pointer',
+              // }}
+            >
+              {data.app?.Record?.creatorName.length === 0
+                ? defaultApp.Record.creatorId
+                : data.app?.Record.creatorName}
+            </div>
+            <div
               className="app-detail-types"
               style={{
                 position: 'relative',
@@ -183,46 +201,17 @@ const MyProductLicense = () => {
                 alignItems: 'center'
               }}
             >
-              <div
-                className="app-detail-rating"
-                style={{
-                  position: 'relative',
-                  backgroundColor: '#ffffff',
-                  fontSize: '1rem'
-                }}
-              >
+              <Tag color="geekblue" style={{ fontSize: '16px' }}>
                 {data.app?.Record.rating.length === 0
                   ? defaultApp.Record.rating
                   : data.app?.Record.rating}
-              </div>
-              <div
-                className="line"
-                style={{
-                  borderRight: '3px solid black',
-                  height: '30%',
-                  marginLeft: '0.5rem',
-                  marginRight: '0.5rem'
-                }}
-              ></div>
-              <div
-                className="line"
-                style={{
-                  borderRight: '3px solid black',
-                  height: '30%',
-                  marginLeft: '0.5rem',
-                  marginRight: '0.5rem'
-                }}
-              ></div>
-              <div
-                className="app-detail-categories"
-                style={{
-                  position: 'relative',
-                  backgroundColor: '#ffffff',
-                  fontSize: '1rem'
-                }}
-              >
-                Display This (categories)
-              </div>
+              </Tag>
+
+              <Tag color="magenta" style={{ fontSize: '16px' }}>
+                {data.app?.Record.appCategories.length === 0
+                  ? defaultApp.Record.appCategories
+                  : data.app?.Record.appCategories}
+              </Tag>
             </div>
 
             {/* <LicenseAppDetails /> */}
@@ -314,23 +303,7 @@ const MyProductLicense = () => {
                 marginTop: '1.5rem'
               }}
             >
-              Feedbacks
-            </div>
-            <div
-              className="app-feedback-user"
-              style={{
-                position: 'relative',
-                top: '0',
-                left: '0',
-                border: 'none',
-                background: 'none',
-                fontSize: '1rem',
-                fontWeight: '700',
-                marginTop: '1rem',
-                color: '#FB7F4B'
-              }}
-            >
-              Do not have this (Username)
+              Generated: November 2022
             </div>
             <div
               className="app-feedback-content"
@@ -345,7 +318,16 @@ const MyProductLicense = () => {
                 fontWeight: '400'
               }}
             >
-              Do not have this (feedback content)
+              <br />
+              <i style={{ fontSize: '12px' }}>
+                Warranty Note: MUESS (MUNCHEN SOFTWARE SERVICE) warrants that
+                the Licensed Software will perform in accordance with its
+                specifications for an ongoing from the date of acceptance. Joi
+                Media will (at its own cost) rectify any faults in the Licensed
+                Software notified to Joi Media during the duration of the
+                platform. This constitutes Licensee's sole remedy for breaches
+                of warranty under this Agreement.
+              </i>
             </div>
           </div>
         </div>

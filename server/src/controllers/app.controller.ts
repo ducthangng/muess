@@ -6,12 +6,23 @@ import AppService from '../services/app.service';
 import UserService from '../services/users.service';
 import { CreateAppDto } from '@/dtos/hlf.dto';
 import LicenseService from '@/services/license.service';
-import { LicenseData } from '@/interfaces/hlf.interface';
+import {
+  ChaincodeProposal,
+  LicenseData,
+  Proposal
+} from '@/interfaces/hlf.interface';
+import proposalService from '../services/proposal.service';
+
+interface AppControllerDetail {
+  proposedPrice: number;
+  proposalNumber: number;
+}
 
 class AppsController {
   public appService = new AppService();
   public userService = new UserService();
   public licenseService = new LicenseService();
+  public proposalService = new proposalService();
 
   /**
    * Contributor: Khang Nguyen
@@ -61,8 +72,22 @@ class AppsController {
 
       const result: string = await this.appService.getAllApps(user);
       const apps: ChaincodeApp[] = JSON.parse(result);
+      if (apps.length === 0) return;
 
-      res.status(200).json({ data: apps, message: 'findAll' });
+      Promise.all(
+        apps.map(async (app) => {
+          await this.userService
+            .findUserById(app.Record.creatorId)
+            .then((user) => {
+              app.Record.creatorName = user.fullname;
+            });
+          return app;
+        })
+      )
+        .then((rr) => res.status(200).json({ data: rr, message: 'ok' }))
+        .catch((err) =>
+          res.status(400).json({ data: err, message: 'findAll' })
+        );
     } catch (error) {
       next(error);
     }
@@ -93,6 +118,30 @@ class AppsController {
       const asset: ChaincodeApp = apps.find((app) => {
         return app.Record.assetId === appId;
       });
+
+      if (asset.Key.length === 0) {
+        res.status(200).json({ data: asset, message: 'findOne' });
+      }
+
+      const proposal = await this.proposalService
+        .getProposalsByAppId(user, appId)
+        .then((result) => {
+          const x: ChaincodeProposal[] = result;
+          return x;
+        });
+
+      const users = await this.userService.findUserById(asset.Record.creatorId);
+
+      let sum = 0;
+      proposal.forEach((p) => {
+        if (p.Record.status === 'accepted') {
+          sum += parseInt(p.Record.proposedPrice);
+        }
+      });
+
+      asset.Record.creatorName = users.fullname;
+      asset.Record.proposalQuantity = proposal.length;
+      asset.Record.averageProposedPrice = sum;
 
       res.status(200).json({ data: asset, message: 'findOne' });
     } catch (error) {

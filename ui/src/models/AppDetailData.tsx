@@ -6,6 +6,7 @@ interface App {
     assetType: string;
     assetId: string; // queries
     creatorId: string; // queries
+    creatorName: string;
     title: string;
     description: string;
     rating: string;
@@ -14,6 +15,8 @@ interface App {
     appTags: string[];
     appCategories: string[];
     appIconURL: string;
+    averageProposedPrice: number;
+    proposalQuantity: number;
   };
 }
 

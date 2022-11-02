@@ -9,6 +9,9 @@ import PurchasePopup from '../components/PurchasePopup';
 import { appApi } from '../api/appApi';
 import { userApi } from '../api/userApi';
 import { User } from '../models/User';
+import { Statistic, Tag, Badge } from 'antd';
+import { CloudDownloadOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { time } from 'console';
 
 const defaultApp: App = {
   Key: '',
@@ -16,6 +19,7 @@ const defaultApp: App = {
     assetType: '',
     assetId: '',
     creatorId: '',
+    creatorName: '',
     title: '',
     description: '',
     rating: '',
@@ -23,7 +27,9 @@ const defaultApp: App = {
     paymentMethod: '',
     appTags: [],
     appCategories: [],
-    appIconURL: ''
+    appIconURL: '',
+    averageProposedPrice: 0,
+    proposalQuantity: 0
   }
 };
 
@@ -142,6 +148,7 @@ const AppDetail = () => {
                 ? defaultApp.Record.title
                 : data.app?.Record.title}
             </div>
+
             <div
               className="app-detail-author"
               // style={{
@@ -159,10 +166,11 @@ const AppDetail = () => {
               //   cursor: 'pointer',
               // }}
             >
-              {data.app?.Record?.creatorId.length === 0
+              {data.app?.Record?.creatorName.length === 0
                 ? defaultApp.Record.creatorId
-                : data.app?.Record.creatorId}
+                : data.app?.Record.creatorName}
             </div>
+
             <div
               className="app-detail-types"
               style={{
@@ -176,7 +184,7 @@ const AppDetail = () => {
                 alignItems: 'center'
               }}
             >
-              <div
+              {/* <div
                 className="app-detail-rating"
                 style={{
                   position: 'relative',
@@ -187,7 +195,7 @@ const AppDetail = () => {
                 {data.app?.Record.rating.length === 0
                   ? defaultApp.Record.rating
                   : data.app?.Record.rating}
-              </div>
+              </div> */}
               {/* <div
               className="line"
               style={{
@@ -207,7 +215,7 @@ const AppDetail = () => {
             >
               Do not have this (download)
             </div> */}
-              <div
+              {/* <div
                 className="line"
                 style={{
                   borderRight: '3px solid black',
@@ -228,6 +236,27 @@ const AppDetail = () => {
                   ? defaultApp.Record.appCategories
                   : data.app?.Record.appCategories}
               </div>
+              <div
+                className="line"
+                style={{
+                  borderRight: '3px solid black',
+                  height: '30%',
+                  marginLeft: '0.5rem',
+                  marginRight: '0.5rem'
+                }}
+              ></div> */}
+
+              <Tag color="geekblue" style={{ fontSize: '18px' }}>
+                {data.app?.Record.rating.length === 0
+                  ? defaultApp.Record.rating
+                  : '#' + data.app?.Record.rating}
+              </Tag>
+
+              <Tag color="magenta" style={{ fontSize: '18px' }}>
+                {data.app?.Record.appCategories.length === 0
+                  ? defaultApp.Record.appCategories
+                  : '#' + data.app?.Record.appCategories}
+              </Tag>
             </div>
             <div
               className="app-detail-author"
@@ -242,7 +271,32 @@ const AppDetail = () => {
                 marginBottom: '1rem'
               }}
             >
-              Average Prices
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row'
+                }}
+              >
+                <Statistic
+                  title="Average Prices"
+                  value={
+                    data.app?.Record?.averageProposedPrice === 0
+                      ? 'N/A'
+                      : data.app?.Record?.averageProposedPrice
+                  }
+                  precision={2}
+                  valueStyle={{ color: '#3f8600' }}
+                  prefix={<ArrowUpOutlined />}
+                  suffix="$"
+                />
+
+                <Statistic
+                  title="Downloads"
+                  value={data.app?.Record?.proposalQuantity}
+                  prefix={<CloudDownloadOutlined />}
+                  style={{ marginBottom: '3vh', marginLeft: '2vw' }}
+                ></Statistic>
+              </div>
             </div>
             <button
               className="purchase_button"
@@ -261,6 +315,7 @@ const AppDetail = () => {
             >
               Purchase
             </button>
+
             <img
               alt="AppImage"
               src={
@@ -322,7 +377,7 @@ const AppDetail = () => {
                 ? defaultApp.Record.description
                 : data.app?.Record.description}
             </div>
-            {/* <div
+            <div
               className="app-feedback-title"
               style={{
                 position: 'relative',
@@ -335,23 +390,7 @@ const AppDetail = () => {
                 marginTop: '1.5rem'
               }}
             >
-              Feedbacks
-            </div>
-            <div
-              className="app-feedback-user"
-              style={{
-                position: 'relative',
-                top: '0',
-                left: '0',
-                border: 'none',
-                background: 'none',
-                fontSize: '1rem',
-                fontWeight: '700',
-                marginTop: '1rem',
-                color: '#FB7F4B'
-              }}
-            >
-              {data.user?.fullname}
+              Published: November 2022
             </div>
             <div
               className="app-feedback-content"
@@ -366,8 +405,17 @@ const AppDetail = () => {
                 fontWeight: '400'
               }}
             >
-              Do not have this (feedback content)
-            </div> */}
+              <br />
+              <i style={{ fontSize: '12px' }}>
+                Warranty Note: MUESS (MUNCHEN SOFTWARE SERVICE) warrants that
+                the Licensed Software will perform in accordance with its
+                specifications for an ongoing from the date of acceptance. Joi
+                Media will (at its own cost) rectify any faults in the Licensed
+                Software notified to Joi Media during the duration of the
+                platform. This constitutes Licensee's sole remedy for breaches
+                of warranty under this Agreement.
+              </i>
+            </div>
           </div>
         </div>
       </div>
