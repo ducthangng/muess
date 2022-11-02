@@ -1,5 +1,5 @@
 import { AppError } from '../models/Error';
-import { App, CreateAppData } from '../models/AppDetailData';
+import { App, AppV2, CreateAppData } from '../models/AppDetailData';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8000';
 const apiUrl = `${BASE_API}/apps`;
@@ -70,11 +70,6 @@ export const appApi = {
       })
       .then((data) => {
         console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
         const x: App[] = data.data;
 
         return x;
@@ -107,9 +102,19 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: App[] = data.data;
-        console.log('app: ', data.data);
-        return apps;
+        const apps: AppV2[] = data.data;
+        const result: App[] = apps.map((app) => {
+          return {
+            Key: app.assetId,
+            Record: {
+              ...app,
+              appCategories: app.appCategories[0].split(';')
+            }
+          };
+        });
+
+        console.log('result: ', result);
+        return result;
       });
 
     return response;
@@ -128,9 +133,17 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: App[] = data.data;
-        console.log('owneddd: ', data.data);
-        return apps;
+        const apps: AppV2[] = data.data;
+        const result: App[] = apps.map((app) => {
+          return {
+            Key: app.assetId,
+            Record: {
+              ...app,
+              appCategories: app.appCategories[0].split(';')
+            }
+          };
+        });
+        return result;
       });
 
     return response;
@@ -155,8 +168,47 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: App = data.data;
-        return apps;
+        const result: AppV2 = data.data;
+        const app: App = {
+          Key: result.assetId,
+          Record: {
+            ...result,
+            appCategories: result.appCategories[0].split(';')
+          }
+        };
+
+        console.log('re sult: ', result);
+        return app;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  getAppByIdSimple: async (id: string) => {
+    const response = await fetch(`${apiUrl}/simple/${id}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const apps: AppV2 = data.data;
+        const result: App = {
+          Key: apps.assetId,
+          Record: {
+            ...apps,
+            appCategories: apps.appCategories[0].split(';')
+          }
+        };
+        return result;
       })
       .catch((err) => {
         return err;

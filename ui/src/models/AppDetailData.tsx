@@ -20,6 +20,23 @@ interface App {
   };
 }
 
+interface AppV2 {
+  assetType: string;
+  assetId: string; // queries
+  creatorId: string; // queries
+  creatorName: string;
+  title: string;
+  description: string;
+  rating: string;
+  appType: string;
+  paymentMethod: string;
+  appTags: string[];
+  appCategories: string[];
+  appIconURL: string;
+  averageProposedPrice: number;
+  proposalQuantity: number;
+}
+
 interface License {
   Key: string;
   Record: {
@@ -43,4 +60,4 @@ interface CreateAppData {
   appIconURL: string;
 }
 
-export type { App, License, CreateAppData };
+export type { App, License, CreateAppData, AppV2 };

@@ -43,6 +43,11 @@ class AppsRoute implements Routes {
       this.appsController.getAppById
     );
     this.router.get(
+      `${this.path}/simple/:appId`,
+      authMiddleware,
+      this.appsController.getAppByIdSimple
+    );
+    this.router.get(
       `${this.path}/creator/:creatorId`,
       authMiddleware,
       this.appsController.getAppsByCreatorId

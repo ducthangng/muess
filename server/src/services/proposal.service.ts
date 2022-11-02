@@ -5,10 +5,12 @@ import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
 import { Proposal } from '@/interfaces/hlf.interface';
+import proposalModel from '../models/proposal.models';
+import { ChaincodeProposal } from '../interfaces/hlf.interface';
 import {
-  AcceptProposalDto,
   CreateProposalDto,
-  CreateSecondhandProposalDto
+  CreateSecondhandProposalDto,
+  AcceptProposalDto
 } from '@/dtos/proposal.dto';
 
 const sampleProposal: Proposal[] = [
@@ -94,6 +96,26 @@ class proposalService {
       proposedPriceString,
       licenseDetails
     );
+
+    const chaincodeProposal = JSON.parse(result.toString());
+
+    console.log('chaincode key: ', chaincodeProposal.Key);
+    console.log('chaincode record: ', chaincodeProposal.Record);
+    console.log('chaincode: ', chaincodeProposal);
+
+    const mongoResult = await this.proposals.create({
+      assetType: 'proposal',
+      assetId: proposalId,
+      appId,
+      buyerId: chaincodeProposal.buyerId,
+      sellerId: chaincodeProposal.sellerId,
+      proposedPrice,
+      licenseDetails,
+      status: 'pending'
+    });
+
+    console.log('result: ', mongoResult);
+
     console.log(
       `Transaction has successfully created, result is: ${result.toString()}`
     );
@@ -168,33 +190,38 @@ class proposalService {
   }
 
   public async getProposalsByAppId(user: User, appId: string) {
-    const contract = await initContract(JSON.parse(user.x509Identity));
-    const result = await contract.evaluateTransaction(
-      'QueryProposalsByAppId',
-      appId
-    );
+    // const contract = await initContract(JSON.parse(user.x509Identity));
+    // const result = await contract.evaluateTransaction(
+    //   'QueryProposalsByAppId',
+    //   appId
+    // );
+
+    const result: Proposal[] = await this.proposals.find({ appId });
+
     console.log(`Transaction has successfully created`);
-    return JSON.parse(result.toString());
+    return result;
   }
 
   public async getProposalsByBuyerId(user: User, buyerId: string) {
-    const contract = await initContract(JSON.parse(user.x509Identity));
-    const result = await contract.evaluateTransaction(
-      'QueryProposalsByBuyerId',
-      buyerId
-    );
+    const result: Proposal[] = await this.proposals.find({ buyerId });
+    // const contract = await initContract(JSON.parse(user.x509Identity));
+    // const result = await contract.evaluateTransaction(
+    //   'QueryProposalsByBuyerId',
+    //   buyerId
+    // );
     console.log(`Transaction has successfully created`);
-    return JSON.parse(result.toString());
+    return result;
   }
 
   public async getProposalsBySellerId(user: User, sellerId: string) {
-    const contract = await initContract(JSON.parse(user.x509Identity));
-    const result = await contract.evaluateTransaction(
-      'QueryProposalsBySellerId',
-      sellerId
-    );
+    const result: Proposal[] = await this.proposals.find({ sellerId });
+    // const contract = await initContract(JSON.parse(user.x509Identity));
+    // const result = await contract.evaluateTransaction(
+    //   'QueryProposalsBySellerId',
+    //   sellerId
+    // );
     console.log(`Transaction has successfully created`);
-    return JSON.parse(result.toString());
+    return result;
   }
 }
 

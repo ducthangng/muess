@@ -135,22 +135,20 @@ class UsersController {
         return;
       }
 
-      const userBoughtProposal: ChaincodeProposal[] =
+      const userBoughtProposal: Proposal[] =
         await this.proposalService.getProposalsByBuyerId(user, reqUser._id);
 
-      const userSoldProposal: ChaincodeProposal[] =
+      const userSoldProposal: Proposal[] =
         await this.proposalService.getProposalsBySellerId(user, reqUser._id);
 
-      const boughtProposal: ChaincodeProposal[] = userBoughtProposal.filter(
+      const boughtProposal: Proposal[] = userBoughtProposal.filter(
         (proposal) => {
-          return proposal.Record.status === 'accepted';
+          return proposal.status === 'accepted';
         }
       );
-      const soldProposal: ChaincodeProposal[] = userSoldProposal.filter(
-        (proposal) => {
-          return proposal.Record.status === 'accepted';
-        }
-      );
+      const soldProposal: Proposal[] = userSoldProposal.filter((proposal) => {
+        return proposal.status === 'accepted';
+      });
 
       const spending: GraphData[] = [];
       const income: GraphData[] = [];
@@ -160,21 +158,21 @@ class UsersController {
       boughtProposal.forEach((proposal, index) => {
         const graphData: GraphData = {
           unit: this.getTmr(index),
-          amount: parseInt(proposal.Record.proposedPrice)
+          amount: proposal.proposedPrice
         };
 
         spending.push(graphData);
-        sumSpending += parseInt(proposal.Record.proposedPrice);
+        sumSpending += proposal.proposedPrice;
       });
 
       soldProposal.forEach((proposal, index) => {
         const graphData: GraphData = {
           unit: this.getTmr(index),
-          amount: parseInt(proposal.Record.proposedPrice)
+          amount: proposal.proposedPrice
         };
 
         income.push(graphData);
-        sumIncome += parseInt(proposal.Record.proposedPrice);
+        sumIncome += proposal.proposedPrice;
       });
 
       console.log('sum: ', sumIncome, sumSpending);

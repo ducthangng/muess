@@ -13,11 +13,6 @@ import {
 } from '@/interfaces/hlf.interface';
 import proposalService from '../services/proposal.service';
 
-interface AppControllerDetail {
-  proposedPrice: number;
-  proposalNumber: number;
-}
-
 class AppsController {
   public appService = new AppService();
   public userService = new UserService();
@@ -70,16 +65,14 @@ class AppsController {
         throw new Error('User does not have Identity');
       }
 
-      const result: string = await this.appService.getAllApps(user);
-      const apps: ChaincodeApp[] = JSON.parse(result);
+      const result = await this.appService.getAllApps(user);
+      const apps: App[] = result;
 
       Promise.all(
         apps.map(async (app) => {
-          await this.userService
-            .findUserById(app.Record.creatorId)
-            .then((user) => {
-              app.Record.creatorName = user.fullname;
-            });
+          await this.userService.findUserById(app.creatorId).then((user) => {
+            app.creatorName = user.fullname;
+          });
           return app;
         })
       )
@@ -112,39 +105,76 @@ class AppsController {
         throw new Error('User does not have Identity');
       }
 
-      const result: string = await this.appService.getAllApps(user);
-      const apps: ChaincodeApp[] = JSON.parse(result);
-      const asset: ChaincodeApp = apps.find((app) => {
-        return app.Record.assetId === appId;
+      const result = await this.appService.getAllApps(user);
+      const apps: App[] = result;
+      const asset: App = apps.find((app) => {
+        return app.assetId === appId;
       });
 
-      if (asset.Key.length === 0) {
+      if (asset.assetId.length === 0) {
         res.status(200).json({ data: asset, message: 'findOne' });
       }
 
-      const proposal = await this.proposalService
-        .getProposalsByAppId(user, appId)
-        .then((result) => {
-          const x: ChaincodeProposal[] = result;
-          return x;
-        });
+      const proposal = await this.proposalService.getProposalsByAppId(
+        user,
+        appId
+      );
 
-      const users = await this.userService.findUserById(asset.Record.creatorId);
+      const users = await this.userService.findUserById(asset.creatorId);
 
       let sum = 0;
       let num = 0;
       proposal.forEach((p) => {
-        if (p.Record.status === 'accepted') {
-          sum += parseInt(p.Record.proposedPrice);
+        if (p.status === 'accepted') {
+          sum += p.proposedPrice;
           num++;
         }
       });
 
-      asset.Record.creatorName = users.fullname;
-      asset.Record.proposalQuantity = proposal.length;
-      asset.Record.averageProposedPrice = sum / num;
+      asset.creatorName = users.fullname;
+      asset.proposalQuantity = proposal.length;
+      asset.averageProposedPrice = sum / num;
 
       res.status(200).json({ data: asset, message: 'findOne' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * Get the application details including the all the license proposal and the application details.
+   * @param req
+   * @param res
+   * @param next
+   */
+  public getAppByIdSimple = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const appId: string = req.params.appId;
+      const reqUser: User = req.user;
+      const user: User = await this.userService.findUserById(reqUser._id);
+
+      if (user.x509Identity.length === 0) {
+        throw new Error('User does not have Identity');
+      }
+
+      const result = await this.appService.getAllApps(user);
+      const apps: App[] = result;
+      console.log('apps', apps);
+      const asset = apps.filter((app) => {
+        if (app.assetId === appId) {
+          return app;
+        }
+      });
+
+      if (asset.length === 0) {
+        res.status(200).json({ data: {}, message: 'findOne' });
+      } else {
+        res.status(200).json({ data: asset[0], message: 'findOne' });
+      }
     } catch (error) {
       next(error);
     }
@@ -171,11 +201,8 @@ class AppsController {
       }
 
       console.log('creatorId: ', creatorId);
-      const result: string = await this.appService.getAppsByCreatorId(
-        user,
-        creatorId
-      );
-      const asset: ChaincodeApp[] = JSON.parse(result);
+      const result = await this.appService.getAppsByCreatorId(user, creatorId);
+      const asset: App[] = result;
 
       res.status(200).json({ data: asset, message: 'findOne' });
     } catch (error) {
@@ -207,27 +234,24 @@ class AppsController {
         reqUser._id
       );
 
-      console.log('result: ', result);
-
-      const allApps: string = await this.appService.getAllApps(user);
-
+      const allApps = await this.appService.getAllApps(user);
+      console.log('all app: ', allApps);
       const licenses: LicenseData[] = JSON.parse(result);
+      console.log('license: ', licenses);
+      const allChainCodeApps: App[] = allApps;
 
-      console.log('all license: ', licenses);
-
-      const allChainCodeApps: ChaincodeApp[] = JSON.parse(allApps);
-
-      console.log('all apps: ', allChainCodeApps);
       const myApps = allChainCodeApps.filter((app) => {
         let check = false;
         licenses.forEach((license) => {
-          if (license.Record.appId === app.Record.assetId) {
+          if (license.Record.appId === app.assetId) {
             check = true;
           }
         });
 
         return check;
       });
+
+      console.log('mypp: ', myApps);
 
       res.status(200).json({ data: myApps, message: 'findMyApp' });
     } catch (error) {

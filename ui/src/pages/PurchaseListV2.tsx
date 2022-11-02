@@ -119,18 +119,19 @@ const PurchaseListV2 = () => {
 
     Promise.all(
       proposals.data.map((proposal, index) => {
+        console.log('proposal: ', proposal);
         return appApi
-          .getAppById(proposal.Record.appId)
+          .getAppByIdSimple(proposal.appId)
           .then((result) => {
-            console.log('title: ', result.Record.title);
+            console.log('result: ', result);
             return {
               key: index,
-              id: proposal.Record.assetId,
+              id: proposal.assetId,
               prodname: result.Record.title,
-              provider: proposal.Record.sellerId,
-              price: proposal.Record.proposedPrice,
-              details: proposal.Record.licenseDetails,
-              status: proposal.Record.status
+              provider: proposal.sellerId,
+              price: proposal.proposedPrice,
+              details: proposal.licenseDetails,
+              status: proposal.status
             };
           })
           .then((val) => {

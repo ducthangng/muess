@@ -9,8 +9,7 @@ const proposalSchema: Schema = new Schema({
   },
   assetId: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   appId: {
     type: String,
@@ -18,27 +17,23 @@ const proposalSchema: Schema = new Schema({
   },
   buyerId: {
     type: String,
-    required: false,
-    unique: false
+    required: true
   },
   sellerId: {
     type: String,
-    required: false
+    required: true
   },
   proposedPrice: {
     type: String,
-    required: false,
-    unique: true
+    required: true
   },
   licenseDetails: {
     type: String,
-    required: false,
-    unique: true
+    required: false
   },
   status: {
     type: String,
-    required: false,
-    unique: true
+    required: false
   }
 });
 

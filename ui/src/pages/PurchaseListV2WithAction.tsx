@@ -72,23 +72,23 @@ const PurchaseListV2WithAction = () => {
     Promise.all(
       proposals.data.map((proposal, index) => {
         return appApi
-          .getAppById(proposal.Record.appId)
+          .getAppById(proposal.appId)
           .then((result) => {
             mapping.push({
               key: result.Record.title,
-              val: proposal.Record.appId
+              val: proposal.appId
             });
 
             console.log('pushed!');
 
             return {
               key: index,
-              id: proposal.Record.assetId,
+              id: proposal.assetId,
               prodname: result.Record.title,
-              buyer: proposal.Record.buyerId,
-              price: proposal.Record.proposedPrice,
-              details: proposal.Record.licenseDetails,
-              status: proposal.Record.status
+              buyer: proposal.buyerId,
+              price: proposal.proposedPrice,
+              details: proposal.licenseDetails,
+              status: proposal.status
             };
           })
           .then((val) => {
