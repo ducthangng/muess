@@ -96,7 +96,7 @@ const MyProductLicense = () => {
       <SideMenu />
       <PurchasePopup trigger={buttonPopup} setTrigger={setButtonPopup} />
 
-      <div className="pt-[50px] w-full h-screen flex flex-col justify-center items-center">
+      <div className="py-[80px] w-full flex flex-col justify-center items-center">
         <div className="flex flex-col gap-5 w-[80vw] min-h-[80vh]">
           <div className="text-left flex justify-start">
             <button
