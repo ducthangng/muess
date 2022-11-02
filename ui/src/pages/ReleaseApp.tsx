@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { TagsInput } from 'react-tag-input-component';
 import { ratings } from '../consts/ratings';
 import { useGlobalContext } from '../context/global/GlobalContext';
+import { isImageExists } from '../utils/isImageExists';
 const { Option } = Select;
 
 const categoriesOptions = [
@@ -58,6 +59,8 @@ const ReleaseApp = () => {
       appIconURL: appImage
     };
 
+    setMessage('');
+
     if (!title) {
       setHasError(true);
       setMessage('App Name cannot be empty!');
@@ -88,9 +91,9 @@ const ReleaseApp = () => {
       setMessage('Please choose at least 1 Category!');
       return;
     }
-    if (!appImage) {
+    if (!isImageExists(appImage)) {
       setHasError(true);
-      setMessage('Please insert an App Image URL!');
+      setMessage('Please insert a valid App Image URL!');
       return;
     }
 

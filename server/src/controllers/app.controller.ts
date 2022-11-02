@@ -72,7 +72,6 @@ class AppsController {
 
       const result: string = await this.appService.getAllApps(user);
       const apps: ChaincodeApp[] = JSON.parse(result);
-      if (apps.length === 0) return;
 
       Promise.all(
         apps.map(async (app) => {
