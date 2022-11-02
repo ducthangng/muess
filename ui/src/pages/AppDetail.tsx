@@ -175,32 +175,50 @@ const AppDetail = () => {
                       <div className="app-detail-author">
                         {data.app.Record.creatorName}
                       </div>
-                      <div className="py-10">
-                        <Tag
-                          color="geekblue"
-                          style={{ fontSize: '16px', margin: '5px' }}
-                        >
-                          #{data.app.Record.rating}
-                        </Tag>
-
-                        {data.app.Record?.appCategories?.length > 0 &&
-                          data.app.Record.appCategories.map((category) => (
-                            <Tag
-                              color="magenta"
-                              style={{ fontSize: '16px', margin: '5px' }}
-                            >
-                              {category}
-                            </Tag>
-                          ))}
-                        {data.app.Record?.appTags?.length > 0 &&
-                          data.app.Record.appTags.map((category) => (
-                            <Tag
-                              color="purple"
-                              style={{ fontSize: '16px', margin: '5px' }}
-                            >
-                              {category}
-                            </Tag>
-                          ))}
+                      <div className="flex flex-col py-5">
+                        <div className="flex gap-2 items-start">
+                          <div className="my-[5px] font-bold text-[16px]">
+                            Rating:
+                          </div>
+                          <Tag
+                            color="geekblue"
+                            style={{ fontSize: '16px', margin: '5px' }}
+                          >
+                            {data.app.Record.rating}
+                          </Tag>
+                        </div>
+                        <div className="flex gap-2 items-start">
+                          <div className="my-[5px] font-bold text-[16px]">
+                            Categories:
+                          </div>
+                          <div>
+                            {data.app.Record?.appCategories?.length > 0 &&
+                              data.app.Record.appCategories.map((category) => (
+                                <Tag
+                                  color="magenta"
+                                  style={{ fontSize: '16px', margin: '5px' }}
+                                >
+                                  {category}
+                                </Tag>
+                              ))}
+                          </div>
+                        </div>
+                        <div className="flex gap-2 items-start">
+                          <div className="my-[5px] font-bold text-[16px]">
+                            Hashtags:
+                          </div>
+                          <div>
+                            {data.app.Record?.appTags?.length > 0 &&
+                              data.app.Record.appTags.map((category) => (
+                                <Tag
+                                  color="purple"
+                                  style={{ fontSize: '16px', margin: '5px' }}
+                                >
+                                  {category}
+                                </Tag>
+                              ))}
+                          </div>
+                        </div>
                       </div>
                       <div className="flex gap-10 py-5">
                         <Statistic
