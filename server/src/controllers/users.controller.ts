@@ -158,21 +158,21 @@ class UsersController {
       boughtProposal.forEach((proposal, index) => {
         const graphData: GraphData = {
           unit: this.getTmr(index),
-          amount: proposal.proposedPrice
+          amount: parseInt(proposal.proposedPrice.toString())
         };
 
         spending.push(graphData);
-        sumSpending += proposal.proposedPrice;
+        sumSpending += parseInt(proposal.proposedPrice.toString());
       });
 
       soldProposal.forEach((proposal, index) => {
         const graphData: GraphData = {
           unit: this.getTmr(index),
-          amount: proposal.proposedPrice
+          amount: parseInt(proposal.proposedPrice.toString())
         };
 
         income.push(graphData);
-        sumIncome += proposal.proposedPrice;
+        sumIncome += parseInt(proposal.proposedPrice.toString());
       });
 
       console.log('sum: ', sumIncome, sumSpending);

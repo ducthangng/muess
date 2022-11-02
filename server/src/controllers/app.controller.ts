@@ -126,18 +126,35 @@ class AppsController {
       let num = 0;
       proposal.forEach((p) => {
         if (p.status === 'accepted') {
-          sum += p.proposedPrice;
+          sum += parseInt(p.proposedPrice.toString());
           num++;
+          console.log('sum: ', sum);
         }
       });
 
-      asset.creatorName = users.fullname;
-      asset.proposalQuantity = proposal.length;
-      asset.averageProposedPrice = sum / num;
+      // console.log('sum: ', sum);
+      // console.log('num: ', num);
+
+      const x: App = {
+        assetId: asset.assetId,
+        title: asset.title,
+        description: asset.description,
+        creatorId: asset.creatorId,
+        creatorName: users.fullname,
+        averageProposedPrice: Math.round(sum / num),
+        proposalQuantity: proposal.length,
+        assetType: asset.assetType,
+        rating: asset.rating,
+        appType: asset.appType,
+        paymentMethod: asset.paymentMethod,
+        appTags: asset.appTags,
+        appCategories: asset.appCategories,
+        appIconURL: asset.appIconURL
+      };
 
       console.log('asset: ', asset.creatorName);
 
-      res.status(200).json({ data: asset, message: 'findOne' });
+      res.status(200).json({ data: x, message: 'findOne' });
     } catch (error) {
       next(error);
     }
