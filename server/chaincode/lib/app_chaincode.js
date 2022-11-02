@@ -59,6 +59,8 @@ class Chaincode extends Contract {
 
     // === Save asset to state ===
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+
+    return asset;
   }
 
   async UpdateApp(
@@ -106,6 +108,8 @@ class Chaincode extends Contract {
 
     // === Save asset to state ===
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+
+    return asset;
   }
 
   // CreateProposal - create a new proposal, store into chaincode state
@@ -144,6 +148,8 @@ class Chaincode extends Contract {
 
     // === Save asset to state ===
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+
+    return asset;
   }
 
   // CreateSecondhandProposal - create a proposal for an already existing license
@@ -166,7 +172,7 @@ class Chaincode extends Contract {
     }
 
     // throws error if license can't be resold
-    if (!license.licenseDetails.includes("resell")) {
+    if (!license.licenseDetails.split(",").includes("resell")) {
       throw new Error("This license doesn't have resell rights");
     }
 
@@ -189,6 +195,8 @@ class Chaincode extends Contract {
 
     // === Save asset to state ===
     await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+
+    return asset;
   }
 
   async AcceptProposal(ctx, assetId, proposalId) {
@@ -207,10 +215,12 @@ class Chaincode extends Contract {
       throw new Error('You must be the owner to accept this proposal.');
     }
 
+    let license;
+
     // if no license associated with this proposal exists
     if (proposal.licenseId == '') {
       // create new asset
-      let asset = {
+      license = {
         assetType: 'license',
         assetId: assetId,
         appId: proposal.appId,
@@ -218,7 +228,7 @@ class Chaincode extends Contract {
         creatorId: proposal.sellerId,
         ownerId: proposal.buyerId // owner is buyer
       };
-      await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(asset)));
+      await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(license)));
     } else {
 
       // otherwise, find the license
@@ -227,7 +237,7 @@ class Chaincode extends Contract {
         throw new Error('No such license exists');
       }
 
-      const license = JSON.parse(licenseBytes.toString());
+      license = JSON.parse(licenseBytes.toString());
       if (!license) {
         throw new Error("Can't JSON parse licenseBytes");
       }
@@ -255,6 +265,8 @@ class Chaincode extends Contract {
       proposal.assetId,
       Buffer.from(JSON.stringify(proposal))
     );
+
+    return license;
   }
 
   async RejectProposal(ctx, proposalId) {

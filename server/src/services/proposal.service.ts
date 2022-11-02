@@ -5,10 +5,11 @@ import { X509Identity } from 'fabric-network';
 import { User } from '@/interfaces/users.interface';
 import { App } from '../interfaces/apps.interface';
 import { Proposal } from '@/interfaces/hlf.interface';
-import { AcceptProposalDto, CreateProposalDto } from '@/dtos/proposal.dto';
-import { ChaincodeProposal } from '../interfaces/hlf.interface';
-import mongoose from 'mongoose';
-import proposalModel from '../models/proposal.models';
+import {
+  AcceptProposalDto,
+  CreateProposalDto,
+  CreateSecondhandProposalDto
+} from '@/dtos/proposal.dto';
 
 const sampleProposal: Proposal[] = [
   {
@@ -80,43 +81,45 @@ class proposalService {
   public proposals = proposalModel;
 
   public async createProposal(user: User, proposalData: CreateProposalDto) {
-    try {
-      const contract = await initContract(JSON.parse(user.x509Identity));
-      const { appId, proposedPrice, licenseDetails } = proposalData;
-      const proposalId = uuidv4();
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const { appId, proposedPrice, licenseDetails } = proposalData;
+    const proposalId = uuidv4();
 
-      const proposedPriceString = proposedPrice.toString();
+    const proposedPriceString = proposedPrice.toString();
 
-      const result = await contract.submitTransaction(
-        'CreateProposal',
-        proposalId,
-        appId,
-        proposedPriceString,
-        licenseDetails
-      );
+    const result = await contract.submitTransaction(
+      'CreateProposal',
+      proposalId,
+      appId,
+      proposedPriceString,
+      licenseDetails
+    );
+    console.log(
+      `Transaction has successfully created, result is: ${result.toString()}`
+    );
+    return result.toString();
+  }
 
-      const chaincodeProposal: ChaincodeProposal = JSON.parse(
-        result.toString()
-      );
+  public async createSecondhandProposal(
+    user: User,
+    proposalData: CreateSecondhandProposalDto
+  ) {
+    const contract = await initContract(JSON.parse(user.x509Identity));
+    const { licenseId, proposedPrice } = proposalData;
+    const proposalId = uuidv4();
 
-      const mresult = await this.proposals.create({
-        assetType: 'proposal',
-        assetId: proposalId,
-        appId: proposalData.appId,
-        buyerId: user._id,
-        sellerId: '',
-        proposedPrice: proposalData.proposedPrice,
-        licenseDetails: proposalData.licenseDetails,
-        status: 'pending'
-      });
+    const proposedPriceString = proposedPrice.toString();
 
-      console.log(mresult);
-
-      return result.toString();
-    } catch (error) {
-      console.log(error);
-      throw new Error('Submit Transaction Failed');
-    }
+    const result = await contract.submitTransaction(
+      'CreateSecondhandProposal',
+      proposalId,
+      licenseId,
+      proposedPriceString
+    );
+    console.log(
+      `Transaction has successfully created, result is: ${result.toString()}`
+    );
+    return result.toString();
   }
 
   public async acceptProposal(

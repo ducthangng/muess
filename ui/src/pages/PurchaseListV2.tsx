@@ -141,7 +141,7 @@ const PurchaseListV2 = () => {
                 prodname: val.prodname,
                 provider: result.fullname,
                 price: val.price,
-                details: val.details.split(';'),
+                details: val.details.split(','),
                 status: val.status
               };
 
