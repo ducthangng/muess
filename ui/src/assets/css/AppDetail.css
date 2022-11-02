@@ -37,26 +37,20 @@
   padding-bottom: 0;
 }
 
-.app-detail-body{
+.app-detail-body {
   height: 100vh;
   overflow-y: hidden;
 }
 
-.app-detail-author{
-  position: relative;
-  top: '0';
-  left: '0 ';
-  width: 50%;
+.app-detail-author {
   background-color: #ffffff;
   font-size: 1.25rem;
   font-weight: 400px;
-  color: #FB7F4B;
+  color: #fb7f4b;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   cursor: pointer;
 }
 
-.app-detail-author:hover{
+.app-detail-author:hover {
   overflow: visible;
 }

@@ -174,9 +174,12 @@ const SideMenu = (props) => {
         </NavLink>
       </div>
 
-      <div className="account" onClick={() => setOpen(!open)}>
-        <div className="account-info">
-          <div className="username">{fullname}</div>
+      <div
+        className="account bg-[#f5f5f5] px-10 py-1"
+        onClick={() => setOpen(!open)}
+      >
+        <div className="text-[#45102b] flex flex-col justify-center items-center">
+          <div className="font-bold text-xl">{fullname}</div>
           <div>{email}</div>
         </div>
         <div className={`dropdown-menu ${open ? 'open' : ''}`}>
@@ -190,10 +193,10 @@ const SideMenu = (props) => {
                 </div>
               </a>
             </li> */}
-            <li className="pt-3" onClick={handleLogout}>
+            <li className="py-3 hover:bg-gray-100/30" onClick={handleLogout}>
               <a className="flex items-center justify-center gap-5">
-                <div className="icon">
-                  <BIIcons.BiLogOut></BIIcons.BiLogOut>
+                <div>
+                  <BIIcons.BiLogOut />
                 </div>
                 <span>Logout</span>
               </a>

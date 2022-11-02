@@ -9,6 +9,8 @@ import PurchasePopup from '../components/PurchasePopup';
 import { appApi } from '../api/appApi';
 import { userApi } from '../api/userApi';
 import { User } from '../models/User';
+import { ratings } from '../consts/ratings';
+import { useGlobalContext } from '../context/global/GlobalContext';
 
 const defaultApp: App = {
   Key: '',
@@ -37,6 +39,7 @@ const defaultUser: User = {
 };
 
 const AppDetail = () => {
+  const { setIsLoading } = useGlobalContext();
   const navigate = useNavigate();
   const [data, setData] = useState({
     app: defaultApp,
@@ -46,23 +49,43 @@ const AppDetail = () => {
   const { appId } = useParams();
   const [buttonPopup, setButtonPopup] = useState(false);
 
-  useEffect(() => {
-    if (appId?.length !== 0) {
-      appApi.getAppById(appId as string).then((result) => {
-        setData((state) => ({ ...state, app: result }));
-      });
+  const fetchData = async () => {
+    if (!appId || appId.length === 0) {
+      return;
     }
-  }, [appId]);
+    try {
+      setIsLoading(true);
+      const appRes = await appApi.getAppById(appId as string);
+      setData((state) => ({ ...state, app: appRes }));
+      const userRes = await userApi.getInfoById(appRes.Record.creatorId);
+      setData((state) => ({ ...state, user: userRes }));
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (appId?.length !== 0) {
+  //     appApi.getAppById(appId as string).then((result) => {
+  //       setData((state) => ({ ...state, app: result }));
+  //     });
+  //   }
+  // }, [appId]);
+
+  // useEffect(() => {
+  //   if (data?.app?.Record?.creatorId?.length !== 0) {
+  //     userApi
+  //       .getInfoById(data?.app?.Record?.creatorId as string)
+  //       .then((user) => {
+  //         setData((state) => ({ ...state, user: user }));
+  //       });
+  //   }
+  // }, [data.app]);
 
   useEffect(() => {
-    if (data?.app?.Record?.creatorId?.length !== 0) {
-      userApi
-        .getInfoById(data?.app?.Record?.creatorId as string)
-        .then((user) => {
-          setData((state) => ({ ...state, user: user }));
-        });
-    }
-  }, [data.app]);
+    fetchData();
+  }, []);
 
   return (
     <body className="app-detail-body">
@@ -142,23 +165,7 @@ const AppDetail = () => {
                 ? defaultApp.Record.title
                 : data.app?.Record.title}
             </div>
-            <div
-              className="app-detail-author"
-              // style={{
-              //   position: 'relative',
-              //   top: '0',
-              //   left: '0',
-              //   width: '50%',
-              //   backgroundColor: '#ffffff',
-              //   fontSize: '1.25rem',
-              //   fontWeight: '400',
-              //   color: '#FB7F4B',
-              //   textOverflow: 'ellipsis',
-              //   whiteSpace: 'nowrap',
-              //   overflow: 'hidden',
-              //   cursor: 'pointer',
-              // }}
-            >
+            <div className="text-[#fb7f4b] text-lg word-break">
               {data.app?.Record?.creatorId.length === 0
                 ? defaultApp.Record.creatorId
                 : data.app?.Record.creatorId}
@@ -186,7 +193,7 @@ const AppDetail = () => {
               >
                 {data.app?.Record.rating.length === 0
                   ? defaultApp.Record.rating
-                  : data.app?.Record.rating}
+                  : ratings[data.app?.Record.rating]}
               </div>
               {/* <div
               className="line"
