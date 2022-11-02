@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Collapse } from 'antd';
+import { Collapse, Skeleton } from 'antd';
 import { App, License } from '../models/AppDetailData';
 import { Tag } from 'antd';
 import SideMenu from '../components/Header/SideMenu';
@@ -11,6 +11,8 @@ import { userApi } from '../api/userApi';
 import { licenseApi } from '../api/licenseApi';
 import { User } from '../models/User';
 import { useGlobalContext } from '../context/global/GlobalContext';
+import SkeletonButton from 'antd/lib/skeleton/Button';
+import SkeletonInput from 'antd/lib/skeleton/Input';
 
 const { Panel } = Collapse;
 
@@ -58,7 +60,7 @@ const defaultLicense: License[] = [
 ];
 
 const MyProductLicense = () => {
-  const { setIsLoading } = useGlobalContext();
+  const { setIsLoading, isLoading } = useGlobalContext();
   const navigate = useNavigate();
   const { appId } = useParams();
   const [data, setData] = useState({
@@ -124,36 +126,68 @@ const MyProductLicense = () => {
             {/* content divided into 2 columns, left and right */}
             <div className="grid grid-cols-2">
               {/* left column */}
-              <div>
-                <div
-                  style={{
-                    fontWeight: '700',
-                    backgroundColor: '#ffffff',
-                    fontSize: '3rem'
-                  }}
-                >
-                  {data.app.Record.title}
-                </div>
-                <div className="app-detail-author">
-                  {data.app.Record.creatorName}
-                </div>
-                <div
-                  className="py-10"
-                  style={{
-                    backgroundColor: '#ffffff',
-                    display: 'flex',
-                    justifyContent: 'left',
-                    alignItems: 'center'
-                  }}
-                >
-                  <Tag color="geekblue" style={{ fontSize: '16px' }}>
-                    {data.app.Record.rating}
-                  </Tag>
+              <div className="flex flex-col">
+                {isLoading ? (
+                  <>
+                    <SkeletonInput
+                      active={isLoading}
+                      style={{
+                        width: '200px',
+                        height: '50px',
+                        marginBottom: '20px'
+                      }}
+                    />
+                    <SkeletonInput
+                      active={isLoading}
+                      style={{
+                        width: '100px',
+                        height: '20px',
+                        marginBottom: '20px'
+                      }}
+                    />
+                    <SkeletonInput
+                      active={isLoading}
+                      style={{
+                        width: '100px',
+                        height: '30px',
+                        marginBottom: '20px'
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <div
+                      style={{
+                        fontWeight: '700',
+                        backgroundColor: '#ffffff',
+                        fontSize: '3rem'
+                      }}
+                    >
+                      {data.app.Record.title}
+                    </div>
+                    <div className="app-detail-author">
+                      {data.app.Record.creatorName}
+                    </div>
+                    <div
+                      className="py-10"
+                      style={{
+                        backgroundColor: '#ffffff',
+                        display: 'flex',
+                        justifyContent: 'left',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <Tag color="geekblue" style={{ fontSize: '16px' }}>
+                        {data.app.Record.rating}
+                      </Tag>
 
-                  <Tag color="magenta" style={{ fontSize: '16px' }}>
-                    {data.app.Record.appCategories}
-                  </Tag>
-                </div>
+                      <Tag color="magenta" style={{ fontSize: '16px' }}>
+                        {data.app.Record.appCategories}
+                      </Tag>
+                    </div>
+                  </>
+                )}
+
                 <div className="w-[400px]">
                   <Collapse defaultActiveKey={['1']}>
                     <Panel header="License Key" key="1">
@@ -181,20 +215,24 @@ const MyProductLicense = () => {
                   >
                     About this app
                   </div>
-                  <div
-                    className="app-description"
-                    style={{
-                      border: 'none',
-                      background: 'none',
-                      fontSize: '1rem',
-                      fontWeight: '400'
-                    }}
-                  >
-                    {data.app.Record.description}
-                  </div>
+                  {isLoading ? (
+                    <Skeleton active={isLoading} />
+                  ) : (
+                    <div
+                      className="app-description"
+                      style={{
+                        border: 'none',
+                        background: 'none',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      }}
+                    >
+                      {data.app.Record.description}
+                    </div>
+                  )}
                 </div>
                 <div
-                  className="app-feedback-title"
+                  className="app-feedback-title flex gap-2"
                   style={{
                     border: 'none',
                     background: 'none',
@@ -202,21 +240,36 @@ const MyProductLicense = () => {
                     fontWeight: '700'
                   }}
                 >
-                  Generated: November 2022
+                  <div>Generated:</div>
+                  {isLoading ? (
+                    <SkeletonInput active={isLoading} />
+                  ) : (
+                    <div>November 2022</div>
+                  )}
                 </div>
               </div>
               {/* right column */}
               <div className="flex justify-end">
-                <img
-                  alt="AppImage"
-                  src={data.app.Record.appIconURL}
-                  style={{
-                    width: '300px',
-                    height: '300px',
-                    objectFit: 'cover',
-                    display: 'flex'
-                  }}
-                />
+                <div style={{ width: '300px', height: '300px' }}>
+                  {isLoading ? (
+                    <SkeletonButton
+                      active={isLoading}
+                      style={{ height: '300px' }}
+                      block
+                    />
+                  ) : (
+                    <img
+                      alt="AppImage"
+                      src={data.app.Record.appIconURL}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'flex'
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             </div>
             {/* footer */}
