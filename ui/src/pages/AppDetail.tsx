@@ -204,7 +204,7 @@ const AppDetail = () => {
                       />
 
                       <Statistic
-                        title="Downloads"
+                        title="Purchases"
                         value={data.app?.Record?.proposalQuantity}
                         prefix={<CloudDownloadOutlined />}
                       ></Statistic>

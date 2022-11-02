@@ -1,11 +1,9 @@
 import React from 'react';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
 import NotFound404 from '../pages/NotFound404';
-import { AdminEC, StudentEC } from '../models/Guard';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
@@ -18,7 +16,6 @@ import AppDetail from '../pages/AppDetail';
 import SoldList from '../pages/SoldList';
 import Test from '../pages/Test';
 import PurchaseConfirm from '../pages/PurchaseConfirm';
-// import EditApp from '../pages/EditApp';
 import Guard from '../guards/AuthGuard';
 import OwnedProducts from '../pages/MyProduct';
 import MyProductLicense from '../pages/MyProductLicense';

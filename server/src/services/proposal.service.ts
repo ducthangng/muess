@@ -90,9 +90,7 @@ class proposalService {
         proposedPriceString,
         licenseDetails
       );
-      console.log(
-        `Transaction has successfully created, result is: ${result.toString()}`
-      );
+      console.log(`Transaction has successfully created`);
       return result.toString();
     } catch (error) {
       console.log(error);
@@ -112,9 +110,7 @@ class proposalService {
       licenseId,
       proposalId
     );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
+    console.log(`Transaction has successfully created,  `);
     return result.toString();
   }
 
@@ -128,9 +124,7 @@ class proposalService {
       'RejectProposal',
       proposalId
     );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
+    console.log(`Transaction has successfully created`);
     return result.toString();
   }
 
@@ -140,9 +134,7 @@ class proposalService {
       'QueryProposalsByAppId',
       appId
     );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
+    console.log(`Transaction has successfully created`);
     return JSON.parse(result.toString());
   }
 
@@ -152,9 +144,7 @@ class proposalService {
       'QueryProposalsByBuyerId',
       buyerId
     );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
+    console.log(`Transaction has successfully created`);
     return JSON.parse(result.toString());
   }
 
@@ -164,9 +154,7 @@ class proposalService {
       'QueryProposalsBySellerId',
       sellerId
     );
-    console.log(
-      `Transaction has successfully created, result is: ${result.toString()}`
-    );
+    console.log(`Transaction has successfully created`);
     return JSON.parse(result.toString());
   }
 }

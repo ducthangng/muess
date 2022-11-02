@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import { appApi } from '../api/appApi';
 import { useQuery } from 'react-query';
 import { useGlobalContext } from '../context/global/GlobalContext';
+import { ShopOutlined, DownSquareOutlined } from '@ant-design/icons';
 
 function OwnedProducts() {
   const { setIsLoading } = useGlobalContext();
@@ -49,11 +50,27 @@ function OwnedProducts() {
               }}
             >
               <div>
-                <Button ghost shape="default" size="middle" href="/products">
-                  Featured Apps
+                <Button
+                  shape="default"
+                  size="large"
+                  icon={<ShopOutlined style={{ fontSize: '25px' }} />}
+                  style={{ borderColor: 'gray', color: 'black' }}
+                  href="/products"
+                >
+                  Store
                 </Button>
-                <Button shape="default" size="middle" href="/my-app">
-                  Owned Apps
+                <Button
+                  shape="default"
+                  style={{
+                    marginLeft: '1vw',
+                    backgroundColor: '#FB7F4A',
+                    color: 'white',
+                    borderColor: 'white'
+                  }}
+                  size="large"
+                  icon={<DownSquareOutlined style={{ fontSize: '25px' }} />}
+                >
+                  My Apps
                 </Button>
               </div>
             </Divider>

@@ -132,15 +132,17 @@ class AppsController {
       const users = await this.userService.findUserById(asset.Record.creatorId);
 
       let sum = 0;
+      let num = 0;
       proposal.forEach((p) => {
         if (p.Record.status === 'accepted') {
           sum += parseInt(p.Record.proposedPrice);
+          num++;
         }
       });
 
       asset.Record.creatorName = users.fullname;
       asset.Record.proposalQuantity = proposal.length;
-      asset.Record.averageProposedPrice = sum;
+      asset.Record.averageProposedPrice = sum / num;
 
       res.status(200).json({ data: asset, message: 'findOne' });
     } catch (error) {
