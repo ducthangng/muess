@@ -1,7 +1,10 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { List, Avatar, Tag } from 'antd';
+import { licenseApi } from '../api/licenseApi';
 
-interface ILicenseListProps {}
+interface ILicenseListProps {
+  appId: string | undefined;
+}
 
 const mockData = [
   {
@@ -55,9 +58,24 @@ const mockData = [
   }
 ];
 
-const LicenseList: React.FunctionComponent<ILicenseListProps> = (props) => {
+const LicenseList: React.FunctionComponent<ILicenseListProps> = ({ appId }) => {
+  const fetchData = async () => {
+    if (!appId) {
+      return;
+    }
+    try {
+      const res = await licenseApi.getLicenseByAppId(appId);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
-    <div>
+    <div className="h-full flex flex-col">
       <div className="text-center text-lg font-bold">
         Want to rebuy licenses?
       </div>
@@ -67,50 +85,52 @@ const LicenseList: React.FunctionComponent<ILicenseListProps> = (props) => {
           border: '1px solid #E3E3E3'
         }}
       />
-      <List
-        itemLayout="vertical"
-        dataSource={mockData}
-        renderItem={(item) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={
-                <Avatar src="https://media.healthecareers.com/wp-content/uploads/2022/02/11211620/contract.jpg" />
-              }
-              title={
-                <a href="https://ant.design" className="text-[14px]">
-                  {item.assetId}
-                </a>
-              }
-              //   description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-            />
-            <div className="flex flex-col gap-2">
-              <div className="grid grid-cols-5">
-                <div className="col-span-1 font-bold">Owner:</div>
-                <div className="col-span-4">{item.ownerId}</div>
-              </div>
-              <div className="grid grid-cols-5">
-                <div className="col-span-1 font-bold">Price:</div>
-                <div className="col-span-4">{item.proposedPrice}</div>
-              </div>
-              <div className="grid grid-cols-5">
-                <div className="col-span-1 font-bold">Details:</div>
-                <div className="col-span-4">
-                  {item.licenseDetails.map((item) => (
-                    <Tag color="geekblue" style={{ fontSize: '14px' }}>
-                      {item}
-                    </Tag>
-                  ))}
+      <div className="overflow-y-scroll">
+        <List
+          itemLayout="vertical"
+          dataSource={mockData}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src="https://media.healthecareers.com/wp-content/uploads/2022/02/11211620/contract.jpg" />
+                }
+                title={
+                  <a href="https://ant.design" className="text-[14px]">
+                    {item.assetId}
+                  </a>
+                }
+                //   description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              />
+              <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-5">
+                  <div className="col-span-1 font-bold">Owner:</div>
+                  <div className="col-span-4">{item.ownerId}</div>
+                </div>
+                <div className="grid grid-cols-5">
+                  <div className="col-span-1 font-bold">Price:</div>
+                  <div className="col-span-4">{item.proposedPrice}</div>
+                </div>
+                <div className="grid grid-cols-5">
+                  <div className="col-span-1 font-bold">Details:</div>
+                  <div className="col-span-4">
+                    {item.licenseDetails.map((item) => (
+                      <Tag color="geekblue" style={{ fontSize: '14px' }}>
+                        {item}
+                      </Tag>
+                    ))}
+                  </div>
+                </div>
+                <div className="my-5 flex justify-center items-center">
+                  <button className="bg-[#ffe4c4] text-gray-700 rounded-lg font-bold border py-1 px-10">
+                    Purchase
+                  </button>
                 </div>
               </div>
-              <div className="my-5 flex justify-center items-center">
-                <button className="bg-[#ffe4c4] text-gray-700 rounded-lg font-bold border py-1 px-10">
-                  Purchase
-                </button>
-              </div>
-            </div>
-          </List.Item>
-        )}
-      />
+            </List.Item>
+          )}
+        />
+      </div>
     </div>
   );
 };
