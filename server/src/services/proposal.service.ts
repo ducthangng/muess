@@ -138,6 +138,20 @@ class proposalService {
       licenseId,
       proposedPriceString
     );
+
+    const chaincodeProposal = JSON.parse(result.toString());
+
+    const mongoResult = await this.proposals.create({
+      assetType: 'proposal',
+      assetId: proposalId,
+      appId: chaincodeProposal.appId,
+      buyerId: chaincodeProposal.buyerId,
+      sellerId: chaincodeProposal.sellerId,
+      proposedPrice,
+      licenseDetails: chaincodeProposal.licenseDetails,
+      status: 'pending'
+    });
+
     console.log(
       `Transaction has successfully created, result is: ${result.toString()}`
     );

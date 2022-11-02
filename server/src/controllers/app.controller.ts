@@ -135,6 +135,8 @@ class AppsController {
       asset.proposalQuantity = proposal.length;
       asset.averageProposedPrice = sum / num;
 
+      console.log('asset: ', asset.creatorName);
+
       res.status(200).json({ data: asset, message: 'findOne' });
     } catch (error) {
       next(error);
