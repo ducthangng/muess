@@ -102,13 +102,14 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: AppV2[] = data.data;
-        const result: App[] = apps.map((app) => {
+        const apps: any[] = data.data;
+        const result: any[] = apps.map((app) => {
+          console.log(app.appCategories);
           return {
             Key: app.assetId,
             Record: {
               ...app,
-              appCategories: app.appCategories[0].split(';')
+              appCategories: app.appCategories.split(',')
             }
           };
         });
@@ -139,7 +140,7 @@ export const appApi = {
             Key: app.assetId,
             Record: {
               ...app,
-              appCategories: app.appCategories[0].split(';')
+              appCategories: app.appCategories[0].split(',')
             }
           };
         });
@@ -168,12 +169,12 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const result: AppV2 = data.data;
-        const app: App = {
+        const result: any = data.data;
+        const app: any = {
           Key: result.assetId,
           Record: {
             ...result,
-            appCategories: result.appCategories[0].split(';')
+            appCategories: result.appCategories.split(',')
           }
         };
 
@@ -205,9 +206,10 @@ export const appApi = {
           Key: apps.assetId,
           Record: {
             ...apps,
-            appCategories: apps.appCategories[0].split(';')
+            appCategories: apps.appCategories[0].split(',')
           }
         };
+        console.log(apps.appCategories[0].split(','));
         return result;
       })
       .catch((err) => {

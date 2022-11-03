@@ -284,7 +284,7 @@ const AppDetail = () => {
                       <Skeleton active={isLoading} />
                     ) : (
                       <div
-                        className="app-description"
+                        // className="app-description"
                         style={{
                           border: 'none',
                           background: 'none',

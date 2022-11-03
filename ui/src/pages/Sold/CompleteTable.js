@@ -236,15 +236,17 @@ export const CompleteTable = () => {
                       );
                     })}
                     <td>
-                      <div className={'status-button-' + row.original.status}>
+                      <div
+                        className={` flex flex-col justify-center items-center`}
+                      >
                         <button
-                          className="table-btn-accept"
+                          className="mx-auto"
                           onClick={() => acceptProposal(row.original.assetId)}
                         >
                           Accept
                         </button>
                         <button
-                          className="table-btn-decline"
+                          className="mx-auto"
                           onClick={() => rejectProposal(row.original.assetId)}
                         >
                           Decline

@@ -43,7 +43,7 @@ class AppService {
       appType,
       paymentMethod,
       appTags,
-      appCategories: appCategories.join(';'),
+      appCategories: appCategories.join(','),
       appIconURL,
       creatorId: user._id
     });
