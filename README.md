@@ -3,12 +3,12 @@
 This is a Blockchain-supported flatform which enable buyers and developers to safely transacts software products. It implements Hyperledger Fabric framework underneath, thus provide comprehensive support for Auth-related process and Data Integrity.
 
 ## Contributors:
-1. [Duc Thang Nguyen](https://https://github.com/ducthangng): Full-time-suffocator
-2. [Nghi Hua](https://https://github.com/nghihua): Experienced-crush-without-response
-3. [Linh Ngo (Siga)](https://https://github.com/sigango): 1.0-Player
-4. [Loc Bui](https://https://github.com/BuiNhienLoc): Full-stack-god
-5. [Khang Nguyen](https://https://github.com/klangthang): Pogrammer-by-day-poker-player-by-night
-6. [Hai Cao](https://https://github.com/SShindow): Distance-love-my-bro 
+1. [Duc Thang Nguyen](https://https://github.com/ducthangng)
+2. [Nghi Hua](https://https://github.com/nghihua)
+3. [Linh Ngo (Siga)](https://https://github.com/sigango
+4. [Loc Bui](https://https://github.com/BuiNhienLoc)
+5. [Khang Nguyen](https://https://github.com/klangthang)
+6. [Hai Cao](https://https://github.com/SShindow)
 
 
 ## Shortcut:
