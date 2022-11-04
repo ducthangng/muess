@@ -1,6 +1,6 @@
 # München Software Service (Müss)
 
-This is a Blockchain-supported flatform which enable buyers and developers to safely transacts software products. It implements Hyperledger Fabric framework underneath, thus provide comprehensive support for Auth-related process and Data Integrity.
+This is a Blockchain-supported flatform which enable buyers and developers to safely transacts software product's license keys. It implements Hyperledger Fabric framework underneath, thus provide comprehensive support for Auth-related process and Data Integrity. ALso include a little improvement in read-throughput using mongodb to support mutliple hardware configuration.
 
 ## Contributors:
 1. [Duc Thang Nguyen](https://https://github.com/ducthangng)
