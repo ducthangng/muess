@@ -1,189 +1,332 @@
 // import { Form, Layout, Button, Input, Divider } from 'antd';
 // // import logo from '../../assets/logo-1.svg';
 import { FC, useEffect, useState } from 'react';
+import { authApi } from '../api/authApi';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import '../assets/css/Login.css';
-import LoginImage from '../assets/images/login.png';
-import LoginLogo from '../assets/images/logo.png';
+import LoginLogo from '../assets/images/logo.svg';
+import LoginImage from '../assets/images/login.svg';
 import CSS from 'csstype';
+import '../assets/css/Login.css';
+import { toast } from 'react-toastify';
+import { userApi } from '../api/userApi';
+
+const Sign: CSS.Properties = {
+  position: 'relative',
+  fontWeight: '700',
+  fontSize: '20px',
+  lineHeight: '34px',
+  color: '#3A001E'
+};
+const InputPass: CSS.Properties = {
+  fontWeight: 400,
+  fontSize: '12px',
+  width: '100%',
+  position: 'relative',
+  borderColor: '#FFE7D4',
+  backgroundColor: '#FFFFFF',
+  color: '#3A001E',
+  borderWidth: '2px',
+  borderRadius: '5px'
+};
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [hasError, setHasError] = useState(false);
+  const [message, setMessage] = useState('');
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
+  const checkLogin = async () => {
+    let res = await userApi.getCurrentUser();
+    if (res.status === 200) {
+      navigate('/products');
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let res = await authApi.login({ email, password });
+    setMessage(res.message);
+    if (res.status === 201) {
+      setHasError(false);
+      toast('Login successfully. Redirecting...');
+      navigate('/products');
+    } else {
+      setHasError(true);
+      console.log(res);
+    }
+  };
+
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
-  const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/`);
   };
-  const test: CSS.Properties = {
-    position: 'relative',
-    fontWeight: 400,
-    fontSize: '12px',
-    lineHeight: '15px',
-    color: '#8C98A9',
-    left: '550px',
-    top: '130px'
-  };
-  const Sign: CSS.Properties = {
-    position: 'relative',
-    fontWeight: '900',
-    fontSize: '28px',
-    lineHeight: '34px',
-    color: '#3A001E',
-    top: '115px',
-    left: '550px'
-  };
-  const InputUser: CSS.Properties = {
-    fontWeight: 400,
-    height: '40px',
-    width: '272px',
-    position: 'relative',
-    borderColor: '#FFE7D4',
-    color: '#3A001E',
-    borderWidth: '2px',
-    borderRadius: '5px',
-    left: '550px',
-    top: '135px',
-    paddingLeft: '10px'
-  };
-  const Pass: CSS.Properties = {
-    position: 'relative',
-    fontWeight: 400,
-    fontSize: '12px',
-    lineHeight: '15px',
-    color: '#8C98A9',
-    left: '550px',
-    top: '150px'
-  };
-  const InputPass: CSS.Properties = {
-    fontWeight: 400,
-    height: '40px',
-    width: '272px',
-    position: 'relative',
-    borderColor: '#FFE7D4',
-    color: '#3A001E',
-    borderWidth: '2px',
-    borderRadius: '5px',
-    left: '550px',
-    top: '160px',
-    paddingLeft: '10px'
-  };
+
   return (
     <>
       <div
-        className="box-1"
+        className="sign-up-background"
         style={{
-          position: 'absolute',
-          backgroundColor: '#FFF7F1',
-          height: 490,
-          width: 479,
-          top: 100,
-          left: 309,
-          borderRadius: '15px 0px 0px 15px'
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: '#FFFFFF'
         }}
       >
-        <img
-          src={LoginLogo}
-          alt="Image"
-          className="login_logo"
-          style={{ width: 75, position: 'relative', top: 40, left: 50 }}
-        />
-        <img
-          src={LoginImage}
-          alt="Image"
-          className="login_image"
-          style={{ position: 'relative', top: 100, left: -5 }}
-        />
-      </div>
-      <div
-        className="box-2"
-        style={{
-          position: 'absolute',
-          borderColor: '#FFE7D4',
-          borderWidth: 1,
-          height: 490,
-          width: 920,
-          top: 100,
-          right: 309,
-          borderRadius: 15,
-          boxShadow: '2px 3px #dadada'
-        }}
-      >
-        <button
-          className="esc"
+        <form
+          className="sign-in-container"
           style={{
-            background: '#DCE1EE',
-            color: '#2E384D',
-            fontWeight: 400,
-            fontSize: '12px',
-            height: '20px',
-            width: '20px',
-            borderRadius: '50%',
-            position: 'absolute',
-            top: '15px',
-            left: '880px'
+            display: 'flex',
+            justifyContent: 'center',
+            margin: '0 auto',
+            backgroundColor: '#FFF7F1',
+            width: '60vw',
+            height: '72vh',
+            position: 'relative',
+            top: '14vh',
+            borderRadius: '10px',
+            boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
           }}
-          onClick={() => handleClick()}
+          onSubmit={handleLogin}
         >
-          X
-        </button>
-        <div
-          className="signin-container"
-          style={{
-            position: 'fixed',
-            width: '310px',
-            height: '310px',
-            top: '80px',
-            left: '330px'
-          }}
-        >
-          <div className="SignIn" style={Sign}>
-            Sign In
-          </div>
-          <div className="username" style={test}>
-            Username/Email
-          </div>
-          <div className="input_username">
-            <input style={InputUser}></input>
-          </div>
-          <div className="password" style={Pass}>
-            Password
-          </div>
-          <div className="input_password">
-            <input
-              type={passwordShown ? 'text' : 'password'}
-              style={InputPass}
-            ></input>
-            <EyeInvisibleOutlined
-              className={passwordShown ? 'shown' : 'not'}
-              onClick={togglePassword}
-            />
-          </div>
-          <div className="forgot_password">Forgot password?</div>
-          <button
-            className="signin_button"
+          <div
+            className="container-1"
             style={{
-              background: '#FB7F4B',
-              color: '#FFFFFF',
-              fontWeight: 400,
-              fontSize: '12px',
-              lineHeight: '15px',
-              height: '40px',
-              width: '272px',
-              borderRadius: '5px',
-              position: 'relative',
-              top: '185px',
-              left: '550px'
+              width: '50%',
+              height: '100%',
+              display: 'block',
+              position: 'absolute',
+              top: '0',
+              left: '0'
             }}
           >
-            SIGN IN
-          </button>
-          <div className="dhaa">Don't Have An Account?</div>
-          <div className="ca">Create Account</div>
-        </div>
+            <img
+              src={LoginLogo}
+              alt="logo"
+              style={{
+                width: '18%',
+                height: '7%',
+                display: 'block',
+                position: 'absolute',
+                top: '5%',
+                left: '8%'
+              }}
+            />
+            <img
+              src={LoginImage}
+              alt="LoginImage"
+              style={{
+                width: '80%',
+                height: '60%',
+                display: 'block',
+                margin: '20% auto'
+              }}
+            />
+          </div>
+
+          <div
+            className="container-2"
+            style={{
+              width: '50%',
+              height: '100%',
+              borderTopRightRadius: '10px',
+              borderBottomRightRadius: '10px',
+              position: 'absolute',
+              backgroundColor: 'white',
+              top: '0',
+              right: '0'
+            }}
+          >
+            <button
+              className="esc"
+              style={{
+                background: '#DCE1EE',
+                color: '#2E384D',
+                fontWeight: 400,
+                fontSize: '12px',
+                height: '20px',
+                width: '20px',
+                borderRadius: '50%',
+                position: 'relative',
+                float: 'right',
+                top: '5%',
+                right: '5%'
+              }}
+              type="button"
+              onClick={() => handleClick()}
+            >
+              X
+            </button>
+            <div
+              className="Sign-up-info"
+              style={{
+                position: 'relative',
+                display: 'block',
+                width: '60%',
+                height: '90%',
+                backgroundColor: 'transparent',
+                margin: '0 auto',
+                top: '5rem'
+              }}
+            >
+              <div className="Sign-in-title" style={Sign}>
+                Sign In
+              </div>
+              <div
+                className="username-email"
+                style={{
+                  position: 'relative',
+                  fontWeight: '400',
+                  fontSize: '12px',
+                  lineHeight: '28px',
+                  color: '#8C98A9',
+                  marginTop: '2%'
+                }}
+              >
+                Email
+              </div>
+              <input
+                style={{
+                  fontWeight: 400,
+                  width: '100%',
+                  position: 'relative',
+                  borderColor: '#FFE7D4',
+                  backgroundColor: '#FFFFFF',
+                  color: '#3A001E',
+                  borderWidth: '2px',
+                  borderRadius: '5px'
+                }}
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type={'email'}
+              ></input>
+              <div
+                className="password"
+                style={{
+                  position: 'relative',
+                  fontWeight: '400',
+                  fontSize: '12px',
+                  lineHeight: '28px',
+                  color: '#8C98A9',
+                  marginTop: '2%'
+                }}
+              >
+                Password
+              </div>
+              <div
+                className="input_password"
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  height: '8%',
+                  position: 'relative',
+                  backgroundColor: 'transparent'
+                }}
+              >
+                <input
+                  type={passwordShown ? 'text' : 'password'}
+                  style={{
+                    fontWeight: 400,
+                    height: '100%',
+                    width: '100%',
+                    position: 'relative',
+                    borderColor: '#FFE7D4',
+                    backgroundColor: '#FFFFFF',
+                    color: '#3A001E',
+                    borderWidth: '2px',
+                    borderRadius: '5px'
+                  }}
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                ></input>
+                <EyeInvisibleOutlined
+                  style={{
+                    position: 'absolute',
+                    right: '0',
+                    fontSize: '16px',
+                    marginRight: '4px',
+                    marginTop: '4px'
+                  }}
+                  className={passwordShown ? 'shown' : 'not'}
+                  onClick={togglePassword}
+                />
+              </div>
+              {message && (
+                <div
+                  className={`${
+                    hasError ? 'text-red-500' : 'text-green-500'
+                  } pt-5`}
+                >
+                  {message}
+                </div>
+              )}
+              <input
+                className="signin_button"
+                style={{
+                  background: '#FB7F4B',
+                  color: '#FFFFFF',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                  lineHeight: '15px',
+                  height: 'fit-content',
+                  padding: '4%',
+                  width: '100%',
+                  borderRadius: '5px',
+                  position: 'relative',
+                  marginTop: '1rem'
+                }}
+                type="submit"
+                value="Sign in"
+              />
+
+              <div
+                className="return-signup"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '0.5rem'
+                }}
+              >
+                <div
+                  className="ahaa"
+                  style={{
+                    fontSize: '12px',
+                    color: '#8C98A9'
+                  }}
+                >
+                  Don't Have An Account?
+                </div>
+                <button
+                  className="signup_button"
+                  style={{
+                    background: 'transparent',
+                    fontWeight: 400,
+                    fontSize: '12px',
+                    border: 'none',
+                    position: 'relative',
+                    color: '#FB7F4B',
+                    marginLeft: '0.2rem'
+                  }}
+                  onClick={() => navigate('/register')}
+                >
+                  Create Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </>
   );

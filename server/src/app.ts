@@ -8,15 +8,11 @@ import morgan from 'morgan';
 import { connect, set } from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@config';
+import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@/config';
 import { dbConnection } from '@databases';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
-import {
-  MyGateway,
-  singletoninitHyperledgerFabric
-} from './config/hyper-ledger';
 
 class App {
   public app: express.Application;
@@ -24,6 +20,7 @@ class App {
   public port: string | number;
 
   constructor(routes: Routes[]) {
+    console.log('setting up routes...');
     this.app = express();
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
@@ -33,7 +30,6 @@ class App {
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
-    // this.initHLF();
   }
 
   public listen() {
@@ -59,7 +55,8 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(morgan(LOG_FORMAT, { stream }));
-    this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
+    // this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
+    this.app.use(cors({ origin: true, credentials: true }));
     this.app.use(hpp());
     this.app.use(helmet());
     this.app.use(compression());

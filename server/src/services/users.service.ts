@@ -1,9 +1,10 @@
 import { hash } from 'bcrypt';
 import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
-import { User } from '@interfaces/users.interface';
+import { User, Wallet } from '@interfaces/users.interface';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
+import { Proposal } from 'fabric-client';
 
 class UserService {
   public users = userModel;
@@ -63,9 +64,10 @@ class UserService {
       userData = { ...userData, password: hashedPassword };
     }
 
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, {
+    const updateUserById: User = await this.users.findByIdAndUpdate(
+      userId,
       userData
-    });
+    );
     if (!updateUserById) throw new HttpException(409, "User doesn't exist");
 
     return updateUserById;

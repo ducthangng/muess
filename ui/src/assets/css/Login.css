@@ -1,26 +1,28 @@
-.box-2 .input_password .shown{
-    position: relative;
+.sign-up-background .sign-up-container .container-2 .input_password .shown{
+    /* position: absolute; */
     opacity: 50%;
     font-size: 25px;
-    top: 160px;
-    left: 510px;
+    /* padding-left: 1rem; */
+    /* top: 0.2rem;
+    right: 0.5rem; */
 }
 
-.box-2 .input_password .not:hover {
+.sign-up-background .sign-up-container .container-2 .input_password .not:hover {
     color: #FB7F4B;
     cursor: pointer;
 }
 
-.box-2 .input_password .shown:hover {
+.sign-up-background .sign-up-container .container-2 .input_password .shown:hover {
     color: #FB7F4B;
     cursor: pointer;
 }
 
-.box-2 .input_password .not{
-    position: relative;
+.sign-up-background .sign-up-container .container-2 .input_password .not{
+    /* position: absolute; */
+    opacity: 50%;
     font-size: 25px;
-    top: 160px;
-    left: 510px;
+    /* top: 0.2rem;
+    right: 0.5rem; */
 
 }
 

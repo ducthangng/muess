@@ -1,0 +1,265 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.graph {
+  position: absolute;
+  bottom: 30px;
+  left: 100px;
+  height: 400px;
+  width: 1400px;
+  background-color: #FEFCE3;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 50px;
+  margin: 0 auto;
+}
+
+.graph .dropdown {
+  position: absolute;
+  top: 8px;
+}
+
+.wallet-container .card-container {
+  display: flex;
+  position: relative;
+  width: 98%;
+  height: 25vh;
+  background-color: transparent;
+  margin: 1rem;
+}
+
+.wallet-container .card-container .purchased-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 75%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.wallet-container .card-container .purchased-container .purchased-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #3A001E;
+}
+
+.purchased-container .purchased-data {
+  position: relative;
+  right: 0;
+  top: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.purchased-container .purchased-data .purchased-data-info {
+  position: relative;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  padding-bottom: 1rem;
+  color: #FB7F4B;
+}
+
+.purchased-container .purchased-data .purchased-data-data {
+  /* position: absolute; */
+  width: max-content;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #009899;
+  float: none;
+  position: relative;
+  float: right;
+  transform: translate(-50%, -50%);
+}
+
+.wallet-container .card-container .sold-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 75%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.wallet-container .card-container .sold-container .sold-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #3A001E;
+}
+
+.sold-container .sold-data {
+  position: relative;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.sold-container .sold-data .sold-data-info {
+  position: relative;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  padding-bottom: 1rem;
+  color: #FB7F4B;
+}
+
+.sold-container .sold-data .sold-data-data {
+  /* position: absolute; */
+  width: max-content;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #009899;
+  position: relative;
+  float: right;
+  transform: translate(-50%, -50%);
+}
+
+.wallet-container .card-container .income-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 75%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.wallet-container .card-container .income-container .income-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #3A001E;
+}
+
+.income-container .income-data {
+  position: relative;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.income-container .income-data .income-data-info {
+  position: relative;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  padding-bottom: 1rem;
+  color: #FB7F4B;
+}
+
+.income-container .income-data .income-data-data {
+  /* position: absolute; */
+  width: max-content;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #009899;
+  float: none;
+  position: relative;
+  float: right;
+  transform: translate(-50%, -50%);
+}
+
+.wallet-container .card-container .balance-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 75%;
+  border: 1px solid #969696;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.wallet-container .card-container .balance-container .balance-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #3A001E;
+}
+
+.balance-container .balance-data {
+  position: relative;
+  right: 0;
+  top: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.balance-container .balance-data .balance-data-info {
+  position: relative;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  padding-bottom: 1rem;
+  color: #FB7F4B;
+}
+
+.balance-container .balance-data .balance-data-data {
+  /* position: absolute; */
+  width: max-content;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #009899;
+  float: none;
+  position: relative;
+  float: right;
+  transform: translate(-50%, -50%);
+}
+
+.dropdown {
+  position: relative;
+  font-style: bold;
+  font-weight: 800;
+  font-size: 25px;
+  line-height: 30px;
+  color: #013567;
+  width: 235px;
+  height: 35px;
+}
+
+.dropdown select {
+  font-style: bold;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 35px;
+  color: #3A001E;
+  width: 235px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.dropdown select option {
+  background-color: transparent;
+}

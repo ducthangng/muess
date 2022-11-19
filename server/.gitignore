@@ -129,4 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+src/services/wallet
+src/utils/wallet
+bin
 .DS_Store

@@ -1,11 +1,23 @@
 interface User {
-  id: number;
-  entityCode: number;
+  _id: string;
+  email: string;
   fullname: string;
   username: string;
   password: string;
-  mail: string;
-  gender: 'male' | 'female' | 'others';
+  identity: string;
 }
 
-export type { User };
+interface UserDataForWalletDisplay {
+  labels: string[];
+  datasets: GraphDisplay[];
+}
+
+interface GraphDisplay {
+  label: string;
+  data: number[];
+  backgroundColor: string[];
+  borderColor: string;
+  borderWidth: number;
+}
+
+export type { User, UserDataForWalletDisplay, GraphDisplay };
