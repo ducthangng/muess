@@ -172,7 +172,7 @@ class Chaincode extends Contract {
     }
 
     // throws error if license can't be resold
-    if (!license.licenseDetails.split(",").includes("resell")) {
+    if (!license.licenseDetails.split(',').includes('resell')) {
       throw new Error("This license doesn't have resell rights");
     }
 
@@ -230,7 +230,6 @@ class Chaincode extends Contract {
       };
       await ctx.stub.putState(assetId, Buffer.from(JSON.stringify(license)));
     } else {
-
       // otherwise, find the license
       const licenseBytes = await ctx.stub.getState(proposal.licenseId);
       if (!licenseBytes) {
@@ -243,7 +242,7 @@ class Chaincode extends Contract {
       }
 
       // throws error if license can't be resold
-      if (!license.licenseDetails.includes("resell")) {
+      if (!license.licenseDetails.includes('resell')) {
         throw new Error("This license doesn't have resell rights");
       }
 
