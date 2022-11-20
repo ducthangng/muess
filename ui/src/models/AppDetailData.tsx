@@ -1,46 +1,63 @@
 import React from 'react';
 
-interface AppDetailData {
-  _id: string;
-  creatorId: string;
+interface App {
+  Key: string;
+  Record: {
+    assetType: string;
+    assetId: string; // queries
+    creatorId: string; // queries
+    creatorName: string;
+    title: string;
+    description: string;
+    rating: string;
+    appType: string;
+    paymentMethod: string;
+    appTags: string[];
+    appCategories: string[];
+    appIconURL: string;
+    averageProposedPrice: number;
+    proposalQuantity: number;
+  };
+}
+
+interface AppV2 {
+  assetType: string;
+  assetId: string; // queries
+  creatorId: string; // queries
   creatorName: string;
   title: string;
   description: string;
-  rated: string;
+  rating: string;
   appType: string;
-  appPaymentMethod: string;
-  appCategories: string;
+  paymentMethod: string;
   appTags: string[];
-  reviewer: string;
-  downloaded: number;
-  appIcon: string; // link to database.
-  feedbacks: [
-    {
-      name: string;
-      content: string;
-    }
-  ];
+  appCategories: string[];
+  appIconURL: string;
+  averageProposedPrice: number;
+  proposalQuantity: number;
+}
+
+interface License {
+  Key: string;
+  Record: {
+    assetType: string;
+    assetId: string;
+    creatorId: string;
+    licenseDetails: string;
+    ownerId: string;
+    appId: string;
+  };
 }
 
 interface CreateAppData {
-  creatorId: string;
-  creatorName: string;
   title: string;
   description: string;
-  rated: string;
+  rating: string;
   appType: string;
-  appPaymentMethod: string;
-  appCategories: string;
+  paymentMethod: string;
   appTags: string[];
-  reviewer: string;
-  downloaded: number;
-  appIcon: string; // link to database.
-  feedbacks: [
-    {
-      name: string;
-      content: string;
-    }
-  ];
+  appCategories: string[];
+  appIconURL: string;
 }
 
-export type { AppDetailData, CreateAppData };
+export type { App, License, CreateAppData, AppV2 };

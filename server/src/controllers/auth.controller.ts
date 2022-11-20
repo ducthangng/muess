@@ -1,64 +1,67 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@dtos/users.dto';
-import { RequestWithUser } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
+import { CreateUserDto, LoginUserDto } from '@dtos/users.dto';
+import { RequestWithUser, TokenData } from '@interfaces/auth.interface';
+import { CreateUserDTO, User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
 
 class AuthController {
   public authService = new AuthService();
 
-  public signUp = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userData: CreateUserDto = req.body;
-      const signUpUserData: User = await this.authService.signup(userData);
-
-      res.status(201).json({ data: signUpUserData, message: 'signup' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public getClientForOrg = async (
-    req: Request,
+  public returnOK = async (
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const clientUserData: User = await this.authService.getClientForOrg(
-        userData.email
-      );
+      const user: User = req.user;
 
-      res.status(201).json({ data: clientUserData, message: 'client' });
+      // reset cookie after login
+      const token: TokenData = this.authService.createToken(user);
+      const options = {
+        maxAge: 100000,
+        httpOnly: false // The cookie only accessible by the web server
+      };
+
+      res.cookie('muess', token, options);
+
+      res.status(201).json({ data: user, message: 'register successfully' });
     } catch (error) {
       next(error);
     }
   };
 
-  public getRegisteredUser = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const registeredUserData: User = await this.authService.getRegisteredUser(
-        userData.email
-      );
+      const userData: CreateUserDTO = req.body;
+      const result = await this.authService.register(userData);
 
-      res.status(201).json({ data: registeredUserData, message: 'registered' });
+      const options = {
+        maxAge: result.cookie.expiresIn * 100000, // would expire after 15 minutes
+        httpOnly: false // The cookie only accessible by the web server
+      };
+
+      res.cookie('muess', result.cookie.token, options);
+      res
+        .status(201)
+        .json({ data: result.user, message: 'register successfully' });
     } catch (error) {
       next(error);
     }
   };
 
-  public logIn = async (req: Request, res: Response, next: NextFunction) => {
+  public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const { cookie, findUser } = await this.authService.login(userData);
+      const userData: LoginUserDto = req.body;
+      const result = await this.authService.login(userData);
 
-      res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findUser, message: 'login' });
+      const options = {
+        maxAge: result.cookie.expiresIn * 1000, // would expire after 15 minutes
+        httpOnly: true // The cookie only accessible by the web server
+      };
+      res.cookie('muess', result.cookie.token, options);
+      res
+        .status(201)
+        .json({ data: result.user, message: 'login successfully' });
     } catch (error) {
       next(error);
     }
@@ -70,11 +73,8 @@ class AuthController {
     next: NextFunction
   ) => {
     try {
-      const userData: User = req.user;
-      const logOutUserData: User = await this.authService.logout(userData);
-
-      res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
-      res.status(200).json({ data: logOutUserData, message: 'logout' });
+      res.clearCookie('muess');
+      res.status(200).json({ message: 'logout successfully' });
     } catch (error) {
       next(error);
     }

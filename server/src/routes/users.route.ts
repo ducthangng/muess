@@ -3,60 +3,62 @@ import UsersController from '@/controllers/users.controller';
 import { CreateUserDto } from '@/dtos/users.dto';
 import { Routes } from '@/interfaces/routes.interface';
 import validationMiddleware from '@/middlewares/validation.middleware';
-import AppsController from '@/controllers/mockapp.controller';
+import LicenseController from '@/controllers/proposal.controller';
+import authMiddleware from '../middlewares/auth.middleware';
 
 class UsersRoute implements Routes {
   public path = '/users';
   public router = Router();
   public usersController = new UsersController();
-  public appsController = new AppsController();
+  public licenseController = new LicenseController();
 
   constructor() {
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.usersController.getUsers);
-    this.router.get(`${this.path}/:id`, this.usersController.getUserById);
-    this.router.post(
+    this.router.get(
       `${this.path}`,
-      validationMiddleware(CreateUserDto, 'body'),
-      this.usersController.createUser
+      authMiddleware,
+      this.usersController.getUsers
+    );
+    this.router.get(
+      `${this.path}/current`,
+      authMiddleware,
+      this.usersController.getCurrentUser
+    );
+    this.router.get(
+      `${this.path}/detail/:userId`,
+      authMiddleware,
+      this.usersController.getUserById
+    );
+    this.router.get(
+      `${this.path}/wallet`,
+      authMiddleware,
+      this.usersController.getWallet
+    );
+    this.router.get(
+      `${this.path}/app`,
+      authMiddleware,
+      this.licenseController.getProposalsByBuyerId
+    );
+    this.router.post(
+      `${this.path}/createProposal`,
+      authMiddleware,
+      this.licenseController.createProposal
+    );
+    this.router.post(
+      `${this.path}/acceptProposal`,
+      authMiddleware,
+      this.licenseController.acceptProposal
     );
     this.router.put(
-      `${this.path}/:id`,
+      `${this.path}`,
+      authMiddleware,
       validationMiddleware(CreateUserDto, 'body', true),
       this.usersController.updateUser
     );
-    this.router.delete(`${this.path}/:id`, this.usersController.deleteUser);
-    this.router.get(`${this.path}/:id/`, this.usersController.enrollUser);
-
-    //mock app
-    // this.router.get(`${this.path}/mockapp`, this.appsController);
-    // this.router.get(`${this.path}/mockapp/:id`, this.appsController.getAppById);
-    // this.router.post(
-    //   `${this.path}/mockapp`,
-    //   validationMiddleware(CreateUserDto, 'body'),
-    //   this.appsController.createApp
-    // );
-    this.router.post(
-      `${this.path}/mockapp/:id`,
-      validationMiddleware(CreateUserDto, 'body', true),
-      this.appsController.createlicenseApp
-    );
-    this.router.get(
-      `${this.path}/mockapp/:id/`,
-      this.appsController.getAppLicenseprice
-    );
-    this.router.get(
-      `${this.path}/mockapp/:id/`,
-      this.appsController.getallAppLicense
-    );
-    this.router.post(
-      `${this.path}/mockapp/:id/`,
-      validationMiddleware(CreateUserDto, 'body', true),
-      this.appsController.purchaseLicense
-    );
+    this.router.delete(`${this.path}`, this.usersController.deleteUser);
   }
 }
 

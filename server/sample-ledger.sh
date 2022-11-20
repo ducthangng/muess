@@ -10,12 +10,18 @@ popd
 
 # start the network && create config channel
 pushd ./test-network/
+<<<<<<< HEAD
 ./network.sh up createChannel -c munich -ca -s couchdb
+=======
+./network.sh up createChannel -ca -s couchdb
+# /network.sh up createChannel -ca -s couchdb
+>>>>>>> 82a11e709f67cc21ed3af1680f2212e3cdd5886c
 popd
 
 # deploy the chaincode
 # -ccep "OR('Org1MSP.peer','Org2MSP.peer')" means that the chaincode can be deployed by any peer of Org1MSP or Org2MSP [OPTIONAL]
 pushd ./test-network/
+<<<<<<< HEAD
 ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-typescript -ccl typescript -c munich
 popd
 
@@ -45,3 +51,8 @@ popd
 echo "===================== Invoke transaction on peer0.org1 on channel 'munich'... ===================== "
 
 peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C munich -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"InitLedger","Args":[]}'
+=======
+# ./network.sh deployCC -ccn prive -ccp ../asset-transfer-basic/chaincode-typescript -ccl typescript -c munich
+./network.sh deployCC -ccn muess -ccp ../chaincode/ -ccl javascript
+popd
+>>>>>>> 82a11e709f67cc21ed3af1680f2212e3cdd5886c

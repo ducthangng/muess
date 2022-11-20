@@ -1,13 +1,9 @@
 import React from 'react';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { GuardEC } from '../models/Guard';
 import { CookiesProvider } from 'react-cookie';
 import UserLayout from '../pages/Layout/UserLayout';
-// import Test from '../pages/Test';
-import Guard from '../guards/AuthGuard';
 import NotFound404 from '../pages/NotFound404';
-import { AdminEC, StudentEC } from '../models/Guard';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Landingpage from '../pages/Landingpage';
@@ -17,27 +13,50 @@ import About from '../pages/About';
 import Wallet from '../pages/Wallet';
 import ProductSelection from '../pages/ProductSelection';
 import AppDetail from '../pages/AppDetail';
+import SoldList from '../pages/SoldList';
+import Test from '../pages/Test';
+import PurchaseConfirm from '../pages/PurchaseConfirm';
+import Guard from '../guards/AuthGuard';
+import OwnedProducts from '../pages/MyProduct';
+import MyProductLicense from '../pages/MyProductLicense';
 
 export default function AppRoute() {
-  const AdminGuard: GuardEC = {
-    guardEntity: AdminEC
-  };
-
   return (
     <BrowserRouter>
       <CookiesProvider>
         <Routes>
           {/* public routes */}
-          {/* <Route element={<LoginLayout />}> */}
           <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/release" element={<ReleaseApp />} />
-          <Route path="/products" element={<ProductSelection />} />
-            <Route path="/products/id/123456" element={<AppDetail _id={'123456'} creatorId={'789'} creatorName={'HaiKao'} title={'Suck My Balls'} description={'App that suck dick'} rated={'5.1'} appType={'game'} appPaymentMethod={'free'} appCategories={'entertainment'} appTags={['#NSFW']} reviewer={''} downloaded={0} appIcon={''} feedbacks= {[{name: 'bui nhien loc', content: 'dell on'}]} />} />
+
+          <Route
+            path="/release"
+            element={
+              <Guard>
+                <ReleaseApp />
+              </Guard>
+            }
+          />
+
+          <Route path="/products/*">
+            <Route path="" element={<ProductSelection />} />
+            <Route path=":appId" element={<AppDetail />} />
+          </Route>
+
+          <Route path="/my-app/*">
+            <Route path="" element={<OwnedProducts />} />
+            <Route path=":appId" element={<MyProductLicense />} />
+          </Route>
+
+          <Route path="/sales" element={<SoldList />} />
+          <Route path="/test" element={<Test />} />
+
+          <Route path="/purchaseConfirm" element={<PurchaseConfirm />} />
           <Route path="/purchases" element={<PurchaseList />} />
           <Route path="/about" element={<About />} />
           <Route path="/wallet" element={<Wallet />} />
+          {/* <Route path="/editapp" element={<EditApp />} /> */}
           {/* </Route> */}
 
           {/* admin routes */}

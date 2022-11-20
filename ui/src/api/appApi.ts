@@ -1,5 +1,5 @@
 import { AppError } from '../models/Error';
-import { AppDetailData, CreateAppData } from '../models/AppDetailData';
+import { App, AppV2, CreateAppData } from '../models/AppDetailData';
 
 const BASE_API = process.env.REACT_APP_BASE_API || 'http://localhost:8000';
 const apiUrl = `${BASE_API}/apps`;
@@ -34,21 +34,23 @@ export const appApi = {
    * @returns true if scuccess, false otherwise
    */
   releaseApp: async (params: { app: CreateAppData }) => {
-    const response = SENDPOST(`${apiUrl}`, params.app)
-      .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const x: number = data.data;
-        return x === 1 ? true : false;
-      })
-      .catch((err) => {
-        return err;
+    try {
+      const response = await fetch(`${apiUrl}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params.app)
       });
 
-    return response;
+      const resToJson = await response.json();
+      const status = response.status;
+
+      return { ...resToJson, status };
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   getAppByCreatorId: async (creatorId: string) => {
@@ -68,12 +70,7 @@ export const appApi = {
       })
       .then((data) => {
         console.log(data);
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
-        }
-
-        const x: AppDetailData[] = data.data;
+        const x: App[] = data.data;
 
         return x;
       })
@@ -92,6 +89,41 @@ export const appApi = {
   getAllApps: async () => {
     const response = await fetch(`${apiUrl}/all`, {
       method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const apps: any[] = data.data;
+        const result: any[] = apps.map((app) => {
+          console.log(app.appCategories);
+          return {
+            Key: app.assetId,
+            Record: {
+              ...app,
+              appCategories: app.appCategories.split(',')
+            }
+          };
+        });
+
+        console.log('result: ', result);
+        return result;
+      });
+
+    return response;
+  },
+
+  getOwnedApps: async () => {
+    const response = await fetch(`${apiUrl}/my-app`, {
+      method: 'GET',
       credentials: 'include'
     })
       .then((res) => {
@@ -102,9 +134,17 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const apps: AppDetailData[] = data.data;
-        console.log('app: ', data.data);
-        return apps;
+        const apps: AppV2[] = data.data;
+        const result: App[] = apps.map((app) => {
+          return {
+            Key: app.assetId,
+            Record: {
+              ...app,
+              appCategories: app.appCategories[0].split(',')
+            }
+          };
+        });
+        return result;
       });
 
     return response;
@@ -117,7 +157,7 @@ export const appApi = {
    * @returns app detail data
    */
   getAppById: async (id: string) => {
-    const response = await fetch(`${apiUrl}/${id}`, {
+    const response = await fetch(`${apiUrl}/appId/${id}`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -129,13 +169,48 @@ export const appApi = {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        const err: AppError = data.error;
-        if (err.errorCode !== 0) {
-          throw new Error(err.errorMsg + ' ++ ' + err.errorField);
+        const result: any = data.data;
+        const app: any = {
+          Key: result.assetId,
+          Record: {
+            ...result,
+            appCategories: result.appCategories.split(',')
+          }
+        };
+
+        console.log('re sult: ', result);
+        return app;
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    return response;
+  },
+
+  getAppByIdSimple: async (id: string) => {
+    const response = await fetch(`${apiUrl}/simple/${id}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
         }
 
-        const apps: AppDetailData = data.data;
-        return apps;
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        const apps: AppV2 = data.data;
+        const result: App = {
+          Key: apps.assetId,
+          Record: {
+            ...apps,
+            appCategories: apps.appCategories[0].split(',')
+          }
+        };
+        console.log(apps.appCategories[0].split(','));
+        return result;
       })
       .catch((err) => {
         return err;
@@ -150,7 +225,7 @@ export const appApi = {
    * @param app app detail of the updated app. Note: all fields are required.
    * @returns status: true if success, false if not.
    */
-  updateApp: async (app: AppDetailData): Promise<Boolean> => {
+  updateApp: async (app: App): Promise<Boolean> => {
     const payload = app;
 
     const response = await fetch(`${apiUrl}`, {

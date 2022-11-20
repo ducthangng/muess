@@ -1,187 +1,56 @@
 body {
-    background-color: #FFF7F1;
-    /* overflow:hidden; */
-    margin: 0;
-    padding: 0;
+  background-color: #fff7f1;
+  /* overflow:hidden; */
+  margin: 0;
+  padding: 0;
+}
+
+textarea {
+  border-radius: 5px;
+}
+
+input {
+  border: 1px solid #bbbbbb;
+}
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  padding: 3px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 1.5px solid #bbbbbb;
+  background-color: #e7e6e7;
+  border-radius: 50%;
+}
+
+input[type='radio']:checked {
+  background-color: #3a001e;
+}
+
+.rti--container {
+  height: 35px;
+  overflow-y: scroll;
+  --rti-bg: '#fff';
+  --rti-border: '#ccc';
+  --rti-main: '#3182ce';
+  --rti-radius: '0.375rem';
+  --rti-s: '0.5rem'; /* spacing */
+  --rti-tag: '#edf2f7';
+  --rti-tag-remove: '#e53e3e';
 }
 
 .Publish_Block {
-    position: relative;
-    margin: 0 auto;
-    top: 7.5rem;
-    background-color: #FFFFFF;
-    height: 540px;
-    width: 1040px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-}
-
-
-.ReleaseTitle {
-    position: relative;
-    top: 20px;
-    left: 50px;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 24px;
-    color: #3A001E;
-}
-
-.AppNameFill input {
-    position: relative;
-    width: 320px;
-    height: 38px;
-    border: 1px solid #A3A3A3;
-    border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    top: 50px;
-    left: 150px;
-    color: #3A001E;
-}
-
-.AppNameFill .count1 {
-    position: relative;
-    width: fit-content;
-    font-size: 9px;
-    top: 42px;
-    left: 450px;
-}
-
-.AppOrGame input[type="radio"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    padding: 3px;
-    /* background-color only for content */
-    background-clip: content-box;
-    border: 1.5px solid #bbbbbb;
-    background-color: #e7e6e7;
-    border-radius: 50%;
-}
-
-.AppOrGame input[type="radio"]:checked {
-    background-color: #3A001E;
-}
-
-.AppOrGame .form-check-input1{
-    position: relative;
-    left:100px;
-    width: fit-content;
-}
-
-.AppOrGame .AppBox {
-    position: relative;
-    top: -20px;
-    left: 120px;
-    width: fit-content;
-}
-
-.AppOrGame .form-check-input2{
-    position: relative;
-    left:100px;
-    top: -12px;
-    width: fit-content;
-}
-
-.AppOrGame .GameBox {
-    position: relative;
-    top: -32px;
-    left: 120px;
-    width: fit-content;
-}
-
-
-
-.FreeOrPaidOrRent input[type="radio"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    padding: 3px;
-    /* background-color only for content */
-    background-clip: content-box;
-    border: 1.5px solid #bbbbbb;
-    background-color: #e7e6e7;
-    border-radius: 50%;
-}
-
-.FreeOrPaidOrRent input[type="radio"]:checked {
-    background-color: #3A001E;
-}
-
-.FreeOrPaidOrRent .form-check-input3{
-    position: relative;
-    left:100px
-}
-
-.FreeOrPaidOrRent .FreeBox {
-    position: relative;
-    top: -21px;
-    left: 120px;
-    width: fit-content;
-}
-
-.FreeOrPaidOrRent .form-check-input4{
-    position: relative;
-    left:100px;
-    top: -12px;
-}
-
-.FreeOrPaidOrRent .PaidBox {
-    position: relative;
-    top: -33px;
-    left: 120px;
-    width: fit-content;
-}
-
-.FreeOrPaidOrRent .form-check-input5{
-    position: relative;
-    left:100px;
-    top: -23px;
-}
-
-.FreeOrPaidOrRent .RentBox {
-    position: relative;
-    top: -44px;
-    left: 120px;
-    width: fit-content;
-}
-
-.DescBox {
-    position: absolute;
-    top: 94px;
-    left: 600px;
-    width: 358px;
-    height: 200px;
-    margin: 0;
-}
-
-.DescBox TextArea {
-    position: relative;
-    top: 1px;
-    left: 67px;
-    width: 320px;
-    height: 180px;
-    border: 1px solid #A3A3A3;
-    border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    overflow: auto;
-    color: #3A001E;
-    resize: none;
-    overflow: auto;
-}
-
-.DescBox .count2{
-    position: absolute;
-    font-size: 9px;
-    top: 3px;
-    left: 100%;
-    top: 100%;
+  position: relative;
+  margin: 0 auto;
+  top: 7.5rem;
+  background-color: #ffffff;
+  height: 540px;
+  width: 1040px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }

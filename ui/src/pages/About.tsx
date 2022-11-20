@@ -14,10 +14,9 @@ const About = () => {
     <>
       <SideMenu />
       <div
-        className="about-container"
+        className="about-container px-10 grid grid-cols-2"
         style={{
           position: 'relative',
-          display: 'flex',
           width: '70vw',
           height: '75vh',
           backgroundColor: '#ffffff',
@@ -30,14 +29,7 @@ const About = () => {
           top: '7.5rem'
         }}
       >
-        <div
-          className="content-left"
-          style={{
-            width: '50%',
-            height: '100%',
-            margin: '0 auto'
-          }}
-        >
+        <div>
           <img
             src={AboutImage}
             alt="Image"
@@ -49,66 +41,16 @@ const About = () => {
             }}
           />
         </div>
-        <div
-          className="content-right"
-          style={{
-            width: '50%',
-            height: '100%',
-            margin: '0 auto',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <div
-            className="content-right-context"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: '2.5rem 2rem'
-            }}
-          >
-            <div
-              className="content-right__title1"
-              style={{
-                color: '#3A001E',
-                fontSize: '40px'
-              }}
-            >
-              {' '}
-              THANK YOU FOR USING
-            </div>
-            <div
-              className="content-right__title2"
-              style={{
-                color: '#3A001E',
-                fontSize: '40px',
-                fontWeight: '600'
-              }}
-            >
-              {' '}
-              OUR PRODUCT
-            </div>
-            <div
-              className="content-right-text"
-              style={{
-                color: '#9E897A',
-                fontSize: '16px',
-                marginTop: '1rem',
-                marginRight: '1rem'
-              }}
-            >
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-              veniam, quis nostrum exercitationem ullam corporis suscipit
-              laboriosam, nisi ut aliquid ex ea commodi consequatur?
-            </div>
+        <div className="flex flex-col gap-3 items-center justify-center">
+          <div className="text-2xl font-bold">Thanks for using our product</div>
+          <div className="text-xl">München - MÜSS</div>
+          <div className="text-center text-[15px] flex flex-col gap-3 my-3">
+            <div>Cao Xuân Hải</div>
+            <div>Nguyễn Phú Khang</div>
+            <div>Ngô Phúc Linh</div>
+            <div>Bùi Nhiên Lộc</div>
+            <div>Hứa Nhật Gia Nghi</div>
+            <div>Nguyễn Đức Thắng</div>
           </div>
         </div>
       </div>

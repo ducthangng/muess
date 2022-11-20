@@ -36,10 +36,12 @@
     "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
+    "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.5.0",
     "util": "^0.12.5",
+    "uuid": "^9.0.0",
     "winston": "^3.8.1",
     "winston-daily-rotate-file": "^4.7.1"
   },
