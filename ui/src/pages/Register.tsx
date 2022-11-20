@@ -40,7 +40,7 @@ const Register = () => {
   const checkLogin = async () => {
     let res = await userApi.getCurrentUser();
     if (res.status === 200) {
-      navigate('/release');
+      navigate('/products');
     }
   };
 
@@ -70,7 +70,7 @@ const Register = () => {
     setMessage(res.message);
     if (res.status === 201) {
       setHasError(false);
-      navigate('/release');
+      navigate('/products');
     } else {
       setHasError(true);
     }
